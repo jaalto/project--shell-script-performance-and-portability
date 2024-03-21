@@ -5,12 +5,7 @@
 # real	0m0.044s t2b readarray + for   (!)
 # real	0m0.045s t3  mapfile
 
-f=t.random.numbers.tmp
-
-if [ ! -f $f ]; then
-    n=10000   # 10 000 numbers
-    perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$n" > $f
-fi
+. ./t-lib.sh ; f=$rand
 
 t1 ()
 {
