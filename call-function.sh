@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# real    0m0.089s t1
-# real    0m0.002s t2 (!)
+# real    0m0.089s t1 $(funcall)
+# real    0m0.002s t2 funcall nameref
 
 f1 ()
 {
