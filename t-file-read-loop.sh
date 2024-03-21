@@ -1,5 +1,7 @@
 #! /bin/bash
 #
+# NOTE: readarray builtin, is a synonym for mapfile
+#
 # real	0m0.041s t1  mapfile
 # real	0m0.036s t2a readarray + for   (!)
 # real	0m0.076s t2b readarray + while
