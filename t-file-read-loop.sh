@@ -1,21 +1,33 @@
 #! /bin/bash
 #
+# real	0m0.041s t1  mapfile
+# real	0m0.036s t2a readarray + for   (!)
+# real	0m0.076s t2b readarray + while
 # real	0m0.088s t2  while read
-# real	0m0.076s t2a readarray + while
-# real	0m0.044s t2b readarray + for   (!)
-# real	0m0.045s t3  mapfile
 
 . ./t-lib.sh ; f=$rand
 
 t1 ()
 {
-    while read i
+    mapfile -t a < $f
+
+    for i in "${a[@]}"
     do
-        i=$i
-    done < $f
+        i=$a[$i]
+    done
 }
 
 t2a ()
+{
+    readarray -t a < $f
+
+    for i in "${a[@]}"
+    do
+        i=$a[$i]
+    done
+}
+
+t2b ()
 {
     readarray -t a < $f
     size=${a#[@]}
@@ -27,24 +39,12 @@ t2a ()
     done
 }
 
-t2b ()
-{
-    readarray -t a < $f
-
-    for i in "${a[@]}"
-    do
-        i=$a[$i]
-    done
-}
-
 t3 ()
 {
-    mapfile -t a < $f
-
-    for i in "${a[@]}"
+    while read i
     do
-        i=$a[$i]
-    done
+        i=$i
+    done < $f
 }
 
 t ()
