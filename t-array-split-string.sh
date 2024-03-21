@@ -10,6 +10,7 @@ t1 ()
 {
     for i in {1..100}
     do
+        # Slow, because internally uses temporary file to store STRING.
         IFS=', ' read -ra array <<< "$string"
         i=${array[0]}
     done
