@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Shoud you use "test -s" size, to check before reading file?
-# A: yes
+# Q: Is "test -s" for size useful before reading a file?
+# A: yes, much faster that way
 #
 # real    0m0.103s $(< file)
 # real    0m0.002s [ -s file] && $(< file)
@@ -34,5 +34,7 @@ t ()
 
 t t1
 t t2
+
+rm -f $f
 
 # End of file
