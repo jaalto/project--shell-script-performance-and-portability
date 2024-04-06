@@ -1,5 +1,8 @@
 #! /bin/bash
 #
+# Q: Which is faster to process file: while read < FILE or readarray
+# A: readarray is much faster
+#
 # NOTE: readarray builtin, is a synonym for mapfile
 #
 # real	0m0.041s t1  mapfile
