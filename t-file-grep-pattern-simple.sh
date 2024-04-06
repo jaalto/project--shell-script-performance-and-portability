@@ -1,10 +1,10 @@
 #! /bin/bash
 #
-# Q: to match file, how much more efficient is read to grep?
-# A: Yes, much faster (because grep launces separate process)
+# Q: To check match in file: read vs grep?
+# A: much faster to read file to memory and do a match
 #
-# NOTE: this is only for brief checks if FILE contain PATTERN. Not a substitute
-# for real regular expressions.
+# NOTE: this is only for brief checks if FILE contain PATTERN. Not a
+# substitute for real regular expressions.
 #
 # t1 real   0m0.183s read + case
 # t2 real   0m0.184s read + bash regexp
