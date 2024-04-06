@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: To test if GLOB exist: stat vs Bash compgen
-# A: Bash built-in compgen is much faster, stat(1) call executable
+# Q: Which one is faster to check if GLOB matches: stat or Bash compgen?
+# A: Bash built-in compgen is much faster
 #
 # t1 real    0m0.002s   Bash compgen GLOB
 # t2 real    0m0.042s   stat -t GLOB
