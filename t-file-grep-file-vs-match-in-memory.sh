@@ -8,7 +8,7 @@
 #
 # t1 real   0m0.183s read + case
 # t2 real   0m0.184s read + bash regexp
-# t3 real   0m0.008s read (once into memory) + bash rexp
+# t3 real   0m0.008s read (once into memory) + bash regexp
 # t4 real   0m0.396s grep
 
 . ./t-lib.sh ; f=$rand
