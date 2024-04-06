@@ -1,5 +1,8 @@
 #! /bin/bash
 #
+# Q: $(cat FILE) vs $(< FILE)
+# A: bash $(< FILE) is faster
+#
 # real    0m0.166s $(< file)
 # real    0m0.365s $(cat file)
 
