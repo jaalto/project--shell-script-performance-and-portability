@@ -1,13 +1,9 @@
 DESCRIPTION
 
-    When writing shell scripts, what kind of
-    constructs would make it more efficient?
-    Here are some tests to check if A is
-    better than B.
+    Some Bash scripting performance test.
 
-    NOTE: the absolute timing values are not
-    really ineresting, but the the winning
-    order.
+    Here are some tests to check if A is
+    better than B while writing scripts.
 
 GENERAL THOUGHTS
 
@@ -23,4 +19,4 @@ GENERAL THOUGHTS
 	It's faster than doing the "while
 	read ... done < FILE".
 
-End of file
+END OF FILE
