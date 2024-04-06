@@ -3,8 +3,8 @@
 # Q: In grep, is --fixed-strings faster?
 # A: yes
 #
-# Q: Is parallel(1) + grep faster?
-# A: only for large files (> 50 000 lines)
+# Q: Is using parallel(1) with grep even faster?
+# A: No. Only for large files (> 50 000 lines)
 #
 # t1pure    real    0m0.332s LANG=C --fixed-strings
 # t1	    real    0m0.398s --fixed-strings
@@ -94,8 +94,10 @@ t t1icase
 t t2
 t t2icase
 
-t t_parallel1
-t t_parallel2
-t t_parallel3
+if command -v parallel > /dev/null; then
+    t t_parallel1
+    t t_parallel2
+    t t_parallel3
+fi
 
 # End of file
