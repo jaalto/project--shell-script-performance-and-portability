@@ -5,7 +5,7 @@
 # real	0m0.041s t1  mapfile
 # real	0m0.036s t2a readarray + for   (!)
 # real	0m0.076s t2b readarray + while
-# real	0m0.088s t2  while read
+# real	0m0.088s t3  while read < file
 
 . ./t-lib.sh ; f=$rand
 
