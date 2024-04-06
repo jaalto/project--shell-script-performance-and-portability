@@ -8,7 +8,8 @@
 #
 # t1 real   0m0.183s read + case
 # t2 real   0m0.184s read + bash regexp
-# t3 real   0m0.396s grep
+# t3 real   0m0.008s read (once into memory) + bash rexp
+# t4 real   0m0.396s grep
 
 . ./t-lib.sh ; f=$rand
 
@@ -19,12 +20,17 @@ string=abc
 
 f=$tmp
 
+Read ()
+{
+    read -N100000 < "$1"
+}
+
 MathFileContentPattern ()  # POSIX
 {
     local file=$1
     local pattern=$2
 
-    read -N10000 < "$file"
+    Read "$file"
 
     case "$REPLY" in
         $pattern)
@@ -41,7 +47,7 @@ MathFileContentRegexp () # BASH REGEXP
     local file=$1
     local re=$2
 
-    read -N10000 < "$file"
+    Read "$file"
 
     [[ "$REPLY" =~ $re ]]
 }
@@ -64,9 +70,20 @@ t2 ()
 
 t3 ()
 {
+    Read "$f"
+
+    for i in {1..10}
+    do
+        [[ $REPLY =~ $RE ]]
+    done
+}
+
+t4 ()
+{
     for i in {1..100}
     do
-        grep --quiet --files-with-matches "$string.*$string" $f
+        # grep(1) is almost aways the "grep -E" version, so use it in test
+        grep --quiet --extended-regexp --files-with-matches "$string.*$string" $f
     done
 }
 
@@ -80,6 +97,7 @@ t ()
 t t1
 t t2
 t t3
+t t4
 
 rm -f $tmp
 
