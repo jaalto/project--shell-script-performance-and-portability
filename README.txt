@@ -19,4 +19,15 @@ GENERAL THOUGHTS
 	It's faster than doing the "while
 	read ... done < FILE".
 
+NOTES
+
+    See bash(1) manual for dislay 'time' command
+    results:
+
+	TIMEFORMAT='real: %R'  # '%R %U %S'
+
+    To drop kernel cache before testing:
+
+	echo 3 > /proc/sys/vm/drop_caches
+
 END OF FILE
