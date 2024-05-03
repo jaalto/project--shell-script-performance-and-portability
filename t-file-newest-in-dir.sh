@@ -1,18 +1,13 @@
 #! /bin/bash
 #
 # Q: What is the fastest way to get newest file in directory
-# A: find + awk ; ls -t would be fastest but it cannot be limited to files only
+# A: find + awk is almost as fast as "ls -t" (but that would compare both dirs and files)
 #
-# t1 real    0m0.046s   find + awk
-# t2 real    0m0.053s   find + sort + sed
-# t3 real    0m0.057s   find + sort + head + cut
-# t4 real    0m0.053s   stat
-# t5 real    0m0.037s   ls -t
-#
-# NOTES
-#
-# The differences are so small, that for simplicity, the
-# "find + sort + sed" is probably most readable.
+# t1 real    0m0.048s   find + awk
+# t2 real    0m0.071s   find + sort + sed
+# t3 real    0m0.096s   find + sort + head + cut
+# t4 real    0m0.039s   stat
+# t5 real    0m0.032s   ls -t
 #
 # These can't tell files from directories:
 #
@@ -37,7 +32,7 @@ prep ()
 
     for i in {1..100}
     do
-        touch --date="-$i hours" $DIR/$TMPBASE.$1 || exit $?
+        touch --date="-$i hours" $DIR/$TMPBASE.$i || exit $?
     done
 }
 
@@ -47,12 +42,11 @@ t1 ()
     do
         find . -maxdepth 1 -type f -printf "%T@ %p\n" |
         awk '
-            BEGIN { recent = 0; file = "" }
             {
                if ($1 > recent)
                {
                    recent = $1
-                 file = $2
+                   file = $2
                }
             }
             END { print file }
