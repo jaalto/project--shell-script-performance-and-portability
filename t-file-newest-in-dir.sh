@@ -3,11 +3,18 @@
 # Q: What is the fastest way to get newest file in directory
 # A: find + awk is almost as fast as "ls -t" (but that would compare both dirs and files)
 #
-# t1 real    0m0.048s   find + awk
-# t2 real    0m0.071s   find + sort + sed
-# t3 real    0m0.096s   find + sort + head + cut
+# t1 real    0m0.054s   find + awk
+# t2 real    0m0.184s   find + sort + head + cut
+# t3 real    0m0.200s   find + sort + sed
 # t4 real    0m0.039s   stat
 # t5 real    0m0.032s   ls -t
+#
+# NOTES
+#
+# awk(1) binary is smalled that sed(1)
+#
+# Probably small head(1) and cut(1) combined is still
+# faster than bigger sed(1) with regexp engine substitute.
 #
 # These can't tell files from directories:
 #
@@ -59,17 +66,18 @@ t2 ()
     for i in {1..10}
     do
         find $DIR -maxdepth 1 -type f -printf "%T@ %p\n" |
-            sort -r | sed -En 's,^.+ ,,; 1p; q' \
+            sort -r | head -1 | cut -d' ' -f2 \
             > /dev/null
     done
 }
+
 
 t3 ()
 {
     for i in {1..10}
     do
         find $DIR -maxdepth 1 -type f -printf "%T@ %p\n" |
-            sort -r | head -1 | cut -d' ' -f2 \
+            sort -r | sed -En 's,^.+ ,,; 1p; q' \
             > /dev/null
     done
 }
@@ -104,8 +112,14 @@ trap AtExit EXIT HUP INT QUIT TERM
 prep
 
 t t1
+
+# Load Kernel cache by running pipes multiple times: t2, t3
 t t2
+t t2
+
 t t3
+t t3
+
 t t4
 t t5
 
