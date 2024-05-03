@@ -47,7 +47,7 @@ t ()
     echo
 }
 
-trap AtExit 0 1 2 3 1
+trap AtExit EXIT HUP INT QUIT TERM
 prep
 
 t t1
