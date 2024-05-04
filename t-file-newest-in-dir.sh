@@ -28,7 +28,7 @@ AtExit ()
 {
     [ "$TMPBASE" ] || return 0
 
-    rm -f "$TMPBASE"*
+    rm -f $DIR/"$TMPBASE"*
 }
 
 prep ()
