@@ -3,7 +3,7 @@
 # Q: To check match in file: read vs grep?
 # A: much faster to read file to memory and do a match
 #
-# NOTE: this is only for brief checks if FILE contain PATTERN. Not a
+# NOTE: this is only for brief checks Not a
 # substitute for real regular expressions.
 #
 # t1 real   0m0.183s read + case
