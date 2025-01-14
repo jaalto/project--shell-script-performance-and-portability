@@ -6,9 +6,9 @@
 # NOTE: this is only for brief checks Not a
 # substitute for real regular expressions.
 #
-# t1 real   0m0.183s read + case
-# t2 real   0m0.184s read + bash regexp
-# t3 real   0m0.008s read (once into memory) + bash regexp
+# t1 real   0m0.183s read + case (inline)
+# t2 real   0m0.184s read + bash regexp (one file at a time)
+# t3 real   0m0.008s read + bash regexp (once + many memory checks)
 # t4 real   0m0.396s grep
 
 . ./t-lib.sh ; f=$rand
@@ -72,7 +72,7 @@ t3 ()
 {
     Read "$f"
 
-    for i in {1..10}
+    for i in {1..100}
     do
         [[ $REPLY =~ $RE ]]
     done
