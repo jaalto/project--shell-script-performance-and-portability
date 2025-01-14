@@ -7,8 +7,8 @@
 # substitute for real regular expressions.
 #
 # t1 real   0m0.183s read + case (inline)
-# t2 real   0m0.184s read + bash regexp (one file at a time)
-# t3 real   0m0.008s read + bash regexp (once + many memory checks)
+# t2 real   0m0.184s read + bash regexp (separate file calls)
+# t3 real   0m0.008s read + bash regexp (one file + loop match)
 # t4 real   0m0.396s grep
 
 . ./t-lib.sh ; f=$rand
