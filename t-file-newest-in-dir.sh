@@ -11,10 +11,10 @@
 #
 # NOTES
 #
-# awk(1) binary is smalled that sed(1)
+# awk(1) binary is smaller that sed(1)
 #
 # Probably small head(1) and cut(1) combined is still
-# faster than bigger sed(1) with regexp engine substitute.
+# faster than sed(1) with regexp engine.
 #
 # These can't tell files from directories:
 #
