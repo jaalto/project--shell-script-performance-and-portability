@@ -6,7 +6,7 @@
 
 rand=t.random.numbers.tmp  # create test file
 
-if [ ! -f $f ]; then
+if [ ! -f "$rand" ]; then
     n=10000   # 10 000 numbers
     perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$n" > "$rand"
 fi
