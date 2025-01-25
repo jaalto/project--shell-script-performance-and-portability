@@ -79,8 +79,7 @@ trap AtExit EXIT HUP INT QUIT TERM
 
 Setup
 
-
 t t1
-t t2
+#t t2
 
 # End of file
