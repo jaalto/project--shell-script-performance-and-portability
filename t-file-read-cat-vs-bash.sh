@@ -5,6 +5,14 @@
 #
 # real    0m0.166s $(< file)
 # real    0m0.365s $(cat file)
+#
+# NOTES: out of interest, cat is faster with big files:
+#
+# time bash -c 'cat FILE_1M > /dev/null'
+# real    0m0.014s
+#
+# time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
+# real  0m0.086s
 
 . ./t-lib.sh ; f=$rand
 
