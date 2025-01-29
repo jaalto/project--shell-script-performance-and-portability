@@ -1,46 +1,57 @@
 #! /bin/bash
 #
-# Q: Which is faster to process file: while read < FILE or readarray
-# A: readarray is much faster
+# Q: Fastest to process lines: 'while read < FILE' or readarray
+# A: readarray with 'for ((... ; i++))' is excpetionally fast
 #
-# NOTE: readarray builtin, is a synonym for mapfile
+# NOTE: readarray built-in is a synonym for mapfile.
 #
-# real	0m0.041s t1  mapfile
-# real	0m0.036s t2a readarray + for   (!)
-# real	0m0.076s t2b readarray + while
-# real	0m0.088s t3  while read < file
+# real	0m0.037s t1  mapfile
+# real	0m0.040s t2a readarray + for
+# real	0m0.003s t2b readarray + for ((i++))  (!)
+# real	0m0.089s t3  while read < file
 
 . ./t-lib.sh ; f=$rand
 
 t1 ()
 {
-    mapfile -t a < $f
+    local -a array
+    array=()
 
-    for i in "${a[@]}"
+    mapfile -t array < $f
+
+    for i in "${array[@]}"
     do
-        i=$a[$i]
+        i=$i
     done
 }
 
 t2a ()
 {
-    readarray -t a < $f
+    local -a array
+    array=()
 
-    for i in "${a[@]}"
+    readarray -t array < $f
+
+    local i
+
+    for i in "${array[@]}"
     do
-        i=$a[$i]
+        i=$i
     done
 }
 
 t2b ()
 {
-    readarray -t a < $f
-    size=${a#[@]}
-    i=0
+    local -a array
+    array=()
 
-    while [ $i -lt $size ]
+    readarray -t array < $f
+
+    local i
+
+    for ((i = 0; i < ${#array[@]}; i++))
     do
-        ((i++))
+        i=${array[i]}
     done
 }
 
