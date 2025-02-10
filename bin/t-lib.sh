@@ -34,13 +34,6 @@ RandomNumbersPython ()
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($random_file_count)))"
 }
 
-t () # Run test
-{
-    echo -n "# $1"
-    time $1
-    echo
-}
-
 Warn ()
 {
     echo "$*" >&2
@@ -56,6 +49,34 @@ Verbose ()
 {
     [ "$verbose" ] || return 0
     echo "$*"
+}
+
+t () # Run test
+{
+    _info="# %s"
+
+    local _bash
+    [ "$BASH_VERSION" ] && _bash="bash"
+
+
+    _TIMEFORMAT=$TIMEFORMAT # save
+
+    if [ "$_bash" ]; then
+        TIMEFORMAT="real %3R  user %3U  sys %3S"
+        _info="# %-15s"
+    fi
+
+    printf "$_info" "$1"
+
+    time "$@"
+
+    if [ "$_bash" ]; then
+        TIMEFORMAT=$_TIMEFORMAT  # restore
+    else
+        echo
+    fi
+
+    unset _info _bash
 }
 
 # AWK is fastest
