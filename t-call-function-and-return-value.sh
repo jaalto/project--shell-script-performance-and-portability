@@ -1,5 +1,8 @@
 #! /bin/bash
 #
+# Q: Bash variable ref to return values vs val=$(funcall)
+# A: variable name ref is about 40x faster, $(funcall) is slow.
+#
 # real    0m0.089s t1 $(funcall)
 # real    0m0.002s t2 funcall nameref
 
