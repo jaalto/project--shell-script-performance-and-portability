@@ -1,28 +1,31 @@
 #! /bin/bash
 #
-# Q: find lines. Will grep hep before loop?
+# Q: Will prefilter grep + loop help compared to straight loop?
 # A: Yes, using external grep + loop is 2x faster
 #
-# real    0m1.063s loop: case glob
-# real    0m1.059s loop: bash glob [[ ]]
-# real    0m0.424s grep before loop
+# t1a real    0m1.063s loop: case glob
+# t1b real    0m1.059s loop: bash glob [[ ]]
+# t2  real    0m0.424s grep before loop
 #
-# NOTES: out of interest, cat is faster with big files:
+# Code:
 #
-# time bash -c 'cat FILE_1M > /dev/null'
-# real    0m0.014s
+# while read ... done < file        # t1a
+# while read ... done < file        # t1b
+# grep | while ... done             # t2
 #
-# time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
-# real  0m0.086s
 
 . ./t-lib.sh ; f=$random_file
 
+loop_max=${loop_count:-10}
+
 tmp=t.tmp
 
-t1 ()
+t1a ()
 {
-    for i in {1..10}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         while read -r line
         do
             case "$i" in
@@ -33,10 +36,12 @@ t1 ()
     done
 }
 
-t2 ()
+t1b ()
 {
-    for i in {1..10}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         while read -r line
         do
             if [[ $i = *0* ]]; then
@@ -48,8 +53,10 @@ t2 ()
 
 t3 ()
 {
-    for i in {1..10}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         grep "0" $f | while read -r line
         do
             found=$line
@@ -57,15 +64,8 @@ t3 ()
     done
 }
 
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
-}
-
-t t1
-t t2
+t t1a
+t t1b
 t t3
 
 # End of file
