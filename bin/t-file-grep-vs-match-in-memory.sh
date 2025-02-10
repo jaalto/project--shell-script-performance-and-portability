@@ -1,24 +1,36 @@
 #! /bin/bash
 #
-# Q: To check file for a match: read vs grep(1)?
-# A: It is much faster to read file into memory for matching
+# Q: To check file for matches: repeat read, inline match or grep(1)?
+# A: Fastest is to read file once into memory and then match
 #
-# t1 real   0m0.183s read + case (inline)
-# t2 real   0m0.184s read + bash regexp (separate file calls)
-# t3 real   0m0.008s read + bash regexp (read file once + loop match)
-# t4 real   0m0.396s external grep(1)
+# t1a real   0m0.049s read + bash regexp (read file once + use loop)
+# t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
+# t2  real   0m0.482s read + case..MATCH..esac (separate file calls)
+# t3  real   0m0.448s read + bash regexp (separate file calls)
+# t4  real   0m0.404s external grep(1)
 #
 # Code:
 #
-# Notes
+# Study the <file>.sh for more information.
 #
-# Only for brief checks. Not a substitute for real
-# regular expressions.
+# read once and loop [[ str =~~ RE ]]   # t1a
+# read once and loop case..MATCH..end   # t1b
+# read -N<max> < file. case..MATCH..end # t2
+# read -N<max> < file. [[ str =~~ RE ]] # t3
+# grep RE file                          # t4
+#
+# Notes:
+#
+# Repeated reads of the same file probably utilizes
+# Kernel cache to some extent. But is is still much faster
+# to read file once and then apply matching.
 
 . ./t-lib.sh ; rand=$random_file
 
 f=$rand.t.tmp
-STRING=abc
+string=abc
+pattern="$string*$string"
+re="$string.*$string"
 
 AtExit ()
 {
@@ -31,8 +43,6 @@ Setup ()
     { echo "$STRING $STRING" ; cat $rand; } > $f
 }
 
-
-
 Read ()
 {
     read -N100000 < "$1"
@@ -41,7 +51,6 @@ Read ()
 MathFileContentPattern ()  # POSIX
 {
     local file=$1
-    local pattern=$2
 
     Read "$file"
 
@@ -55,62 +64,78 @@ MathFileContentPattern ()  # POSIX
     esac
 }
 
-MathFileContentRegexp () # BASH REGEXP
+MathFileContentRegexp () # Bash regexp
 {
     local file=$1
-    local re=$2
 
     Read "$file"
 
     [[ "$REPLY" =~ $re ]]
 }
 
-t1 ()
+t1a ()
 {
-    for i in {1..100}
+    Read "$f"
+    re=$string
+
+    i=1
+    while [ $i -le $loop_max ]
     do
-        MathFileContentPattern $f "$string*$string"
+        i=$((i + 1))
+        [[ $REPLY =~ $re ]]
+    done
+}
+
+t1b ()
+{
+    Read "$f"
+
+    i=1
+    while [ $i -le $loop_max ]
+    do
+        i=$((i + 1))
+        case "$REPLY" in
+            *$pattern*) ;;
+        esac
     done
 }
 
 t2 ()
 {
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
-        MathFileContentRegexp $f "$string*$string"
+        i=$((i + 1))
+        MathFileContentPattern $f
     done
 }
 
 t3 ()
 {
-    Read "$f"
-
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
-        [[ $REPLY =~ $RE ]]
+        i=$((i + 1))
+        MathFileContentRegexp $f
     done
 }
 
 t4 ()
 {
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         # grep(1) is almost aways the "grep -E" version, so use it in test
-        grep --quiet --extended-regexp --files-with-matches "$string.*$string" $f
+        grep --quiet --extended-regexp --files-with-matches "$re" $f
     done
-}
-
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
 }
 
 trap AtExit EXIT HUP INT QUIT TERM
 
 Setup
-t t1
+t t1a
+t t1b
 t t2
 t t3
 t t4
