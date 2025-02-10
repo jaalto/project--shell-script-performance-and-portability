@@ -6,7 +6,7 @@
 # real    0m1.477s  pipes
 # real    0m1.472s  process substitution
 
-. ./t-lib.sh ; f=$rand
+. ./t-lib.sh ; f=$random_file
 
 tmp=t.tmp
 

@@ -6,7 +6,7 @@
 # real    0m0.003s $(seq ...)
 # real    0m0.006s {N..M}
 
-# . ./t-lib.sh ; f=$rand
+# . ./t-lib.sh ; f=$random_file
 # tmp=t.tmp
 
 t1 ()

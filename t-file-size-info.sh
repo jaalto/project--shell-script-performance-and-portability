@@ -7,7 +7,7 @@
 # real    0m0.360s wc -l ; GNU version efectively like stat()
 # real    0m0.461s ls + awk
 
-. ./t-lib.sh ; f=$rand
+. ./t-lib.sh ; f=$random_file
 
 t1 ()
 {

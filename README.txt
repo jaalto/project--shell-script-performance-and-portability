@@ -32,6 +32,14 @@ NOTES
 
 CODE NOTES
 
-    All test files start with prefix "t-" for short.
+    - All test files start with prefix "t-" for short.
+    - Files ending to *.bash are specific to Bash.
+    - Files ending to *.sh can be run under POSIX
+      compliant shells.
+
+    For keeping things simple:
+
+    - Shellcheck is not used to check code.
+    - Variables are *not* "$quoted" for simplicity.
 
 END OF FILE

@@ -11,7 +11,7 @@
 # t3 real   0m0.008s read + bash regexp (one file + loop match)
 # t4 real   0m0.396s grep
 
-. ./t-lib.sh ; f=$rand
+. ./t-lib.sh ; f=$random_file
 
 tmp=t.tmp
 string=abc

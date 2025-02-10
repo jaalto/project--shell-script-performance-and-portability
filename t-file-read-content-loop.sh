@@ -10,7 +10,7 @@
 # real	0m0.081s t2b readarray + for ((i++))  (!)
 # real	0m0.103s t3  while read < file
 
-. ./t-lib.sh ; f=$rand
+. ./t-lib.sh ; f=$random_file
 
 t1 ()
 {

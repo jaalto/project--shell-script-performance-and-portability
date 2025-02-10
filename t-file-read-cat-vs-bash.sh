@@ -14,7 +14,7 @@
 # time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
 # real  0m0.086s
 
-. ./t-lib.sh ; f=$rand
+. ./t-lib.sh ; f=$random_file
 
 tmp=t.tmp
 

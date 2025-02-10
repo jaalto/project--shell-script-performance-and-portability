@@ -6,7 +6,7 @@
 # real    0m0.428s val=$(shell)
 # real    0m0.899s shell > file; val=$(< file)
 
-. ./t-lib.sh ; f=$rand
+. ./t-lib.sh ; f=$random_file
 
 tmp=t.tmp
 
