@@ -3,9 +3,11 @@
 
 .PHONY: all
 all:
-	./results.sh
+	cd bin && \
+	../results.sh
 
 run:
-	./run.sh t-*
+	cd bin && \
+	../run.sh t-*
 
 # End of file
