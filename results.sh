@@ -13,21 +13,12 @@ Result ()
         }
 
         /^#[[:space:]]+[QA]: / {
-            arr[count++] = $0
-        }
-
-        ENDFILE {
-            len = length(array)
-
-            if (len)
-            {
+            if (!count)
                 printf("-- %s\n", FILENAME)
 
-                for (i = 0; i < count; i++)
-                {
-
-                }
-            }
+            sub("^# ", "")
+            print
+            count++
         }
     ' "$@"
 }
