@@ -1,0 +1,315 @@
+FILE: t-array-split-string.bash
+#! /bin/bash
+#
+# Q: split string into array: read vs eval?
+# A: eval is 5x faster
+#
+# t1 real    0m0.025s read -ra
+# t2 real    0m0.005s eval     (!)
+#
+# Code:
+#
+# string=$(echo {1..100})
+# read -ra array <<< "$string"  # t1
+# eval 'array=($string)'        # t2
+
+FILE: t-call-function-and-return-value.bash
+#! /bin/bash
+#
+# Q: Bash name ref to return values vs val=$(funcall)
+# A: name ref is about 40x faster
+#
+# t1 real    0m0.089s t1 $(funcall)
+# t2 real    0m0.002s t2 funcall nameref
+#
+# Code:
+#
+# fn(): return "echo <value>"     # t1
+# fn(): return using local -n var # t2
+
+FILE: t-command-grep.sh
+#! /bin/bash
+#
+# Q: In grep, is --fixed-strings faster?
+# A: Not much difference to --extended-regexp or --perl-regexp
+#
+# Q: Is using parallel(1) with grep even faster?
+# A: Not worth for small files. Yes with bigger ones (test file: 10 000 lines)
+#
+# t1pure     real   0m0.338s LANG=C --fixed-strings
+# t1utf8     real   0m0.372s LANG=C.UTF-8 --fixed-strings
+# t1extended real   0m0.346s LANG=C --extended-regexp
+# t1perl     real   0m0.349s LANG=C --perl-regexp
+#
+# t2icasef   real    0m0.394s LANG=C --fixed-strings --ignore-case
+# t2icasee   real    0m0.419s LANG=C --extended-regexp --ignore-case
+#
+# GNU parallel(1). Split file into chunks and run grep(1) in parallel
+# for each chunk.
+#
+# t_parallel1 real  0m0.226s <defaults>
+# t_parallel2 real  0m0.653s --block-size 1k
+# t_parallel3 real  0m0.300s -N 1k (grep instance for every 1k lines)
+
+FILE: t-dir-empty.sh
+#! /bin/bash
+#
+# Q: What is the fastest way to check empty directory?
+# A: array+glob is faster than built-in compgen
+#
+# t1 real    0m0.054s   array+glob
+# t2 real    0m0.104s   compgen
+# t3 real    0m0.304s   ls (out of curiosity)
+# t3 real    0m0.480s   find|read
+
+FILE: t-dir-entries.sh
+#! /bin/bash
+#
+# Q: What is the fastest way to get list of directories?
+# A: In general, the for-loop. ls(1) is only faster with 100 directories
+#
+# for 100 directories:
+#
+# real    0m0.012s ls -ld */
+# real    0m0.015s for-loop
+#
+# for 20 directories:
+#
+# real    0m0.004s for-loop
+# real    0m0.008s ls -d */
+#
+# TESTING NOTES
+#
+# Because the OS caches files and directories, you have to
+# manually modify this file between the tests:
+#
+# Manually adjust the number of directories to create in
+# Setup(). The default is typical 20 directries.
+#
+# T1:
+# - Comment out test t2
+# - Run t1
+#
+# T2:
+# - Comment out t1
+# - Run t2
+
+FILE: t-file-copy-check-exist.sh
+#! /bin/bash
+#
+# Q: Need a copy of file. Call cp(1), make hardlink, or do test before copy?
+# A: Faster is to test existense of file before cp(1). Hardlink is fast.
+#
+# t1 real    0m1.002s cp A B
+# t2 real    0m0.013s test(1) -nt ...
+# t2 real    0m0.009s test(1) -ef ... (using hardlink)
+#
+# Code:
+#
+# cp --preserve=timestamps A B                       # t1
+# [ A -nt B ] || cp --preserve=timestamps ...        # t2
+# [ A -ef B ] || cp --preserve=timestamps --link ... # t3
+
+FILE: t-file-for-loop-vs-awk.sh
+#! /bin/bash
+#
+# Q: for-loop to send file-by-file to awk vs awk handling all the files?
+# A: pure awk is at least 2x faster
+#
+# t1 real    0m0.213s pure awk
+# t1 real    0m0.584s for + awk
+#
+# Code:
+#
+# awk '{...}' <file...>
+# for..do.. awk <file> .. done
+
+FILE: t-file-glob-bash-compgen-vs-stat.sh
+#! /bin/bash
+#
+# Q: The check if GLOB matches file: stat or Bash compgen?
+# A: Bash array+glob/compgen are much faster than stat(1)
+#
+# t1 real    0m0.026s   Bash compgen GLOB
+# t2 real    0m0.028s   Bash array: (GLOB)
+# t2 real    0m0.039s   stat -t GLOB
+#
+# Code:
+#
+# arr=("file"*)
+# compgen -G "file"*
+# stat -t "file"*
+#
+# Notes:
+#
+# Understandable as stat(1) would do more work by
+# opening each file found.
+
+FILE: t-file-grep-vs-match-in-memory.sh
+#! /bin/bash
+#
+# Q: To check file for matches: repeat read, inline match or grep(1)?
+# A: Fastest is to read file once into memory and then match
+#
+# t1a real   0m0.049s read + bash regexp (read file once + use loop)
+# t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
+# t2  real   0m0.482s read + case..MATCH..esac (separate file calls)
+# t3  real   0m0.448s read + bash regexp (separate file calls)
+# t4  real   0m0.404s external grep(1)
+#
+# Code:
+#
+# Study the <file>.sh for more information.
+#
+# read once and loop [[ str =~~ RE ]]   # t1a
+# read once and loop case..MATCH..end   # t1b
+# read -N<max> < file. case..MATCH..end # t2
+# read -N<max> < file. [[ str =~~ RE ]] # t3
+# grep RE file                          # t4
+#
+# Notes:
+#
+# Repeated reads of the same file probably utilizes
+# Kernel cache to some extent. But is is still much faster
+# to read file once and then apply matching.
+
+FILE: t-file-newest-in-dir.sh
+#! /bin/bash
+#
+# Q: What is the fastest way to get newest file in directory
+# A: find + awk is tad faster but more complex. Use find + filters.
+#
+# t1 real    0m0.417s   find + awk
+# t2 real    0m0.523s   find + sort + head + cut
+# t3 real    0m0.575s   find + sort + sed
+#
+# t4 real    0m0.382s   stat (not a generic solution; see awk)
+# t5 real    0m0.330s   ls -t (not a generic solution; see awk)
+#
+# Code:
+#
+# See <file>.sh for more details.
+#
+# find -maxdepth 1 -type f ... | awk '<complex code>'       # t1
+# find -maxdepth 1 -type f | sort -r | head -1 | cut ...    # t2
+# find -maxdepth 1 -type f | sort -r | sed ...              # t3
+# stat ... | sort -r | sed ...                              # t4
+# ls --sort=time | head -1                                  # t5
+#
+#
+# Notes:
+#
+# awk(1) binary is smaller that sed(1)
+#
+# Probably small head(1) and cut(1) combined is still
+# faster than sed(1) which uses regexp engine.
+#
+# These can't tell files from directories:
+#
+#   ls -t   sort by time
+#   stat
+
+FILE: t-file-pipe-vs-process-substitution.sh
+#! /bin/bash
+#
+# Q: Is there pipe slower than process substitution?
+# A: No different. Pipes are efficient.
+#
+# real    0m1.477s  pipes
+# real    0m1.472s  process substitution
+
+FILE: t-file-read-cat-vs-bash.sh
+#! /bin/bash
+#
+# Q: How much is $(< FILE) faster than $(cat FILE)?
+# A: bash $(< FILE) is about 2x faster
+#
+# real    0m0.166s $(< file)
+# real    0m0.365s $(cat file)
+#
+# NOTES: out of interest, cat is faster with big files:
+#
+# time bash -c 'cat FILE_1M > /dev/null'
+# real    0m0.014s
+#
+# time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
+# real  0m0.086s
+
+FILE: t-file-read-content-loop.sh
+#! /bin/bash
+#
+# Q: Fastest to process lines: 'while read < FILE' or readarray
+# A: readarray with 'for' is the fastest
+#
+# NOTE: readarray built-in is a synonym for mapfile.
+#
+# real	0m0.037s t1  mapfile
+# real	0m0.033s t2a readarray + for
+# real	0m0.081s t2b readarray + for ((i++))  (!)
+# real	0m0.103s t3  while read < file
+
+FILE: t-file-read-match-lines-loop-vs-grep.sh
+#! /bin/bash
+#
+# Q: find lines. Will grep hep before loop?
+# A: Yes, using external grep + loop is 2x faster
+#
+# real    0m1.063s loop: case glob
+# real    0m1.059s loop: bash glob [[ ]]
+# real    0m0.424s grep before loop
+#
+# NOTES: out of interest, cat is faster with big files:
+#
+# time bash -c 'cat FILE_1M > /dev/null'
+# real    0m0.014s
+#
+# time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
+# real  0m0.086s
+
+FILE: t-file-read-shell-result.sh
+#! /bin/bash
+#
+# Q: Which one is faster: just $() or saving content to file and then reading file?
+# A: The $() is faster than using a temporary file
+#
+# real    0m0.428s val=$(shell)
+# real    0m0.899s shell > file; val=$(< file)
+
+FILE: t-file-read-with-size-check.sh
+#! /bin/bash
+#
+# Q: Is "test -s" for size useful before reading a file?
+# A: yes, much faster that way
+#
+# real    0m0.103s $(< file)
+# real    0m0.002s [ -s file] && $(< file)
+
+FILE: t-file-size-info.sh
+#! /bin/bash
+#
+# Q: What is the fastest way to read a file's size?
+# A: wc -c; or stat() but not POSIX.
+#
+# real    0m0.269s stat
+# real    0m0.360s wc -l ; GNU version efectively like stat()
+# real    0m0.461s ls + awk
+
+FILE: t-lib.sh
+FILE: t-loop-seq-vs-seq-expr.sh
+#! /bin/bash
+#
+# Q: Bash seq expr {N..M} vs $(seq ...)
+# A: The {N..M} sequence expression is faster but both are real fast
+#
+# real    0m0.003s $(seq ...)
+# real    0m0.006s {N..M}
+
+FILE: t-trim-whitespace.sh
+#! /bin/bash
+#
+# Q: Trim whitepace using Bash only vs sed(1)
+# A: Bash is much faster; especially even with nameref
+#
+# real    0m0.497s sed
+# real    0m0.158s Bash
+
