@@ -7,6 +7,10 @@ PROGRAM=${0##*/}
 Result ()
 {
     awk '
+        BEGIN {
+
+        }
+
         BEGINFILE {
             delete arr
             count=0
@@ -20,6 +24,18 @@ Result ()
             print
             count++
         }
+
+        ENDFILE {
+            # After each file, separate next files by newline
+            # Skip first file.
+
+            if (!newline)
+                newline = 1
+            else
+                print ""
+        }
+
+
     ' "$@"
 }
 
