@@ -22,10 +22,8 @@ tmp=t.tmp
 
 t1a ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         while read -r line
         do
             case "$i" in
@@ -38,10 +36,8 @@ t1a ()
 
 t1b ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         while read -r line
         do
             if [[ $i = *0* ]]; then
@@ -53,10 +49,8 @@ t1b ()
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         grep "0" $f | while read -r line
         do
             found=$line

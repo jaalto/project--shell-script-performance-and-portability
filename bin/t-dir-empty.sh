@@ -31,8 +31,7 @@ t1 ()
     shopt -s nullglob  # Avoids literal * if directory is empty
     local -a files
 
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
         files=("$dir"/*)
 
@@ -46,8 +45,7 @@ t1 ()
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
         if ! compgen -G "$dir"/* > /dev/null
         then
@@ -60,8 +58,7 @@ t3 ()
 {
     # Do not use. Just out of curiosity.
 
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
         if [ "$(ls "$dir")" ]; then
             dummy="empty: ls"
@@ -73,8 +70,7 @@ t4 ()
 {
     # Just out of curiosity.
 
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
         if ! find "$dir" -mindepth 1 -maxdepth 1 -type f |
            read -r

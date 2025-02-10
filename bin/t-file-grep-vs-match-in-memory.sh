@@ -78,10 +78,8 @@ t1a ()
     Read "$f"
     re=$string
 
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         [[ $REPLY =~ $re ]]
     done
 }
@@ -90,10 +88,8 @@ t1b ()
 {
     Read "$f"
 
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         case "$REPLY" in
             *$pattern*) ;;
         esac
@@ -102,30 +98,24 @@ t1b ()
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         MathFileContentPattern $f
     done
 }
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         MathFileContentRegexp $f
     done
 }
 
 t4 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         # grep(1) is almost aways the "grep -E" version, so use it in test
         grep --quiet --extended-regexp --files-with-matches "$re" $f
     done

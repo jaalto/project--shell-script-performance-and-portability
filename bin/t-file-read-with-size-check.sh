@@ -21,8 +21,7 @@ AtExit ()
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
         i=$((i + 1))
         val=$(< $f)
@@ -31,10 +30,8 @@ t1 ()
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         [ -s $f ] && val=$(< $f)
     done
 }

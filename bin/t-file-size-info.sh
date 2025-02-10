@@ -11,35 +11,28 @@
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         size=$(stat -c %s "$f")
     done
 }
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         # More portable
         #
         # GNU  coreutils implementation optimizes this
         # away using fstat(). Efectively same as stat().
-
         size=$(wc -c "$f")
     done
 }
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         size=$(ls -l "$f" | awk '{print $5; exit}')
     done
 }

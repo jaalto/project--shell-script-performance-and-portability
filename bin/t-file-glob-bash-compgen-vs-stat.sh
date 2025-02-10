@@ -29,17 +29,15 @@ AtExit ()
     rm -f "$TMPBASE"*
 }
 
-prep ()
+Setup ()
 {
     touch $TMPBASE.{1..100}
 }
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         if compgen -G "$TMPBASE"* > /dev/null; then
             dummy="glob match"
         fi
@@ -48,10 +46,8 @@ t1 ()
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         arr=("$TMPBASE"*)
         if [ ${#arr[*]} -gt 0 ]; then
             dummy="glob match"
@@ -61,10 +57,8 @@ t2 ()
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         if stat -t "$TMPBASE"* > /dev/null; then
             dummy="glob match"
         fi
@@ -72,7 +66,7 @@ t3 ()
 }
 
 trap AtExit EXIT HUP INT QUIT TERM
-prep
+Setup
 
 t t1
 t t2

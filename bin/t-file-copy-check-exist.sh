@@ -26,10 +26,8 @@ AtExit ()
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         cp --preserve=timestamps $f $copy
     done
 }
@@ -38,10 +36,8 @@ t2 ()
 {
     # when called: $copy already exist (as it should)
 
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         if [ $f -nt $copy ]; then # if newer file, then copy
             cp --preserve=timestamps $f $copy
         fi
@@ -50,10 +46,8 @@ t2 ()
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         if [ ! $f -ef $copy ]; then  # same hardlink?
             cp --preserve=timestamps --link $f $copy # make a hardlink
         fi
@@ -63,8 +57,10 @@ t3 ()
 trap AtExit EXIT HUP INT QUIT TERM
 
 t t1
+
 rm --force "$copy"
 t t2
+
 rm --force "$copy"
 t t3
 

@@ -19,20 +19,16 @@ AtExit ()
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         count=$(grep --count --fixed-strings "12" $f)
     done
 }
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         grep --count --fixed-strings "12" $f > $tmp
         count=$(< $tmp)
     done

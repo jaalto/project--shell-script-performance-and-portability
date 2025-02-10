@@ -51,21 +51,16 @@ Setup ()
 
     # Generate files 1h apart
 
-    i=1
-    while [ $i -le $max_files ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         touch --date="-$i hours" "$DIR/$i" || exit $?
     done
 }
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
-
         find . -maxdepth 1 -type f -printf "%T@ %p\n" |
         awk '
             {
@@ -82,10 +77,8 @@ t1 ()
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         find $DIR -maxdepth 1 -type f -printf "%T@ %p\n" |
             sort --reverse |
             head --lines=1 |
@@ -97,10 +90,8 @@ t2 ()
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         find $DIR -maxdepth 1 -type f -printf "%T@ %p\n" |
             sort --reverse |
             sed --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
@@ -110,10 +101,8 @@ t3 ()
 
 t4 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         stat --format="%Y %n" * |
             sort --reverse |
             sed --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
@@ -123,10 +112,8 @@ t4 ()
 
 t5 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         ls --sort=time | head --lines=1 > /dev/null
     done
 }

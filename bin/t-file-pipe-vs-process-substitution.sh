@@ -15,25 +15,19 @@
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
-
         # Think "cat" as any program that produces output
         # that needs to be send to pipes. We just
         # cook up something using 2 pipes.
-
         cat $f | cut -f1 | awk '/./ {}'
     done
 }
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         < <( < <(cat $f) cut -f1) awk '/./ {}'
     done
 }

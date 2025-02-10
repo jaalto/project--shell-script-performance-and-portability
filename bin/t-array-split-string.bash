@@ -19,10 +19,8 @@ string=$(echo {1..100})
 
 t1 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         # Slow, because internally uses temporary file to store STRING.
         IFS=', ' read -ra array <<< "$string"
         item=${array[0]}
@@ -31,10 +29,8 @@ t1 ()
 
 t2 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         IFS=', ' eval 'array=($string)'
         item=${array[0]}
     done

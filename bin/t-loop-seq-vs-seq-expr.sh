@@ -29,10 +29,8 @@ t2 ()
 
 t3 ()
 {
-    i=1
-    while [ $i -le $loop_max ]
+    for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         item=$i
     done
 }

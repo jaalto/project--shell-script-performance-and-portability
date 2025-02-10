@@ -41,10 +41,8 @@ Setup ()
 {
     tmpdir=$(mktemp --directory --tmpdir="$pwd")
 
-    i=1
-    while [ $i -le $max_dirs ]
+    for i in $(seq $max_dirs)
     do
-        i=$((i + 1))
         [ $i -lt 10 ] && i="0$i"  # 01, 02, ...
 
         mkdir "$tmpdir/$i"
