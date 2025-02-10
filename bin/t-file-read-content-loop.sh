@@ -1,14 +1,23 @@
 #! /bin/bash
 #
-# Q: Fastest to process lines: 'while read < FILE' or readarray
-# A: readarray with 'for' is the fastest
+# Q: Fastest way to process lines: 'while read < FILE' vs readarray
+# A: readarray with 'for' loop is the fastest
 #
-# NOTE: readarray built-in is a synonym for mapfile.
+# t1  real       0m0.037s t1  mapfile
+# t2a real       0m0.033s t2a readarray + for
+# t2b real       0m0.081s t2b readarray + for ((i++))  (!)
+# t3  real       0m0.103s t3  while read < file
 #
-# real	0m0.037s t1  mapfile
-# real	0m0.033s t2a readarray + for
-# real	0m0.081s t2b readarray + for ((i++))  (!)
-# real	0m0.103s t3  while read < file
+# Code:
+#
+#  mapfile -t array < file ; for <array> ...        # t1
+#  readarray -t array < $f ; for i in <array> ...   # t2a
+#  readarray -t array < $f ; for ((i... <array> ... # t2b
+#  while read ... done < file                       # t3
+#
+# Notes:
+#
+# In Bash, the readarray built-in is a synonym for mapfile.
 
 . ./t-lib.sh ; f=$random_file
 
@@ -57,17 +66,10 @@ t2b ()
 
 t3 ()
 {
-    while read i
+    while read -r i
     do
         i=$i
     done < $f
-}
-
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
 }
 
 t t1
