@@ -28,4 +28,8 @@ doc-all:
 doc-brief:
 	grep --extended-regexp "^($$|FILE:|# [QA]:)" $(DOC) > $(BRIEF)
 
+.PHONY: clean
+clean:
+	rm --force bin/t.*
+
 # End of file
