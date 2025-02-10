@@ -1,40 +1,41 @@
 #! /bin/bash
 #
-# Q: Is there pipe slower than process substitution?
-# A: No different. Pipes are efficient.
+# Q: Would pipe be slower than using process substitution?
+# A: No real difference. Pipes are efficient.
 #
-# real    0m1.477s  pipes
-# real    0m1.472s  process substitution
+# t1 real    0m0.790s  pipes
+# t2 real    0m0.745s  process substitution
+#
+# Code:
+#
+# cmd | cmd | cmd           # t1
+# < <( < <(cmd) cmd) cmd    # t2
 
 . ./t-lib.sh ; f=$random_file
 
-tmp=t.tmp
-
 t1 ()
 {
-    for i in {1..200}
+    i=1
+    while [ $i -le $loop_max ]
     do
-        # Think "cat" as any program that produces output
-        # that needs yto be processes via pipes. We just
-        # do something using 2 pipes.
+        i=$((i + 1))
 
-        cat $rand | cut -f1 | awk '/./ {}'
+        # Think "cat" as any program that produces output
+        # that needs to be send to pipes. We just
+        # cook up something using 2 pipes.
+
+        cat $f | cut -f1 | awk '/./ {}'
     done
 }
 
 t2 ()
 {
-    for i in {1..200}
+    i=1
+    while [ $i -le $loop_max ]
     do
-        < <( < <(cat $rand) cut -f1) awk '/./ {}'
+        i=$((i + 1))
+        < <( < <(cat $f) cut -f1) awk '/./ {}'
     done
-}
-
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
 }
 
 t t1
