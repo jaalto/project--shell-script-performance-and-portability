@@ -60,7 +60,7 @@ t3 ()
     done
 }
 
-#trap AtExit EXIT HUP INT QUIT TERM
+trap AtExit EXIT HUP INT QUIT TERM
 
 t t1
 rm --force "$copy"
