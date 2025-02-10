@@ -4,7 +4,7 @@ README: Shell script performance tests
 How to write faster shell scripts?
 
 That's the question these tests try to answer:
-see the RESULTS file.
+see the RESULTS* files.
 
 This project includes tests to determine the
 most efficient way to write shell script code.
