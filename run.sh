@@ -30,7 +30,7 @@ Run ()
 Main ()
 {
     if [ ! "$1" ]; then
-        echo "Synopsis: $PRORAM <test file to run> ..."
+        echo "Synopsis: $PROGRAM <test file to run> ..."
         return 1
     fi
 
