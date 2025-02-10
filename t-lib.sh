@@ -4,8 +4,14 @@
 #
 # Synopsis: source <file>
 
+# export variables
+random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
+loop_max=${loop_max:-100}
+
+# private variables. Unset after this file has been read.
 random_file_count=${random_file_count:-10000}
-random_file={random_file:-t.random.numbers.tmp}  # create random number test file
+
+# For test loops
 
 RandomNumbersAwk ()
 {
@@ -26,6 +32,13 @@ RandomNumbersPerl ()
 RandomNumbersPython ()
 {
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($random_file_count)))"
+}
+
+t () # Run test
+{
+    echo -n "# $1"
+    time $1
+    echo
 }
 
 Warn ()
