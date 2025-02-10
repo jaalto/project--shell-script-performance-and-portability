@@ -3,8 +3,13 @@
 # Q: Bash name ref to return values vs val=$(funcall)
 # A: name ref is about 40x faster
 #
-# real    0m0.089s t1 $(funcall)
-# real    0m0.002s t2 funcall nameref
+# t1 real    0m0.089s t1 $(funcall)
+# t2 real    0m0.002s t2 funcall nameref
+#
+# Code:
+#
+# fn(): return "echo <value>"     # t1
+# fn(): return using local -n var # t2
 
 . ./t-lib.sh ; f=$random_file
 
