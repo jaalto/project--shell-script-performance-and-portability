@@ -32,14 +32,19 @@
 # We don't use ${TMPDIR:-/tmp}
 # because that may be on fast tempfs
 
+. ./t-lib.sh ; f=$random_file
+
 pwd=$(cd "$(dirname "$0")" && pwd)
+max_dirs=${max_dirs:-20}
 
 Setup ()
 {
     tmpdir=$(mktemp --directory --tmpdir="$pwd")
 
-    for i in {0..20}
+    i=1
+    while [ $i -le $max_dirs ]
     do
+        i=$((i + 1))
         [ $i -lt 10 ] && i="0$i"  # 01, 02, ...
 
         mkdir "$tmpdir/$i"
@@ -68,15 +73,7 @@ t2 ()
     done
 }
 
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
-}
-
 trap AtExit EXIT HUP INT QUIT TERM
-
 Setup
 
 t t1
