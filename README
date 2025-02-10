@@ -39,9 +39,8 @@ Project details
         Bash and POSIX shell.
 
     Optional Depends
-        make (any version). Used only
-        for toplevel calls and to
-        generate documentation easily.
+        make (any version). Used as
+        a frontend to call utilities.
 
 Copyright
 
