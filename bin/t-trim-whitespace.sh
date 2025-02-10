@@ -1,21 +1,39 @@
 #! /bin/bash
 #
-# Q: Trim whitepace using Bash only vs sed(1)
-# A: Bash is much faster; especially even with nameref
+# Q: Trim whitepace using Bash RE vs sed(1)
+# A: Bash is much faster; especially with fn() name ref
 #
-# real    0m0.497s sed
-# real    0m0.158s Bash
+# t2 real    0m0.025s Bash fn() RE, name ref
+# t2 real    0m0.107s Bash fn() RE
+# t1 real    0m0.440s echo | sed RE
+#
+# Code:
+#
+# t1 var=$(echo .. | sed <trim>)    # external call
+# t2 var=$(bashTrim)                # fn() return by value
+# t2 BashTrom var                   # fn() use name ref
+
+. ./t-lib.sh ; f=$random_file
 
 s='[[:space:]]+'
 S='[^[:space:]]+'
 
 str="  this string  "
 
+trim_nameref ()
+{
+    local -n _var=$1
+
+    [[ $_var =~ ^$s(.+)$   ]] && _var=${BASH_REMATCH[1]}
+    [[ $_var =~ ^(.*$S)$s$ ]] && _var=${BASH_REMATCH[1]}
+}
+
 t1 ()
 {
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
-        x=$(echo "$str" | sed -E "s,^$s*(.*$S)\s*$,\1,")
+        item=$str
+        trim_nameref item
     done
 }
 
@@ -31,34 +49,18 @@ trim ()
 
 t2 ()
 {
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
-        x=$(trim "$str")
+        item=$(trim "$str")
     done
-}
-
-trim_nameref ()
-{
-    local -n var=$1
-
-    [[ $var =~ ^$s(.+)$   ]] && var=${BASH_REMATCH[1]}
-    [[ $var =~ ^(.*$S)$s$ ]] && var=${BASH_REMATCH[1]}
 }
 
 t3 ()
 {
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
-        x=$str
-        trim_nameref x
+        item=$(echo "$str" | sed --regexp-extended "s,^$s*(.*$S)\s*$,\1,")
     done
-}
-
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
 }
 
 t t1
