@@ -1,0 +1,21 @@
+USAGE
+
+    To display results:
+
+	make
+
+    To re-run all tests:
+
+	make run
+
+    To manually run tests:
+
+	./run.sh <test file> ...
+
+    WARNING: the individual test files
+    are not designed to work corrctly in
+    calls like:
+
+	bash ~/path/to/t-<file>.sh
+
+End of file
