@@ -20,7 +20,6 @@
 # stat ... | sort -r | sed ...                              # t4
 # ls --sort=time | head -1                                  # t5
 #
-#
 # Notes:
 #
 # awk(1) binary is smaller that sed(1)
