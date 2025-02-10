@@ -196,7 +196,6 @@ FILE: t-file-newest-in-dir.sh
 # stat ... | sort -r | sed ...                              # t4
 # ls --sort=time | head -1                                  # t5
 #
-#
 # Notes:
 #
 # awk(1) binary is smaller that sed(1)
@@ -212,104 +211,130 @@ FILE: t-file-newest-in-dir.sh
 FILE: t-file-pipe-vs-process-substitution.sh
 #! /bin/bash
 #
-# Q: Is there pipe slower than process substitution?
-# A: No different. Pipes are efficient.
+# Q: Would pipe be slower than using process substitution?
+# A: No real difference. Pipes are efficient.
 #
-# real    0m1.477s  pipes
-# real    0m1.472s  process substitution
+# t1 real    0m0.790s  pipes
+# t2 real    0m0.745s  process substitution
+#
+# Code:
+#
+# cmd | cmd | cmd           # t1
+# < <( < <(cmd) cmd) cmd    # t2
 
 FILE: t-file-read-cat-vs-bash.sh
 #! /bin/bash
 #
-# Q: How much is $(< FILE) faster than $(cat FILE)?
-# A: bash $(< FILE) is about 2x faster
+# Q: Is Bash $(< FILE) faster than $(cat FILE)?
+# A: The $(< FILE) is about 2x faster for small files
 #
 # real    0m0.166s $(< file)
 # real    0m0.365s $(cat file)
 #
-# NOTES: out of interest, cat is faster with big files:
+# Notes:
 #
-# time bash -c 'cat FILE_1M > /dev/null'
+# With big files, cat(1) is much faster:
+#
+# . t-lib.sh
+# RandomWordsDictionary 1M > t.1M
+#
+# time bash -c 'cat t.1M > /dev/null'
 # real    0m0.014s
 #
-# time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
-# real  0m0.086s
+# time bash -c 's=$(< t.1M); echo "$s" > /dev/null'
+# real  0m0.055s
 
 FILE: t-file-read-content-loop.sh
 #! /bin/bash
 #
-# Q: Fastest to process lines: 'while read < FILE' or readarray
-# A: readarray with 'for' is the fastest
+# Q: Fastest way to process lines: 'while read < FILE' vs readarray
+# A: readarray with 'for' loop is the fastest
 #
-# NOTE: readarray built-in is a synonym for mapfile.
+# t1  real       0m0.037s t1  mapfile
+# t2a real       0m0.033s t2a readarray + for
+# t2b real       0m0.081s t2b readarray + for ((i++))  (!)
+# t3  real       0m0.103s t3  while read < file
 #
-# real	0m0.037s t1  mapfile
-# real	0m0.033s t2a readarray + for
-# real	0m0.081s t2b readarray + for ((i++))  (!)
-# real	0m0.103s t3  while read < file
+# Code:
+#
+#  mapfile -t array < file ; for <array> ...        # t1
+#  readarray -t array < $f ; for i in <array> ...   # t2a
+#  readarray -t array < $f ; for ((i... <array> ... # t2b
+#  while read ... done < file                       # t3
+#
+# Notes:
+#
+# In Bash, the readarray built-in is a synonym for mapfile.
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /bin/bash
 #
-# Q: find lines. Will grep hep before loop?
+# Q: Will prefilter grep + loop help compared to straight loop?
 # A: Yes, using external grep + loop is 2x faster
 #
-# real    0m1.063s loop: case glob
-# real    0m1.059s loop: bash glob [[ ]]
-# real    0m0.424s grep before loop
+# t1a real    0m1.063s loop: case glob
+# t1b real    0m1.059s loop: bash glob [[ ]]
+# t2  real    0m0.424s grep before loop
 #
-# NOTES: out of interest, cat is faster with big files:
+# Code:
 #
-# time bash -c 'cat FILE_1M > /dev/null'
-# real    0m0.014s
+# while read ... done < file        # t1a
+# while read ... done < file        # t1b
+# grep | while ... done             # t2
 #
-# time bash -c 's=$(< FILE_1M); echo "$s" > /dev/null'
-# real  0m0.086s
 
 FILE: t-file-read-shell-result.sh
 #! /bin/bash
 #
-# Q: Which one is faster: just $() or saving content to file and then reading file?
-# A: The $() is faster than using a temporary file
+# Q: Is capturing var=$() faster or using temporary file for outpur?
+# A: The var=$() is 2x faster than using a temporary file
 #
-# real    0m0.428s val=$(shell)
-# real    0m0.899s shell > file; val=$(< file)
+# t1 real    0m0.428s val=$(cmd)
+# t2 real    0m0.899s cmd > file; val=$(< file)
 
 FILE: t-file-read-with-size-check.sh
 #! /bin/bash
 #
-# Q: Is "test -s" for size useful before reading a file?
-# A: yes, much faster that way
+# Q: Is "test -s" for size useful before reading the file content?
+# A: yes, much faster to check [ -s file ] before reading.
 #
-# real    0m0.103s $(< file)
-# real    0m0.002s [ -s file] && $(< file)
+# real    0m0.105s $(< file)
+# real    0m0.006s [ -s file] && $(< file)
 
 FILE: t-file-size-info.sh
 #! /bin/bash
 #
 # Q: What is the fastest way to read a file's size?
-# A: wc -c; or stat() but not POSIX.
+# A: GNU wc -c. Or stat() but it is not in POSIX (not portable)
 #
-# real    0m0.269s stat
-# real    0m0.360s wc -l ; GNU version efectively like stat()
-# real    0m0.461s ls + awk
+# t1 real    0m0.288s stat -c file
+# t2 real    0m0.360s wc -l file; GNU version efectively like stat()
+# t3 real    0m0.461s ls -l + awk
 
 FILE: t-lib.sh
 FILE: t-loop-seq-vs-seq-expr.sh
 #! /bin/bash
 #
-# Q: Bash seq expr {N..M} vs $(seq ...)
-# A: The {N..M} sequence expression is faster but both are real fast
+# Q: Bash {1..N} vs $(seq N) vs POSIX i++
+# A: The {1..N} and $(seq N) are very fast.
 #
-# real    0m0.003s $(seq ...)
-# real    0m0.006s {N..M}
+# t1 real    0m0.003s for i in {N..M}
+# t2 real    0m0.007s for i in $(seq ...)
+# t3 real    0m0.017s for [ $i -le $max ] ... i++
 
-FILE: t-trim-whitespace.sh
+FILE: t-string-trim-whitespace.sh
 #! /bin/bash
 #
-# Q: Trim whitepace using Bash only vs sed(1)
-# A: Bash is much faster; especially even with nameref
+# Q: Trim whitepace using Bash RE vs sed(1)
+# A: Bash is much faster; especially with fn() name ref
 #
-# real    0m0.497s sed
-# real    0m0.158s Bash
+# t2 real    0m0.025s Bash fn() RE, name ref
+# t2 real    0m0.107s Bash fn() RE
+# t1 real    0m0.440s echo | sed RE
+#
+# Code:
+#
+# t1 var=$(echo .. | sed <trim>)    # external call
+# t2 var=$(bashTrim)                # fn() return by value
+# t2 BashTrom var                   # fn() use name ref
 

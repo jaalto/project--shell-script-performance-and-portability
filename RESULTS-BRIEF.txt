@@ -41,39 +41,39 @@ FILE: t-file-newest-in-dir.sh
 # A: find + awk is tad faster but more complex. Use find + filters.
 
 FILE: t-file-pipe-vs-process-substitution.sh
-# Q: Is there pipe slower than process substitution?
-# A: No different. Pipes are efficient.
+# Q: Would pipe be slower than using process substitution?
+# A: No real difference. Pipes are efficient.
 
 FILE: t-file-read-cat-vs-bash.sh
-# Q: How much is $(< FILE) faster than $(cat FILE)?
-# A: bash $(< FILE) is about 2x faster
+# Q: Is Bash $(< FILE) faster than $(cat FILE)?
+# A: The $(< FILE) is about 2x faster for small files
 
 FILE: t-file-read-content-loop.sh
-# Q: Fastest to process lines: 'while read < FILE' or readarray
-# A: readarray with 'for' is the fastest
+# Q: Fastest way to process lines: 'while read < FILE' vs readarray
+# A: readarray with 'for' loop is the fastest
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
-# Q: find lines. Will grep hep before loop?
+# Q: Will prefilter grep + loop help compared to straight loop?
 # A: Yes, using external grep + loop is 2x faster
 
 FILE: t-file-read-shell-result.sh
-# Q: Which one is faster: just $() or saving content to file and then reading file?
-# A: The $() is faster than using a temporary file
+# Q: Is capturing var=$() faster or using temporary file for outpur?
+# A: The var=$() is 2x faster than using a temporary file
 
 FILE: t-file-read-with-size-check.sh
-# Q: Is "test -s" for size useful before reading a file?
-# A: yes, much faster that way
+# Q: Is "test -s" for size useful before reading the file content?
+# A: yes, much faster to check [ -s file ] before reading.
 
 FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
-# A: wc -c; or stat() but not POSIX.
+# A: GNU wc -c. Or stat() but it is not in POSIX (not portable)
 
 FILE: t-lib.sh
 FILE: t-loop-seq-vs-seq-expr.sh
-# Q: Bash seq expr {N..M} vs $(seq ...)
-# A: The {N..M} sequence expression is faster but both are real fast
+# Q: Bash {1..N} vs $(seq N) vs POSIX i++
+# A: The {1..N} and $(seq N) are very fast.
 
-FILE: t-trim-whitespace.sh
-# Q: Trim whitepace using Bash only vs sed(1)
-# A: Bash is much faster; especially even with nameref
+FILE: t-string-trim-whitespace.sh
+# Q: Trim whitepace using Bash RE vs sed(1)
+# A: Bash is much faster; especially with fn() name ref
 
