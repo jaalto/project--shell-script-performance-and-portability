@@ -20,13 +20,12 @@
 
 . ./t-lib.sh ; f=$random_file
 
-re='12'
-loop_max=${loop_max:-100}
+re=${re:-'12'}
 
 t1pure ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         i=$((i + 1))
         LANG=C grep --quiet --fixed-strings "$re" $f
@@ -36,7 +35,7 @@ t1pure ()
 t1utf8 ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         i=$((i + 1))
         LANG=C.UTF-8 grep --quiet --fixed-strings "$re" $f
@@ -46,7 +45,7 @@ t1utf8 ()
 t1 ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         grep --quiet --extended-regexp "$re" $f
     done
@@ -55,7 +54,7 @@ t1 ()
 t1extended ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         LANG=C grep --quiet --extended-regexp "$re" $f
     done
@@ -64,7 +63,7 @@ t1extended ()
 t1perl ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         LANG=C grep --quiet --perl-regexp "$re" $f
     done
@@ -73,7 +72,7 @@ t1perl ()
 t2icasef ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         grep --quiet --fixed-strings --ignore-case "$re" $f
     done
@@ -82,7 +81,7 @@ t2icasef ()
 t2icasee ()
 {
     i=1
-    while [ "$i" -le 100 ]
+    while [ $i -le $loop_max ]
     do
         grep --quiet --extended-regexp --ignore-case "$re" $f
     done
@@ -107,13 +106,6 @@ t_parallel3 ()
     # Suprisingly file size (10 000) was enough to benefit parallel
 
     parallel --pipe --max-replace-args 1k grep --quiet --fixed-strings "$re" < $f
-}
-
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
 }
 
 t t1pure
