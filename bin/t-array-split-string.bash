@@ -25,7 +25,7 @@ t1 ()
         i=$((i + 1))
         # Slow, because internally uses temporary file to store STRING.
         IFS=', ' read -ra array <<< "$string"
-        i=${array[0]}
+        item=${array[0]}
     done
 }
 
@@ -36,7 +36,7 @@ t2 ()
     do
         i=$((i + 1))
         IFS=', ' eval 'array=($string)'
-        i=${array[0]}
+        item=${array[0]}
     done
 }
 
