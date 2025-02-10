@@ -19,6 +19,8 @@ CODE NOTES
 
     Coding Style
 
+    - Use readable --long options everywhere.
+
     - Allman for these:
 
 	fn ()
