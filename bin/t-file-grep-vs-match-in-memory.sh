@@ -1,24 +1,37 @@
 #! /bin/bash
 #
-# Q: To check match in file: read vs grep?
-# A: much faster to read file to memory and do a match
-#
-# NOTE: this is only for brief checks Not a
-# substitute for real regular expressions.
+# Q: To check file for a match: read vs grep(1)?
+# A: It is much faster to read file into memory for matching
 #
 # t1 real   0m0.183s read + case (inline)
 # t2 real   0m0.184s read + bash regexp (separate file calls)
-# t3 real   0m0.008s read + bash regexp (one file + loop match)
-# t4 real   0m0.396s grep
+# t3 real   0m0.008s read + bash regexp (read file once + loop match)
+# t4 real   0m0.396s external grep(1)
+#
+# Code:
+#
+# Notes
+#
+# Only for brief checks. Not a substitute for real
+# regular expressions.
 
-. ./t-lib.sh ; f=$random_file
+. ./t-lib.sh ; rand=$random_file
 
-tmp=t.tmp
-string=abc
+f=$rand.t.tmp
+STRING=abc
 
-{ echo "$string $string" ; cat $f; } > $tmp
+AtExit ()
+{
+    [ "$f" ] || return 0
+    rm --force "$f"
+}
 
-f=$tmp
+Setup ()
+{
+    { echo "$STRING $STRING" ; cat $rand; } > $f
+}
+
+
 
 Read ()
 {
@@ -94,11 +107,12 @@ t ()
     echo
 }
 
+trap AtExit EXIT HUP INT QUIT TERM
+
+Setup
 t t1
 t t2
 t t3
 t t4
-
-rm -f $tmp
 
 # End of file
