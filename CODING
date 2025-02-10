@@ -1,0 +1,47 @@
+CODE NOTES
+
+    In case, you contribute more tests.
+
+    Files:
+
+    - Readable shebang with space "#! <interpreter>"
+    - All test files start with prefix "t-" for short.
+    - Files ending to *.bash are specific to Bash.
+    - Files ending to *.sh can be run under POSIX
+      compliant shells.
+
+    Variables and Linting:
+
+    - Variables are *not* "$quoted" for simplicity.
+    - shellcheck(1) is deliberately not used
+      because files are intended to be as straightforward
+      as possible. Ref: <https://www.shellcheck.net>.
+
+    Coding Style
+
+    - Allman for these:
+
+	fn ()
+	{
+	    ...
+	}
+
+	for <test>
+	do
+	    ...
+	done
+
+	case "$var" in
+	    glob) ...
+		  ;;
+	    glob) ...
+		  ;;
+	fi
+
+    - K&R for placing 'then' in short conditionals:
+
+	if <cmd>; then
+	    ...
+	fi
+
+End of file
