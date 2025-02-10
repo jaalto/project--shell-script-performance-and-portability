@@ -30,31 +30,35 @@ RandomWordsDictionary ()
     if [ ! -e /usr/share/dict/words ]; then
         Die "ERROR: missing word dict. Debian: apt-get install wamerican"
     else
-        shuf --head-count=20000 /usr/share/dict/words |
+        shuf --head-count=200000 /usr/share/dict/words |
         awk '
-        {
-            if (length(line) + length($0) + 1 <= 80)
+            BEGIN {
+                total_size = 0;
+            }
+
             {
-                if (length(line) > 0)
-                    line = line " " $0
+                if (length(line) + length($0) + 1 <= 80)
+                {
+                    if (length(line) > 0)
+                        line = line " " $0;
+                    else
+                        line = $0;
+                }
                 else
-                    line = $0
-            } else
-            {
-                print line
-                line = $0
+                {
+                    print line;
+                    total_size += length(line) + 1;
+                    line = $0;
+                }
             }
 
-            if (length(line) >= 80) {
-                print line
-                line = ""
-            }
-        }
-
-        END {
-            if (line)
-                print line
-        }' |
+            END {
+                if (length(line) > 0)
+                {
+                    print line;
+                    total_size += length(line) + 1;
+                }
+            }' |
         head --bytes=${1:-100k}
     fi
 }
