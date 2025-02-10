@@ -1,38 +1,44 @@
 #! /bin/bash
 #
-# Q: Which one is faster: just $() or saving content to file and then reading file?
-# A: The $() is faster than using a temporary file
+# Q: Is capturing var=$() faster or using temporary file for outpur?
+# A: The var=$() is 2x faster than using a temporary file
 #
-# real    0m0.428s val=$(shell)
-# real    0m0.899s shell > file; val=$(< file)
+# t1 real    0m0.428s val=$(cmd)
+# t2 real    0m0.899s cmd > file; val=$(< file)
 
 . ./t-lib.sh ; f=$random_file
 
-tmp=t.tmp
+tmp=t.$$.tmp
+
+AtExit ()
+{
+    [ -f "$tmp" ] || return 0
+
+    rm --force "$tmp"
+}
 
 t1 ()
 {
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         count=$(grep --count --fixed-strings "12" $f)
     done
 }
 
 t2 ()
 {
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         grep --count --fixed-strings "12" $f > $tmp
-        local count=$(< $tmp)
+        count=$(< $tmp)
     done
 }
 
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
-}
+trap AtExit EXIT HUP INT QUIT TERM
 
 t t1
 t t2
