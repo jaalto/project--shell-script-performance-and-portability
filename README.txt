@@ -1,19 +1,61 @@
-DESCRIPTION
+README: Shell script performace tests
+---------------------------------------------
 
-    Some Bash/sh scripting performance tests.
+How to write faster shell scripts?
 
-    Tests to check if some way would be
-    better than the other.
+That's the question these tests try to answer:
+see the RESULTS file.
 
-    Run from currect directory:
+This project includes tests to determine the
+most efficient way to write shell script code.
 
-	./<script>.sh
+Please do not rely on raw result times, as
+they reflect the system used. Instead, compare
+the relative order in which each test case
+yielded the fastest results.
 
-    WARNING: not designed to work corrctly with:
+The file structure:
 
-	bash ~/path/to/<script>.sh
+    bin/            The tests
+    RESULTS         Generated; run "make doc"
 
-GENERAL PERFORMANCE TIPS
+Important files
+
+    COPYING         GPL-2-or-later
+    INSTALL         Install instructions
+
+Project details
+
+    Homepage
+        https://github.com/jaalto/project--shell-programming-performace
+
+    To report bugs
+        See above
+
+    Source code repository
+        See above
+
+    Depends
+        Bash and POSIX shell.
+
+    Optional Depends
+        make (any version). Used only
+        for toplevel calls and to
+        generate documentation easily.
+
+Copyright
+
+    Copyright (C) 2024-2025 Jari Aalto
+
+License
+
+    This program is free software; you can
+    redistribute and/or modify program under the
+    terms of GNU General Public license either
+    version 2 of the License, or (at your option)
+    any later version.
+
+General performance tips
 
     - Avoid extra processes at all costs. Use
       buitins. Use arrays in for loops. Use
@@ -36,59 +78,15 @@ GENERAL PERFORMANCE TIPS
       Much faster than filtering lines
       inside loop (contine, or if...fi).
 
-NOTES
+RANDOM NOTES
 
-    See bash(1) manual for dislaying 'time' command
-    results:
+    See bash(1) manual how to use 'time' command
+    to display results in different formats:
 
-	TIMEFORMAT='real: %R'  # '%R %U %S'
+        TIMEFORMAT='real: %R'  # '%R %U %S'
 
-    You could drop kernel cache before testing:
+    You could also drop kernel cache before testing:
 
-	echo 3 > /proc/sys/vm/drop_caches
+        echo 3 > /proc/sys/vm/drop_caches
 
-CODE NOTES
-
-    Files:
-
-    - Readable shebang with space "#! <interpreter>"
-    - All test files start with prefix "t-" for short.
-    - Files ending to *.bash are specific to Bash.
-    - Files ending to *.sh can be run under POSIX
-      compliant shells.
-
-    Variables and Linting:
-
-    - Variables are *not* "$quoted" for simplicity.
-    - shellcheck(1) is deliberately not used
-      because files are intended to be as straightforward
-      as possible. Ref: <https://www.shellcheck.net>.
-
-    Coding Style
-
-    - Allman for these:
-
-	fn ()
-	{
-	    ...
-	}
-
-	for <test>
-	do
-	    ...
-	done
-
-	case "$var" in
-	    glob) ...
-		  ;;
-	    glob) ...
-		  ;;
-	fi
-
-    - K&R for placing 'then' in short conditionals:
-
-	if <cmd>; then
-	    ...
-	fi
-
-END OF FILE
+End of file
