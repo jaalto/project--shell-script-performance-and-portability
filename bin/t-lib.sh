@@ -13,6 +13,52 @@ random_file_count=${random_file_count:-10000}
 
 # For test loops
 
+RandomWordsGibberish ()
+{
+    # - File SIZE containing Random words.
+    # - Limit output to column 80.
+    # - Separate words by spaces.
+
+    base64 --decode /dev/urandom |
+        tr --complement --delete 'a-zA-Z0-9 ' |
+        fold --width=80 |
+        head --bytes="${1:-100k}"
+}
+
+RandomWordsDictionary ()
+{
+    if [ ! -e /usr/share/dict/words ]; then
+        Die "ERROR: missing word dict. Debian: apt-get install wamerican"
+    else
+        shuf --head-count=20000 /usr/share/dict/words |
+        awk '
+        {
+            if (length(line) + length($0) + 1 <= 80)
+            {
+                if (length(line) > 0)
+                    line = line " " $0
+                else
+                    line = $0
+            } else
+            {
+                print line
+                line = $0
+            }
+
+            if (length(line) >= 80) {
+                print line
+                line = ""
+            }
+        }
+
+        END {
+            if (line)
+                print line
+        }' |
+        head --bytes=${1:-100k}
+    fi
+}
+
 RandomNumbersAwk ()
 {
     awk 'BEGIN {
@@ -53,30 +99,20 @@ Verbose ()
 
 t () # Run test
 {
-    _info="# %s"
+    if [ "$BASH_VERSION" ]; then
+        _TIMEFORMAT=$TIMEFORMAT # save
 
-    local _bash
-    [ "$BASH_VERSION" ] && _bash="bash"
-
-
-    _TIMEFORMAT=$TIMEFORMAT # save
-
-    if [ "$_bash" ]; then
         TIMEFORMAT="real %3R  user %3U  sys %3S"
-        _info="# %-15s"
-    fi
 
-    printf "$_info" "$1"
+        printf "# %-15s" "$1"
+        time "$@"
 
-    time "$@"
-
-    if [ "$_bash" ]; then
         TIMEFORMAT=$_TIMEFORMAT  # restore
     else
+        printf "# $1"
+        (time date) 2>&1 | paste -sd " "
         echo
     fi
-
-    unset _info _bash
 }
 
 # AWK is fastest
