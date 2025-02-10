@@ -14,6 +14,9 @@
 # t2icasef   real    0m0.394s LANG=C --fixed-strings --ignore-case
 # t2icasee   real    0m0.419s LANG=C --extended-regexp --ignore-case
 #
+# GNU parallel(1). Split file into chunks and run grep(1) in parallel
+# for each chunk.
+#
 # t_parallel1 real  0m0.226s <defaults>
 # t_parallel2 real  0m0.653s --block-size 1k
 # t_parallel3 real  0m0.300s -N 1k (grep instance for every 1k lines)
