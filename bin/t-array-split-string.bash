@@ -3,8 +3,14 @@
 # Q: split string into array: read vs eval?
 # A: eval is 5x faster
 #
-# real    0m0.025s read -ra
-# real    0m0.005s eval     (!)
+# t1 real    0m0.025s read -ra
+# t2 real    0m0.005s eval     (!)
+#
+# Code:
+#
+# string=$(echo {1..100})
+# read -ra array <<< "$string"  # t1
+# eval 'array=($string)'        # t2
 
 . ./t-lib.sh ; f=$random_file
 
