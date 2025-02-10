@@ -7,32 +7,23 @@ PROGRAM=${0##*/}
 Result ()
 {
     awk '
-        BEGIN {
-
-        }
-
         BEGINFILE {
             delete arr
             count=0
         }
 
-        /^#[[:space:]]+[QA]: / {
-            if (!count)
-                printf("-- %s\n", FILENAME)
-
-            sub("^# ", "")
-            print
-            count++
+        /^#!/, /^$/ {
+            arr[count++] = $0
         }
 
         ENDFILE {
+            printf("FILE: %s\n", FILENAME)
+
             # After each file, separate next files by newline
             # Skip first file.
 
-            if (!newline)
-                newline = 1
-            else
-                print ""
+            for (i = 0; i < count; i++)
+                print arr[i]
         }
 
 
