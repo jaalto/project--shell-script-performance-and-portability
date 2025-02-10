@@ -1,38 +1,44 @@
 #! /bin/bash
 #
-# Q: Bash seq expr {N..M} vs $(seq ...)
-# A: The {N..M} sequence expression is faster but both are real fast
+# Q: Bash {1..N} vs $(seq N) vs POSIX i++
+# A: The {1..N} and $(seq N) are very fast.
 #
-# real    0m0.003s $(seq ...)
-# real    0m0.006s {N..M}
+# t1 real    0m0.003s for i in {N..M}
+# t2 real    0m0.007s for i in $(seq ...)
+# t3 real    0m0.017s for [ $i -le $max ] ... i++
 
-# . ./t-lib.sh ; f=$random_file
-# tmp=t.tmp
+. ./t-lib.sh ; f=$random_file
+
+loop_max=${loop_count:-1000}
 
 t1 ()
 {
-    for i in {1..1000}
+    for i in {1..1000}  # Cannot parametrisize
     do
-        i=$i
+        item=$i
     done
 }
 
 t2 ()
 {
-    for i in $(seq 1000)
+    for i in $(seq $loop_max)
     do
-        i=$i
+        itemp=$i
     done
 }
 
-t ()
+t3 ()
 {
-    echo -n "# $1"
-    time $1
-    echo
+    i=1
+    while [ $i -le $loop_max ]
+    do
+        i=$((i + 1))
+        item=$i
+    done
 }
 
 t t1
 t t2
+t t3
 
 # End of file
