@@ -4,7 +4,7 @@
 .PHONY: all
 all:
 	cd bin && \
-	../results.sh
+	../results.sh t-*
 
 run:
 	cd bin && \
