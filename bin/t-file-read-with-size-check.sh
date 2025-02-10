@@ -1,40 +1,49 @@
 #! /bin/bash
 #
-# Q: Is "test -s" for size useful before reading a file?
-# A: yes, much faster that way
+# Q: Is "test -s" for size useful before reading the file content?
+# A: yes, much faster to check [ -s file ] before reading.
 #
-# real    0m0.103s $(< file)
-# real    0m0.002s [ -s file] && $(< file)
+# real    0m0.105s $(< file)
+# real    0m0.006s [ -s file] && $(< file)
 
-f=t.empty
+. ./t-lib.sh ; f=$random_file
+
+# local test
+f=t.$$.tmp
 : > $f
+
+AtExit ()
+{
+    [ -f "$tmp" ] || return 0
+
+    rm --force "$tmp"
+}
 
 t1 ()
 {
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         val=$(< $f)
     done
 }
 
 t2 ()
 {
-    for i in {1..100}
+    i=1
+    while [ $i -le $loop_max ]
     do
+        i=$((i + 1))
         [ -s $f ] && val=$(< $f)
     done
 }
 
-t ()
-{
-    echo -n "# $1"
-    time $1
-    echo
-}
+trap AtExit EXIT HUP INT QUIT TERM
+
+echo "1" > $tmp
 
 t t1
 t t2
-
-rm -f $f
 
 # End of file
