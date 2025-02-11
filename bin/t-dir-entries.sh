@@ -1,33 +1,28 @@
 #! /bin/bash
 #
-# Q: What is the fastest way to get list of directories?
-# A: In general, the for-loop. ls(1) is only faster with 100 directories
-#
-# for 100 directories:
-#
-# real    0m0.012s ls -ld */
-# real    0m0.015s for-loop
+# Q: Fastest to get list of dirs: for vs compgen vs ls -d
+# A: In general, simple ls(1) will do fine. No big differences.
 #
 # for 20 directories:
 #
-# real    0m0.004s for-loop
-# real    0m0.008s ls -d */
+# t3 real    0m0.003s compgen -G */
+# t1 real    0m0.001s for-loop
+# t2 real    0m0.004s ls -d */
 #
-# TESTING NOTES
+# for 100 directories:
+#
+# t1 real    0m0.012s compgen -G */
+# t2 real    0m0.015s for-loop
+# t3 real    0m0.010s ls -d */
+#
+# notes
 #
 # Because the OS caches files and directories, you have to
-# manually modify this file between the tests:
+# manually run tests:
 #
-# Manually adjust the number of directories to create in
-# Setup(). The default is typical 20 directries.
-#
-# T1:
-# - Comment out test t2
-# - Run t1
-#
-# T2:
-# - Comment out t1
-# - Run t2
+#     max_dirs=20 ./t-dir-entries.sh t1
+#     max_dirs=20 ./t-dir-entries.sh t2
+#     max_dirs=20 ./t-dir-entries.sh t3
 
 # We don't use ${TMPDIR:-/tmp}
 # because that may be on fast tempfs
@@ -43,9 +38,8 @@ Setup ()
 
     for i in $(seq $max_dirs)
     do
-        [ $i -lt 10 ] && i="0$i"  # 01, 02, ...
-
-        mkdir "$tmpdir/$i"
+        item=$(printf "%03d" $i)
+        mkdir "$tmpdir/$item"
     done
 }
 
@@ -58,8 +52,12 @@ AtExit ()
 
 t1 ()
 {
-    ls -d -- $tmpdir/*/ > /dev/null
+    pwd=$PWD
+    cd $tmpdir
+    compgen -A directory > /dev/null
+    cd $pwd
 }
+
 
 t2 ()
 {
@@ -67,14 +65,25 @@ t2 ()
 
     for dir in $tmpdir/*/
     do
-        list="$list ${dir%/}"
+        list="$list $dir"
     done
+}
+
+
+t3 ()
+{
+    ls -d -- $tmpdir/*/ > /dev/null
 }
 
 trap AtExit EXIT HUP INT QUIT TERM
 Setup
 
-t t1
-#t t2
+if [ ! "$1" ]; then
+    t t1
+    t t2
+    t t3
+else
+    t "$1"
+fi
 
 # End of file
