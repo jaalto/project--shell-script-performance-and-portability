@@ -8,7 +8,7 @@ USAGE
 
         make run
 
-    To run single tests and display commentary:
+    To run test and display commentary:
 
         cd bin/
         ./run.sh <test>.sh ...
