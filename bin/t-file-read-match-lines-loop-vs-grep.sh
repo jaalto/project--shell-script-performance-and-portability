@@ -17,11 +17,16 @@
 #
 # Notes:
 #
-# The file contents is kept in Kernel cache. If
-# run order "t1a t1b" is reversed to "t1b t1a",
-# the FIRST one will always appear to be clock
-# faster which probably is not the case. They are
-# equal due to cache.
+# The practical winner in scripts is the
+# '<(proc)' due to variables being visible in the same
+# scope. The "grep | while" would create a subshell
+# and release the variables after the for-loop.
+#
+# The file contents are kept in the Kernel cache. If
+# the run order "t1a t1b" is reversed to "t1b t1a",
+# the FIRST one will always appear to be clocked
+# faster, which is probably not the case. They are
+# equal due to the cache.
 
 . ./t-lib.sh ; f=$random_file
 
