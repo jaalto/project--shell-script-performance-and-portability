@@ -42,39 +42,31 @@ Project details
         make (any version). Used as
         a frontend to call utilities.
 
-Copyright
-
-    Copyright (C) 2024-2025 Jari Aalto
-
-License
-
-    This program is free software; you can
-    redistribute and/or modify program under the
-    terms of GNU General Public license either
-    version 2 of the License, or (at your option)
-    any later version.
-
 General performance tips
 
-    - Avoid extra processes at all costs. Use
-      buitins. Use arrays in for loops. Use
-      name refs (Bash) to return value from
+    - Avoid extra processes at all costs.
+
+    - Use buitins.
+
+    - Use name refs (Bash) to return value from
       functions.
 
-    - If you can, read file into memory as a
+
+    - In general, read file into memory as a
       STRING and use bash regexp tests on STRING.
-      This is much faster than calling grep(1).
+      This is much faster than calling external
+      grep(1).
 
-    - For line-to-line handling, Read file
-      once into an bash array and
-      then loop array (in memory).
+    - For line-to-line handling, read file
+      into an array and then loop the array.
 
-      It's faster than doing:
+      It will be faster than doing:
       "while read ... done < FILE".
 
-    - Use prefilter grep as in:
+    - To process only certain lines,
+      use prefilter grep as in:
          "grep ... | while read -r ...done".
-      Much faster than filtering lines
+      Much faster than excluding or picking lines
       inside loop (contine, or if...fi).
 
 RANDOM NOTES
@@ -87,5 +79,17 @@ RANDOM NOTES
     You could also drop kernel cache before testing:
 
         echo 3 > /proc/sys/vm/drop_caches
+
+Copyright
+
+    Copyright (C) 2024-2025 Jari Aalto
+
+License
+
+    This program is free software; you can
+    redistribute and/or modify program under the
+    terms of GNU General Public license either
+    version 2 of the License, or (at your option)
+    any later version.
 
 End of file
