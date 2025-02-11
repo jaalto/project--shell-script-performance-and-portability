@@ -3,16 +3,16 @@
 # Q: Fastest way to process lines: 'while read < FILE' vs readarray
 # A: readarray with 'for' loop is the fastest
 #
-# t1  real       0m0.037s t1  mapfile
-# t2a real       0m0.033s t2a readarray + for
-# t2b real       0m0.081s t2b readarray + for ((i++))  (!)
+# t1a real       0m0.033s t2a readarray + for
+# t1b real       0m0.081s t2b readarray + for ((i++))
+# t2  real       0m0.037s t1  mapfile
 # t3  real       0m0.103s t3  while read < file
 #
 # Code:
 #
-#  mapfile -t array < file ; for <array> ...        # t1
-#  readarray -t array < $f ; for i in <array> ...   # t2a
-#  readarray -t array < $f ; for ((i... <array> ... # t2b
+#  readarray -t array < file ; for i in <array> ...   # t1a
+#  readarray -t array < file ; for ((i... <array> ... # t1b
+#  mapfile -t array < file   ; for <array> ...        # t2
 #  while read ... done < file                       # t3
 #
 # Notes:
@@ -21,20 +21,7 @@
 
 . ./t-lib.sh ; f=$random_file
 
-t1 ()
-{
-    local -a array
-    array=()
-
-    mapfile -t array < $f
-
-    for i in "${array[@]}"
-    do
-        i=$i
-    done
-}
-
-t2a ()
+t1a ()
 {
     local -a array
     array=()
@@ -49,7 +36,7 @@ t2a ()
     done
 }
 
-t2b ()
+t1b ()
 {
     local -a array
     array=()
@@ -61,6 +48,19 @@ t2b ()
     for ((i = 0; i < ${#array[@]}; i++))
     do
         item=${array[i]}
+    done
+}
+
+t2 ()
+{
+    local -a array
+    array=()
+
+    mapfile -t array < $f
+
+    for i in "${array[@]}"
+    do
+        i=$i
     done
 }
 
