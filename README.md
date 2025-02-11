@@ -1,6 +1,6 @@
 # SHELL SCRIPT PERFORMANCE TESTS
 
-How to write faster shell scripts?
+How to write faster and optimized shell scripts?
 
 That's the question these tests try to answer.
 See the rsults:
