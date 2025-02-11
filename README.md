@@ -44,7 +44,7 @@ INSTALL   Install instructions
   `make` (any version). Used as
   a frontend to call utilities.
 
-# GENERAL PERFORMANCE TIPS
+# MAJOR PERFORMANCE GAINS
 
 - Avoid extra processes at all costs.
 
@@ -59,8 +59,11 @@ INSTALL   Install instructions
   external `grep(1)`.
 
 - For line-to-line handling, read file
-  into an array and then loop the array.
-  It will be much faster than doing:
+  into an array and then loop the array:
+
+  `readarray -t array < file ; for i in "${array[@]}" ...`
+
+  The previous is much faster than doing:
 
   `while read ... done < FILE`.
 
@@ -72,6 +75,53 @@ INSTALL   Install instructions
   That will be much faster than excluding or
   picking lines inside loop with `contine` or
   `if...fi`.
+
+# MINOR PERFORMANCE GAINS
+
+TODO
+
+# NEGLIGIBLE OR NO PERFORMANCE GAINS
+
+According to the tests, there is not really a
+difference between the following examples. See
+the raw test results for details and further
+commentary.
+
+- The Bash specific `[[ ]]` might offer
+  a tad minuscle advantage.
+
+```
+    [ "$var" = "1" ] # POSIX
+    [[ $var = 1 ]]   # Bash
+
+    [ ! "$var" ]     # POSIX
+    [[ ! $var ]]     # Bash
+    [ -z "$var" ]    # archaic
+```
+
+- There are no differences between these:
+
+```
+    : $((i++))       # POSIX
+    i=$((i + 1))     # POSIX
+    ((i++))          # Bash
+    let i++          # Bash
+```
+
+- The Bash-specific `{1..N}` might offer a
+  minuscule advantage, but it's impractical
+  because `N` cannot be parameterized.
+  Surprisingly, a simple and elegant winner by a
+  hair is `$(seq N)`. The POSIX `while`-loop
+  variant was slightly slower in all subsequent
+  tests.
+
+```
+    for i in {1..$N} ...
+    for i in $(seq $N) ...
+    for ((i=0; i < $N; i++)) ...
+    while [ "$i" -le "$N" ]; do ... i=$((i + 1)) .. done
+```
 
 # RANDOM NOTES
 
