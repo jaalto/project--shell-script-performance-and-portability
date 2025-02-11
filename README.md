@@ -62,7 +62,8 @@ INSTALL   Install instructions
   into an array and then loop the array.
 
   It will be much faster than doing:
-  `while read ... done < FILE'.
+
+  `while read ... done < FILE`.
 
 - To process only certain lines,
   use prefilter grep as in:
