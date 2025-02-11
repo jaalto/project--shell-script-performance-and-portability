@@ -1,10 +1,6 @@
-FILE: t-array-split-string.bash
-# Q: split string into array: read vs eval?
-# A: eval is 5x faster
-
-FILE: t-call-function-and-return-value.bash
-# Q: Bash name ref to return values vs val=$(funcall)
-# A: name ref is about 40x faster
+FILE: t-array-split-string.sh
+# Q: split string into an array: read vs eval?
+# A: eval is 2x faster
 
 FILE: t-command-grep.sh
 # Q: In grep, is --fixed-strings faster?
@@ -68,11 +64,11 @@ FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
 # A: GNU wc -c. Or stat() but it is not in POSIX (not portable)
 
-FILE: t-lib.sh
-FILE: t-statement-arithmetic-comparison.sh
-# Q: POSIX [ a -gt b ] vs Bash [[ a -gt b ]] and (( a > b ))
-# A: No noticeable difference
+FILE: t-function-and-return-value.sh
+# Q: Bash name ref to return values vs val=$(funcall)
+# A: name ref is about 40x faster
 
+FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
 # Q: for-loop: ((...)) vs {1..N} vs $(seq N) vs POSIX i++
 # A: The {1..N} and $(seq N) are very fast.

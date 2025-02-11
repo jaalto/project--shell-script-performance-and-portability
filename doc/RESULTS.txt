@@ -1,31 +1,23 @@
-FILE: t-array-split-string.bash
+FILE: t-array-split-string.sh
 #! /bin/bash
 #
-# Q: split string into array: read vs eval?
-# A: eval is 5x faster
+# Q: split string into an array: read vs eval?
+# A: eval is 2x faster
 #
-# t1 real    0m0.025s read -ra
-# t2 real    0m0.005s eval     (!)
+# t1 real    0m0.012s eval
+# t2 real    0m0.025s read -ra
 #
 # Code:
 #
 # string=$(echo {1..100})
 # read -ra array <<< "$string"  # t1
 # eval 'array=($string)'        # t2
-
-FILE: t-call-function-and-return-value.bash
-#! /bin/bash
 #
-# Q: Bash name ref to return values vs val=$(funcall)
-# A: name ref is about 40x faster
+# Notes:
 #
-# t1 real    0m0.089s t1 $(funcall)
-# t2 real    0m0.002s t2 funcall nameref
-#
-# Code:
-#
-# fn(): return "echo <value>"     # t1
-# fn(): return using local -n var # t2
+# The reason is probably that `<<<` uses a
+# temporary file, whereas `eval` operates
+# entirely in memory.
 
 FILE: t-command-grep.sh
 #! /bin/bash
@@ -255,7 +247,7 @@ FILE: t-file-read-content-loop.sh
 #  mapfile -t array < file   ; for <array> ...        # t1
 #  readarray -t array < file ; for i in <array> ...   # t2a
 #  readarray -t array < file ; for ((i... <array> ... # t2b
-#  while read ... done < file                       # t3
+#  while read ... done < file                         # t3
 #
 # Notes:
 #
@@ -321,17 +313,21 @@ FILE: t-file-size-info.sh
 # t2 real    0m0.360s wc -l file; GNU version efectively like stat()
 # t3 real    0m0.461s ls -l + awk
 
-FILE: t-lib.sh
-FILE: t-statement-arithmetic-comparison.sh
+FILE: t-function-and-return-value.sh
 #! /bin/bash
 #
-# Q: POSIX [ a -gt b ] vs Bash [[ a -gt b ]] and (( a > b ))
-# A: No noticeable difference
+# Q: Bash name ref to return values vs val=$(funcall)
+# A: name ref is about 40x faster
 #
-# t1     real    0m0.005s [ a -gt b ]
-# t2     real    0m0.005s [[ a -gt b ]]
-# t3     real    0m0.005s (( a > b ))
+# t1 real    0m0.089s t1 $(funcall)
+# t2 real    0m0.002s t2 funcall nameref
+#
+# Code:
+#
+# fn(): return "echo <value>"     # t1
+# fn(): return using local -n var # t2
 
+FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
 #! /bin/bash
 #
@@ -362,10 +358,10 @@ FILE: t-statement-arithmetic-increment.sh
 # Q: POSIX 'i=$((i + 1))' vs ((i++)) vs let i++ etc.
 # A: No noticeable difference
 #
-# t1     real    0m0.005s ((i++))
-# t2     real    0m0.005s let i++
-# t3     real    0m0.007s : $((i++))
-# t4     real    0m0.007s i=$((i + 1))
+# t1     real    0m0.005s ((i++))      Bash
+# t2     real    0m0.005s let i++      Bash
+# t3     real    0m0.007s : $((i++))   POSIX
+# t4     real    0m0.007s i=$((i + 1)) POSIX
 
 FILE: t-statement-statement-if-test-posix-vs-bash.sh
 #! /bin/bash
