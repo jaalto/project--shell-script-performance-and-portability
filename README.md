@@ -48,10 +48,8 @@ INSTALL   Install instructions
 
 - Avoid extra processes at all costs:
 
-```
-    cmd | head .. | ... | cut ...
-    cmd | grep ... | sed ...
-```
+  `cmd | head .. | ... | cut ...`
+  `cmd | grep ... | sed ...`
 
   Instead, a single `awk` probably handles
   all of the above. The `awk` is *very*
