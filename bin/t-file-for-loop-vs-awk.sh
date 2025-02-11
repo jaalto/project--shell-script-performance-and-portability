@@ -1,15 +1,10 @@
 #! /bin/bash
 #
-# Q: for-loop to send file-by-file to awk vs awk handling all the files?
-# A: pure awk is at least 2x faster
+# Q: for-loop file-by-file to awk vs awk handling all the files?
+# A: Doing all in awk is at least 2x faster
 #
-# t1 real    0m0.213s pure awk
-# t1 real    0m0.584s for + awk
-#
-# Code:
-#
-# awk '{...}' <file...>
-# for..do.. awk <file> .. done
+# t1 real    0m0.213s awk '{...}' <file> <file> ...
+# t1 real    0m0.584s for <files> do ... awk <file> ... done
 
 . ./t-lib.sh ; f=$random_file
 
