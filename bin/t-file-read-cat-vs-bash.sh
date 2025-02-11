@@ -8,16 +8,15 @@
 #
 # Notes:
 #
-# With big files, cat(1) is much faster:
+# With big files, they are equal.
 #
-# . t-lib.sh
-# RandomWordsDictionary 1M > t.1M
+# . ./t-lib.sh; RandomWordsDictionary 1M > t.1M
 #
-# time bash -c 'cat t.1M > /dev/null'
-# real    0m0.014s
+# time bash -c 's=$(cat t.1M); echo "$s" > /dev/null'
+# real    0m0.059s
 #
 # time bash -c 's=$(< t.1M); echo "$s" > /dev/null'
-# real  0m0.055s
+# real  0m0.056s
 
 . ./t-lib.sh ; f=$random_file
 
