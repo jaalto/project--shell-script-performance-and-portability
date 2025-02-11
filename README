@@ -42,7 +42,7 @@ Project details
         make (any version). Used as
         a frontend to call utilities.
 
-General performance tips
+GENERAL PERFORMANCE TIPS
 
     - Avoid extra processes at all costs.
 
@@ -80,11 +80,11 @@ RANDOM NOTES
 
         echo 3 > /proc/sys/vm/drop_caches
 
-Copyright
+COPYRIGHT
 
     Copyright (C) 2024-2025 Jari Aalto
 
-License
+LICENSE
 
     This program is free software; you can
     redistribute and/or modify program under the
