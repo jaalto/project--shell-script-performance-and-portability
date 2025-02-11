@@ -7,8 +7,8 @@
 # t2 real    0m0.523s   find + sort + head + cut
 # t3 real    0m0.575s   find + sort + sed
 #
-# t4 real    0m0.382s   stat (not a generic solution; see awk)
-# t5 real    0m0.330s   ls -t (not a generic solution; see awk)
+# t4 real    0m0.382s   stat (not a generic solution)
+# t5 real    0m0.330s   ls -t (not a generic solution)
 #
 # Code:
 #
