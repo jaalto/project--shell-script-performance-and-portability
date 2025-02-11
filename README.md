@@ -3,7 +3,7 @@
 How to write faster and optimized shell scripts?
 
 That's the question these tests try to answer.
-See the rsults:
+See the results:
 
 - [RESULTS](./RESULTS.txt)
 - [RESULTS-BRIEF](./RESULTS-BRIF.txt)
@@ -12,10 +12,10 @@ See the rsults:
 This project includes tests to determine the
 most efficient way to write shell script code.
 
-Please do not rely on raw result times, as
-they reflect the system used. Instead, compare
-the relative order in which each test case
-produced the fastest results.
+Consider the raw `time(1)` results only as
+guidance, as they reflect the system used.
+Instead, compare the relative order in which
+each test case produced the fastest results.
 
 ## The file structure
 
@@ -180,3 +180,6 @@ redistribute and/or modify the programs under the
 terms of GNU General Public license either
 version 2 of the License, or (at your option)
 any later version.
+
+Keywords: shell, sh, posix, bash, programming,
+optimize, performance, profiling
