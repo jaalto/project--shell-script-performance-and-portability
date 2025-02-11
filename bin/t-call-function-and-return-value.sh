@@ -21,7 +21,7 @@ f1 ()
 
 f2 ()
 {
-    local -n var  # nameref attribute, reference to variable
+    local -n var=$1  # nameref attribute, reference to variable
     var="done"
 }
 
