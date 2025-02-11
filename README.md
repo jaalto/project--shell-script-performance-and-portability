@@ -5,8 +5,8 @@ How to write faster and optimized shell scripts?
 That's the question these tests try to answer.
 See the results:
 
-- [RESULTS](./RESULTS.txt)
-- [RESULTS-BRIEF](./RESULTS-BRIF.txt)
+- [RESULTS](./doc/RESULTS.txt)
+- [RESULTS-BRIEF](./doc/RESULTS-BRIF.txt)
 - The test cases and code in [bin/](./bin/)
 
 This project includes tests to determine the
