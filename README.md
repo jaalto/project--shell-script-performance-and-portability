@@ -50,8 +50,21 @@ INSTALL   Install instructions
 
 - Use built-ins.
 
-- Use namerefs (Bash) to return value from
-  functions aka `local -n retval`.
+- in functions, use of nameref (Bash) to return value
+  is about 40x faster than `ret=$(fn)'. Use this:
+
+```
+    fn()
+    {
+	    local arg=$1
+        local -n retval
+
+	    retval="value"
+    }
+
+    ret=""
+    fn "arg" ...  # return value in 'ret'
+```
 
 - It is faster to Read file into memory as a
   STRING and use bash regexp tests on STRING.
