@@ -71,13 +71,15 @@ INSTALL   Install instructions
 ```
     fn()
     {
-        local arg=$1
-        local -n retval
-        retval="value"
+        local -n retval=$1  # VAR name where to save
+		shift               # real arguments follow
+	    local arg=$1
+
+        retval="value"      # Assigns to indirect var
     }
 
     ret=""
-    fn "arg" ...  # return value in 'ret'
+    fn ret "arg" ...  # returns stored in 'ret'
 ```
 
 - It is faster to Read file into memory as a
