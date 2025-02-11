@@ -3,24 +3,53 @@
 # Q: Will prefilter grep + loop help compared to straight loop?
 # A: Yes, using external grep + loop is 2x faster
 #
-# t1a real    0m1.063s loop: case glob
-# t1b real    0m1.059s loop: bash glob [[ ]]
-# t2  real    0m0.424s grep before loop
+# t1a real    0m0.436s grep before loop
+# t1b real    0m0.469s grep before loop (proc)
+# t2a real    0m1.105s loop: POSIX case glob
+# t2b real    0m1.127s loop: Bash glob [[ ]]
 #
 # Code:
 #
-# while read ... done < file        # t1a
-# while read ... done < file        # t1b
-# grep | while ... done             # t2
+# grep | while ... done             # t1a
+# while ... done < <(grep)          # t1b
+# while read ... done < file        # t2a
+# while read ... done < file        # t2b
 #
+# Notes:
+#
+# The file contents is kept in Kernel cache. If
+# run order "t1a t1b" is reversed to "t1b t1a",
+# the FIRST one will always appear to be clock
+# faster which probably is not the case. They are
+# equal due to cache.
 
 . ./t-lib.sh ; f=$random_file
 
 loop_max=${loop_count:-10}
 
-tmp=t.tmp
-
 t1a ()
+{
+    for i in $(seq $loop_max)
+    do
+        grep "0" $f | while read -r line
+        do
+            found=$line
+        done
+    done
+}
+
+t1b ()
+{
+    for i in $(seq $loop_max)
+    do
+        while read -r line
+        do
+            found=$line
+        done < <(grep "0" $f)
+    done
+}
+
+t2a ()
 {
     for i in $(seq $loop_max)
     do
@@ -34,7 +63,7 @@ t1a ()
     done
 }
 
-t1b ()
+t2b ()
 {
     for i in $(seq $loop_max)
     do
@@ -47,19 +76,9 @@ t1b ()
     done
 }
 
-t3 ()
-{
-    for i in $(seq $loop_max)
-    do
-        grep "0" $f | while read -r line
-        do
-            found=$line
-        done
-    done
-}
-
 t t1a
 t t1b
-t t3
+t t2a
+t t2b
 
 # End of file
