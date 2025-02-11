@@ -3,10 +3,10 @@
 # Q: POSIX 'i=$((i + 1))' vs ((i++)) vs let i++ etc.
 # A: No noticeable difference
 #
-# t1     real    0m0.005s ((i++))
-# t2     real    0m0.005s let i++
-# t3     real    0m0.007s : $((i++))
-# t4     real    0m0.007s i=$((i + 1))
+# t1     real    0m0.005s ((i++))      Bash
+# t2     real    0m0.005s let i++      Bash
+# t3     real    0m0.007s : $((i++))   POSIX
+# t4     real    0m0.007s i=$((i + 1)) POSIX
 
 . ./t-lib.sh ; f=$random_file
 
