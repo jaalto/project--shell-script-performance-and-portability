@@ -60,7 +60,6 @@ INSTALL   Install instructions
 
 - For line-to-line handling, read file
   into an array and then loop the array.
-
   It will be much faster than doing:
 
   `while read ... done < FILE`.
