@@ -15,7 +15,7 @@
 # t2 real    0m0.015s for-loop
 # t3 real    0m0.010s ls -d */
 #
-# notes
+# Notes:
 #
 # Because the OS caches files and directories, you have to
 # manually run tests:
