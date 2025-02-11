@@ -72,8 +72,8 @@ INSTALL   Install instructions
     fn()
     {
         local -n retval=$1  # VAR name where to save
-		shift               # real arguments follow
-	    local arg=$1
+        shift               # real arguments follow
+        local arg=$1
 
         retval="value"      # Assigns to indirect var
     }
