@@ -46,7 +46,16 @@ INSTALL   Install instructions
 
 # MAJOR PERFORMANCE GAINS
 
-- Avoid extra processes at all costs.
+- Avoid extra processes at all costs:
+
+  ´cmd | head .. | ... | cut ...`
+  ´cmd | grep ... | sed ...`
+
+  Instead, a single `awk` probably handles
+  all of the above. The `awk` is *very*
+  fast and efficient for any tasks:
+
+  `cmd | awk '{...}'`
 
 - Use built-ins.
 
