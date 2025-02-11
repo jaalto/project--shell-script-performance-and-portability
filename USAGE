@@ -2,20 +2,29 @@ USAGE
 
     To display results:
 
-	make
+        make show
 
     To re-run all tests:
 
-	make run
+        make run
 
-    To manually run tests:
+    To run single tests and display commentary:
 
-	./run.sh <test file> ...
+        cd bin/
+        ./run.sh <test>.sh ...
 
-    WARNING: the individual test files
-    are not designed to work corrctly in
+    For low level control:
+
+        cd bin/
+        ./<test>.sh
+
+        # to chnage loop count
+        loop_max=200 ./<test>.sh
+
+    WARNING: The individual test files
+    are not designed to work correctly with
     calls like:
 
-	bash ~/path/to/t-<file>.sh
+        bash bin/<file>.sh
 
 End of file
