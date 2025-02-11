@@ -71,10 +71,9 @@ INSTALL   Install instructions
 ```
     fn()
     {
-	    local arg=$1
+        local arg=$1
         local -n retval
-
-	    retval="value"
+        retval="value"
     }
 
     ret=""
