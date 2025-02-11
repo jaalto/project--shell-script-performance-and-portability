@@ -15,8 +15,7 @@
 #
 # Notes:
 #
-# Understandable as stat(1) would do more work by
-# opening each file found.
+# stat(1) does more work by opening each found file.
 
 . ./t-lib.sh ; f=$random_file
 
