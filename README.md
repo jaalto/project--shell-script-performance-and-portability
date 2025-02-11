@@ -75,7 +75,7 @@ INSTALL   Install instructions
 
 # RANDOM NOTES
 
-See bash(1) manual how to use 'time' command
+See bash(1) manual how to use `time` command
 to display results in different formats:
 
 ```
