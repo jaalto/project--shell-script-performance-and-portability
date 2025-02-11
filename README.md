@@ -67,7 +67,7 @@ INSTALL   Install instructions
 - To process only certain lines,
   use prefilter grep as in:
 
-  `grep ... | while read -r ...done`.
+  `while read -r ...done < <(grep)`.
 
   That will be much faster than excluding or
   picking lines inside loop with `contine` or
