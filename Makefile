@@ -20,8 +20,8 @@ all: help
 # show - Show test results
 .PHONY: show
 show:
-	cd bin && \
-	../$(BIN_DOC) t-*
+	@cd bin && \
+	./$(BIN_DOC) t-*
 
 # help - Display make targets
 .PHONY: help
@@ -41,7 +41,7 @@ help:
 .PHONY: run
 run:
 	cd bin && \
-	../$(BIN_RUN) t-*
+	./$(BIN_RUN) t-*
 
 # doc - Generate documentation
 .PHONY: doc
@@ -49,7 +49,7 @@ doc: doc-all doc-brief
 
 define doc-function
 	cd bin && \
-	../$(BIN_DOC) t-* > ../$(DOCDIR)/$(DOC)
+	./$(BIN_DOC) t-* > ../$(DOCDIR)/$(DOC)
 endef
 
 .PHONY: doc-all
@@ -68,7 +68,7 @@ doc-brief: $(DOCDIR)/$(DOC)
 clean:
 	$(RM) $(DOCDIR)/*
 
-# clean - Remove all temporary files
+# realclean - Remove all temporary files
 .PHONY: realclean
 realclean: clean
 	$(RM) bin/t.*
