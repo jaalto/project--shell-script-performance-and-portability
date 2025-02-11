@@ -1,9 +1,13 @@
-# README: Shell script performance tests
+# SHELL SCRIPT PERFORMANCE TESTS
 
 How to write faster shell scripts?
 
-That's the question these tests try to answer:
-see the `RESULTS*' files.
+That's the question these tests try to answer.
+See the rsults:
+
+- [RESULTS](./RESULTS.txt)
+- [RESULTS-BRIEF](./RESULTS-BRIF.txt)
+- The test cases and code [bin/](./bin/)
 
 This project includes tests to determine the
 most efficient way to write shell script code.
@@ -16,15 +20,10 @@ yielded the fastest results.
 ## The file structure
 
 ```
-    bin/            The tests
-    RESULTS*        Generated; run "make doc"
-```
-
-## Important files
-
-```
-    COPYING         GPL-2-or-later
-    INSTALL         Install instructions
+bin/      The tests
+RESULTS*  Generated; "make doc"
+COPYING   GPL-2-or-later
+INSTALL   Install instructions
 ```
 
 ## Project details
@@ -33,10 +32,10 @@ yielded the fastest results.
   https://github.com/jaalto/project--shell-script-performance
 
 - To report bugs:
-  See above
+  see homepage.
 
 - Source code repository:
-  See above
+  see homepage.
 
 - Depends:
   Bash and POSIX shell.
@@ -49,50 +48,54 @@ yielded the fastest results.
 
 - Avoid extra processes at all costs.
 
-- Use buitins.
+- Use built-ins.
 
-- Use name refs (Bash) to return value from
-  functions.
+- Use namerefs (Bash) to return value from
+  functions aka `local -n retval`.
 
-
-- In general, read file into memory as a
+- It is faster to Read file into memory as a
   STRING and use bash regexp tests on STRING.
-  This is much faster than calling external
-  grep(1).
+  This is much more efficient than calling
+  external `grep(1)`.
 
 - For line-to-line handling, read file
   into an array and then loop the array.
 
-  It will be faster than doing:
-  "while read ... done < FILE".
+  It will be much faster than doing:
+  `while read ... done < FILE'.
 
 - To process only certain lines,
   use prefilter grep as in:
-     "grep ... | while read -r ...done".
-  Much faster than excluding or picking lines
-  inside loop (contine, or if...fi).
+
+  `grep ... | while read -r ...done`.
+
+  That will be much faster than excluding or
+  picking lines inside loop with `contine` or
+  `if...fi`.
 
 # RANDOM NOTES
 
-    See bash(1) manual how to use 'time' command
-    to display results in different formats:
+See bash(1) manual how to use 'time' command
+to display results in different formats:
 
-        TIMEFORMAT='real: %R'  # '%R %U %S'
+```
+TIMEFORMAT='real: %R'  # '%R %U %S'
+```
 
-    You could also drop kernel cache before testing:
+You could also drop kernel cache before testing:
 
-        echo 3 > /proc/sys/vm/drop_caches
+```
+echo 3 > /proc/sys/vm/drop_caches
+```
 
 # COPYRIGHT
 
-    Copyright (C) 2024-2025 Jari Aalto
+Copyright (C) 2024-2025 Jari Aalto
 
 # LICENSE
 
-    This program is free software; you can
-    redistribute and/or modify program under the
-    terms of GNU General Public license either
-    version 2 of the License, or (at your option)
-    any later version.
-
-End of file
+These programs are free software; you can
+redistribute and/or modify the programs under the
+terms of GNU General Public license either
+version 2 of the License, or (at your option)
+any later version.
