@@ -49,8 +49,8 @@ FILE: t-file-read-cat-vs-bash.sh
 # A: The $(< FILE) is about 2x faster for small files
 
 FILE: t-file-read-content-loop.sh
-# Q: Fastest way to process lines: 'while read < FILE' vs readarray
-# A: readarray with 'for' loop is the fastest
+# Q: Fastest to process lines: readarray vs 'while read < file' ?
+# A: readarray/mapfiles+for is 2x faster than 'while read < file'
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 # Q: Will prefilter grep + loop help compared to straight loop?
@@ -69,9 +69,21 @@ FILE: t-file-size-info.sh
 # A: GNU wc -c. Or stat() but it is not in POSIX (not portable)
 
 FILE: t-lib.sh
-FILE: t-loop-seq-vs-seq-expr.sh
-# Q: for-loop: Bash {1..N} vs $(seq N) vs POSIX i++
+FILE: t-statement-arithmetic-comparison.sh
+# Q: POSIX [ a -gt b ] vs Bash [[ a -gt b ]] and (( a > b ))
+# A: No noticeable difference
+
+FILE: t-statement-arithmetic-for-loop.sh
+# Q: for-loop: ((...)) vs {1..N} vs $(seq N) vs POSIX i++
 # A: The {1..N} and $(seq N) are very fast.
+
+FILE: t-statement-arithmetic-increment.sh
+# Q: POSIX 'i=$((i + 1))' vs ((i++)) vs let i++ etc.
+# A: No noticeable difference
+
+FILE: t-statement-statement-if-test-posix-vs-bash.sh
+# Q: POSIX [ $var = 1 ] vs Bash [[ $var = 1 ]] etc
+# A: In practise, not much difference
 
 FILE: t-string-trim-whitespace.sh
 # Q: Trim whitepace using Bash RE vs sed(1)

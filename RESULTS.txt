@@ -242,24 +242,25 @@ FILE: t-file-read-cat-vs-bash.sh
 FILE: t-file-read-content-loop.sh
 #! /bin/bash
 #
-# Q: Fastest way to process lines: 'while read < FILE' vs readarray
-# A: readarray with 'for' loop is the fastest
+# Q: Fastest to process lines: readarray vs 'while read < file' ?
+# A: readarray/mapfiles+for is 2x faster than 'while read < file'
 #
-# t1  real       0m0.037s t1  mapfile
-# t2a real       0m0.033s t2a readarray + for
-# t2b real       0m0.081s t2b readarray + for ((i++))  (!)
-# t3  real       0m0.103s t3  while read < file
+# t1  real       0m0.037s t1  mapfile + for
+# t2a real       0m0.036s t2a readarray + for
+# t2b real       0m0.081s t2b readarray + for ((i++))
+# t3  real       0m0.085s t3  while read < file
 #
 # Code:
 #
-#  mapfile -t array < file ; for <array> ...        # t1
-#  readarray -t array < $f ; for i in <array> ...   # t2a
-#  readarray -t array < $f ; for ((i... <array> ... # t2b
+#  mapfile -t array < file   ; for <array> ...        # t1
+#  readarray -t array < file ; for i in <array> ...   # t2a
+#  readarray -t array < file ; for ((i... <array> ... # t2b
 #  while read ... done < file                       # t3
 #
 # Notes:
 #
-# In Bash, the readarray built-in is a synonym for mapfile.
+# In Bash, the readarray built-in is a synonym for mapfile,
+# so they should behave equally.
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /bin/bash
@@ -267,16 +268,30 @@ FILE: t-file-read-match-lines-loop-vs-grep.sh
 # Q: Will prefilter grep + loop help compared to straight loop?
 # A: Yes, using external grep + loop is 2x faster
 #
-# t1a real    0m1.063s loop: case glob
-# t1b real    0m1.059s loop: bash glob [[ ]]
-# t2  real    0m0.424s grep before loop
+# t1a real    0m0.436s grep before loop
+# t1b real    0m0.469s grep before loop (proc)
+# t2a real    0m1.105s loop: POSIX case glob
+# t2b real    0m1.127s loop: Bash glob [[ ]]
 #
 # Code:
 #
-# while read ... done < file        # t1a
-# while read ... done < file        # t1b
-# grep | while ... done             # t2
+# grep | while ... done             # t1a
+# while ... done < <(grep)          # t1b
+# while read ... done < file        # t2a
+# while read ... done < file        # t2b
 #
+# Notes:
+#
+# The practical winner in scripts is the
+# '<(proc)' due to variables being visible in the same
+# scope. The "grep | while" would create a subshell
+# and release the variables after the for-loop.
+#
+# The file contents are kept in the Kernel cache. If
+# the run order "t1a t1b" is reversed to "t1b t1a",
+# the FIRST one will always appear to be clocked
+# faster, which is probably not the case. They are
+# equal due to the cache.
 
 FILE: t-file-read-shell-result.sh
 #! /bin/bash
@@ -307,15 +322,76 @@ FILE: t-file-size-info.sh
 # t3 real    0m0.461s ls -l + awk
 
 FILE: t-lib.sh
-FILE: t-loop-seq-vs-seq-expr.sh
+FILE: t-statement-arithmetic-comparison.sh
 #! /bin/bash
 #
-# Q: for-loop: Bash {1..N} vs $(seq N) vs POSIX i++
+# Q: POSIX [ a -gt b ] vs Bash [[ a -gt b ]] and (( a > b ))
+# A: No noticeable difference
+#
+# t1     real    0m0.005s [ a -gt b ]
+# t2     real    0m0.005s [[ a -gt b ]]
+# t3     real    0m0.005s (( a > b ))
+
+FILE: t-statement-arithmetic-for-loop.sh
+#! /bin/bash
+#
+# Q: for-loop: ((...)) vs {1..N} vs $(seq N) vs POSIX i++
 # A: The {1..N} and $(seq N) are very fast.
 #
-# t1 real    0m0.003s for i in {N..M}
-# t2 real    0m0.007s for i in $(seq ...)
-# t3 real    0m0.017s for [ $i -le $max ] ... i++
+# t1 real    0m0.003s for i in {1..N}
+# t2 real    0m0.004s for i in $(seq ...)
+# t3 real    0m0.006s for ((i=0; i < N; i++))
+# t4 real    0m0.010s while [ $i -le $N ] ... i++
+#
+# Notes:
+#
+# A simple, elegant and practical winner: $(seq N)
+#
+# {1..N} problem: the Bash brace
+# expansion cannot parametrisized, so it
+# is only useful is N is known beforehand.
+#
+# But ... all the loops are so fast that the
+# numbers don't mean much. The POSIX while-loop
+# variant was slightly slower in all subsequent
+# tests.
+
+FILE: t-statement-arithmetic-increment.sh
+#! /bin/bash
+#
+# Q: POSIX 'i=$((i + 1))' vs ((i++)) vs let i++ etc.
+# A: No noticeable difference
+#
+# t1     real    0m0.005s ((i++))
+# t2     real    0m0.005s let i++
+# t3     real    0m0.007s : $((i++))
+# t4     real    0m0.007s i=$((i + 1))
+
+FILE: t-statement-statement-if-test-posix-vs-bash.sh
+#! /bin/bash
+#
+# Q: POSIX [ $var = 1 ] vs Bash [[ $var = 1 ]] etc
+# A: In practise, not much difference
+#
+# t1val     real    0m0.002s [ "$var" = "1" ]
+# t2val     real    0m0.003s [[ $var = 1 ]]
+# t1empty   real    0m0.002s [ ! "$var" ]     # modern
+# t2empty   real    0m0.002s [ -z "$var" ]    # archaic
+# t3empty   real    0m0.003s [[ ! $var ]]     # Bash
+#
+# Notes:
+#
+# With very high amount of repeats, there are differences.
+# Like if ooping files with lot of lines and making
+# decisions.
+#
+# loop_max=10000 ./statement-if-posix-vs-bash.sh
+#
+# t1val          real 0.055  user 0.054  sys 0.000
+# t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
+# t1empty        real 0.052  user 0.045  sys 0.007
+# t2empty        real 0.053  user 0.050  sys 0.003
+# t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 FILE: t-string-trim-whitespace.sh
 #! /bin/bash
