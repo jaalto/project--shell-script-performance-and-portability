@@ -70,7 +70,7 @@ FILE: t-file-size-info.sh
 
 FILE: t-lib.sh
 FILE: t-loop-seq-vs-seq-expr.sh
-# Q: Bash {1..N} vs $(seq N) vs POSIX i++
+# Q: for-loop: Bash {1..N} vs $(seq N) vs POSIX i++
 # A: The {1..N} and $(seq N) are very fast.
 
 FILE: t-string-trim-whitespace.sh
