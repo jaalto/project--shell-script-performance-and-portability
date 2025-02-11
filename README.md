@@ -66,7 +66,7 @@ INSTALL   Install instructions
 ```
 
 - In functions, use of nameref (Bash) to return value
-  is about 40x faster than `ret=$(fn)'. Use this:
+  is about 40x faster than `ret=$(fn)`. Use this:
 
 ```
     fn()
