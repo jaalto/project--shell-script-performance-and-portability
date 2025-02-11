@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: Bash {1..N} vs $(seq N) vs POSIX i++
+# Q: for-loop: Bash {1..N} vs $(seq N) vs POSIX i++
 # A: The {1..N} and $(seq N) are very fast.
 #
 # t1 real    0m0.003s for i in {N..M}
