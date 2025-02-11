@@ -57,9 +57,15 @@ INSTALL   Install instructions
 
   `cmd | awk '{...}'`
 
-- Use built-ins.
+- Use built-ins. No path names to binaries:
 
-- in functions, use of nameref (Bash) to return value
+```
+    echo ...    # not /usr/bin/echo
+    printf ...  # not /usr/bin/printf
+    [ ... ]     # not: if /usr/bin/test ...; then ...
+```
+
+- In functions, use of nameref (Bash) to return value
   is about 40x faster than `ret=$(fn)'. Use this:
 
 ```
