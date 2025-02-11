@@ -107,7 +107,20 @@ INSTALL   Install instructions
 
 TODO:
 
-# MINOR PERFORMANCE GAINS
+# MODERATE PERFORMANCE GAINS
+
+- To split a string into an array, use `eval`,
+  which is much faster than the here-string. The
+  reason is probably that `<<<` uses a temporary
+  file, whereas `eval` operates entirely in
+  memory.
+
+```
+    string=$(echo {1..100})
+    eval 'array=($string)'
+    # ... the following would be much slower
+    read -ra array <<< "$string"
+```
 
 TODO
 
