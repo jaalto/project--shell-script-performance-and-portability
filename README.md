@@ -82,11 +82,6 @@ INSTALL   Install instructions
     fn ret "arg" ...  # returns stored in 'ret'
 ```
 
-- It is faster to Read file into memory as a
-  STRING and use bash regexp tests on STRING.
-  This is much more efficient than calling
-  external `grep(1)`.
-
 - For line-to-line handling, read file
   into an array and then loop the array:
 
@@ -104,6 +99,13 @@ INSTALL   Install instructions
   That will be much faster than excluding or
   picking lines inside loop with `contine` or
   `if...fi`.
+
+- It is faster to Read file into memory as a
+  STRING and use bash regexp tests on STRING.
+  This is much more efficient than calling
+  external `grep(1)`.
+
+TODO:
 
 # MINOR PERFORMANCE GAINS
 
