@@ -92,7 +92,7 @@ INSTALL   Install instructions
 
   `readarray -t array < file ; for i in "${array[@]}" ...`
 
-  The previous is much faster than doing:
+  which is much faster than doing:
 
   `while read ... done < FILE`.
 
