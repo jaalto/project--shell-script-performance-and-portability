@@ -4,8 +4,8 @@
 # A: Faster is to test existense of file before cp(1). Hardlink is fast.
 #
 # t1 real    0m1.002s cp A B
-# t2 real    0m0.013s test(1) -nt ...
-# t2 real    0m0.009s test(1) -ef ... (using hardlink)
+# t2 real    0m0.013s [ A -nt B] && cp
+# t2 real    0m0.009s [ A -ef B] || cp (using hardlink)
 #
 # Code:
 #
