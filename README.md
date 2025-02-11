@@ -7,7 +7,7 @@ See the rsults:
 
 - [RESULTS](./RESULTS.txt)
 - [RESULTS-BRIEF](./RESULTS-BRIF.txt)
-- The test cases and code [bin/](./bin/)
+- The test cases and code in [bin/](./bin/)
 
 This project includes tests to determine the
 most efficient way to write shell script code.
