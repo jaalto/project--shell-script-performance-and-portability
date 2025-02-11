@@ -15,7 +15,7 @@ most efficient way to write shell script code.
 Please do not rely on raw result times, as
 they reflect the system used. Instead, compare
 the relative order in which each test case
-yielded the fastest results.
+produced the fastest results.
 
 ## The file structure
 
