@@ -23,6 +23,9 @@
 #
 #       See the --help option.
 
+set -o errexit # Exit on error
+set -o nounset # Treat unused variables as errors
+
 PREFIX="-- "
 PROGRAM=${0##*/}
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
@@ -45,7 +48,13 @@ OPTIONS
         Display help.
 
 DESCRIPTION
-    Display commentatry from <test case> and run the file."
+    Display commentary from <test case> and run the file.
+
+EXAMPLES
+    ./$PROGRAM t-test-case.sh
+
+    # Modify the default repeat count $loop_max (see t-lib.sh)
+    loop_max=500 ./$PROGRAM t-test-case.sh"
 
     exit 0
 }
@@ -78,6 +87,8 @@ Run ()
 
 Main ()
 {
+    local dummy
+
     while :
     do
         # Unused, but useful during debug
