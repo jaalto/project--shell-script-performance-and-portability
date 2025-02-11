@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: POSIX ': $((i++))' or Bash ((i++)) vs let i++?
+# Q: POSIX ': $((i++))' vs ((i++)) vs let i++?
 # A: No noticeable difference
 #
 # t1     real    0m0.005s ((i++))
