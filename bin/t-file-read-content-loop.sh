@@ -13,7 +13,7 @@
 #  mapfile -t array < file   ; for <array> ...        # t1
 #  readarray -t array < file ; for i in <array> ...   # t2a
 #  readarray -t array < file ; for ((i... <array> ... # t2b
-#  while read ... done < file                       # t3
+#  while read ... done < file                         # t3
 #
 # Notes:
 #
