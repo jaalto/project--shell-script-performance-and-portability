@@ -1,10 +1,10 @@
 #! /bin/bash
 #
 # Q: What is the fastest way to read a file's size?
-# A: GNU wc -c. Or stat() but it is not in POSIX (not portable)
+# A: GNU 'wc -c'. The stat(1) is not in POSIX + options are not portable.
 #
 # t1 real    0m0.288s stat -c file
-# t2 real    0m0.360s wc -l file; GNU version efectively like stat()
+# t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
 # t3 real    0m0.461s ls -l + awk
 
 . ./t-lib.sh ; f=$random_file
