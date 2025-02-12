@@ -138,12 +138,29 @@ RandomNumbersPython()
 
 t() # Run a test case
 {
-    # We're supposing recent Bash 5.x
-    # which has TIMEFORMAT
+    # We're supposing recent Bash 5.x or Ksh
+    # which defines TIMEFORMAT
+    #
+    # In Ksh, ignore 'local' keyword
+
+    local hasformat 2> /dev/null
 
     if [ "$BASH_VERSION" ]; then
-        local format="real %3R  user %3U  sys %3S"
-        local timeformat=$TIMEFORMAT # save
+        hasformat="TIMEFORMAT"
+    fi
+
+    case "$0" in  # Use POSIX globbing
+        ksh | */ksh | */ksh93*)
+            hasformat="TIMEFORMAT"
+            ;;
+    esac
+
+    if [ "$hasformat" ]; then
+        unset hasformat
+
+        local format timeformat 2> /dev/null
+        format="real %3R  user %3U  sys %3S"
+        timeformat=$TIMEFORMAT # save
 
         printf "# %-15s" "$1"
 
@@ -152,13 +169,23 @@ t() # Run a test case
         time "$@"
 
         TIMEFORMAT=$timeformat  # restore
+        unset format timeformat
 
-    elif type time 2> /dev/null; then
+    elif type time 2> /dev/null 2>&1; then
         # Format the output using other means.
-        printf "# $1"
-        (time date) 2>&1 | paste -sd " "
-        echo
+        printf "# $1  "
 
+        # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
+        # =============================
+        # sed(1) to delete this part and limit output to 2 spaces.
+
+        (time date) 2>&1 |
+            paste --serial --delimiters=" " |
+            sed --regexp-extended \
+                --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
+                --expression 's,   +,  ,g'
+
+        echo
     else
         Die "ERROR: in function t(), no 'time' command"
     fi
