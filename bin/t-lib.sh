@@ -143,7 +143,7 @@ t() # Run a test case
     #
     # In Ksh, ignore 'local' keyword
 
-    local hasformat format 2> /dev/null
+    local format hasformat 2> /dev/null
     format="real %3R  user %3U  sys %3S" # precision (3): N.NNN
 
     if [ "$ZSH_VERSION" ]; then
@@ -153,9 +153,16 @@ t() # Run a test case
 
         # ... maybe some later release
         Die "ERROR: in function t(), unfortunately zsh cannot time functions"
-    elif [ "$BASH_VERSION" ] || [ "KSH_VERSION" ]; then
+    elif [ "$BASH_VERSION" ]; then
         # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
         hasformat="TIMEFORMAT"
+    elif [ "$KSH_VERSION" ]; then
+        case "$KSH_VERSION" in
+            *MIRBSD*) # No format in mksh(1)
+                ;;
+            *)  hasformat="TIMEFORMAT"
+                ;;
+        esac
     else
         case "$0" in
             ksh | */ksh | */ksh93*)
@@ -186,13 +193,14 @@ t() # Run a test case
         # =============================
         # sed(1) to delete this part and limit output to 2 spaces.
 
-        (time "$@") 2>&1 |
+        { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
             sed --regexp-extended \
                 --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
-                --expression 's,   +,  ,g'
+                --expression 's,   +,  ,g' \
+                --expression 's,\t,  ,g'
 
-        echo
+        echo  # Add newline
     else
         Die "ERROR: in function t(), no 'time' command"
     fi
