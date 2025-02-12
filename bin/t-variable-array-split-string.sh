@@ -20,7 +20,6 @@
 
 . ./t-lib.sh ; f=$random_file
 
-declare -a array
 string=$(echo {1..100})
 
 t1()
