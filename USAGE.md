@@ -1,40 +1,42 @@
-USAGE
+# USAGE
 
-    To display results:
+To display results:
 
-        make show
+    make show
 
-    To re-run all tests:
+To re-run all tests:
 
-        make run
+    make run
 
-    To run test and display commentary:
+To run test and display commentary:
 
-        cd bin/
-        ./run.sh <test>.sh ...
+    cd bin/
+    ./run.sh <test>.sh ...
 
-    Run the test cases under different shells. The
-    shells must have a built-in `time` command and
-    support the tested features, such as array tests.
-    Note: unfortunately, `zsh(1)` cannot be used
-    because it cannot time function definitions.
+Run the test cases under different shells. The
+shells must have a built-in `time` command and
+support the tested features, such as array tests.
+Note: unfortunately, `zsh(1)` cannot be used
+because it cannot time function definitions.
 
-        ./run.sh <test>.sh ...
-        ./run.sh --shell ksh <test>.sh ...
-        ./run.sh --shell mkksh <test>.sh ...
+	./run.sh <test>.sh ...
+	./run.sh --shell ksh <test>.sh ...
+	./run.sh --shell mkksh <test>.sh ...
 
-    For low level control:
+For low level control:
 
-        cd bin/
-        ./<test>.sh
+	cd bin/
+	./<test>.sh
 
-        # to chnange test rounds count
-        loop_max=200 ./<test>.sh
+	# to chnange test rounds count
+	loop_max=200 ./<test>.sh
 
-    WARNING: The individual test files
-    are not designed to work correctly with
-    calls like:
+WARNING: The individual test files
+are not designed to work correctly with
+calls like, so this might fail:
 
-        bash bin/<file>.sh
+	bash bin/<file>.sh
 
-End of file
+	# Use ...
+	./<file>.sh
+
