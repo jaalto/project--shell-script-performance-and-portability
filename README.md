@@ -6,7 +6,7 @@ That's the question these tests try to answer.
 See the results:
 
 - [RESULTS](./doc/RESULTS.txt)
-- [RESULTS-BRIEF](./doc/RESULTS-BRIF.txt)
+- [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
 - The test cases and code in [bin/](./bin/)
 
 This project includes tests to determine the
@@ -48,11 +48,11 @@ INSTALL   Install instructions
 
 - Avoid extra processes at all costs:
 
-  `cmd | head .. | ... | cut ...`
+  `cmd | head ... | ... | cut ...`
   `cmd | grep ... | sed ...`
 
   Instead, a single `awk` probably handles
-  all of the above. The `awk` is *very*
+  all of the above. Program `awk` is *very*
   fast and efficient for any tasks:
 
   `cmd | awk '{...}'`
@@ -65,8 +65,9 @@ INSTALL   Install instructions
     [ ... ]     # not: if /bin/test ...; then ...
 ```
 
-- In functions, use of nameref (Bash) to return value
-  is about 40x faster than `ret=$(fn)`. Use this:
+- In functions, using nameref (Bash) to return a
+  value is about 40 times faster than `ret=$(fn)`.
+  Use this:
 
 ```
     fn()
@@ -75,15 +76,15 @@ INSTALL   Install instructions
         shift               # real arguments follow
         local arg=$1
 
-        retval="value"      # Assigns to indirect var
+        retval="value" # Assigns to indirect var
     }
 
     ret=""
     fn ret "arg" ...  # returns stored in 'ret'
 ```
 
-- For line-to-line handling, read file
-  into an array and then loop the array:
+- For line-by-line handling, read the file
+  into an array and then loop through the array:
 
   `readarray -t array < file ; for i in "${array[@]}" ...`
 
@@ -100,18 +101,18 @@ INSTALL   Install instructions
   picking lines inside loop with `contine` or
   `if...fi`.
 
-- It is faster to Read file into memory as a
-  STRING and use bash regexp tests on STRING.
-  This is much more efficient than calling
-  external `grep(1)`.
+- It is faster to read a file into memory as a
+  string and use Bash regular expression tests
+  on that string. This is much more efficient
+  than calling the external `grep(1)` command.
 
 TODO:
 
 # MODERATE PERFORMANCE GAINS
 
 - To split a string into an array, use `eval`,
-  which is much faster than the here-string. The
-  reason is probably that `<<<` uses a temporary
+  which is much faster than using a here-string.
+  This is likely because `<<<` uses a temporary
   file, whereas `eval` operates entirely in
   memory.
 
@@ -169,8 +170,8 @@ commentary.
 
 # RANDOM NOTES
 
-See bash(1) manual how to use `time` command
-to display results in different formats:
+See the bash(1) manual page how to use `time`
+command to display results in different formats:
 
 ```
 TIMEFORMAT='real: %R'  # '%R %U %S'
@@ -188,11 +189,18 @@ Copyright (C) 2024-2025 Jari Aalto
 
 # LICENSE
 
-These programs are free software; you can
-redistribute and/or modify the programs under the
-terms of GNU General Public license either
-version 2 of the License, or (at your option)
-any later version.
+These programs are free software; you can redistribute it and/or modify
+them under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+These programs are distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with these programs. If not, see <http://www.gnu.org/licenses/>.
 
 Keywords: shell, sh, posix, bash, programming,
 optimize, performance, profiling
