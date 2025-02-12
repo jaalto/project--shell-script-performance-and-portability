@@ -1,24 +1,3 @@
-FILE: t-array-split-string.sh
-#! /bin/bash
-#
-# Q: split string into an array: read vs eval?
-# A: eval is 2x faster
-#
-# t1 real    0m0.012s eval
-# t2 real    0m0.025s read -ra
-#
-# Code:
-#
-# string=$(echo {1..100})
-# read -ra array <<< "$string"  # t1
-# eval 'array=($string)'        # t2
-#
-# Notes:
-#
-# The reason is probably that `<<<` uses a
-# temporary file, whereas `eval` operates
-# entirely in memory.
-
 FILE: t-command-grep.sh
 #! /bin/bash
 #
@@ -313,7 +292,7 @@ FILE: t-file-size-info.sh
 # t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
 # t3 real    0m0.461s ls -l + awk
 
-FILE: t-function-and-return-value.sh
+FILE: t-function-return-value.sh
 #! /bin/bash
 #
 # Q: Bash name ref to return values vs val=$(funcall)
@@ -371,7 +350,7 @@ FILE: t-statement-arithmetic-increment.sh
 # portable POSIX version works in all shells:
 # `i=$((i + 1))`.
 
-FILE: t-statement-statement-if-test-posix-vs-bash.sh
+FILE: t-statement-if-test-posix-vs-bash.sh
 #! /bin/bash
 #
 # Q: POSIX [ $var = 1 ] vs Bash [[ $var = 1 ]] etc
@@ -412,5 +391,26 @@ FILE: t-string-trim-whitespace.sh
 #
 # t1 var=$(echo .. | sed <trim>)    # external call
 # t2 var=$(bashTrim)                # fn() return by value
-# t2 BashTrom var                   # fn() use name ref
+# t2 BashTrim var                   # fn() use name ref
+
+FILE: t-variable-array-split-string.sh
+#! /bin/bash
+#
+# Q: split string into an array: read vs eval?
+# A: eval is 2x faster
+#
+# t1 real    0m0.012s eval
+# t2 real    0m0.025s read -ra
+#
+# Code:
+#
+# string=$(echo {1..100})
+# read -ra array <<< "$string"  # t1
+# eval 'array=($string)'        # t2
+#
+# Notes:
+#
+# The reason is probably that `<<<` uses a
+# temporary file, whereas `eval` operates
+# entirely in memory.
 
