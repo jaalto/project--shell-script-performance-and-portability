@@ -11,10 +11,11 @@
 #
 # t1 var=$(echo .. | sed <trim>)    # external call
 # t2 var=$(bashTrim)                # fn() return by value
-# t2 BashTrom var                   # fn() use name ref
+# t2 BashTrim var                   # fn() use name ref
 
 . ./t-lib.sh ; f=$random_file
 
+# Define perl style \s and \S shorthand variables
 s='[[:space:]]+'
 S='[^[:space:]]+'
 
@@ -22,19 +23,10 @@ str="  this string  "
 
 trim_nameref()
 {
-    local -n _var=$1
+    local -n _retval=$1
 
-    [[ $_var =~ ^$s(.+)$   ]] && _var=${BASH_REMATCH[1]}
-    [[ $_var =~ ^(.*$S)$s$ ]] && _var=${BASH_REMATCH[1]}
-}
-
-t1()
-{
-    for i in $(seq $loop_max)
-    do
-        item=$str
-        trim_nameref item
-    done
+    [[ $_retval =~ ^$s(.+)$   ]] && _retval=${BASH_REMATCH[1]}
+    [[ $_retval =~ ^(.*$S)$s$ ]] && _retval=${BASH_REMATCH[1]}
 }
 
 trim()
@@ -45,6 +37,15 @@ trim()
     [[ $var =~ ^(.*$S)$s$ ]] && var=${BASH_REMATCH[1]}
 
     echo "$var"
+}
+
+t1()
+{
+    for i in $(seq $loop_max)
+    do
+        item=$str
+        trim_nameref item
+    done
 }
 
 t2()
