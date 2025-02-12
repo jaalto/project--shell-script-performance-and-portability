@@ -143,32 +143,36 @@ t() # Run a test case
     #
     # In Ksh, ignore 'local' keyword
 
-    local hasformat 2> /dev/null
+    local hasformat format 2> /dev/null
+    format="real %3R  user %3U  sys %3S" # precision (3): N.NNN
 
     if [ "$BASH_VERSION" ]; then
+        # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
         hasformat="TIMEFORMAT"
+    elif [ "$ZSH_VERSION" ]; then
+        hasformat="TIMEFMT"
+        # https://zsh.sourceforge.io/Doc/Release/Parameters.html
+        format="real %*E  user %*U  sys %*S"
+    else
+        case "$0" in  # Use POSIX globbing
+            ksh | */ksh | */ksh93*)
+                hasformat="TIMEFORMAT"
+                ;;
+        esac
     fi
 
-    case "$0" in  # Use POSIX globbing
-        ksh | */ksh | */ksh93*)
-            hasformat="TIMEFORMAT"
-            ;;
-    esac
-
     if [ "$hasformat" ]; then
-        unset hasformat
+        local timeformat 2> /dev/null
 
-        local format timeformat 2> /dev/null
-        format="real %3R  user %3U  sys %3S"
-        timeformat=$TIMEFORMAT # save
+        eval "timeformat=\$$hasformat" # save
 
         printf "# %-15s" "$1"
 
-        [ "$TIMEFORMAT" ] || TIMEFORMAT=$format
+        eval "$hasformat='$format'"    # set
 
         time "$@"
 
-        TIMEFORMAT=$timeformat  # restore
+        eval "$hasformat='$timeformat'" # restore
         unset format timeformat
 
     elif type time 2> /dev/null 2>&1; then
@@ -179,7 +183,7 @@ t() # Run a test case
         # =============================
         # sed(1) to delete this part and limit output to 2 spaces.
 
-        (time date) 2>&1 |
+        (time "$@") 2>&1 |
             paste --serial --delimiters=" " |
             sed --regexp-extended \
                 --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
@@ -189,6 +193,8 @@ t() # Run a test case
     else
         Die "ERROR: in function t(), no 'time' command"
     fi
+
+    unset hasformat format
 }
 
 TestData ()
