@@ -60,9 +60,9 @@ INSTALL   Install instructions
 - Use built-ins. No path names to binaries:
 
 ```
-    echo ...    # not /usr/bin/echo
-    printf ...  # not /usr/bin/printf
-    [ ... ]     # not: if /usr/bin/test ...; then ...
+    echo ...    # not /bin/echo
+    printf ...  # not /bin/printf
+    [ ... ]     # not: if /bin/test ...; then ...
 ```
 
 - In functions, use of nameref (Bash) to return value
