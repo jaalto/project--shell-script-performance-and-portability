@@ -50,9 +50,7 @@ Read ()
 
 MathFileContentPattern ()  # POSIX
 {
-    local file=$1
-
-    Read "$file"
+    Read "$1"
 
     case "$REPLY" in
         $pattern)
@@ -66,9 +64,7 @@ MathFileContentPattern ()  # POSIX
 
 MathFileContentRegexp () # Bash regexp
 {
-    local file=$1
-
-    Read "$file"
+    Read "$1"
 
     [[ "$REPLY" =~ $re ]]
 }
