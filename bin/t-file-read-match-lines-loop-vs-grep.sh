@@ -1,32 +1,39 @@
 #! /bin/bash
 #
-# Q: Will prefilter grep + loop help compared to straight loop?
-# A: Yes, using external grep + loop is 2x faster
+# Q: process file: will prefilter lines using grep(1) help?
+# A: grep(1) + loop is 2x faster than doing filtering in loop
 #
-# t1a real    0m0.436s grep before loop
-# t1b real    0m0.469s grep before loop (proc)
-# t2a real    0m1.105s loop: POSIX case glob
-# t2b real    0m1.127s loop: Bash glob [[ ]]
+# t1a real    0m0.436s grep prefilter before loop
+# t1b real    0m0.469s grep prefilter before loop (proc)
+# t2a real    0m1.105s loop: POSIX glob match with case...esac
+# t2b real    0m1.127s loop: Bash glob match using [[ ]]
 #
 # Code:
 #
-# grep | while ... done             # t1a
-# while ... done < <(grep)          # t1b
-# while read ... done < file        # t2a
-# while read ... done < file        # t2b
+# grep | while ... done                      # t1a
+# while ... done < <(grep)                   # t1b
+# while read ... case..esac ... done < file  # t2a
+# while read ... [[ ]] ... done < file       # t2b
 #
 # Notes:
 #
-# The practical winner in scripts is the
-# '<(proc)' due to variables being visible in the same
-# scope. The "grep | while" would create a subshell
-# and release the variables after the for-loop.
+# The practical winner in scripts is the `while read
+# do .. done < <(proc)` due to variables being
+# visible in the same scope. The "grep | while"
+# would create a subshell and release the variables
+# after the for-loop.
 #
-# The file contents are kept in the Kernel cache. If
-# the run order "t1a t1b" is reversed to "t1b t1a",
-# the FIRST one will always appear to be clocked
-# faster, which is probably not the case. They are
-# equal due to the cache.
+# About the test cases
+#
+# The file contents read during the test cases are
+# probably cached in the Kernel. When the tests are
+# executed in the order "t1a t1b," reversing the
+# order to "t1b t1a" results in the FIRST test
+# consistently appearing to run faster. This is
+# likely not an accurate representation of the true
+# performance. The apparent equality in performance
+# between cases "t1a" and "t2b" is probably due to
+# the Kernel's file cache.
 
 . ./t-lib.sh ; f=$random_file
 
