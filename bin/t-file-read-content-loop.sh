@@ -42,8 +42,6 @@ t2a ()
 
     readarray -t array < $f
 
-    local i
-
     for i in "${array[@]}"
     do
         i=$i
@@ -56,8 +54,6 @@ t2b ()
     array=()
 
     readarray -t array < $f
-
-    local i item
 
     for ((i = 0; i < ${#array[@]}; i++))
     do
