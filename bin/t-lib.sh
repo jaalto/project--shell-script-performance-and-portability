@@ -41,7 +41,7 @@
 #           $random_file
 #           $loop_max
 
-# export variables
+# Exported variables
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
 
@@ -138,38 +138,52 @@ RandomNumbersPython()
 
 t() # Run a test case
 {
+    # We're supposing recent Bash 5.x
+    # which has TIMEFORMAT
+
     if [ "$BASH_VERSION" ]; then
+        local format="real %3R  user %3U  sys %3S"
         local timeformat=$TIMEFORMAT # save
 
-        TIMEFORMAT="real %3R  user %3U  sys %3S"
-
         printf "# %-15s" "$1"
+
+        [ "$TIMEFORMAT" ] || TIMEFORMAT=$format
+
         time "$@"
 
         TIMEFORMAT=$timeformat  # restore
-    elif command -v time; then
+
+    elif type time 2> /dev/null; then
+        # Format the output using other means.
         printf "# $1"
         (time date) 2>&1 | paste -sd " "
         echo
+
     else
-        Die "ERROR: in function t(), no time(1) command available"
+        Die "ERROR: in function t(), no 'time' command"
     fi
 }
 
-# AWK is fastest
-#
-# 0m0.008s  awk
-# 0m0.011s  perl
-# 0m0.043s  python
-#
-# time RandomNumbersAwk "$random_file_count" > /dev/null
-# time RandomNumbersPerl "$random_file_count" > /dev/null
-# time RandomNumbersPython "$random_file_count" > /dev/null
+TestData ()
+{
+    # Create test data to use with all test cases.
+    #
+    # AWK is the fastest
+    #
+    # 0m0.008s  awk
+    # 0m0.011s  perl
+    # 0m0.043s  python
+    #
+    # time RandomNumbersAwk "$1" > /dev/null
+    # time RandomNumbersPerl "$1" > /dev/null
+    # time RandomNumbersPython "$1" > /dev/null
 
-if [ ! -f "$random_file" ]; then
-    RandomNumbersAwk "$random_file_count" > "$random_file"
-fi
+    if [ ! -f "$random_file" ]; then
+        RandomNumbersAwk "$1" > "$random_file"
+    fi
+}
 
+TestData $random_file_count
 unset random_file_count
 
 # End of file
