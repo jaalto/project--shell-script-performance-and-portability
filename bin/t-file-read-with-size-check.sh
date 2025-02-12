@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Is "test -s" for size useful before reading the file content?
-# A: yes, much faster to check [ -s file ] before reading.
+# Q: Is empty file check useful before reading file's content?
+# A: It is significantly faster (~10x) to use [ -s file ] before reading
 #
 # real    0m0.105s $(< file)
 # real    0m0.006s [ -s file] && $(< file)
@@ -23,7 +23,6 @@ t1 ()
 {
     for i in $(seq $loop_max)
     do
-        i=$((i + 1))
         val=$(< $f)
     done
 }
