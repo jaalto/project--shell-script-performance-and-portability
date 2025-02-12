@@ -163,7 +163,7 @@ t() # Run a test case
                 ;;
         esac
     fi
-exit
+
     if [ "$hasformat" ]; then
         local timeformat 2> /dev/null
 
