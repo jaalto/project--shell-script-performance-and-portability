@@ -1,29 +1,38 @@
 CODE NOTES
 
-    In case, you contribute more tests.
+    information for contributing more test cases.
 
-    Files:
+    GENERAL <TEST CASE> FILE CONVENTIONS
 
-    - Readable shebang with space "#! <interpreter>"
-    - All test files start with prefix "t-" for short.
-    - Files ending to *.bash are specific to Bash.
-    - Files ending to *.sh can be run under POSIX
-      compliant shells.
+    - Start with readable shebang with space "#! /bin/bash"
 
-    Variables and Linting:
+    - Name test files "t-<category>-*.sh", where
+      category is one of:
 
-    - Variables are *not* "$quoted" for simplicity.
-    - shellcheck(1) is deliberately not used
-      because files are intended to be as straightforward
-      as possible. Ref: <https://www.shellcheck.net>.
+	file
+	dir
+	statement
+	command
+	function
+	variable
 
-    Coding Style
+    GENERAL CODING STYLE CONSIDERATIONS
+
+    Use relaxed conventions for
+    maximum clarity and simplicity:
 
     - Use readable --long options everywhere.
 
-    - Allman for these:
+    - Do not "$quote"; unless absolutely needed.
 
-	fn ()
+    - No need to lint using shellcheck(1) etc.
+      The <test case> files are intended to be as
+      straightforward as possible.
+      Ref: <https://www.shellcheck.net>.
+
+    - Allman style for these:
+
+	fn()
 	{
 	    ...
 	}
@@ -40,10 +49,19 @@ CODE NOTES
 		  ;;
 	fi
 
-    - K&R for placing 'then' in short conditionals:
+    - K&R style for placing 'then':
 
 	if <cmd>; then
 	    ...
 	fi
+
+    References
+
+    - Allman style
+      https://en.wikipedia.org/wiki/Indentation_style#Allman_style
+    - K&R style
+      https://en.wikipedia.org/wiki/Indentation_style#K&R
+    - Linting - static code analysis
+      https://en.wikipedia.org/wiki/Lint_(software)
 
 End of file
