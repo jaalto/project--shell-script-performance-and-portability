@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: POSIX 'i=$((i + 1))' vs ((i++)) vs let i++ etc.
+# Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
 # A: No noticeable difference
 #
 # t1     real    0m0.005s ((i++))      Bash
@@ -8,9 +8,11 @@
 # t3     real    0m0.007s : $((i++))   POSIX
 # t4     real    0m0.007s i=$((i + 1)) POSIX
 
+[ "${loop_max:+user}" = "user" ] && loop_count=$loop_max
+
 . ./t-lib.sh ; f=$random_file
 
-loop_max=${max_count:-1000}
+loop_max=${loop_count:-1000}
 
 t1 ()
 {
