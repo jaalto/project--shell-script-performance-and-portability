@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: Is capturing var=$() faster or using temporary file for outpur?
+# Q: Command result: var=$() vs reading output from a temporary file?
 # A: The var=$() is 2x faster than using a temporary file
 #
 # t1 real    0m0.428s val=$(cmd)
