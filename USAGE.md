@@ -28,7 +28,7 @@ For low level control:
 	cd bin/
 	./<test>.sh
 
-	# to chnange test rounds count
+	# To change test round count
 	loop_max=200 ./<test>.sh
 
 WARNING: The individual test files
