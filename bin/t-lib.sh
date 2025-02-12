@@ -21,26 +21,53 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-# Description
-#
-#       This is a library. Common utilities.
-#
 # Usage
 #
 #       . <file>
+#
+# Description
+#
+#       This is a library. Common utilities. When sourced, it will
+#       create the following test files to be used by <test cases>:
+#
+#           t.random.numbers.tmp
+#
+#       Global variables used:
+#
+#           $verbose         in Verbose()
+#
+#       Exported variables:
+#
+#           $random_file
+#           $loop_max
 
 # export variables
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
 
-# private variables. Unset after this file has been read.
+# Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
 
-# For test loops
+Warn ()
+{
+    echo "$*" >&2
+}
+
+Die ()
+{
+    Warn "$*"
+    exit 1
+}
+
+Verbose ()
+{
+    [ "$verbose" ] || return 0
+    echo "$*"
+}
 
 RandomWordsGibberish ()
 {
-    # - File SIZE containing Random words.
+    # - Create file with SIZE containing random words.
     # - Limit output to column 80.
     # - Separate words by spaces.
 
@@ -90,8 +117,8 @@ RandomWordsDictionary ()
 
 RandomNumbersAwk ()
 {
-    awk 'BEGIN {
-        n = ENVIRON["n"];  # Read 'n' from environment
+    awk -v n="$1" '
+    BEGIN {
         srand();
 
         for (i = 1; i <= n; i++)
@@ -101,32 +128,15 @@ RandomNumbersAwk ()
 
 RandomNumbersPerl ()
 {
-    perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$random_file_count"
+    perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
 }
 
 RandomNumbersPython ()
 {
-    python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($random_file_count)))"
+    python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
-Warn ()
-{
-    echo "$*" >&2
-}
-
-Die ()
-{
-    Warn "$*"
-    exit 1
-}
-
-Verbose ()
-{
-    [ "$verbose" ] || return 0
-    echo "$*"
-}
-
-t () # Run test
+t () # Run a test case
 {
     if [ "$BASH_VERSION" ]; then
         local timeformat=$TIMEFORMAT # save
@@ -137,24 +147,27 @@ t () # Run test
         time "$@"
 
         TIMEFORMAT=$timeformat  # restore
-    else
+    elif command -v time
         printf "# $1"
         (time date) 2>&1 | paste -sd " "
         echo
+    else
+        Die "ERROR: in function t(), no time(1) command available"
     fi
 }
 
 # AWK is fastest
+#
 # 0m0.008s  awk
 # 0m0.011s  perl
 # 0m0.043s  python
 #
-# time RandomNumbersAwk > /dev/null
-# time RandomNumbersPerl > /dev/null
-# time RandomNumbersPython > /dev/null
+# time RandomNumbersAwk "$random_file_count" > /dev/null
+# time RandomNumbersPerl "$random_file_count" > /dev/null
+# time RandomNumbersPython "$random_file_count" > /dev/null
 
 if [ ! -f "$random_file" ]; then
-    RandomNumbersAwk > "$random_file"
+    RandomNumbersAwk "$random_file_count" > "$random_file"
 fi
 
 unset random_file_count
