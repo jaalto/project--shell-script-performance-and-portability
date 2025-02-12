@@ -1,29 +1,50 @@
 #! /bin/bash
 #
-# Q: In grep, is --fixed-strings faster?
-# A: Not much difference to --extended-regexp or --perl-regexp
+# Q: In grep, is option --fixed-strings faster?
+# A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
+# category: negligible
 #
 # Q: Is using parallel(1) with grep even faster?
-# A: Not worth for small files. Yes with bigger ones (test file: 10 000 lines)
+# A: Yes, parallel is effective (test file was 10 000 lines)
+# category: medium
 #
-# t1pure     real   0m0.338s LANG=C --fixed-strings
-# t1utf8     real   0m0.372s LANG=C.UTF-8 --fixed-strings
-# t1extended real   0m0.346s LANG=C --extended-regexp
-# t1perl     real   0m0.349s LANG=C --perl-regexp
+# t1pure     real   0m0.382s LANG=C --fixed-strings
+# t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
+# t1extended real   0m0.382s LANG=C --extended-regexp
+# t1perl     real   0m0.381s LANG=C --perl-regexp
 #
-# t2icasef   real    0m0.394s LANG=C --fixed-strings --ignore-case
-# t2icasee   real    0m0.419s LANG=C --extended-regexp --ignore-case
+# t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
+# t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
 #
 # GNU parallel(1). Split file into chunks and run grep(1) in parallel
-# for each chunk.
+# for each chunk. Suprisingly the default test file with 10 000 lines
+# of numbers was enough to benefit from parallel processing.
 #
-# t_parallel1 real  0m0.226s <defaults>
-# t_parallel2 real  0m0.653s --block-size 1k
-# t_parallel3 real  0m0.300s -N 1k (grep instance for every 1k lines)
+# t_parallel1 real  0m0.233s <defaults>
+# t_parallel2 real  0m0.300s --block-size 1k
+# t_parallel3 real  0m0.245s -N 1k (grep instance for every 1k lines)
 
-. ./t-lib.sh ; f=$random_file
+. ./t-lib.sh # ; f=$random_file
 
-re=${re:-'12'}
+# can be set externally
+re=${re:-'ad'}
+size=${size:-10k}
+
+dict=t.random.dictionary.$size
+f=$dict
+
+AtExit ()
+{
+    [ "$dict" ] || return 0
+    [ -f "$dict" ] || return 0
+
+    rm --force "$dict"
+}
+
+Setup ()
+{
+    RandomWordsDictionary $size > $dict
+}
 
 t1pure ()
 {
@@ -70,7 +91,7 @@ t2icasef ()
 {
     for i in $(seq $loop_max)
     do
-        grep --quiet --fixed-strings --ignore-case "$re" $f
+        grep --quiet --ignore-case --fixed-strings "$re" $f
     done
 }
 
@@ -78,30 +99,29 @@ t2icasee ()
 {
     for i in $(seq $loop_max)
     do
-        grep --quiet --extended-regexp --ignore-case "$re" $f
+        grep --quiet --ignore-case --extended-regexp "$re" $f
     done
 }
 
 t_parallel1()
 {
-    # Suprisingly file size (10 000) was enough to benefit parallel
-
     parallel --pipe grep --quiet --fixed-strings "$re" < $f
 }
 
 t_parallel2()
 {
-    # Suprisingly file size (10 000) was enough to benefit parallel
-
     parallel --pipe --block-size 1k grep --quiet --fixed-strings "$re" < $f
 }
 
 t_parallel3()
 {
-    # Suprisingly file size (10 000) was enough to benefit parallel
-
     parallel --pipe --max-replace-args 1k grep --quiet --fixed-strings "$re" < $f
 }
+
+trap AtExit EXIT HUP INT QUIT TERM
+
+Setup
+echo "test file: $(ls -l $f)"
 
 t t1pure
 t t1utf8
