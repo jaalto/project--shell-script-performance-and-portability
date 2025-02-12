@@ -31,7 +31,7 @@ trim_nameref()
 
 trim()
 {
-    local var=$1
+    var=$1
 
     [[ $var =~ ^$s(.+)$   ]] && var=${BASH_REMATCH[1]}
     [[ $var =~ ^(.*$S)$s$ ]] && var=${BASH_REMATCH[1]}
