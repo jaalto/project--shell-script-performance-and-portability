@@ -171,7 +171,9 @@ commentary.
 
 # RANDOM NOTES
 
-See the bash(1) manual page how to use `time`
+See the
+[bash(1)](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
+manual page how to use `time`
 command to display results in different formats:
 
 	TIMEFORMAT='real: %R'  # '%R %U %S'

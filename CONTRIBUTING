@@ -2,6 +2,31 @@ CODE NOTES
 
     information for contributing more test cases.
 
+    FILE LAYOUT
+
+	Q: <Test case descriptio in one sentence>
+	A: <Major results in one sentence>
+	category: <category>
+
+	<Performance reaults form time(1)>
+
+	Code:
+
+	<More explnatory code to for the reader>
+
+	Notes:
+
+	<About the test cases, analysis of the results,
+	moe commentary or notes....>
+
+    Based on the results, select one-word <category> as follows:
+
+	critical – Performance is highly important and must be optimized.
+	high – Significant impact on performance.
+	medium – Some impact, but not critical.
+	low – Minimal impact, but still measurable.
+	negligible – No effect or unimportant for performance.
+
     GENERAL <TEST CASE> FILE CONVENTIONS
 
     - Start with readable shebang with space "#! /bin/bash"
