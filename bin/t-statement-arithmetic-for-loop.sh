@@ -10,16 +10,21 @@
 #
 # Notes:
 #
-# A simple, elegant and practical winner: $(seq N)
+# A simple, elegant, and practical winner: $(seq N)
 #
-# {1..N} problem: the Bash brace
-# expansion cannot parametrisized, so it
-# is only useful is N is known beforehand.
+# {1..N} problem: The Bash brace
+# expansion cannot be parameterized, so it
+# is only useful if N is known beforehand.
 #
-# But ... all the loops are so fast that the
+# However, all loops are so fast that the
 # numbers don't mean much. The POSIX while-loop
 # variant was slightly slower in all subsequent
 # tests.
+
+# Make user's setting take precedence:
+# loop_max=100 ./<file>.sh
+
+[ "${loop_max:+user}" = "user" ] && loop_count=$loop_max
 
 . ./t-lib.sh ; f=$random_file
 
