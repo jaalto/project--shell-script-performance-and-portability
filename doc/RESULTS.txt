@@ -72,7 +72,7 @@ FILE: t-dir-entries.sh
 # t2 real    0m0.015s for-loop
 # t3 real    0m0.010s ls -d */
 #
-# notes
+# Notes:
 #
 # Because the OS caches files and directories, you have to
 # manually run tests:
@@ -88,8 +88,8 @@ FILE: t-file-copy-check-exist.sh
 # A: Faster is to test existense of file before cp(1). Hardlink is fast.
 #
 # t1 real    0m1.002s cp A B
-# t2 real    0m0.013s test(1) -nt ...
-# t2 real    0m0.009s test(1) -ef ... (using hardlink)
+# t2 real    0m0.013s [ A -nt B] && cp
+# t2 real    0m0.009s [ A -ef B] || cp (using hardlink)
 #
 # Code:
 #
@@ -100,16 +100,11 @@ FILE: t-file-copy-check-exist.sh
 FILE: t-file-for-loop-vs-awk.sh
 #! /bin/bash
 #
-# Q: for-loop to send file-by-file to awk vs awk handling all the files?
-# A: pure awk is at least 2x faster
+# Q: for-loop file-by-file to awk vs awk handling all the files?
+# A: Doing all in awk is at least 2x faster
 #
-# t1 real    0m0.213s pure awk
-# t1 real    0m0.584s for + awk
-#
-# Code:
-#
-# awk '{...}' <file...>
-# for..do.. awk <file> .. done
+# t1 real    0m0.213s awk '{...}' <file> <file> ...
+# t1 real    0m0.584s for <files> do ... awk <file> ... done
 
 FILE: t-file-glob-bash-compgen-vs-stat.sh
 #! /bin/bash
@@ -129,8 +124,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 #
 # Notes:
 #
-# Understandable as stat(1) would do more work by
-# opening each file found.
+# stat(1) does more work by opening each found file.
 
 FILE: t-file-grep-vs-match-in-memory.sh
 #! /bin/bash
@@ -170,8 +164,8 @@ FILE: t-file-newest-in-dir.sh
 # t2 real    0m0.523s   find + sort + head + cut
 # t3 real    0m0.575s   find + sort + sed
 #
-# t4 real    0m0.382s   stat (not a generic solution; see awk)
-# t5 real    0m0.330s   ls -t (not a generic solution; see awk)
+# t4 real    0m0.382s   stat (not a generic solution)
+# t5 real    0m0.330s   ls -t (not a generic solution)
 #
 # Code:
 #
@@ -220,16 +214,15 @@ FILE: t-file-read-cat-vs-bash.sh
 #
 # Notes:
 #
-# With big files, cat(1) is much faster:
+# With big files, they are equal.
 #
-# . t-lib.sh
-# RandomWordsDictionary 1M > t.1M
+# . ./t-lib.sh; RandomWordsDictionary 1M > t.1M
 #
-# time bash -c 'cat t.1M > /dev/null'
-# real    0m0.014s
+# time bash -c 's=$(cat t.1M); echo "$s" > /dev/null'
+# real    0m0.059s
 #
 # time bash -c 's=$(< t.1M); echo "$s" > /dev/null'
-# real  0m0.055s
+# real  0m0.056s
 
 FILE: t-file-read-content-loop.sh
 #! /bin/bash
@@ -257,38 +250,45 @@ FILE: t-file-read-content-loop.sh
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /bin/bash
 #
-# Q: Will prefilter grep + loop help compared to straight loop?
-# A: Yes, using external grep + loop is 2x faster
+# Q: process file: will prefilter lines using grep(1) help?
+# A: grep(1) + loop is 2x faster than doing filtering in loop
 #
-# t1a real    0m0.436s grep before loop
-# t1b real    0m0.469s grep before loop (proc)
-# t2a real    0m1.105s loop: POSIX case glob
-# t2b real    0m1.127s loop: Bash glob [[ ]]
+# t1a real    0m0.436s grep prefilter before loop
+# t1b real    0m0.469s grep prefilter before loop (proc)
+# t2a real    0m1.105s loop: POSIX glob match with case...esac
+# t2b real    0m1.127s loop: Bash glob match using [[ ]]
 #
 # Code:
 #
-# grep | while ... done             # t1a
-# while ... done < <(grep)          # t1b
-# while read ... done < file        # t2a
-# while read ... done < file        # t2b
+# grep | while ... done                      # t1a
+# while ... done < <(grep)                   # t1b
+# while read ... case..esac ... done < file  # t2a
+# while read ... [[ ]] ... done < file       # t2b
 #
 # Notes:
 #
-# The practical winner in scripts is the
-# '<(proc)' due to variables being visible in the same
-# scope. The "grep | while" would create a subshell
-# and release the variables after the for-loop.
+# The practical winner in scripts is the `while read
+# do .. done < <(proc)` due to variables being
+# visible in the same scope. The "grep | while"
+# would create a subshell and release the variables
+# after the for-loop.
 #
-# The file contents are kept in the Kernel cache. If
-# the run order "t1a t1b" is reversed to "t1b t1a",
-# the FIRST one will always appear to be clocked
-# faster, which is probably not the case. They are
-# equal due to the cache.
+# About the test cases
+#
+# The file contents read during the test cases are
+# probably cached in the Kernel. When the tests are
+# executed in the order "t1a t1b," reversing the
+# order to "t1b t1a" results in the FIRST test
+# consistently appearing to run faster. This is
+# likely not an accurate representation of the true
+# performance. The apparent equality in performance
+# between cases "t1a" and "t2b" is probably due to
+# the Kernel's file cache.
 
 FILE: t-file-read-shell-result.sh
 #! /bin/bash
 #
-# Q: Is capturing var=$() faster or using temporary file for outpur?
+# Q: Command result: var=$() vs reading output from a temporary file?
 # A: The var=$() is 2x faster than using a temporary file
 #
 # t1 real    0m0.428s val=$(cmd)
@@ -297,8 +297,8 @@ FILE: t-file-read-shell-result.sh
 FILE: t-file-read-with-size-check.sh
 #! /bin/bash
 #
-# Q: Is "test -s" for size useful before reading the file content?
-# A: yes, much faster to check [ -s file ] before reading.
+# Q: Is empty file check useful before reading file's content?
+# A: It is significantly faster (~10x) to use [ -s file ] before reading
 #
 # real    0m0.105s $(< file)
 # real    0m0.006s [ -s file] && $(< file)
@@ -307,25 +307,25 @@ FILE: t-file-size-info.sh
 #! /bin/bash
 #
 # Q: What is the fastest way to read a file's size?
-# A: GNU wc -c. Or stat() but it is not in POSIX (not portable)
+# A: GNU 'wc -c'. The stat(1) is not in POSIX + options are not portable.
 #
 # t1 real    0m0.288s stat -c file
-# t2 real    0m0.360s wc -l file; GNU version efectively like stat()
+# t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
 # t3 real    0m0.461s ls -l + awk
 
 FILE: t-function-and-return-value.sh
 #! /bin/bash
 #
 # Q: Bash name ref to return values vs val=$(funcall)
-# A: name ref is about 40x faster
+# A: Using name ref is about 40x faster
 #
 # t1 real    0m0.089s t1 $(funcall)
 # t2 real    0m0.002s t2 funcall nameref
 #
 # Code:
 #
-# fn(): return "echo <value>"     # t1
-# fn(): return using local -n var # t2
+# fn(): ... echo "<value>"                 # t1
+# fn(): local -n ret=$1; ... ret="<value>" # t2
 
 FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
@@ -341,13 +341,13 @@ FILE: t-statement-arithmetic-for-loop.sh
 #
 # Notes:
 #
-# A simple, elegant and practical winner: $(seq N)
+# A simple, elegant, and practical winner: $(seq N)
 #
-# {1..N} problem: the Bash brace
-# expansion cannot parametrisized, so it
-# is only useful is N is known beforehand.
+# {1..N} problem: The Bash brace
+# expansion cannot be parameterized, so it
+# is only useful if N is known beforehand.
 #
-# But ... all the loops are so fast that the
+# However, all loops are so fast that the
 # numbers don't mean much. The POSIX while-loop
 # variant was slightly slower in all subsequent
 # tests.
@@ -355,13 +355,21 @@ FILE: t-statement-arithmetic-for-loop.sh
 FILE: t-statement-arithmetic-increment.sh
 #! /bin/bash
 #
-# Q: POSIX 'i=$((i + 1))' vs ((i++)) vs let i++ etc.
-# A: No noticeable difference
+# Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
+# A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine
 #
-# t1     real    0m0.005s ((i++))      Bash
-# t2     real    0m0.005s let i++      Bash
-# t3     real    0m0.007s : $((i++))   POSIX
-# t4     real    0m0.007s i=$((i + 1)) POSIX
+# t1     real    0m0.025s ((i++))      Bash
+# t2     real    0m0.047s let i++      Bash
+# t3     real    0m0.045s i=$((i + 1)) POSIX
+# t4     real    0m0.061s : $((i++))   POSIX (side effect)
+#
+# Notes:
+#
+# The tests were using 10,000 repeats, which is
+# unrealistic for any program. There really is no
+# practical difference whichever you choose. The
+# portable POSIX version works in all shells:
+# `i=$((i + 1))`.
 
 FILE: t-statement-statement-if-test-posix-vs-bash.sh
 #! /bin/bash
@@ -371,20 +379,21 @@ FILE: t-statement-statement-if-test-posix-vs-bash.sh
 #
 # t1val     real    0m0.002s [ "$var" = "1" ]
 # t2val     real    0m0.003s [[ $var = 1 ]]
+#
 # t1empty   real    0m0.002s [ ! "$var" ]     # modern
 # t2empty   real    0m0.002s [ -z "$var" ]    # archaic
 # t3empty   real    0m0.003s [[ ! $var ]]     # Bash
 #
 # Notes:
 #
-# With very high amount of repeats, there are differences.
-# Like if ooping files with lot of lines and making
-# decisions.
+# Only with very high amount of repeats, there are
+# slight differences in favor of Bash `[[ ]]`.
 #
 # loop_max=10000 ./statement-if-posix-vs-bash.sh
 #
 # t1val          real 0.055  user 0.054  sys 0.000
 # t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
+#
 # t1empty        real 0.052  user 0.045  sys 0.007
 # t2empty        real 0.053  user 0.050  sys 0.003
 # t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
