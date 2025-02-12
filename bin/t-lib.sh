@@ -146,16 +146,16 @@ t() # Run a test case
     local hasformat format 2> /dev/null
     format="real %3R  user %3U  sys %3S" # precision (3): N.NNN
 
-    if [ "$BASH_VERSION" ] || [ "KSH_VERSION" ]; then
-        # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
-        hasformat="TIMEFORMAT"
-    elif [ "$ZSH_VERSION" ]; then
+    if [ "$ZSH_VERSION" ]; then
         # https://zsh.sourceforge.io/Doc/Release/Parameters.html
         # hasformat="TIMEFMT"
         # format="real %*E  user %*U  sys %*S"
 
         # ... maybe some later release
         Die "ERROR: in function t(), unfortunately zsh cannot time functions"
+    elif [ "$BASH_VERSION" ] || [ "KSH_VERSION" ]; then
+        # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
+        hasformat="TIMEFORMAT"
     else
         case "$0" in
             ksh | */ksh | */ksh93*)
@@ -163,7 +163,7 @@ t() # Run a test case
                 ;;
         esac
     fi
-
+exit
     if [ "$hasformat" ]; then
         local timeformat 2> /dev/null
 
