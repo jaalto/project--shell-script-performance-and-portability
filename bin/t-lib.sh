@@ -129,14 +129,14 @@ Verbose ()
 t () # Run test
 {
     if [ "$BASH_VERSION" ]; then
-        _TIMEFORMAT=$TIMEFORMAT # save
+        local timeformat=$TIMEFORMAT # save
 
         TIMEFORMAT="real %3R  user %3U  sys %3S"
 
         printf "# %-15s" "$1"
         time "$@"
 
-        TIMEFORMAT=$_TIMEFORMAT  # restore
+        TIMEFORMAT=$timeformat  # restore
     else
         printf "# $1"
         (time date) 2>&1 | paste -sd " "
