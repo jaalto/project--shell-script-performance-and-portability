@@ -5,20 +5,21 @@
 #
 # t1val     real    0m0.002s [ "$var" = "1" ]
 # t2val     real    0m0.003s [[ $var = 1 ]]
+#
 # t1empty   real    0m0.002s [ ! "$var" ]     # modern
 # t2empty   real    0m0.002s [ -z "$var" ]    # archaic
 # t3empty   real    0m0.003s [[ ! $var ]]     # Bash
 #
 # Notes:
 #
-# With very high amount of repeats, there are differences.
-# Like if ooping files with lot of lines and making
-# decisions.
+# Only with very high amount of repeats, there are
+# slight differences in favor of Bash `[[ ]]`.
 #
 # loop_max=10000 ./statement-if-posix-vs-bash.sh
 #
 # t1val          real 0.055  user 0.054  sys 0.000
 # t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
+#
 # t1empty        real 0.052  user 0.045  sys 0.007
 # t2empty        real 0.053  user 0.050  sys 0.003
 # t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
