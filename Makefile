@@ -17,7 +17,7 @@ RM	 = rm --force
 .PHONY: all
 all: help
 
-# show - Show test results
+# show - Show test results (!)
 .PHONY: show
 show:
 	@cd bin && \
