@@ -146,15 +146,18 @@ t() # Run a test case
     local hasformat format 2> /dev/null
     format="real %3R  user %3U  sys %3S" # precision (3): N.NNN
 
-    if [ "$BASH_VERSION" ]; then
+    if [ "$BASH_VERSION" ] || [ "KSH_VERSION" ]; then
         # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
         hasformat="TIMEFORMAT"
     elif [ "$ZSH_VERSION" ]; then
-        hasformat="TIMEFMT"
         # https://zsh.sourceforge.io/Doc/Release/Parameters.html
-        format="real %*E  user %*U  sys %*S"
+        # hasformat="TIMEFMT"
+        # format="real %*E  user %*U  sys %*S"
+
+        # ... maybe some later release
+        Die "ERROR: in function t(), unfortunately zsh cannot time functions"
     else
-        case "$0" in  # Use POSIX globbing
+        case "$0" in
             ksh | */ksh | */ksh93*)
                 hasformat="TIMEFORMAT"
                 ;;
@@ -165,7 +168,6 @@ t() # Run a test case
         local timeformat 2> /dev/null
 
         eval "timeformat=\$$hasformat" # save
-
         printf "# %-15s" "$1"
 
         eval "$hasformat='$format'"    # set
@@ -173,10 +175,11 @@ t() # Run a test case
         time "$@"
 
         eval "$hasformat='$timeformat'" # restore
-        unset format timeformat
+        unset timeformat
 
     elif type time 2> /dev/null 2>&1; then
-        # Format the output using other means.
+        # format the output using other means.
+
         printf "# $1  "
 
         # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
