@@ -9,11 +9,12 @@ CODE NOTES
     - Name test files "t-<category>-*.sh", where
       category is one of:
 
-	file	    - file manipulation
-	dir	    - directory related
-	statement   - language structures
 	command	    - extermal commands
+	dir	    - directory related
+	file	    - file manipulation
 	function    - function usage
+	statement   - language structures
+	string	    - string manipulation
 	variable    - Anything about variables.
 		      Use subtype prefix:
 		      variable-var-*
