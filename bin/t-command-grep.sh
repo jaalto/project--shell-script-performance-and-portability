@@ -41,7 +41,7 @@ t1utf8 ()
     done
 }
 
-t1 ()
+t1()
 {
     i=1
     while [ $i -le $loop_max ]
@@ -82,21 +82,21 @@ t2icasee ()
     done
 }
 
-t_parallel1 ()
+t_parallel1()
 {
     # Suprisingly file size (10 000) was enough to benefit parallel
 
     parallel --pipe grep --quiet --fixed-strings "$re" < $f
 }
 
-t_parallel2 ()
+t_parallel2()
 {
     # Suprisingly file size (10 000) was enough to benefit parallel
 
     parallel --pipe --block-size 1k grep --quiet --fixed-strings "$re" < $f
 }
 
-t_parallel3 ()
+t_parallel3()
 {
     # Suprisingly file size (10 000) was enough to benefit parallel
 

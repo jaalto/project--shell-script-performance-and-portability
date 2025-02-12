@@ -22,7 +22,7 @@
 
 loop_max=${loop_count:-10000}
 
-t1 ()
+t1()
 {
     item=0
     for i in $(seq $loop_max)
@@ -31,7 +31,7 @@ t1 ()
     done
 }
 
-t2 ()
+t2()
 {
     item=0
     var="abc"
@@ -41,7 +41,7 @@ t2 ()
     done
 }
 
-t3 ()
+t3()
 {
     item=0
     for i in $(seq $loop_max)
@@ -50,7 +50,7 @@ t3 ()
     done
 }
 
-t4 ()
+t4()
 {
     item=0
     for i in $(seq $loop_max)

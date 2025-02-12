@@ -19,7 +19,7 @@ AtExit ()
     rm --force "$tmp"
 }
 
-t1 ()
+t1()
 {
     for i in $(seq $loop_max)
     do
@@ -27,7 +27,7 @@ t1 ()
     done
 }
 
-t2 ()
+t2()
 {
     for i in $(seq $loop_max)
     do

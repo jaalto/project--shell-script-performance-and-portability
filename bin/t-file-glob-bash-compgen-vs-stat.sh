@@ -33,7 +33,7 @@ Setup ()
     touch $TMPBASE.{1..100}
 }
 
-t1 ()
+t1()
 {
     for i in $(seq $loop_max)
     do
@@ -43,7 +43,7 @@ t1 ()
     done
 }
 
-t2 ()
+t2()
 {
     for i in $(seq $loop_max)
     do
@@ -54,7 +54,7 @@ t2 ()
     done
 }
 
-t3 ()
+t3()
 {
     for i in $(seq $loop_max)
     do

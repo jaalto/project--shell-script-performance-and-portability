@@ -26,7 +26,7 @@ AtExit ()
     rm --force "$dir"
 }
 
-t1 ()
+t1()
 {
     shopt -s nullglob  # Avoids literal * if directory is empty
     local -a files
@@ -43,7 +43,7 @@ t1 ()
     shopt -u nullglob
 }
 
-t2 ()
+t2()
 {
     for i in $(seq $loop_max)
     do
@@ -54,7 +54,7 @@ t2 ()
     done
 }
 
-t3 ()
+t3()
 {
     # Do not use. Just out of curiosity.
 
@@ -66,7 +66,7 @@ t3 ()
     done
 }
 
-t4 ()
+t4()
 {
     # Just out of curiosity.
 
