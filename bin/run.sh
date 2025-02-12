@@ -29,6 +29,7 @@ set -o nounset # Treat unused variables as errors
 PREFIX="-- "
 PROGRAM=${0##*/}
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
+RUN_SHELL=""
 
 pwd=$(cd "$(dirname "$0")" && pwd)
 
@@ -44,6 +45,9 @@ SYNOPSIS
     $PROGRAM [options] <test case> [<test case> ...]
 
 OPTIONS
+    -s, --shell SHELL
+        Run test case unser SHELL. Like ksh, mksh etc.
+
     -h, --help
         Display help.
 
@@ -52,6 +56,7 @@ DESCRIPTION
 
 EXAMPLES
     ./$PROGRAM t-test-case.sh
+    ./$PROGRAM --shell ksh t-test-case.sh
 
     # Modify the default repeat count $loop_max (see t-lib.sh)
     loop_max=500 ./$PROGRAM t-test-case.sh"
@@ -82,7 +87,13 @@ Run ()
 {
     Header "$1"
     FileInfo "$1"
-    "./$1"
+
+    if [ "$RUN_SHELL" ]; then
+        echo "Run shell: $RUN_SHELL"
+        $RUN_SHELL "./$1"
+    else
+        "./$1"
+    fi
 }
 
 Main ()
@@ -96,6 +107,10 @@ Main ()
         dummy="OPT: $1"
 
         case "$1" in
+            -s | --shell)
+                RUN_SHELL=$2
+                shift ; shift
+                ;;
             -h | --help)
                 shift
                 Help
