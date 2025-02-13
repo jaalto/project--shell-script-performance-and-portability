@@ -47,16 +47,21 @@ each test case produced the fastest results.
 
 # MAJOR PERFORMANCE GAINS
 
-- Avoid extra processes at all costs:
+- Avoid extra processes at all costs.
+  Instead, a single
+  [awk(1)](https://www.gnu.org/software/gawk/)
+  can usually handle all of the above.
+  Program `awk` is *very* fast and
+  efficient for any tasks.
 
-  `cmd | head ... | ... | cut ...`
-  `cmd | grep ... | sed ...`
 
-  Instead, a single `awk` probably handles
-  all of the above. Program `awk` is *very*
-  fast and efficient for any tasks:
+```
+    cmd | awk '{...}'
 
-  `cmd | awk '{...}'`
+    # ... Avoid
+    cmd | head ... | cut ...
+    cmd | grep ... | sed ...
+```
 
 - Use built-ins. No path names to binaries:
 
