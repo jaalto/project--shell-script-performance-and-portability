@@ -69,9 +69,13 @@ doc-brief: $(DOCDIR)/$(DOC)
 clean:
 	$(RM) $(DOCDIR)/*
 
-# realclean - Remove all temporary files
-.PHONY: realclean
-realclean: clean
+# distclean - Clean all generated files
+.PHONY: distclean
+distclean: clean
 	$(RM) bin/t.*
+
+# realclean - Clean totally all generated files
+.PHONY: realclean
+realclean: distclean
 
 # End of file
