@@ -164,15 +164,6 @@ each test case produced the fastest results.
     bash -c 'ls -lL /proc/self/fd/0 <<<hello'
 ```
 
-- Use
-  [GNU parallel(1)](https://www.gnu.org/software/parallel/)
-  to process files. This is suprisingly efective even
-  for files with only 1000 lines, compared to plain grep(1).
-
-```
-    parallel --pipe grep "$re" < "$file"
-```
-
 # MINOR OR NO PERFORMANCE GAINS
 
 According to the tests, there is no practical
@@ -258,6 +249,24 @@ commentary.
     do
 	    i=$((i + 1))
     done
+```
+
+- With `grep(1)`, the use of
+  GNU `parallel(1)`
+  [GNU parallel(1)](https://www.gnu.org/software/parallel/)
+  makes things notably slower for typical file sizes.
+  Otherwise, GNU `parallel` is excellent for making
+  full use of multiple cores. The idea of splitting a
+  file into chunks of lines and running the search in
+  parallel is intriguing, but the overhead of
+  starting `perl` is orders of magnitude more
+  expensive compared to a single-process `grep(1)`.
+  In cases where the file size is in the tens of
+  megabytes, GNU `parallel` can help speed things up.
+
+
+```
+    parallel --pipepart grep "$re" < "$big_file"
 ```
 
 # RANDOM NOTES
