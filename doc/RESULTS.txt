@@ -1,26 +1,43 @@
 FILE: t-command-grep.sh
 #! /bin/bash
 #
-# Q: In grep, is --fixed-strings faster?
-# A: Not much difference to --extended-regexp or --perl-regexp
+# Q: In grep, is option --fixed-strings faster?
+# A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
+# category: negligible
 #
 # Q: Is using parallel(1) with grep even faster?
-# A: Not worth for small files. Yes with bigger ones (test file: 10 000 lines)
+# A: Yes, parallel is effective (test file was 10 000 lines)
+# category: medium
 #
-# t1pure     real   0m0.338s LANG=C --fixed-strings
-# t1utf8     real   0m0.372s LANG=C.UTF-8 --fixed-strings
-# t1extended real   0m0.346s LANG=C --extended-regexp
-# t1perl     real   0m0.349s LANG=C --perl-regexp
+# t1pure     real   0m0.382s LANG=C --fixed-strings
+# t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
+# t1extended real   0m0.382s LANG=C --extended-regexp
+# t1perl     real   0m0.381s LANG=C --perl-regexp
 #
-# t2icasef   real    0m0.394s LANG=C --fixed-strings --ignore-case
-# t2icasee   real    0m0.419s LANG=C --extended-regexp --ignore-case
+# t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
+# t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
 #
 # GNU parallel(1). Split file into chunks and run grep(1) in parallel
-# for each chunk.
+# for each chunk. Suprisingly the default test file with 10 000 lines
+# of numbers was enough to benefit from parallel processing.
 #
-# t_parallel1 real  0m0.226s <defaults>
-# t_parallel2 real  0m0.653s --block-size 1k
-# t_parallel3 real  0m0.300s -N 1k (grep instance for every 1k lines)
+# t_parallel1 real  0m0.233s <defaults>
+# t_parallel2 real  0m0.300s --block-size 1k
+# t_parallel3 real  0m0.245s -N 1k (grep instance for every 1k lines)
+
+FILE: t-command-pwd-vs-variable-pwd.sh
+#! /bin/bash
+#
+# Q: How much is POSIX $PWD faster than command pwd(1)?
+# A: $PWD is about 7x faster considering pwd is bash built-in
+#
+# t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
+# t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
+#
+# Notes:
+#
+# Even though pwd(1) is a Bash built-in, there is still a penalty
+# for calling command substitution $(command).
 
 FILE: t-dir-empty.sh
 #! /bin/bash
@@ -396,21 +413,24 @@ FILE: t-string-trim-whitespace.sh
 FILE: t-variable-array-split-string.sh
 #! /bin/bash
 #
-# Q: split string into an array: read vs eval?
-# A: eval is 2x faster
+# Q: split string into an array: eval vs read?
+# A: eval is 2-3x faster
 #
 # t1 real    0m0.012s eval
 # t2 real    0m0.025s read -ra
 #
 # Code:
 #
-# string=$(echo {1..100})
-# read -ra array <<< "$string"  # t1
-# eval 'array=($string)'        # t2
+# IFS=":" eval 'array=($PATH)'        # t1
+# IFS=":" read -ra array <<< "$PATH"  # t2
 #
 # Notes:
 #
-# The reason is probably that `<<<` uses a
-# temporary file, whereas `eval` operates
+# This test involves splitting by an arbitrary
+# character, which requires setting a local
+# IFS for the execution of the command.
+#
+# The reason why `<<<` is slower is that it
+# uses a temporary file, whereas `eval` operates
 # entirely in memory.
 
