@@ -93,7 +93,7 @@ each test case produced the fastest results.
 
 - For line-by-line handling, read the file
   into an array and then loop through the array.
-  If you're wondering `readarray' vs `maparray',
+  If you're wondering `readarray` vs `mapfile`,
   there is no differende.
 
 ```
