@@ -148,8 +148,9 @@ each test case produced the fastest results.
 - To split a string into an array, use `eval`,
   which is much faster than using a here-string.
   This is because HERE STRING `<<<` uses a temporary
-  file or pipe, whereas `eval` operates entirely in
-  memory.
+  file or pipe (even slower), whereas
+  `eval` operates entirely in memory.
+  See https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
 
 ```
     string=$(echo {1..100})
@@ -158,11 +159,8 @@ each test case produced the fastest results.
     # Much slower
     read -ra array <<< "$string"
 
-	# In later Bash versions HERE STRING
-    # started using pipes (even slower) if data
-	# is small. See
-	https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
-	bash -c 'ls -lL /proc/self/fd/0 <<<hello'
+    # To see What Bash uses for HERE STRING
+    bash -c 'ls -lL /proc/self/fd/0 <<<hello'
 ```
 
 # MINOR OR NO PERFORMANCE GAINS
@@ -232,24 +230,24 @@ commentary.
 
 ```
     for i in {1..100}
-        do
-                ...
-        done
+    do
+	    ...
+    done
 
-        for i in $(seq $N)
-        do
-                ...
-        done
+    for i in $(seq $N)
+    do
+	    ...
+    done
 
-        for ((i=0; i < $N; i++))
-        do
-                ...
-        done
+    for ((i=0; i < $N; i++))
+    do
+	    ...
+    done
 
     while [ "$i" -le "$N" ]
-        do
-                i=$((i + 1))
-        done
+    do
+	    i=$((i + 1))
+    done
 ```
 
 # RANDOM NOTES
