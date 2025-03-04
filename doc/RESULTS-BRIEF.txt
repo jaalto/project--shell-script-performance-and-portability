@@ -1,8 +1,12 @@
 FILE: t-command-grep.sh
-# Q: In grep, is --fixed-strings faster?
-# A: Not much difference to --extended-regexp or --perl-regexp
+# Q: In grep, is option --fixed-strings faster?
+# A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
 # Q: Is using parallel(1) with grep even faster?
-# A: Not worth for small files. Yes with bigger ones (test file: 10 000 lines)
+# A: Yes, parallel is effective (test file was 10 000 lines)
+
+FILE: t-command-pwd-vs-variable-pwd.sh
+# Q: How much is POSIX $PWD faster than command pwd(1)?
+# A: $PWD is about 7x faster considering pwd is bash built-in
 
 FILE: t-dir-empty.sh
 # Q: What is the fastest way to check empty directory?
@@ -82,6 +86,6 @@ FILE: t-string-trim-whitespace.sh
 # A: Bash is much faster; especially with fn() name ref
 
 FILE: t-variable-array-split-string.sh
-# Q: split string into an array: read vs eval?
-# A: eval is 2x faster
+# Q: split string into an array: eval vs read?
+# A: eval is 2-3x faster
 

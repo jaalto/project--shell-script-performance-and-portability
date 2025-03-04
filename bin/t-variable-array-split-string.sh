@@ -1,21 +1,24 @@
 #! /bin/bash
 #
-# Q: split string into an array: read vs eval?
-# A: eval is 2x faster
+# Q: split string into an array: eval vs read?
+# A: eval is 2-3x faster
 #
 # t1 real    0m0.012s eval
 # t2 real    0m0.025s read -ra
 #
 # Code:
 #
-# string=$(echo {1..100})
-# read -ra array <<< "$string"  # t1
-# eval 'array=($string)'        # t2
+# IFS=":" eval 'array=($PATH)'        # t1
+# IFS=":" read -ra array <<< "$PATH"  # t2
 #
 # Notes:
 #
-# The reason is probably that `<<<` uses a
-# temporary file, whereas `eval` operates
+# This test involves splitting by an arbitrary
+# character, which requires setting a local
+# IFS for the execution of the command.
+#
+# The reason why `<<<` is slower is that it
+# uses a temporary file, whereas `eval` operates
 # entirely in memory.
 
 . ./t-lib.sh ; f=$random_file

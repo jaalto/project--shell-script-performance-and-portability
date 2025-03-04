@@ -1,13 +1,15 @@
 # -*- mode: makefile-gmake; -*-
 
+ifneq (,)
+    This makefile requires GNU Make.
+endif
+
 DOCDIR   = doc
 MAKEFILE = Makefile
-
 DOC      = RESULTS.txt
 BRIEF    = RESULTS-BRIEF.txt
 BIN_RUN  = run.sh
 BIN_DOC  = results.sh
-
 GREP     = grep --extended-regexp
 RM	 = rm --force
 
@@ -17,25 +19,24 @@ RM	 = rm --force
 .PHONY: all
 all: help
 
-# show - Show test results (!)
-.PHONY: show
-show:
-	@cd bin && \
-	./$(BIN_DOC) t-*
-
 # help - Display make targets
 .PHONY: help
 help:
 	@echo "# Synopsis: make <target>"
 	@$(GREP) '^# [^#-]+- ' $(MAKEFILE) | \
-	    sort | \
 	    awk '\
 	    { \
 		sub("^# ", ""); \
 		target = $$1; \
 		sub(target " +- +", ""); \
-		printf("%-8s %s\n", target, $$0); \
+		printf("%-12s %s\n", target, $$0); \
 	    }'
+
+# show - Show test results (!)
+.PHONY: show
+show:
+	@cd bin && \
+	./$(BIN_DOC) t-*
 
 # run - Run tests
 .PHONY: run
@@ -63,14 +64,18 @@ $(DOCDIR)/$(DOC):
 doc-brief: $(DOCDIR)/$(DOC)
 	$(GREP) "^($$|FILE:|# [QA]:)" $(DOCDIR)/$(DOC) > $(DOCDIR)/$(BRIEF)
 
-# clean - Remove generated doc files
+# clean - Delete generated doc files
 .PHONY: clean
 clean:
 	$(RM) $(DOCDIR)/*
 
-# realclean - Remove all temporary files
-.PHONY: realclean
-realclean: clean
+# distclean - Delete all generated files
+.PHONY: distclean
+distclean: clean
 	$(RM) bin/t.*
+
+# realclean - Delete totally all generated files
+.PHONY: realclean
+realclean: distclean
 
 # End of file
