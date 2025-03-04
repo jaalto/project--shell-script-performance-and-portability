@@ -24,7 +24,7 @@ tmp=t.tmp
 
 t1 ()
 {
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
         val=$(< $f)
     done
@@ -32,7 +32,7 @@ t1 ()
 
 t2 ()
 {
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
         val=$(cat $f)
     done
