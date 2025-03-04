@@ -1,23 +1,23 @@
 #! /bin/bash
 #
-# Q: Is using parallel(1) with grep even faster?
-# A: Yes, parallel is effective (1000 lines in test file)
-# priority: 5
+# Q: Howabout grep(1) with GNU parallel(1)?
+# A: No, considerably slower in typical cases, use only with huge files.
+# priority: 1
 #
-# t0  real  0m0.233s grep baseline
-# t1a real  0m0.300s --block-size <default> (Linux 64k)
-# t1b real  0m0.245s -block-size <default> --pipepart
-# t2  real  0m0.245s --block-size 1k (grep instance for every 1k lines)
-# t3  real  0m0.245s --block-size 16k
-# t4  real  0m0.245s --block-size 32k
+# t0  real  0m0.005s grep baseline
+# t1a real  0m0.210s --block-size <default> --pipepart
+# t1b real  0m0.240s --block-size <default> (Linux 64k)
+# t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
+# t3  real  0m0.224s --block-size 32k
 #
 # Notes:
 #
-# GNU parallel(1) tests. Split file into chunks and run grep(1)
-# in parallel for each chunk.
+# Split file into chunks and run grep(1) in parallel
+# for each chunk.
 #
-# Suprisingly with test files ranging from 1000 to 10000 lines
-# was enough to benefit from parallel processing.
+# The grep(1) by itself is very fast. The startup time
+# of perl(1) is taking the toll with the parallel if the
+# file sizes are relatively small (test file: ~600 lines).
 
 . ./t-lib.sh # ; f=$random_file
 
@@ -25,7 +25,7 @@ LANG=C
 
 # can be set externally
 re=${re:-'ad'}
-size=${size:-10k}
+size=${size:-50k}
 
 dict=t.random.dictionary.$size
 f=$dict
@@ -50,18 +50,18 @@ t0 ()  # Baseline
 
 t1a ()
 {
-    # Use default values. In Linux blocksize is around 64k
-    parallel --pipe grep --quiet --fixed-strings "$re" < $f
+    parallel --pipepart grep --quiet --fixed-strings "$re" < $f
 }
 
 t1b ()
 {
-    parallel --pipepart grep --quiet --fixed-strings "$re" < $f
+    # Use default values. In Linux blocksize is around 64k
+    parallel --pipe grep --quiet --fixed-strings "$re" < $f
 }
 
 t2 ()
 {
-    parallel --pipe --block-size 1k grep --quiet --fixed-strings "$re" < $f
+    parallel --pipe --block-size 32k grep --quiet --fixed-strings "$re" < $f
 }
 
 t3 ()
@@ -69,15 +69,12 @@ t3 ()
     parallel --pipe --block-size 16k grep --quiet --fixed-strings "$re" < $f
 }
 
-t4 ()
-{
-    parallel --pipe --block-size 32k grep --quiet --fixed-strings "$re" < $f
-}
 
 trap AtExit EXIT HUP INT QUIT TERM
 
 Setup
 echo "test file: $(ls -l $f)"
+echo "test file: lines $(wc -l $f)"
 
 if ! command -v parallel > /dev/null; then
     Warn "INFO: no parallel(1). Skipping tests."
@@ -94,7 +91,6 @@ else
 
     t t2
     t t3
-    t t4
 fi
 
 # End of file
