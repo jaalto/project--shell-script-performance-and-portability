@@ -82,7 +82,9 @@ CODE NOTES
 		  ;;
 	fi
 
-    - K&R style for placing 'then':
+    - K&R style for placing 'then'
+      provided that <cmd> is short and simple
+      enough.
 
 	if <cmd>; then
 	    ...
