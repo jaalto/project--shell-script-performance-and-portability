@@ -131,12 +131,41 @@ TODO:
 
 TODO:
 
-# NEGLIGIBLE OR NO PERFORMANCE GAINS
+# MINOR OR NO PERFORMANCE GAINS
 
 According to the tests, there is not really a
 difference between the following examples. See
 the raw test results for details and further
 commentary.
+
+- The POSIX `$PWD' and `$OLDPWD' which are set by
+  cd(1)offer minor performance improvements vs
+  `$(pwd)'. Only in some rare shells (not bash, dash,
+  zsh, ksh93, pdks, mksh for instance) will pwd(1)
+  potentially give less stale information than `$PWD'
+  in some corner cases like following symlink vs
+  `/bin/pwd'.
+
+
+```
+	for dir in $list
+	do
+		cd "$dir" || continue
+		... do work
+		...
+		cd "$OLDPWD"
+	done
+
+	# instead of:
+
+	for dir in $list
+	do
+		olddir=$(pwd)
+		cd "$dir" || continue
+		... do work
+		...
+		cd "$olddir"
+	done
 
 - The Bash specific `[[ ]]` might offer
   a tad minuscle advantage.
@@ -150,7 +179,7 @@ commentary.
     [ -z "$var" ]    # archaic
 ```
 
-- There are no differences between these:
+- There are no real differences between these:
 
 ```
     : $((i++))       # POSIX
