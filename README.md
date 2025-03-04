@@ -52,9 +52,11 @@ each test case produced the fastest results.
   [awk(1)](https://www.gnu.org/software/gawk/)
   may be able to handle all.
   Program `awk` is *very* fast and
-  more efficient than perl(1) or python(1)
-  for many quite a many file manipulation
-  tasks.
+  more efficient than
+  [perl(1)](https://www.perl.org)
+  or
+  [python(1)](https://www.python.org)
+  for typical file manipulation tasks.
 
 ```
     cmd | awk '{...}'
@@ -64,7 +66,9 @@ each test case produced the fastest results.
     cmd | grep ... | sed ...
 ```
 
-- Use built-ins. Not binaries:
+- Use Shell
+  [built-ins](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html)
+  and not binaries:
 
 ```
     echo ...    # not /bin/echo
