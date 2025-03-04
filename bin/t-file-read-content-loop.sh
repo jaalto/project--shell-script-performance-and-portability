@@ -22,7 +22,7 @@
 
 . ./t-lib.sh ; f=$random_file
 
-t1()
+t1 ()
 {
     local -a array
     array=()
@@ -61,7 +61,7 @@ t2b ()
     done
 }
 
-t3()
+t3 ()
 {
     while read -r i
     do

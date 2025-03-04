@@ -24,7 +24,7 @@ AtExit ()
     rm --force "$copy"
 }
 
-t1()
+t1 ()
 {
     for i in $(seq $loop_max)
     do
@@ -32,7 +32,7 @@ t1()
     done
 }
 
-t2()
+t2 ()
 {
     # when called: $copy already exist (as it should)
 
@@ -44,7 +44,7 @@ t2()
     done
 }
 
-t3()
+t3 ()
 {
     for i in $(seq $loop_max)
     do

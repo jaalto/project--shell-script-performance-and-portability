@@ -30,7 +30,7 @@
 
 loop_max=${loop_count:-1000}
 
-t1()
+t1 ()
 {
     for i in {1..1000}
     do
@@ -38,7 +38,7 @@ t1()
     done
 }
 
-t2()
+t2 ()
 {
     for i in $(seq $loop_max)
     do
@@ -46,7 +46,7 @@ t2()
     done
 }
 
-t3()
+t3 ()
 {
     for ((i=0; i <= $loop_max; i++))
     do
@@ -54,7 +54,7 @@ t3()
     done
 }
 
-t4()
+t4 ()
 {
     i=0
     while [ $i -le $loop_max ]

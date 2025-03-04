@@ -34,7 +34,7 @@ Awk ()
     ' "$@"
 }
 
-t1()
+t1 ()
 {
     # GNU version has 'ENDFILE'
     awk '
@@ -44,7 +44,7 @@ t1()
     ' "$TMP/"* > /dev/null
 }
 
-t2()
+t2 ()
 {
     for i in "$TMP"/*
     do

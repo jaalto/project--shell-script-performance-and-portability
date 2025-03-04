@@ -13,13 +13,13 @@
 
 . ./t-lib.sh ; f=$random_file
 
-f1()
+f1 ()
 {
     result="return value"
     echo "$result"
 }
 
-f2()
+f2 ()
 {
     local -n retval=$1  # nameref attribute, a reference to variable
 
@@ -27,7 +27,7 @@ f2()
     retval="$result"
 }
 
-t1()
+t1 ()
 {
     val=""
 
@@ -37,7 +37,7 @@ t1()
     done
 }
 
-t2()
+t2 ()
 {
     val=""
 

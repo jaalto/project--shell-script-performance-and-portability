@@ -48,18 +48,18 @@ loop_max=${loop_max:-100}
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
 
-Warn()
+Warn ()
 {
     echo "$*" >&2
 }
 
-Die()
+Die ()
 {
     Warn "$*"
     exit 1
 }
 
-Verbose()
+Verbose ()
 {
     [ "$verbose" ] || return 0
     echo "$*"
@@ -70,7 +70,7 @@ IsCygwin ()
     [ -d /cygdrive/c ]
 }
 
-RandomWordsGibberish()
+RandomWordsGibberish ()
 {
     # - Create file with SIZE containing random words.
     # - Limit output to column 80.
@@ -82,7 +82,7 @@ RandomWordsGibberish()
         head --bytes="${1:-100k}"
 }
 
-RandomWordsDictionary()
+RandomWordsDictionary ()
 {
     if [ ! -e /usr/share/dict/words ]; then
         Die "ERROR: missing word dict. Debian: apt-get install wamerican"
@@ -131,17 +131,17 @@ RandomNumbersAwk ()
     }'
 }
 
-RandomNumbersPerl()
+RandomNumbersPerl ()
 {
     perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
 }
 
-RandomNumbersPython()
+RandomNumbersPython ()
 {
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
-t() # Run a test case
+t () # Run a test case
 {
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT

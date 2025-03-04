@@ -21,7 +21,7 @@ S='[^[:space:]]+'
 
 str="  this string  "
 
-trim_nameref()
+trim_nameref ()
 {
     local -n _retval=$1
 
@@ -29,7 +29,7 @@ trim_nameref()
     [[ $_retval =~ ^(.*$S)$s$ ]] && _retval=${BASH_REMATCH[1]}
 }
 
-trim()
+trim ()
 {
     var=$1
 
@@ -39,7 +39,7 @@ trim()
     echo "$var"
 }
 
-t1()
+t1 ()
 {
     for i in $(seq $loop_max)
     do
@@ -48,7 +48,7 @@ t1()
     done
 }
 
-t2()
+t2 ()
 {
     for i in $(seq $loop_max)
     do
@@ -56,7 +56,7 @@ t2()
     done
 }
 
-t3()
+t3 ()
 {
     for i in $(seq $loop_max)
     do

@@ -22,7 +22,7 @@
 
 tmp=t.tmp
 
-t1()
+t1 ()
 {
     for i in {1..100}
     do
@@ -30,7 +30,7 @@ t1()
     done
 }
 
-t2()
+t2 ()
 {
     for i in {1..100}
     do
@@ -38,7 +38,7 @@ t2()
     done
 }
 
-t()
+t ()
 {
     echo -n "# $1"
     time $1

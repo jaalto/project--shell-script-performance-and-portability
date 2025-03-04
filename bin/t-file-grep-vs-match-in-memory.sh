@@ -92,7 +92,7 @@ t1b ()
     done
 }
 
-t2()
+t2 ()
 {
     for i in $(seq $loop_max)
     do
@@ -100,7 +100,7 @@ t2()
     done
 }
 
-t3()
+t3 ()
 {
     for i in $(seq $loop_max)
     do
@@ -108,7 +108,7 @@ t3()
     done
 }
 
-t4()
+t4 ()
 {
     for i in $(seq $loop_max)
     do

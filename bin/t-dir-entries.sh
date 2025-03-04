@@ -50,7 +50,7 @@ AtExit ()
     rm -rf "$tmpdir"
 }
 
-t1()
+t1 ()
 {
     pwd=$PWD
     cd $tmpdir
@@ -59,7 +59,7 @@ t1()
 }
 
 
-t2()
+t2 ()
 {
     list=""
 
@@ -70,7 +70,7 @@ t2()
 }
 
 
-t3()
+t3 ()
 {
     ls -d -- $tmpdir/*/ > /dev/null
 }
