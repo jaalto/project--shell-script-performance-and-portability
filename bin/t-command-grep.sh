@@ -2,10 +2,10 @@
 #
 # Q: In grep, is option --fixed-strings faster?
 # A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
-# category: negligible
+# priority: 2
 #
 # Q: Is using parallel(1) with grep even faster?
-# A: Yes, parallel is effective (test file was 10 000 lines)
+# A: Yes, parallel is effective (1000 lines in test file)
 # category: medium
 #
 # t1pure     real   0m0.382s LANG=C --fixed-strings
@@ -17,8 +17,8 @@
 # t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
 #
 # GNU parallel(1). Split file into chunks and run grep(1) in parallel
-# for each chunk. Suprisingly the default test file with 10 000 lines
-# of numbers was enough to benefit from parallel processing.
+# for each chunk. Suprisingly the default test file from 1000 to 10000
+# lines was enough to benefit from parallel processing.
 #
 # t_parallel1 real  0m0.233s <defaults>
 # t_parallel2 real  0m0.300s --block-size 1k
@@ -28,7 +28,7 @@
 
 # can be set externally
 re=${re:-'ad'}
-size=${size:-10k}
+size=${size:-1k}
 
 dict=t.random.dictionary.$size
 f=$dict
