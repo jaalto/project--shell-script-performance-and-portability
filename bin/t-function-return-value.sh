@@ -31,7 +31,7 @@ t1 ()
 {
     val=""
 
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
         val=$(f1)
     done
@@ -41,7 +41,7 @@ t2 ()
 {
     val=""
 
-    for i in {1..100}
+    for i in $(seq $loop_max)
     do
         f2 val
     done
