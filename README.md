@@ -147,10 +147,11 @@ each test case produced the fastest results.
 
 - To split a string into an array, use `eval`,
   which is much faster than using a here-string.
-  This is because HERE STRING `<<<` uses a temporary
+  This is because
+  [Bash HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
+  `<<<` uses a temporary
   file or pipe (even slower), whereas
   `eval` operates entirely in memory.
-  See https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
 
 ```
     string=$(echo {1..100})
@@ -161,6 +162,15 @@ each test case produced the fastest results.
 
     # To see What Bash uses for HERE STRING
     bash -c 'ls -lL /proc/self/fd/0 <<<hello'
+```
+
+- Use
+  [GNU parallel(1)](https://www.gnu.org/software/parallel/)
+  to process files. This is suprisingly efective even
+  for files with only 1000 lines, compared to plain grep(1).
+
+```
+    parallel --pipe grep "$re" < "$file"
 ```
 
 # MINOR OR NO PERFORMANCE GAINS
