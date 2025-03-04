@@ -6,7 +6,7 @@
 #
 # Q: Is using parallel(1) with grep even faster?
 # A: Yes, parallel is effective (1000 lines in test file)
-# category: medium
+# priority: 5
 #
 # t1pure     real   0m0.382s LANG=C --fixed-strings
 # t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
