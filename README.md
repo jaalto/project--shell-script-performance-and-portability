@@ -9,6 +9,7 @@ See files:
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
 - The test cases and code in [bin/](./bin/)
 - [USAGE](./USAGE.md)
+- [CONTRIBUTING](./CONTRIBUTING)
 
 This project includes tests to determine the
 most efficient way to write shell script code.
