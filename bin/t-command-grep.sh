@@ -16,7 +16,7 @@
 
 # can be set externally
 re=${re:-'ad'}
-size=${size:-1k}
+size=${size:-10k}
 
 dict=t.random.dictionary.$size
 f=$dict
