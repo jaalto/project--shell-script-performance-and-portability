@@ -294,7 +294,6 @@ commentary.
 ```
 
 - With `grep(1)`, the use of
-  GNU `parallel(1)`
   [GNU parallel(1)](https://www.gnu.org/software/parallel/)
   makes things notably slower for typical file sizes.
   Otherwise, GNU `parallel` is excellent for making
