@@ -6,7 +6,7 @@ CODE NOTES
 
 	Q: <Test case descriptio in one sentence>
 	A: <Major results in one sentence>
-	category: <category>
+	priority: 0-10
 
 	<Performance reaults form time(1)>
 
