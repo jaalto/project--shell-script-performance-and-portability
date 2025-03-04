@@ -118,8 +118,8 @@ TODO:
 
 - To split a string into an array, use `eval`,
   which is much faster than using a here-string.
-  This is likely because `<<<` uses a temporary
-  file, whereas `eval` operates entirely in
+  This is because HERE STRING `<<<` uses a temporary
+  file or pipe, whereas `eval` operates entirely in
   memory.
 
 ```
@@ -127,6 +127,12 @@ TODO:
     eval 'array=($string)'
     # ... the following would be much slower
     read -ra array <<< "$string"
+
+	# In later Bash versions HERE STRING
+    # started using pipes (even slower) if data
+	# is small. See
+	https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
+	bash -c 'ls -lL /proc/self/fd/0 <<<hello'
 ```
 
 TODO:
