@@ -64,17 +64,17 @@ $(DOCDIR)/$(DOC):
 doc-brief: $(DOCDIR)/$(DOC)
 	$(GREP) "^($$|FILE:|# [QA]:)" $(DOCDIR)/$(DOC) > $(DOCDIR)/$(BRIEF)
 
-# clean - Remove generated doc files
+# clean - Delete generated doc files
 .PHONY: clean
 clean:
 	$(RM) $(DOCDIR)/*
 
-# distclean - Clean all generated files
+# distclean - Delete all generated files
 .PHONY: distclean
 distclean: clean
 	$(RM) bin/t.*
 
-# realclean - Clean totally all generated files
+# realclean - Delete totally all generated files
 .PHONY: realclean
 realclean: distclean
 
