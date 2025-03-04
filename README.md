@@ -168,8 +168,10 @@ each test case produced the fastest results.
   This is because
   [Bash HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a temporary
-  file or pipe (even slower), whereas
-  `eval` operates entirely in memory.
+  file or pipe (which is even slower),
+  whereas `eval` operates entirely in memory.
+  The pipe buffer behavor was introduced in
+  [Bash 5.1/c.](https://github.com/bminor/bash/blob/master/CHANGES)
 
 ```
     string=$(echo {1..100})
@@ -181,13 +183,6 @@ each test case produced the fastest results.
     # To see What Bash uses for HERE STRING
     bash -c 'ls -lL /proc/self/fd/0 <<<hello'
 ```
-
-# MINOR OR NO PERFORMANCE GAINS
-
-According to the tests, there is no practical
-difference between the following examples. See
-the raw test results for details and further
-commentary.
 
 - The POSIX `$PWD` and `$OLDPWD` which are set by
   cd(1)offer minor performance improvements vs
@@ -217,6 +212,13 @@ commentary.
 		cd "$olddir"
 	done
 ```
+
+# MINOR OR NO PERFORMANCE GAINS
+
+According to the tests, there is no practical
+difference between the following examples. See
+the raw test results for details and further
+commentary.
 
 - The Bash specific `[[ ]]` might offer
   a tad minuscle advantage.
@@ -292,7 +294,6 @@ commentary.
 ```
 
 - With `grep(1)`, the use of
-  GNU `parallel(1)`
   [GNU parallel(1)](https://www.gnu.org/software/parallel/)
   makes things notably slower for typical file sizes.
   Otherwise, GNU `parallel` is excellent for making
