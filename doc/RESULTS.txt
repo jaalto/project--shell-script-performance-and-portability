@@ -1,13 +1,31 @@
+FILE: t-command-grep-parallel.sh
+#! /bin/bash
+#
+# Q: Howabout grep(1) with GNU parallel(1)?
+# A: No, considerably slower in typical cases, use only with huge files.
+# priority: 1
+#
+# t0  real  0m0.005s grep baseline
+# t1a real  0m0.210s --block-size <default> --pipepart
+# t1b real  0m0.240s --block-size <default> (Linux 64k)
+# t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
+# t3  real  0m0.224s --block-size 32k
+#
+# Notes:
+#
+# Split file into chunks and run grep(1) in parallel
+# for each chunk.
+#
+# The grep(1) by itself is very fast. The startup time
+# of perl(1) is taking the toll with the parallel if the
+# file sizes are relatively small (test file: ~600 lines).
+
 FILE: t-command-grep.sh
 #! /bin/bash
 #
 # Q: In grep, is option --fixed-strings faster?
 # A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
-# category: negligible
-#
-# Q: Is using parallel(1) with grep even faster?
-# A: Yes, parallel is effective (test file was 10 000 lines)
-# category: medium
+# priority: 2
 #
 # t1pure     real   0m0.382s LANG=C --fixed-strings
 # t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
@@ -16,20 +34,37 @@ FILE: t-command-grep.sh
 #
 # t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
 # t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
+
+FILE: t-command-output-vs-process-substitution.sh
+#! /bin/bash
 #
-# GNU parallel(1). Split file into chunks and run grep(1) in parallel
-# for each chunk. Suprisingly the default test file with 10 000 lines
-# of numbers was enough to benefit from parallel processing.
+# Q: CMD | while vs while ... <(process substitution)
+# A: Identical. Use process substitution as it preserves variables in loop.
+# priority: 0
 #
-# t_parallel1 real  0m0.233s <defaults>
-# t_parallel2 real  0m0.300s --block-size 1k
-# t_parallel3 real  0m0.245s -N 1k (grep instance for every 1k lines)
+# t1 real    0m0.750s  cmd | while
+# t2 real    0m0.760s  process substitution
+#
+# Code:
+#
+# cmd | while read -r ... done      # t1
+# while read -r ... done < <(cmd)   # t2
+#
+# Notes:
+#
+# There is no practical or measurable difference.
+#
+# Process substitution is more general because the
+# `while` loop runs under the same environment, and
+# any variables defined or set will persist
+# afterward.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
 #! /bin/bash
 #
 # Q: How much is POSIX $PWD faster than command pwd(1)?
 # A: $PWD is about 7x faster considering pwd is bash built-in
+# priority: 4
 #
 # t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
 # t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir

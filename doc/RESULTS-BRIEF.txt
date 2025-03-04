@@ -1,8 +1,14 @@
+FILE: t-command-grep-parallel.sh
+# Q: Howabout grep(1) with GNU parallel(1)?
+# A: No, considerably slower in typical cases, use only with huge files.
+
 FILE: t-command-grep.sh
 # Q: In grep, is option --fixed-strings faster?
 # A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
-# Q: Is using parallel(1) with grep even faster?
-# A: Yes, parallel is effective (test file was 10 000 lines)
+
+FILE: t-command-output-vs-process-substitution.sh
+# Q: CMD | while vs while ... <(process substitution)
+# A: Identical. Use process substitution as it preserves variables in loop.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
 # Q: How much is POSIX $PWD faster than command pwd(1)?
