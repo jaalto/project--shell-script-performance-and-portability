@@ -67,7 +67,7 @@ Verbose()
 
 IsCygwin ()
 {
-    [ /cygdrive/c ]
+    [ -d /cygdrive/c ]
 }
 
 RandomWordsGibberish()
