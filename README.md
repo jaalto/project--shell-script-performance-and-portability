@@ -168,8 +168,10 @@ each test case produced the fastest results.
   This is because
   [Bash HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a temporary
-  file or pipe (even slower), whereas
-  `eval` operates entirely in memory.
+  file or pipe (which is even slower),
+  whereas `eval` operates entirely in memory.
+  The pipe buffer behavor was introduced in
+  [Bash 5.1/c.](https://github.com/bminor/bash/blob/master/CHANGES)
 
 ```
     string=$(echo {1..100})
