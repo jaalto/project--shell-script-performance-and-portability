@@ -1,13 +1,15 @@
 # -*- mode: makefile-gmake; -*-
 
+ifneq (,)
+    This makefile requires GNU Make.
+endif
+
 DOCDIR   = doc
 MAKEFILE = Makefile
-
 DOC      = RESULTS.txt
 BRIEF    = RESULTS-BRIEF.txt
 BIN_RUN  = run.sh
 BIN_DOC  = results.sh
-
 GREP     = grep --extended-regexp
 RM	 = rm --force
 
@@ -17,25 +19,24 @@ RM	 = rm --force
 .PHONY: all
 all: help
 
-# show - Show test results (!)
-.PHONY: show
-show:
-	@cd bin && \
-	./$(BIN_DOC) t-*
-
 # help - Display make targets
 .PHONY: help
 help:
 	@echo "# Synopsis: make <target>"
 	@$(GREP) '^# [^#-]+- ' $(MAKEFILE) | \
-	    sort | \
 	    awk '\
 	    { \
 		sub("^# ", ""); \
 		target = $$1; \
 		sub(target " +- +", ""); \
-		printf("%-8s %s\n", target, $$0); \
+		printf("%-12s %s\n", target, $$0); \
 	    }'
+
+# show - Show test results (!)
+.PHONY: show
+show:
+	@cd bin && \
+	./$(BIN_DOC) t-*
 
 # run - Run tests
 .PHONY: run
