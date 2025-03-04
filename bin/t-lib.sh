@@ -65,6 +65,11 @@ Verbose()
     echo "$*"
 }
 
+IsCygwin ()
+{
+    [ /cygdrive/c ]
+}
+
 RandomWordsGibberish()
 {
     # - Create file with SIZE containing random words.
