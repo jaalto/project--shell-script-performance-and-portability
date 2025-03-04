@@ -4,10 +4,6 @@
 # A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
-# Q: Is using parallel(1) with grep even faster?
-# A: Yes, parallel is effective (1000 lines in test file)
-# priority: 5
-#
 # t1pure     real   0m0.382s LANG=C --fixed-strings
 # t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
 # t1extended real   0m0.382s LANG=C --extended-regexp
@@ -15,14 +11,6 @@
 #
 # t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
 # t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
-#
-# GNU parallel(1). Split file into chunks and run grep(1) in parallel
-# for each chunk. Suprisingly with test files ranging from 1000 to 10000
-# lines was enough to benefit from parallel processing.
-#
-# t_parallel1 real  0m0.233s <defaults>
-# t_parallel2 real  0m0.300s --block-size 1k
-# t_parallel3 real  0m0.245s -N 1k (grep instance for every 1k lines)
 
 . ./t-lib.sh # ; f=$random_file
 
@@ -62,7 +50,7 @@ t1utf8 ()
     done
 }
 
-t1()
+t1 ()
 {
     i=1
     while [ $i -le $loop_max ]
@@ -103,21 +91,6 @@ t2icasee ()
     done
 }
 
-t_parallel1()
-{
-    parallel --pipe grep --quiet --fixed-strings "$re" < $f
-}
-
-t_parallel2()
-{
-    parallel --pipe --block-size 1k grep --quiet --fixed-strings "$re" < $f
-}
-
-t_parallel3()
-{
-    parallel --pipe --max-replace-args 1k grep --quiet --fixed-strings "$re" < $f
-}
-
 trap AtExit EXIT HUP INT QUIT TERM
 
 Setup
@@ -130,14 +103,5 @@ t t1perl
 
 t t2icasef
 t t2icasee
-
-if ! command -v parallel > /dev/null; then
-    Warn "INFO: no parallel(1). Skipping tests."
-else
-    # Run parallel tests
-    t t_parallel1
-    t t_parallel2
-    t t_parallel3
-fi
 
 # End of file
