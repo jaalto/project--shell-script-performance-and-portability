@@ -66,7 +66,9 @@ each test case produced the fastest results.
     cmd | grep ... | sed ...
 ```
 
-- Use built-ins. Not binaries:
+- Use Shell
+  [built-ins](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html)
+  and not binaries:
 
 ```
     echo ...    # not /bin/echo
