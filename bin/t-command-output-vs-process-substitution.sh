@@ -2,6 +2,7 @@
 #
 # Q: CMD | while vs while ... <(process substitution)
 # A: Identical. Use process substitution as it preserves variables in loop.
+# priority: 0
 #
 # t1 real    0m0.750s  cmd | while
 # t2 real    0m0.760s  process substitution
