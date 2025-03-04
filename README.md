@@ -56,8 +56,7 @@ each test case produced the fastest results.
   [perl(1)](https://www.perl.org)
   or
   [python(1)](https://www.python.org)
-  for many quite a many file manipulation
-  tasks.
+  for typical file manipulation tasks.
 
 ```
     cmd | awk '{...}'
