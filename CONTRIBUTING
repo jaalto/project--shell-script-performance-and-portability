@@ -54,8 +54,9 @@ CODE NOTES
     - Use readable --long options everywhere.
 
     - Do not "$quote"; unless absolutely needed.
-      No 'local' variables either unledd needed.
-      There are Test Cases, not Procuction Code.
+      No 'local' for variable unless needed.
+      Remember, there are <test cases> and
+      not Procuction Code.
 
     - No need to lint using shellcheck(1) etc.
       The <test case> files are intended to be as
