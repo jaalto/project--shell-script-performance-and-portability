@@ -184,13 +184,6 @@ each test case produced the fastest results.
     bash -c 'ls -lL /proc/self/fd/0 <<<hello'
 ```
 
-# MINOR OR NO PERFORMANCE GAINS
-
-According to the tests, there is no practical
-difference between the following examples. See
-the raw test results for details and further
-commentary.
-
 - The POSIX `$PWD` and `$OLDPWD` which are set by
   cd(1)offer minor performance improvements vs
   `$(pwd)`. Only in some rare shells (not bash, dash,
@@ -219,6 +212,13 @@ commentary.
 		cd "$olddir"
 	done
 ```
+
+# MINOR OR NO PERFORMANCE GAINS
+
+According to the tests, there is no practical
+difference between the following examples. See
+the raw test results for details and further
+commentary.
 
 - The Bash specific `[[ ]]` might offer
   a tad minuscle advantage.
