@@ -52,7 +52,10 @@ each test case produced the fastest results.
   [awk(1)](https://www.gnu.org/software/gawk/)
   may be able to handle all.
   Program `awk` is *very* fast and
-  more efficient than perl(1) or python(1)
+  more efficient than
+  [perl(1)](https://www.perl.org)
+  or
+  [python(1)](https://www.python.org)
   for many quite a many file manipulation
   tasks.
 
