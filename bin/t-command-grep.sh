@@ -17,7 +17,7 @@
 # t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
 #
 # GNU parallel(1). Split file into chunks and run grep(1) in parallel
-# for each chunk. Suprisingly the default test file from 1000 to 10000
+# for each chunk. Suprisingly with test files ranging from 1000 to 10000
 # lines was enough to benefit from parallel processing.
 #
 # t_parallel1 real  0m0.233s <defaults>
