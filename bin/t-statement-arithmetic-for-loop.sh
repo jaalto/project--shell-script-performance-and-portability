@@ -32,7 +32,7 @@ loop_max=${loop_count:-1000}
 
 t1 ()
 {
-    for i in {1..1000}
+    for i in $(seq $loop_max)
     do
         item=$i
     done
