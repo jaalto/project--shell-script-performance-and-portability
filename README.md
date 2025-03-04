@@ -76,10 +76,10 @@ each test case produced the fastest results.
     [ ... ]     # not: /bin/test
 ```
 
-- In functions, using nameref (Bash) to return a
-  value is about 40 times faster than `ret=$(fn)`.
-  Use this:
-
+- In functions, using Bash
+  [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
+  to return a value is about 40 times faster
+  than `ret=$(fn)`.
 
 ```
     fn()
@@ -97,7 +97,9 @@ each test case produced the fastest results.
 
 - For line-by-line handling, read the file
   into an array and then loop through the array.
-  If you're wondering `readarray` vs `mapfile`,
+  If you're wondering
+  [readarray](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
+  vs `mapfile`,
   there is no differende.
 
 ```
@@ -119,13 +121,25 @@ each test case produced the fastest results.
 - To process only certain lines, use a prefilter
   with grep(1) instead of reading the whole file
   into a loop and then selecting lines. Bash loops
-  are slow in general..
+  are slow in general. The
+  [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html) is
 
 ```
-  while read -r ...
-  do
-          ...
-  done < <(grep -E "$re" "$file")
+    while read -r ...
+    do
+        ...
+    done < <(grep -E "$re" "$file")
+
+    # Not like this
+    while read -r ...
+    do
+       if [[ ! <match> ]]; then
+           continue
+       fi
+
+       ...
+    done < "$file"
+
 ```
 
   That will be much faster than excluding or
@@ -252,6 +266,28 @@ commentary.
     while [ "$i" -le "$N" ]
     do
 	    i=$((i + 1))
+    done
+```
+
+- There is no performance difference between a
+  regular loop and a
+  [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
+  loop. However, the latter is more general, as
+  any variable set during the loop will persist
+  after the loop because all statements run in
+  the same environment.
+
+```
+    while read -r ...
+    do
+        ...
+    done < <(command)
+
+    # while is not in the same environment
+    command |
+    while read -r ...
+    do
+        ...
     done
 ```
 
