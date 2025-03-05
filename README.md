@@ -110,7 +110,7 @@ each test case produced the fastest results.
 ```
     readarray -t array < file
 
-	# About 2 times faster
+    # About 2 times faster
     for i in "${array[@]}"
     do
         ...
