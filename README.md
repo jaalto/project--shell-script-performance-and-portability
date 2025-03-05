@@ -262,7 +262,7 @@ commentary.
 
 ```
 
-    N=1    # Not used here
+    N=1
     M=100
 
     for i in {1..100}  # Bash
@@ -275,11 +275,12 @@ commentary.
         ...
     done
 
-    for ((i=0; i < $M; i++)) # Bash
+    for ((i=$N; i <= $M; i++)) # Bash
     do
         ...
     done
 
+    i=$N
     while [ "$i" -le "$M" ] # POSIX
     do
         i=$((i + 1))
