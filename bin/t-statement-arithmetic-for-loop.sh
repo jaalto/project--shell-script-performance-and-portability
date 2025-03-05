@@ -48,7 +48,7 @@ t2 ()
 
 t3 ()
 {
-    for ((i=0; i <= $loop_max; i++))
+    for ((i=1; i <= $loop_max; i++))
     do
         item=$i
     done
@@ -56,7 +56,7 @@ t3 ()
 
 t4 ()
 {
-    i=0
+    i=1
     while [ $i -le $loop_max ]
     do
         i=$((i + 1))  # POSIX
