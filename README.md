@@ -124,7 +124,8 @@ each test case produced the fastest results.
 ```
 
 - To process only certain lines, use a prefilter
-  with grep instead of reading the whole file
+  with grep (about 2 times faster) instead of
+  reading the whole file
   into a loop and then selecting lines. Bash loops
   are generally slow. The
   [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
