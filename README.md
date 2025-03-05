@@ -171,62 +171,33 @@ each test case produced the fastest results.
 # MODERATE PERFORMANCE GAINS
 
 - To split a string into an array, use `eval`,
-  which is much faster than using a here-string.
-  This is because
-  [Bash HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
-  `<<<` uses a temporary
-  file or pipe (which is even slower),
-  whereas `eval` operates entirely in memory.
-  The pipe buffer behavor was introduced in
+  which is 2-3 times faster than using a
+  here-string. This is because Bash
+  [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
+  `<<<` uses a
+  pipe or temporary file, whereas `eval`
+  operates entirely in memory. The pipe
+  buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
   See [code](./bin/t-variable-array-split-string.sh)
 
 ```
+    # Fastest
     string=$(echo {1..100})
     eval 'array=($string)'
 
     # Much slower
     read -ra array <<< "$string"
 
-    # To see What Bash uses for HERE STRING
+    # To see what Bash uses for HERE STRING
     bash -c 'ls -lL /proc/self/fd/0 <<<hello'
 ```
 
-- The POSIX `$PWD` and `$OLDPWD` which are set by
-  `cd` offer minor performance improvements vs
-  `$(pwd)`. Only in some rare shells (not bash, dash,
-  zsh, ksh93, pdks, mksh for instance) will `pwd`
-  potentially give less stale information than `$PWD`
-  in some corner cases like following symlink vs
-  `/bin/pwd`.
-  See [code](./bin/t-command-pwd-vs-variable-pwd.sh)
+# MINOR PERFORMANCE GAINS
 
-```
-	for dir in $list
-	do
-		cd "$dir" || continue
-		... do work
-		...
-		cd "$OLDPWD"
-	done
-
-	# instead of:
-
-	for dir in $list
-	do
-		olddir=$(pwd)
-		cd "$dir" || continue
-		... do work
-		...
-		cd "$olddir"
-	done
-```
-
-# MINOR OR NO PERFORMANCE GAINS
-
-According to the tests, there is no practical
-difference between the following examples. See
-the raw test results for details and further
+According to the tests, note that none of
+these offer real practical benefits. See the
+raw test results for details and further
 commentary.
 
 - One might think that choosing optimized `grep`
@@ -250,8 +221,11 @@ commentary.
 	LANG=C grep <any of above> --ignore-case ...
 ```
 
-- The Bash specific `[[ ]]` might offer
-  a tad minuscle advantage.
+- The Bash-specific `[[ ]]` might offer a
+  minuscule advantage but only in loops of
+  10,000 iterations. Unless the safeguards
+  provided by Bash `[[ ]]` are important, the
+  POSIX test will do fine.
   See [code](./bin/t-statement-if-test-posix-vs-bash.sh)
 
 ```
@@ -260,10 +234,11 @@ commentary.
 
     [ ! "$var" ]     # POSIX
     [[ ! $var ]]     # Bash
-    [ -z "$var" ]    # archaic
+    [ -z "$var" ]    # archaic (POSIX)
 ```
 
 - There are no practical differences between these.
+  The POSIX statement will do fine.
   See [code](./bin/t-statement-arithmetic-increment.sh)
 
 ```
@@ -273,36 +248,43 @@ commentary.
     let i++          # Bash
 ```
 
-- The Bash-specific `{1..N}` might offer a
-  minuscule advantage, but it's impractical
-  because `N` cannot be parameterized.
-  Surprisingly, a simple and elegant winner by a
-  hair is `$(seq N)`. The POSIX `while`-loop
-  variant was slightly slower in all subsequent
-  tests.
+- The Bash-specific `{N..M}` might offer a
+  minuscule advantage, but it may be impractical
+  because `N..M` cannot be parameterized.
+  Surprisingly, the simple and elegant winner by
+  a hair is `$(seq M)`, even though it calls a
+  subshell with a binary. We can only guess that
+  the reason is that any kind of looping,
+  increments, and tests are inherently slow. The
+  POSIX `while` loop variant was slightly slower
+  in all subsequent tests.
   See [code](./bin/t-statement-arithmetic-for-loop.sh)
 
 ```
-    for i in {1..100}
+    for i in {1..100}  # Bash
     do
 	    ...
     done
 
-    for i in $(seq $N)
+    for i in $(seq $N) # binary, still fast
     do
 	    ...
     done
 
-    for ((i=0; i < $N; i++))
+    for ((i=0; i < $N; i++)) # Bash
     do
 	    ...
     done
 
-    while [ "$i" -le "$N" ]
+    while [ "$i" -le "$N" ] # POSIX
     do
 	    i=$((i + 1))
     done
 ```
+
+# NO PERFORMANCE GAINS
+
+None of these offer any advantages to speed up shell scripts.
 
 - There is no performance difference between a
   regular loop and a
