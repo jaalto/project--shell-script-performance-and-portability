@@ -75,9 +75,9 @@ each test case produced the fastest results.
   and not binaries:
 
 ```
-    echo ...    # not /bin/echo
-    printf ...  # not /bin/printf
-    [ ... ]     # not: /bin/test
+    echo ...    # not /usr//bin/echo
+    printf ...  # not /usr/bin/printf
+    [ ... ]     # not: /usr//bin/test
 ```
 
 - In functions, using Bash
