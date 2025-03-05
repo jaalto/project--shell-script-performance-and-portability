@@ -129,7 +129,7 @@ each test case produced the fastest results.
   is more general because variables persist after the loop,
   whereas the `<loop>` in the `while | <loop>` runs in
   a separate shell due to the pipe.
-  See [code](./bim/t-command-output-vs-process-substitution.sh)
+  See [code](./bin/t-command-output-vs-process-substitution.sh)
 
 ```
     while read -r ...
@@ -153,7 +153,7 @@ each test case produced the fastest results.
   string and use Bash regular expression tests
   on that string. This is much more efficient
   than calling the external `grep` command.
-  See [code](./bim/t-file-grep-vs-match-in-memory.sh)
+  See [code](./bin/t-file-grep-vs-match-in-memory.sh)
 
 ```
    # increase 100k buffer if needed
@@ -177,7 +177,7 @@ each test case produced the fastest results.
   whereas `eval` operates entirely in memory.
   The pipe buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
-  See [code](./bim/t-variable-array-split-string.sh)
+  See [code](./bin/t-variable-array-split-string.sh)
 
 ```
     string=$(echo {1..100})
@@ -197,7 +197,7 @@ each test case produced the fastest results.
   potentially give less stale information than `$PWD`
   in some corner cases like following symlink vs
   `/bin/pwd`.
-  See [code](./bim/t-command-pwd-vs-variable-pwd.sh)
+  See [code](./bin/t-command-pwd-vs-variable-pwd.sh)
 
 ```
 	for dir in $list
@@ -237,7 +237,7 @@ commentary.
   `--ignore-case` might improve performance, at least
   according to some StackOverflow discussions with
   huge data files.
-  See [code](./bim/t-command-grep.sh)
+  See [code](./bin/t-command-grep.sh)
 
 ```
     # The same performance. Regexp engine
@@ -250,7 +250,7 @@ commentary.
 
 - The Bash specific `[[ ]]` might offer
   a tad minuscle advantage.
-  See [code](./bim/t-statement-if-test-posix-vs-bash.sh)
+  See [code](./bin/t-statement-if-test-posix-vs-bash.sh)
 
 ```
     [ "$var" = "1" ] # POSIX
@@ -262,7 +262,7 @@ commentary.
 ```
 
 - There are no practical differences between these.
-  See [code](./bim/t-statement-arithmetic-increment.sh)
+  See [code](./bin/t-statement-arithmetic-increment.sh)
 
 ```
     i=$((i + 1))     # POSIX
@@ -278,7 +278,7 @@ commentary.
   hair is `$(seq N)`. The POSIX `while`-loop
   variant was slightly slower in all subsequent
   tests.
-  See [code](./bim/t-statement-arithmetic-for-loop.sh)
+  See [code](./bin/t-statement-arithmetic-for-loop.sh)
 
 ```
     for i in {1..100}
@@ -309,7 +309,7 @@ commentary.
   any variable set during the loop will persist
   after the loop because all statements run in
   the same environment.
-  See [code](./bim/t-command-output-vs-process-substitution.sh)
+  See [code](./bin/t-command-output-vs-process-substitution.sh)
 
 ```
     while read -r ...
