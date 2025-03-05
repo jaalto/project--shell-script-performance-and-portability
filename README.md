@@ -158,8 +158,8 @@ each test case produced the fastest results.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh)
 
 ```
-   # Suppose 100k buffer is enough
-   read -N$((100 * 1000)) < "$file"
+   # Suppose 100kiB buffer is enough
+   read -N$((100 * 1024)) < "$file"
 
    if [[ $REPLY =~ $regexp1 ]]; then
        ...
