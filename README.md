@@ -100,6 +100,24 @@ each test case produced the fastest results.
     fn ret "arg"
 ```
 
+- It is about 10 times faster to read a file into
+  memory as a string and use Bash regular
+  expression tests on that string. This is much
+  more efficient than calling the external
+  `grep` command.
+  See [code](./bin/t-file-grep-vs-match-in-memory.sh).
+
+```
+   # Suppose 100 KiB buffer is enough
+   read -N$((100 * 1024)) < "$file"
+
+   if [[ $REPLY =~ $regexp1 ]]; then
+       ...
+   elif [[ $REPLY =~ $regexp2 ]]; then
+       ...
+   fi
+```
+
 - For line-by-line handling, read the file into an
   array and then loop through the array. If you're
   wondering about
@@ -150,23 +168,6 @@ each test case produced the fastest results.
        ...
     done < "$file"
 
-```
-
-- It is faster to read a file into memory as a
-  string and use Bash regular expression tests
-  on that string. This is much more efficient
-  than calling the external `grep` command.
-  See [code](./bin/t-file-grep-vs-match-in-memory.sh).
-
-```
-   # Suppose 100 KiB buffer is enough
-   read -N$((100 * 1024)) < "$file"
-
-   if [[ $REPLY =~ $regexp1 ]]; then
-       ...
-   elif [[ $REPLY =~ $regexp2 ]]; then
-       ...
-   fi
 ```
 
 # MODERATE PERFORMANCE GAINS
