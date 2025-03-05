@@ -36,11 +36,9 @@
 # between cases "t1a" and "t2b" is probably due to
 # the Kernel's file cache.
 
-[ "${loop_max:+user}" = "user" ] && loop_count=$loop_max
-
 . ./t-lib.sh ; f=$random_file
 
-loop_max=${loop_count:-10}
+loop_max=${loop_max:-${loop_count:-10}}
 
 t1a ()
 {
