@@ -326,16 +326,18 @@ commentary.
 ```
 
 - With `grep`, the use of
-  [GNU parallel](https://www.gnu.org/software/parallel/)
+  [GNU parallel](https://www.gnu.org/software/parallel/),
+  a `perl` script,
   makes things notably slower for typical file sizes.
   Otherwise, GNU `parallel` is excellent for making
   full use of multiple cores. The idea of splitting a
   file into chunks of lines and running the search in
   parallel is intriguing, but the overhead of
-  starting `perl` is orders of magnitude more
-  expensive compared to a single-process `grep`.
-  In cases where the file size is in the tens of
-  megabytes, GNU `parallel` can help speed things up.
+  starting perl with `parallel` is orders of magnitude more
+  expensive compared to `grep` binary.
+  Based on StackOverflow discussions, if file sizes are
+  in the tens of megabytes, GNU `parallel` can help
+  speed things up.
   See [code](./bin/t-command-grep-parallel.sh)
 
 ```
