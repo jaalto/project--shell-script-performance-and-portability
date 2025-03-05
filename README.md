@@ -225,7 +225,7 @@ commentary.
   minuscule advantage but only in loops of
   10,000 iterations. Unless the safeguards
   provided by Bash `[[ ]]` are important, the
-  POSIX test will do fine.
+  POSIX tests will do fine.
   See [code](./bin/t-statement-if-test-posix-vs-bash.sh).
 
 ```
