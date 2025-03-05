@@ -2,6 +2,7 @@
 #
 # Q: Fastest to get list of dirs: for vs compgen vs ls -d
 # A: In general, simple ls(1) will do fine. No big differences.
+# priority:
 #
 # for 20 directories:
 #

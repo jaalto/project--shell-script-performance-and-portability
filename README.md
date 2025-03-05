@@ -12,10 +12,12 @@ See files:
 - [CONTRIBUTING](./CONTRIBUTING)
 
 This project includes tests to determine the
-most efficient way to write shell script code.
+most efficient way to write shell script.
 
-Consider the raw `time(1)` results only as
-guidance, as they reflect the system used.
+Consider the raw
+[`time`](https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words)
+results only as guidance, as they reflect only
+the system used at the time of testing.
 Instead, compare the relative order in which
 each test case produced the fastest results.
 
@@ -36,7 +38,7 @@ each test case produced the fastest results.
 - To report bugs:
   see homepage.
 
-- Source code repository:
+- Source repository:
   see homepage.
 
 - Depends:
@@ -48,16 +50,15 @@ each test case produced the fastest results.
 
 # MAJOR PERFORMANCE GAINS
 
-- Avoid extra processes at all costs.
-  Instead, a single
-  [awk(1)](https://www.gnu.org/software/gawk/)
-  may be able to handle all.
-  Program `awk` is *very* fast and
+- Minimize extra processes as much as possible.
+  In most cases, a single
+  [awk](https://www.gnu.org/software/gawk/)
+  can handle all of `sed`, `cut`, `grep` etc.
+  chains. The `awk` program is *very* fast and
   more efficient than
-  [perl(1)](https://www.perl.org)
+  [perl](https://www.perl.org)
   or
-  [python(1)](https://www.python.org)
-  for typical file manipulation tasks.
+  [python](https://www.python.org).
 
 ```
     cmd | awk '{...}'
@@ -81,6 +82,7 @@ each test case produced the fastest results.
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value is about 40 times faster
   than `ret=$(fn)`.
+  See [code](./bin/t-function-return-value.sh)
 
 ```
     fn()
@@ -96,12 +98,12 @@ each test case produced the fastest results.
     fn ret "arg"
 ```
 
-- For line-by-line handling, read the file
-  into an array and then loop through the array.
-  If you're wondering
-  [readarray](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
-  vs `mapfile`,
-  there is no differende.
+- For line-by-line handling, read the file into an
+  array and then loop through the array. If you're
+  wondering about
+  [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
+  vs `mapfile`, there is no difference.
+  See [code](./bin/t-file-read-content-loop.sh)
 
 ```
     readarray -t array < file
@@ -120,10 +122,13 @@ each test case produced the fastest results.
 ```
 
 - To process only certain lines, use a prefilter
-  with grep(1) instead of reading the whole file
+  with grep instead of reading the whole file
   into a loop and then selecting lines. Bash loops
-  are slow in general. The
-  [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html) is
+  are generally slow. The
+  [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
+  is more general because variables persist after the loop,
+  whereas the `<loop>` in the `while | <loop>` runs in
+  a separate shell due to the pipe.
 
 ```
     while read -r ...
@@ -131,7 +136,7 @@ each test case produced the fastest results.
         ...
     done < <(grep -E "$re" "$file")
 
-    # Not like this
+    # Slightly slower
     while read -r ...
     do
        if [[ ! <match> ]]; then
@@ -143,17 +148,14 @@ each test case produced the fastest results.
 
 ```
 
-  That will be much faster than excluding or
-  picking lines inside loop with `contine` or
-  `if...fi`.
-
 - It is faster to read a file into memory as a
   string and use Bash regular expression tests
   on that string. This is much more efficient
-  than calling the external `grep(1)` command.
+  than calling the external `grep` command.
 
 ```
-   read -N100000 < "$file"
+   # increase 100k buffer if needed
+   read -N$((100 * 1000)) < "$file"
 
    if [[ $REPLY =~ $regexp1 ]]; then
        ...
@@ -186,12 +188,13 @@ each test case produced the fastest results.
 ```
 
 - The POSIX `$PWD` and `$OLDPWD` which are set by
-  cd(1)offer minor performance improvements vs
+  `cd` offer minor performance improvements vs
   `$(pwd)`. Only in some rare shells (not bash, dash,
-  zsh, ksh93, pdks, mksh for instance) will pwd(1)
+  zsh, ksh93, pdks, mksh for instance) will `pwd`
   potentially give less stale information than `$PWD`
   in some corner cases like following symlink vs
   `/bin/pwd`.
+  See [code](./bim/t-command-pwd-vs-variable-pwd.sh)
 
 ```
 	for dir in $list
@@ -221,6 +224,27 @@ difference between the following examples. See
 the raw test results for details and further
 commentary.
 
+- One might think that choosing optimized `grep`
+  options would make a difference. According to the
+  benchmarks for typical files, they don't:
+  in practice, performance is nearly identical even with the ignore case
+  option included.
+  Nonetheless, there may be cases where selecting
+  `LANG=C`, using `--fixed-strings`, and avoiding
+  `--ignore-case` might improve performance, at least
+  according to some StackOverflow discussions with
+  huge data files.
+  See [code](./bim/t-command-grep.sh)
+
+```
+    # The same performance. Regexp engine
+	# does not seem to be the bottleneck
+	LANG=C grep --fixed-strings ...
+	LANG=C grep --extended-regexp ...
+	LANG=C grep --perl-regexp ...
+	LANG=C grep <any of above> --ignore-case ...
+```
+
 - The Bash specific `[[ ]]` might offer
   a tad minuscle advantage.
 
@@ -233,7 +257,7 @@ commentary.
     [ -z "$var" ]    # archaic
 ```
 
-- There are no real differences between these:
+- There are no practical differences between these:
 
 ```
     i=$((i + 1))     # POSIX
@@ -279,6 +303,7 @@ commentary.
   any variable set during the loop will persist
   after the loop because all statements run in
   the same environment.
+  See [code](./bim/t-command-output-vs-process-substitution.sh)
 
 ```
     while read -r ...
@@ -294,18 +319,18 @@ commentary.
     done
 ```
 
-- With `grep(1)`, the use of
-  [GNU parallel(1)](https://www.gnu.org/software/parallel/)
+- With `grep`, the use of
+  [GNU parallel](https://www.gnu.org/software/parallel/)
   makes things notably slower for typical file sizes.
   Otherwise, GNU `parallel` is excellent for making
   full use of multiple cores. The idea of splitting a
   file into chunks of lines and running the search in
   parallel is intriguing, but the overhead of
   starting `perl` is orders of magnitude more
-  expensive compared to a single-process `grep(1)`.
+  expensive compared to a single-process `grep`.
   In cases where the file size is in the tens of
   megabytes, GNU `parallel` can help speed things up.
-
+  See [code](./bin/t-command-grep-parallel.sh)
 
 ```
     parallel --pipepart grep "$re" < "$big_file"
@@ -314,7 +339,7 @@ commentary.
 # RANDOM NOTES
 
 See the
-[bash(1)](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
+[Bash](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
 manual page how to use `time`
 command to display results in different formats:
 
