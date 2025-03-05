@@ -84,7 +84,7 @@ each test case produced the fastest results.
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value is about 40 times faster
   than `ret=$(fn)`.
-  See [code](./bin/t-function-return-value.sh)
+  See [code](./bin/t-function-return-value.sh).
 
 ```
     fn()
@@ -105,7 +105,7 @@ each test case produced the fastest results.
   wondering about
   [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
   vs `mapfile`, there is no difference.
-  See [code](./bin/t-file-read-content-loop.sh)
+  See [code](./bin/t-file-read-content-loop.sh).
 
 ```
     readarray -t array < file
@@ -131,7 +131,7 @@ each test case produced the fastest results.
   is more general because variables persist after the loop,
   whereas the `<loop>` in the `while | <loop>` runs in
   a separate shell due to the pipe.
-  See [code](./bin/t-command-output-vs-process-substitution.sh)
+  See [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```
     while read -r ...
@@ -155,7 +155,7 @@ each test case produced the fastest results.
   string and use Bash regular expression tests
   on that string. This is much more efficient
   than calling the external `grep` command.
-  See [code](./bin/t-file-grep-vs-match-in-memory.sh)
+  See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
    # Suppose 100kiB buffer is enough
@@ -179,7 +179,7 @@ each test case produced the fastest results.
   operates entirely in memory. The pipe
   buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
-  See [code](./bin/t-variable-array-split-string.sh)
+  See [code](./bin/t-variable-array-split-string.sh).
 
 ```
     # Fastest
@@ -210,7 +210,7 @@ commentary.
   `--ignore-case` might improve performance, at least
   according to some StackOverflow discussions with
   huge data files.
-  See [code](./bin/t-command-grep.sh)
+  See [code](./bin/t-command-grep.sh).
 
 ```
     # The same performance. Regexp engine
@@ -226,7 +226,7 @@ commentary.
   10,000 iterations. Unless the safeguards
   provided by Bash `[[ ]]` are important, the
   POSIX test will do fine.
-  See [code](./bin/t-statement-if-test-posix-vs-bash.sh)
+  See [code](./bin/t-statement-if-test-posix-vs-bash.sh).
 
 ```
     [ "$var" = "1" ] # POSIX
@@ -239,7 +239,7 @@ commentary.
 
 - There are no practical differences between these.
   The POSIX statement will do fine.
-  See [code](./bin/t-statement-arithmetic-increment.sh)
+  See [code](./bin/t-statement-arithmetic-increment.sh).
 
 ```
     i=$((i + 1))     # POSIX
@@ -258,7 +258,7 @@ commentary.
   increments, and tests are inherently slow. The
   POSIX `while` loop variant was slightly slower
   in all subsequent tests.
-  See [code](./bin/t-statement-arithmetic-for-loop.sh)
+  See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
 ```
     for i in {1..100}  # Bash
@@ -293,7 +293,7 @@ None of these offer any advantages to speed up shell scripts.
   any variable set during the loop will persist
   after the loop because all statements run in
   the same environment.
-  See [code](./bin/t-command-output-vs-process-substitution.sh)
+  See [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```
     while read -r ...
@@ -322,7 +322,7 @@ None of these offer any advantages to speed up shell scripts.
   Based on StackOverflow discussions, if file sizes are
   in the tens of megabytes, GNU `parallel` can help
   speed things up.
-  See [code](./bin/t-command-grep-parallel.sh)
+  See [code](./bin/t-command-grep-parallel.sh).
 
 ```
     parallel --pipepart grep "$re" < "$big_file"
