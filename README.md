@@ -77,7 +77,7 @@ each test case produced the fastest results.
 ```
     echo ...    # not /usr//bin/echo
     printf ...  # not /usr/bin/printf
-    [ ... ]     # not: /usr//bin/test
+    [ ... ]     # not /usr//bin/test
 ```
 
 - In functions, using Bash
@@ -158,7 +158,7 @@ each test case produced the fastest results.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh)
 
 ```
-   # increase 100k buffer if needed
+   # Suppose 100k buffer is enough
    read -N$((100 * 1000)) < "$file"
 
    if [[ $REPLY =~ $regexp1 ]]; then
