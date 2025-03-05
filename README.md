@@ -116,8 +116,7 @@ each test case produced the fastest results.
         ...
     done
 
-    # Much slower
-
+    # Slower
     while read -r ...
     do
         ...
