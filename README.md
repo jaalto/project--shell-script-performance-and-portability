@@ -54,11 +54,13 @@ each test case produced the fastest results.
   In most cases, a single
   [awk](https://www.gnu.org/software/gawk/)
   can handle all of `sed`, `cut`, `grep` etc.
-  chains. The `awk` program is *very* fast and
-  more efficient than
+  chains. The `awk` binary program is *very*
+  fast and more efficient than
   [perl](https://www.perl.org)
   or
-  [python](https://www.python.org).
+  [python](https://www.python.org)
+  scripts where startup time and higher
+  memory consumption is a factor.
 
 ```
     cmd | awk '{...}'
