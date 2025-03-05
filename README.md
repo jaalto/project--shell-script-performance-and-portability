@@ -118,9 +118,9 @@ each test case produced the fastest results.
    fi
 ```
 
-- For line-by-line handling, read the file into an
-  array and then loop through the array. If you're
-  wondering about
+- It is about 2 times faster to for line-by-line
+  handling to read the file into an array and then
+  loop through the array. If you're wondering about
   [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
   vs `mapfile`, there is no difference.
   See [code](./bin/t-file-read-content-loop.sh).
@@ -128,7 +128,6 @@ each test case produced the fastest results.
 ```
     readarray -t array < file
 
-    # About 2 times faster
     for i in "${array[@]}"
     do
         ...
