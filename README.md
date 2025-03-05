@@ -48,7 +48,21 @@ each test case produced the fastest results.
   `make` (any version). Used as
   a frontend to call utilities.
 
-# MAJOR PERFORMANCE GAINS
+# GENERAL ADVICE
+
+- If you run scripts on many small files, set
+  up a RAM disk and copy the files to it. This
+  can lead to massive speed gains. See
+  [tmpfs](https://en.wikipedia.org/wiki/Tmpfs),
+  which allows you to set a size limit, unlike
+  the memory-hogging
+  [ramfs](https://wiki.debian.org/ramfs),
+  which can fill all available memory and
+  potentially halt your server.
+
+- If you know the files beforehand, preload them
+  into memory. This can also lead to massive
+  speed gains. See [vmtouch](https://hoytech.com/vmtouch/).
 
 - Minimize extra processes as much as possible.
   In most cases, a single
@@ -79,6 +93,8 @@ each test case produced the fastest results.
     printf ...  # not /usr/bin/printf
     [ ... ]     # not /usr//bin/test
 ```
+
+# MAJOR PERFORMANCE GAINS
 
 - In functions, using Bash
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
