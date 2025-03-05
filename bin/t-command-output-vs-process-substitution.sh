@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: CMD | while vs while ... <(process substitution)
-# A: Identical. Use process substitution as it preserves variables in loop.
+# A: No real difference. Process substitution preserves variables in loop.
 # priority: 0
 #
 # t1 real    0m0.750s  cmd | while
@@ -14,7 +14,7 @@
 #
 # Notes:
 #
-# There is no practical or measurable difference.
+# There is no practical difference.
 #
 # Process substitution is more general because the
 # `while` loop runs under the same environment, and
