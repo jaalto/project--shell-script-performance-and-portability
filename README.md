@@ -131,7 +131,7 @@ each test case produced the fastest results.
   is more general because variables persist after the loop,
   whereas the `<loop>` in the `while | <loop>` runs in
   a separate shell due to the pipe.
-  See [code](./bin/t-command-output-vs-process-substitution.sh).
+  See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```
     while read -r ...
@@ -139,7 +139,7 @@ each test case produced the fastest results.
         ...
     done < <(grep -E "$re" "$file")
 
-    # Slightly slower
+    # slow, without prefilter
     while read -r ...
     do
        if [[ ! <match> ]]; then
