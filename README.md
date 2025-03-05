@@ -261,22 +261,26 @@ commentary.
   See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
 ```
+
+    N=1    # Not used here
+    M=100
+
     for i in {1..100}  # Bash
     do
         ...
     done
 
-    for i in $(seq $N) # binary, still fast
+    for i in $(seq $M) # binary, still fast
     do
         ...
     done
 
-    for ((i=0; i < $N; i++)) # Bash
+    for ((i=0; i < $M; i++)) # Bash
     do
         ...
     done
 
-    while [ "$i" -le "$N" ] # POSIX
+    while [ "$i" -le "$M" ] # POSIX
     do
         i=$((i + 1))
     done
