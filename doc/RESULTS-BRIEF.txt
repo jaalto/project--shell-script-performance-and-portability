@@ -51,8 +51,8 @@ FILE: t-file-read-cat-vs-bash.sh
 # A: It is abut 2x faster to use `$(< FILE)` for small files
 
 FILE: t-file-read-content-loop.sh
-# Q: Fastest to process lines: readarray vs 'while read < file' ?
-# A: It is about 2x faster to use readarray+for
+# Q: To process lines: `readarray` vs `while read < file`
+# A: It is about 2x faster to use `readarray`
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 # Q: would grep(1) prefilter help before loop?
