@@ -214,7 +214,7 @@ full listing, see RESULTS above.
 ```
     # Prepare a string with
     # 100 "words"
-    string=$(echo {1..100})
+    printf -v string "%s " {1..100}
 
     # Fastest
     eval 'array=($string)'
