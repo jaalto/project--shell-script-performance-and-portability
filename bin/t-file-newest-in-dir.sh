@@ -2,6 +2,7 @@
 #
 # Q: What is the fastest way to get newest file in a directory
 # A: Use find + filters. find + awk would be tad faster but more complex.
+# priority: 3
 #
 #     t1 real 0m0.417s   find + awk
 #     t2 real 0m0.523s   find + sort + head + cut

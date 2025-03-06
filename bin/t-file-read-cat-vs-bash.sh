@@ -2,6 +2,7 @@
 #
 # Q: Howabout `$(< FILE)` vs `$(cat FILE)`
 # A: It is abut 2x faster to use `$(< FILE)` for small files
+# priority: 10
 #
 #     t1 real 0m0.166s $(< file)
 #     t2 real 0m0.365s $(cat file)

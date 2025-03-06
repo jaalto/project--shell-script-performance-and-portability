@@ -2,6 +2,7 @@
 #
 # Q: What is the fastest way to read a file's size?
 # A: Use stat(1) or portable GNU `wc -c`.
+# priority: 5
 #
 #     t1 real 0m0.288s stat -c file
 #     t2 real 0m0.380s wc -c file; GNU version efectively is like stat(1)

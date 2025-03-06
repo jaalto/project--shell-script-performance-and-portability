@@ -1,7 +1,8 @@
 #! /bin/bash
 #
-# Q: If you need a copy of file, should you test before copy?
-# A: Yes, test existense of file before cp(1). Hardlinks are fast.
+# Q: Should you test existense before copying?
+# A: It is about 5x faster is you test existense before copying.
+# priority: 5
 #
 #     t1 real 0m1.002s cp A B
 #     t2 real 0m0.013s <file test> cp
