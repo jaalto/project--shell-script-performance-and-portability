@@ -5,11 +5,11 @@ FILE: t-command-grep-parallel.sh
 # A: No, parallel won't help in typical cases. Use only with huge files.
 # priority: 1
 #
-# t0  real  0m0.005s grep baseline
-# t1a real  0m0.210s --block-size <default> --pipepart
-# t1b real  0m0.240s --block-size <default> (Linux 64k)
-# t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
-# t3  real  0m0.224s --block-size 32k
+#     t0  real  0m0.005s grep baseline
+#     t1a real  0m0.210s --block-size <default> --pipepart
+#     t1b real  0m0.240s --block-size <default> (Linux 64k)
+#     t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
+#     t3  real  0m0.224s --block-size 32k
 #
 # Notes:
 #
@@ -27,13 +27,13 @@ FILE: t-command-grep.sh
 # A: Not real difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
-# t1pure     real   0m0.382s LANG=C --fixed-strings
-# t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
-# t1extended real   0m0.382s LANG=C --extended-regexp
-# t1perl     real   0m0.381s LANG=C --perl-regexp
+#     t1pure     real   0m0.382s LANG=C --fixed-strings
+#     t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
+#     t1extended real   0m0.382s LANG=C --extended-regexp
+#     t1perl     real   0m0.381s LANG=C --perl-regexp
 #
-# t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
-# t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
+#     t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
+#     t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
 
 FILE: t-command-output-vs-process-substitution.sh
 #! /bin/bash
@@ -42,13 +42,13 @@ FILE: t-command-output-vs-process-substitution.sh
 # A: No real difference. Process substitution preserves variables in loop.
 # priority: 0
 #
-# t1 real    0m0.750s  cmd | while
-# t2 real    0m0.760s  process substitution
+#     t1 real    0m0.750s  cmd | while
+#     t2 real    0m0.760s  process substitution
 #
 # Code:
 #
-# cmd | while read -r ... done      # t1
-# while read -r ... done < <(cmd)   # t2
+#     t1 cmd | while read -r ... done
+#     t2 while read -r ... done < <(cmd)
 #
 # Notes:
 #
@@ -66,13 +66,13 @@ FILE: t-command-pwd-vs-variable-pwd.sh
 # A: $PWD is about 7x faster considering `pwd` is even bash built-in
 # priority: 4
 #
-# t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
-# t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
+#     t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
+#     t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
 #
 # Notes:
 #
 # Even though pwd(1) is a Bash built-in, there is still a penalty
-# for calling command substitution $(command).
+# for calling command substitution `$(command)`.
 
 FILE: t-dir-empty.sh
 #! /bin/bash
@@ -81,16 +81,16 @@ FILE: t-dir-empty.sh
 # A: array+glob is faster than built-in `compgen`
 # priority: 3
 #
-# t1 real    0m0.054s   array+glob
-# t2 real    0m0.104s   compgen
-# t3 real    0m0.304s   ls
-# t3 real    0m0.480s   find | read
+#     t1 real    0m0.054s   array+glob
+#     t2 real    0m0.104s   compgen
+#     t3 real    0m0.304s   ls
+#     t3 real    0m0.480s   find | read
 #
 # Code:
 #
-# t1 files=("$dir"/*)
-# t2 compgen -G "$dir"/*
-# ...
+#     t1 files=("$dir"/*)
+#     t2 compgen -G "$dir"/*
+#     ...
 
 FILE: t-dir-entries.sh
 #! /bin/bash
@@ -101,17 +101,17 @@ FILE: t-dir-entries.sh
 #
 # For 20 directories:
 #
-# t1 real    0m0.003s compgen -G */
-# t2 real    0m0.001s for-loop
-# t3 real    0m0.004s ls -d */
-# t4 real    0m0.007s find . -maxdepth 1-type d
+#     t1 real    0m0.003s compgen -G */
+#     t2 real    0m0.001s for-loop
+#     t3 real    0m0.004s ls -d */
+#     t4 real    0m0.007s find . -maxdepth 1-type d
 #
 # For 100 directories:
 #
-# t1 real    0m0.012s compgen -G */
-# t2 real    0m0.015s for-loop
-# t3 real    0m0.010s ls -d */
-# t4 real    0m0.011s find . -maxdepth 1 -type d
+#     t1 real    0m0.012s compgen -G */
+#     t2 real    0m0.015s for-loop
+#     t3 real    0m0.010s ls -d */
+#     t4 real    0m0.011s find . -maxdepth 1 -type d
 #
 # Notes:
 #
@@ -129,15 +129,15 @@ FILE: t-file-copy-check-exist.sh
 # Q: If you need a copy of file, should you test before copy?
 # A: Yes, test existense of file before cp(1). Hardlinks are fast.
 #
-# t1 real    0m1.002s cp A B
-# t2 real    0m0.013s <file test> cp
-# t2 real    0m0.009s <file test> cp (hardlink)
+#     t1 real    0m1.002s cp A B
+#     t2 real    0m0.013s <file test> cp
+#     t2 real    0m0.009s <file test> cp (hardlink)
 #
 # Code:
 #
-# cp --preserve=timestamps A B                       # t1
-# [ A -nt B ] || cp --preserve=timestamps ...        # t2
-# [ A -ef B ] || cp --preserve=timestamps --link ... # t3
+#     t1 cp --preserve=timestamps A B
+#     t2 [ A -nt B ] || cp --preserve=timestamps ...
+#     t3 [ A -ef B ] || cp --preserve=timestamps --link ...
 
 FILE: t-file-for-loop-vs-awk.sh
 #! /bin/bash
@@ -145,8 +145,8 @@ FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?
 # A: is is at least 2x faster to do it all in awk
 #
-# t1 real    0m0.213s awk '{...}' <file> <file> ...
-# t1 real    0m0.584s for <files> do ... awk <file> ... done
+#     t1 real    0m0.213s awk '{...}' <file> <file> ...
+#     t1 real    0m0.584s for <files> do ... awk <file> ... done
 
 FILE: t-file-glob-bash-compgen-vs-stat.sh
 #! /bin/bash
@@ -154,15 +154,15 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 # Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
 # A: `compgen` and array+glob are slightly faster than stat(1)
 #
-# t1 real    0m0.026s   Bash compgen GLOB
-# t2 real    0m0.028s   Bash array: (GLOB)
-# t2 real    0m0.039s   stat -t GLOB
+#     t1 real    0m0.026s   Bash compgen GLOB
+#     t2 real    0m0.028s   Bash array: (GLOB)
+#     t2 real    0m0.039s   stat -t GLOB
 #
 # Code:
 #
-# t1 compgen -G "file"*
-# t2 arr=("file"*)
-# t3 stat -t "file"*
+#     t1 compgen -G "file"*
+#     t2 arr=("file"*)
+#     t3 stat -t "file"*
 #
 # Notes:
 #
@@ -174,21 +174,21 @@ FILE: t-file-grep-vs-match-in-memory.sh
 # Q: To search file for matches: in memry searh vs grep(1)
 # A: Fastest is to read file once into memory and then do matching
 #
-# t1a real   0m0.049s read + bash regexp (read file once + use loop)
-# t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
-# t2  real   0m0.482s read + case..MATCH..esac (separate file calls)
-# t3  real   0m0.448s read + bash regexp (separate file calls)
-# t4  real   0m0.404s external grep(1)
+#     t1a real   0m0.049s read + bash regexp (read file once + use loop)
+#     t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
+#     t2  real   0m0.482s read + case..MATCH..esac (separate file calls)
+#     t3  real   0m0.448s read + bash regexp (separate file calls)
+#     t4  real   0m0.404s external grep(1)
 #
 # Code:
 #
 # Study the <test case>.sh code for more information.
 #
-# read once and loop [[ str =~~ RE ]]   # t1a
-# read once and loop case..MATCH..end   # t1b
-# read -N<max> < file. case..MATCH..end # t2
-# read -N<max> < file. [[ str =~~ RE ]] # t3
-# grep RE file                          # t4
+#     t1a read once and loop [[ str =~~ RE ]]
+#     t1b read once and loop case..MATCH..end
+#     t2  read -N<max> < file. case..MATCH..end
+#     t3  read -N<max> < file. [[ str =~~ RE ]]
+#     t4  grep RE file
 #
 # Notes:
 #
@@ -202,36 +202,36 @@ FILE: t-file-newest-in-dir.sh
 # Q: What is the fastest way to get newest file in a directory
 # A: Use find + filters. find + awk would be tad faster but more complex.
 #
-# t1 real    0m0.417s   find + awk
-# t2 real    0m0.523s   find + sort + head + cut
-# t3 real    0m0.575s   find + sort + sed
+#     t1 real    0m0.417s   find + awk
+#     t2 real    0m0.523s   find + sort + head + cut
+#     t3 real    0m0.575s   find + sort + sed
 #
-# t4 real    0m0.382s   stat (not a generic solution)
-# t5 real    0m0.330s   ls -t (not a generic solution)
+#     t4 real    0m0.382s   stat (not a generic solution)
+#     t5 real    0m0.330s   ls -t (not a generic solution)
 #
 # Code:
 #
 # See <file>.sh for more details.
 #
-# find -maxdepth 1 -type f ... | awk '<complex code>'       # t1
-# find -maxdepth 1 -type f | sort -r | head -1 | cut ...    # t2
-# find -maxdepth 1 -type f | sort -r | sed ...              # t3
-# stat ... | sort -r | sed ...                              # t4
-# ls --sort=time | head -1                                  # t5
+#     t1 find -maxdepth 1 -type f ... | awk '<complex code>'
+#     t2 find -maxdepth 1 -type f | sort -r | head -1 | cut ...
+#     t3 find -maxdepth 1 -type f | sort -r | sed ...
+#     t4 stat ... | sort -r | sed ...
+#     t5 ls --sort=time | head -1
 #
 # Notes:
 #
-# awk(1) binary is smaller that sed(1).
 #
 # Probably small head(1) and cut(1) combined is still
-# faster than sed(1) which uses regexp engine.
+# faster than sed(1) which uses regexp engine. And
+# awk(1) binary is smaller that sed(1).
 #
 # These can't tell files from directories, so they
 # are not usable if the directory ocntains both files
 # and directories.
 #
-#   ls -t   sort by time
-#   stat
+#     ls -t   sort by time
+#     stat
 
 FILE: t-file-pipe-vs-process-substitution.sh
 #! /bin/bash
@@ -298,27 +298,28 @@ FILE: t-file-read-match-lines-loop-vs-grep.sh
 # A: grep(1) before loop is 2x faster than doing filtering in loop
 # priority: 7
 #
-# t1a real    0m0.436s grep prefilter before loop
-# t1b real    0m0.469s grep prefilter before loop (proc)
-# t2a real    0m1.105s loop: POSIX glob match with case...esac
-# t2b real    0m1.127s loop: Bash glob match using [[ ]]
+#     t1a real    0m0.436s grep prefilter before loop
+#     t1b real    0m0.469s grep prefilter before loop (proc)
+#     t2a real    0m1.105s loop: POSIX glob match with case...esac
+#     t2b real    0m1.127s loop: Bash glob match using [[ ]]
 #
 # Code:
 #
-# grep | while ... done                      # t1a
-# while ... done < <(grep)                   # t1b
-# while read ... case..esac ... done < file  # t2a
-# while read ... [[ ]] ... done < file       # t2b
+#     t1a grep | while ... done
+#     t1b while ... done < <(grep)
+#     t2a while read ... case..esac ... done < file
+#     t2b while read ... [[ ]] ... done < file
 #
 # Notes:
 #
-# The practical winner in scripts is the `while read
-# do .. done < <(proc)` due to variables being
-# visible in the same scope. The "grep | while"
-# would create a subshell and release the variables
-# after the for-loop.
+# The practical winner in scripts is the
+# `while read do .. done < <(proc)` due to
+# variables being visible in the same scope.
+# The `grep | while` would create a subshell
+# and release the variables after the
+# for-loop.
 #
-# About the test cases
+# _About the test cases_
 #
 # The file contents read during the test cases are
 # probably cached in the Kernel. When the tests are
@@ -336,8 +337,8 @@ FILE: t-file-read-shell-result.sh
 # Q: Capturing command's output: var=$() vs reading from a temporary file?
 # A: The var=$() is 2x faster than using a temporary file
 #
-# t1 real    0m0.428s val=$(cmd)
-# t2 real    0m0.899s cmd > file; val=$(< file)
+#     t1 real    0m0.428s val=$(cmd)
+#     t2 real    0m0.899s cmd > file; val=$(< file)
 
 FILE: t-file-read-with-size-check.sh
 #! /bin/bash
@@ -345,8 +346,8 @@ FILE: t-file-read-with-size-check.sh
 # Q: Is empty file check useful before reading file's content?
 # A: It is about 10x faster to use `[ -s file ]` before reading
 #
-# real    0m0.105s $(< file)
-# real    0m0.006s [ -s file] && $(< file)
+#     t1 real    0m0.105s $(< file)
+#     t2 real    0m0.006s [ -s file] && $(< file)
 
 FILE: t-file-size-info.sh
 #! /bin/bash
@@ -354,9 +355,9 @@ FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
 # A: Prefer GNU `wc -c`. The non-POSIX stat(1) and it's options are not portable.
 #
-# t1 real    0m0.288s stat -c file
-# t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
-# t3 real    0m0.461s ls -l + awk
+#     t1 real    0m0.288s stat -c file
+#     t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
+#     t3 real    0m0.461s ls -l + awk
 
 FILE: t-function-return-value.sh
 #! /bin/bash
@@ -364,31 +365,32 @@ FILE: t-function-return-value.sh
 # Q: Howabout Bash nameref to return value vs val=$(funcall)
 # A: It is about 40x faster to use nameref to return value from a function
 #
-# t1 real    0m0.089s t1 $(funcall)
-# t2 real    0m0.002s t2 funcall nameref
+#     t1 real    0m0.089s t1 $(funcall)
+#     t2 real    0m0.002s t2 funcall nameref
 #
 # Code:
 #
-# fn(): ... echo "<value>"                 # t1
-# fn(): local -n ret=$1; ... ret="<value>" # t2
+#     t1 fn(): ... echo "<value>"
+#     t2 fn(): local -n ret=$1; ... ret="<value>"
 
 FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
 #! /bin/bash
 #
-# Q: for-loop: {1..N} vs $(seq N) vs ((...)) vs POSIX i++
-# A: The {1..N} and $(seq N) are very fast
+# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
+# A: The `{1..N}` and `$(seq N)` are very fast
 #
-# t1 real    0m0.003s for i in {1..N}
-# t2 real    0m0.004s for i in $(seq ...)
-# t3 real    0m0.006s for ((i=0; i < N; i++))
-# t4 real    0m0.010s while [ $i -le $N ] ... i++
+#     t1 real    0m0.003s for i in {1..N}
+#     t2 real    0m0.004s for i in $(seq ...)
+#     t3 real    0m0.006s for ((i=0; i < N; i++))
+#     t4 real    0m0.010s while [ $i -le $N ] ... i++
 #
 # Notes:
 #
-# A simple, elegant, and practical winner: $(seq N)
+# Surprisingly, a simple, elegant, and practical winner
+# is `$(seq N)`.
 #
-# {1..N} problem: The Bash brace
+# The is a problem with `{N..M}`. The Bash brace
 # expansion cannot be parameterized, so it
 # is only useful if N is known beforehand.
 #
@@ -403,10 +405,10 @@ FILE: t-statement-arithmetic-increment.sh
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
 # A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine
 #
-# t1     real    0m0.025s ((i++))      Bash
-# t2     real    0m0.047s let i++      Bash
-# t3     real    0m0.045s i=$((i + 1)) POSIX
-# t4     real    0m0.061s : $((i++))   POSIX (true; with side effect)
+#     t1 real    0m0.025s ((i++))      Bash
+#     t2 real    0m0.047s let i++      Bash
+#     t3 real    0m0.045s i=$((i + 1)) POSIX
+#     t4 real    0m0.061s : $((i++))   POSIX (true; with side effect)
 #
 # Notes:
 #
@@ -422,12 +424,12 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: In practise, no real differences
 #
-# t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
-# t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
+#     t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
+#     t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
 #
-# t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
-# t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
-# t3empty   real    0m0.003s [[ ! $var ]]     # Bash
+#     t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
+#     t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
+#     t3empty   real    0m0.003s [[ ! $var ]]     # Bash
 #
 # Notes:
 #
@@ -436,12 +438,12 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 #
 # loop_max=10000 ./statement-if-posix-vs-bash.sh
 #
-# t1val          real 0.055  user 0.054  sys 0.000  POSIX
-# t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
+#     t1val          real 0.055  user 0.054  sys 0.000  POSIX
+#     t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
 #
-# t1empty        real 0.052  user 0.045  sys 0.007  POSIX
-# t2empty        real 0.053  user 0.050  sys 0.003
-# t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
+#     t1empty        real 0.052  user 0.045  sys 0.007  POSIX
+#     t2empty        real 0.053  user 0.050  sys 0.003
+#     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 FILE: t-string-trim-whitespace.sh
 #! /bin/bash
@@ -465,13 +467,13 @@ FILE: t-variable-array-split-string.sh
 # Q: Split string into an array: `eval` vs `read`?
 # A: It is about 2-3x faster to use `eval`
 #
-# t1 real    0m0.012s eval
-# t2 real    0m0.025s read -ra
+#     t1 real    0m0.012s eval
+#     t2 real    0m0.025s read -ra
 #
 # Code:
 #
-# IFS=":" eval 'array=($PATH)'        # t1
-# IFS=":" read -ra array <<< "$PATH"  # t2
+#     t1 IFS=":" eval 'array=($PATH)'
+#     t2 IFS=":" read -ra array <<< "$PATH"
 #
 # Notes:
 #

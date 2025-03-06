@@ -76,8 +76,8 @@ FILE: t-function-return-value.sh
 
 FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
-# Q: for-loop: {1..N} vs $(seq N) vs ((...)) vs POSIX i++
-# A: The {1..N} and $(seq N) are very fast
+# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
+# A: The `{1..N}` and `$(seq N)` are very fast
 
 FILE: t-statement-arithmetic-increment.sh
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
