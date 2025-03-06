@@ -4,18 +4,19 @@
 # A: In general, simple ls(1) will do fine. No big differences.
 # priority:
 #
-# for 20 directories:
+# For 20 directories:
 #
-# t3 real    0m0.003s compgen -G */
-# t1 real    0m0.001s for-loop
-# t2 real    0m0.004s ls -d */
+# t1 real    0m0.003s compgen -G */
+# t2 real    0m0.001s for-loop
+# t3 real    0m0.004s ls -d */
+# t4 real    0m0.007s find . -maxdepth 1-type d
 #
-# for 100 directories:
+# For 100 directories:
 #
 # t1 real    0m0.012s compgen -G */
 # t2 real    0m0.015s for-loop
 # t3 real    0m0.010s ls -d */
-# t4 real    0m0.010s find -type d
+# t4 real    0m0.011s find . -maxdepth 1 -type d
 #
 # Notes:
 #
@@ -25,6 +26,7 @@
 #     max_dirs=20 ./t-dir-entries.sh t1
 #     max_dirs=20 ./t-dir-entries.sh t2
 #     max_dirs=20 ./t-dir-entries.sh t3
+#     max_dirs=20 ./t-dir-entries.sh t4
 
 # We don't use ${TMPDIR:-/tmp}
 # because that may be on fast tempfs
@@ -76,7 +78,7 @@ t3 ()
 
 t4 ()
 {
-    find . -maxdepth 1 -type d
+    find . -maxdepth 1 -type d > /dev/null
 }
 
 trap AtExit EXIT HUP INT QUIT TERM
