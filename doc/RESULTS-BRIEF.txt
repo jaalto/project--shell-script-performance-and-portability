@@ -1,97 +1,97 @@
 FILE: t-command-grep-parallel.sh
-# Q: Howabout grep(1) with GNU parallel(1)?
-# A: No, considerably slower in typical cases, use only with huge files.
+# Q: Howabout using parallel(1) to speed up grep(1)?
+# A: No, parallel won't help in typical cases. Use only with huge files.
 
 FILE: t-command-grep.sh
 # Q: In grep, is option --fixed-strings faster?
-# A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
+# A: Not real difference between --extended-regexp, --perl-regexp, --ignore-case
 
 FILE: t-command-output-vs-process-substitution.sh
-# Q: CMD | while vs while ... <(process substitution)
-# A: Identical. Use process substitution as it preserves variables in loop.
+# Q: `cmd | while` vs `while ... done < <(process substitution)`
+# A: No real difference. Process substitution preserves variables in loop.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
-# Q: How much is POSIX $PWD faster than command pwd(1)?
-# A: $PWD is about 7x faster considering pwd is bash built-in
+# Q: How much is POSIX `$PWD` faster than pwd(1)?
+# A: $PWD is about 7x faster considering `pwd` is even bash built-in
 
 FILE: t-dir-empty.sh
 # Q: What is the fastest way to check empty directory?
-# A: array+glob is faster than built-in compgen
+# A: array+glob is faster than built-in `compgen`
 
 FILE: t-dir-entries.sh
 # Q: Fastest to get list of dirs: for vs compgen vs ls -d
 # A: In general, simple ls(1) will do fine. No big differences.
 
 FILE: t-file-copy-check-exist.sh
-# Q: Need a copy of file. Call cp(1), make hardlink, or do test before copy?
-# A: Faster is to test existense of file before cp(1). Hardlink is fast.
+# Q: If you need a copy of file, should you test before copy?
+# A: Yes, test existense of file before cp(1). Hardlinks are fast.
 
 FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?
-# A: Doing all in awk is at least 2x faster
+# A: is is at least 2x faster to do it all in awk
 
 FILE: t-file-glob-bash-compgen-vs-stat.sh
-# Q: The check if GLOB matches file: stat or Bash compgen?
-# A: Bash array+glob/compgen are much faster than stat(1)
+# Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
+# A: `compgen` and array+glob are slightly faster than stat(1)
 
 FILE: t-file-grep-vs-match-in-memory.sh
-# Q: To check file for matches: repeat read, inline match or grep(1)?
-# A: Fastest is to read file once into memory and then match
+# Q: To search file for matches: in memry searh vs grep(1)
+# A: Fastest is to read file once into memory and then do matching
 
 FILE: t-file-newest-in-dir.sh
-# Q: What is the fastest way to get newest file in directory
-# A: find + awk is tad faster but more complex. Use find + filters.
+# Q: What is the fastest way to get newest file in a directory
+# A: Use find + filters. find + awk would be tad faster but more complex.
 
 FILE: t-file-pipe-vs-process-substitution.sh
 # Q: Would pipe be slower than using process substitution?
 # A: No real difference. Pipes are efficient.
 
 FILE: t-file-read-cat-vs-bash.sh
-# Q: Is Bash $(< FILE) faster than $(cat FILE)?
-# A: The $(< FILE) is about 2x faster for small files
+# Q: Should I use `$(< FILE)´ over `$(cat FILE)`?
+# A: The  `$(< FILE)´ 1s bbout 2x faster for small files
 
 FILE: t-file-read-content-loop.sh
 # Q: Fastest to process lines: readarray vs 'while read < file' ?
-# A: readarray/mapfiles+for is 2x faster than 'while read < file'
+# A: It is about 2x faster to use readarray+for
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
-# Q: process file: will prefilter lines using grep(1) help?
-# A: grep(1) + loop is 2x faster than doing filtering in loop
+# Q: would grep(1) prefilter help before loop?
+# A: grep(1) before loop is 2x faster than doing filtering in loop
 
 FILE: t-file-read-shell-result.sh
-# Q: Command result: var=$() vs reading output from a temporary file?
+# Q: Capturing command's output: var=$() vs reading from a temporary file?
 # A: The var=$() is 2x faster than using a temporary file
 
 FILE: t-file-read-with-size-check.sh
 # Q: Is empty file check useful before reading file's content?
-# A: It is significantly faster (~10x) to use [ -s file ] before reading
+# A: It is about 10x faster to use `[ -s file ]` before reading
 
 FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
-# A: GNU 'wc -c'. The stat(1) is not in POSIX + options are not portable.
+# A: Prefer GNU `wc -c`. The non-POSIX stat(1) and it's options are not portable.
 
 FILE: t-function-return-value.sh
-# Q: Bash name ref to return values vs val=$(funcall)
-# A: Using name ref is about 40x faster
+# Q: Howabout Bash nameref to return value vs val=$(funcall)
+# A: It is about 40x faster to use nameref to return value from a function
 
 FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
-# Q: for-loop: ((...)) vs {1..N} vs $(seq N) vs POSIX i++
-# A: The {1..N} and $(seq N) are very fast.
+# Q: for-loop: {1..N} vs $(seq N) vs ((...)) vs POSIX i++
+# A: The {1..N} and $(seq N) are very fast
 
 FILE: t-statement-arithmetic-increment.sh
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
 # A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine
 
 FILE: t-statement-if-test-posix-vs-bash.sh
-# Q: POSIX [ $var = 1 ] vs Bash [[ $var = 1 ]] etc
-# A: In practise, not much difference
+# Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
+# A: In practise, no real differences
 
 FILE: t-string-trim-whitespace.sh
 # Q: Trim whitepace using Bash RE vs sed(1)
-# A: Bash is much faster; especially with fn() name ref
+# A: Bash is much faster; especially with fn() using nameref
 
 FILE: t-variable-array-split-string.sh
-# Q: split string into an array: eval vs read?
-# A: eval is 2-3x faster
+# Q: Split string into an array: `eval` vs `read`?
+# A: It is about 2-3x faster to use `eval`
 
