@@ -288,7 +288,7 @@ With big files, they are equal.
 
 ## Notes
 
-In Bash, the readarray built-in is a synonym for mapfile,
+In Bash, the `readarray` built-in is a synonym for `mapfile`,
 so they should behave equally.
 
 

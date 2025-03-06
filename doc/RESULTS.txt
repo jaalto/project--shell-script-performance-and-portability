@@ -288,7 +288,7 @@ FILE: t-file-read-content-loop.sh
 #
 # Notes:
 #
-# In Bash, the readarray built-in is a synonym for mapfile,
+# In Bash, the `readarray` built-in is a synonym for `mapfile`,
 # so they should behave equally.
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
