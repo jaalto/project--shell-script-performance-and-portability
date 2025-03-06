@@ -25,11 +25,20 @@
 # character, which requires setting a local
 # `IFS` for the execution of the command.
 #
-# The local IFS can be defined if `eval` is used.
+# The local IFS can be defined for one
+# statement only if `eval` is used.
 #
 # The reason why `<<<` is slower is that it
 # uses a pipe buffer (in latest Bash),
 # whereas `eval` operates entirely in memory.
+#
+# *Warning*
+#
+# Please note that using the `(list)`
+# statement will undergo pathname expansion.
+# Use it only in situations where the string does
+# not contain any globbing characters
+# like `*`, `?`, etc.
 
 . ./t-lib.sh ; f=$random_file
 
