@@ -28,12 +28,9 @@
 # faster than sed(1) which uses regexp engine. And
 # awk(1) binary is smaller that sed(1).
 #
-# These can't tell files from directories, so they
-# are not usable if the directory ocntains both files
-# and directories.
-#
-#     ls -t   sort by time
-#     stat
+# Commads `ls` and `stat` can't tell files from
+# directories, so they are not usable if a
+# directory contains both.
 
 . ./t-lib.sh ; f=$random_file
 
