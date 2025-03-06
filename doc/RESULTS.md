@@ -185,7 +185,7 @@ stat(1) does more work by opening each found file.
 
 ## Code
 
-Study the <test case>.sh code for more information.
+See the test code for more information. Overview:
 
     t1a read once and loop [[ str =~~ RE ]]
     t1b read once and loop case..MATCH..end
