@@ -1,19 +1,13 @@
 # SHELL SCRIPT PERFORMANCE TESTS
 
-How to write faster and optimized shell
-scripts?
-
-That's the question these tests try to answer.
-See files:
+How can you write faster and more optimized shell scripts?
+That's the question these test cases on GitHub aim to answer.
 
 - [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
 - The test cases and code in [bin/](./bin/)
 - [USAGE](./USAGE.md)
 - [CONTRIBUTING](./CONTRIBUTING.md)
-
-This project includes tests to determine the
-most efficient way to write shell script.
 
 Consider the raw
 [`time`](https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words)
