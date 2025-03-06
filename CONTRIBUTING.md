@@ -4,6 +4,11 @@ information for contributing more test cases.
 
 # TEST CASE FILE LAYOUT
 
+Write documentation comments in the <text case>.sh files as
+they would appear in markdown. The comments
+"# " will be stripped during documentation conversion.
+See [txt2markdown.sh](./bin/Makefile::d).
+
 ```
     Q: <In one sentence, test case description>
     A: <In one sentence, major results>
