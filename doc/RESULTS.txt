@@ -1,8 +1,8 @@
 FILE: t-command-grep-parallel.sh
 #! /bin/bash
 #
-# Q: Howabout grep(1) with GNU parallel(1)?
-# A: No, considerably slower in typical cases, use only with huge files.
+# Q: Howabout using parallel(1) to speed up grep(1)?
+# A: No, parallel won't help in typical cases. Use only with huge files.
 # priority: 1
 #
 # t0  real  0m0.005s grep baseline
@@ -24,7 +24,7 @@ FILE: t-command-grep.sh
 #! /bin/bash
 #
 # Q: In grep, is option --fixed-strings faster?
-# A: Not much difference to --extended-regexp, --perl-regexp, --ignore-case
+# A: Not real difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
 # t1pure     real   0m0.382s LANG=C --fixed-strings
@@ -38,8 +38,8 @@ FILE: t-command-grep.sh
 FILE: t-command-output-vs-process-substitution.sh
 #! /bin/bash
 #
-# Q: CMD | while vs while ... <(process substitution)
-# A: Identical. Use process substitution as it preserves variables in loop.
+# Q: `cmd | while` vs `while ... done < <(process substitution)`
+# A: No real difference. Process substitution preserves variables in loop.
 # priority: 0
 #
 # t1 real    0m0.750s  cmd | while
@@ -52,7 +52,7 @@ FILE: t-command-output-vs-process-substitution.sh
 #
 # Notes:
 #
-# There is no practical or measurable difference.
+# There is no practical difference.
 #
 # Process substitution is more general because the
 # `while` loop runs under the same environment, and
@@ -62,8 +62,8 @@ FILE: t-command-output-vs-process-substitution.sh
 FILE: t-command-pwd-vs-variable-pwd.sh
 #! /bin/bash
 #
-# Q: How much is POSIX $PWD faster than command pwd(1)?
-# A: $PWD is about 7x faster considering pwd is bash built-in
+# Q: How much is POSIX `$PWD` faster than pwd(1)?
+# A: $PWD is about 7x faster considering `pwd` is even bash built-in
 # priority: 4
 #
 # t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
@@ -78,49 +78,60 @@ FILE: t-dir-empty.sh
 #! /bin/bash
 #
 # Q: What is the fastest way to check empty directory?
-# A: array+glob is faster than built-in compgen
+# A: array+glob is faster than built-in `compgen`
+# priority: 3
 #
 # t1 real    0m0.054s   array+glob
 # t2 real    0m0.104s   compgen
-# t3 real    0m0.304s   ls (out of curiosity)
-# t3 real    0m0.480s   find|read
+# t3 real    0m0.304s   ls
+# t3 real    0m0.480s   find | read
+#
+# Code:
+#
+# t1 files=("$dir"/*)
+# t2 compgen -G "$dir"/*
+# ...
 
 FILE: t-dir-entries.sh
 #! /bin/bash
 #
 # Q: Fastest to get list of dirs: for vs compgen vs ls -d
 # A: In general, simple ls(1) will do fine. No big differences.
+# priority:
 #
-# for 20 directories:
+# For 20 directories:
 #
-# t3 real    0m0.003s compgen -G */
-# t1 real    0m0.001s for-loop
-# t2 real    0m0.004s ls -d */
+# t1 real    0m0.003s compgen -G */
+# t2 real    0m0.001s for-loop
+# t3 real    0m0.004s ls -d */
+# t4 real    0m0.007s find . -maxdepth 1-type d
 #
-# for 100 directories:
+# For 100 directories:
 #
 # t1 real    0m0.012s compgen -G */
 # t2 real    0m0.015s for-loop
 # t3 real    0m0.010s ls -d */
+# t4 real    0m0.011s find . -maxdepth 1 -type d
 #
 # Notes:
 #
-# Because the OS caches files and directories, you have to
-# manually run tests:
+# Because the OS caches files and directories, run
+# tests manually:
 #
 #     max_dirs=20 ./t-dir-entries.sh t1
 #     max_dirs=20 ./t-dir-entries.sh t2
 #     max_dirs=20 ./t-dir-entries.sh t3
+#     max_dirs=20 ./t-dir-entries.sh t4
 
 FILE: t-file-copy-check-exist.sh
 #! /bin/bash
 #
-# Q: Need a copy of file. Call cp(1), make hardlink, or do test before copy?
-# A: Faster is to test existense of file before cp(1). Hardlink is fast.
+# Q: If you need a copy of file, should you test before copy?
+# A: Yes, test existense of file before cp(1). Hardlinks are fast.
 #
 # t1 real    0m1.002s cp A B
-# t2 real    0m0.013s [ A -nt B] && cp
-# t2 real    0m0.009s [ A -ef B] || cp (using hardlink)
+# t2 real    0m0.013s <file test> cp
+# t2 real    0m0.009s <file test> cp (hardlink)
 #
 # Code:
 #
@@ -132,7 +143,7 @@ FILE: t-file-for-loop-vs-awk.sh
 #! /bin/bash
 #
 # Q: for-loop file-by-file to awk vs awk handling all the files?
-# A: Doing all in awk is at least 2x faster
+# A: is is at least 2x faster to do it all in awk
 #
 # t1 real    0m0.213s awk '{...}' <file> <file> ...
 # t1 real    0m0.584s for <files> do ... awk <file> ... done
@@ -140,8 +151,8 @@ FILE: t-file-for-loop-vs-awk.sh
 FILE: t-file-glob-bash-compgen-vs-stat.sh
 #! /bin/bash
 #
-# Q: The check if GLOB matches file: stat or Bash compgen?
-# A: Bash array+glob/compgen are much faster than stat(1)
+# Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
+# A: `compgen` and array+glob are slightly faster than stat(1)
 #
 # t1 real    0m0.026s   Bash compgen GLOB
 # t2 real    0m0.028s   Bash array: (GLOB)
@@ -149,9 +160,9 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 #
 # Code:
 #
-# arr=("file"*)
-# compgen -G "file"*
-# stat -t "file"*
+# t1 compgen -G "file"*
+# t2 arr=("file"*)
+# t3 stat -t "file"*
 #
 # Notes:
 #
@@ -160,8 +171,8 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 FILE: t-file-grep-vs-match-in-memory.sh
 #! /bin/bash
 #
-# Q: To check file for matches: repeat read, inline match or grep(1)?
-# A: Fastest is to read file once into memory and then match
+# Q: To search file for matches: in memry searh vs grep(1)
+# A: Fastest is to read file once into memory and then do matching
 #
 # t1a real   0m0.049s read + bash regexp (read file once + use loop)
 # t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
@@ -171,7 +182,7 @@ FILE: t-file-grep-vs-match-in-memory.sh
 #
 # Code:
 #
-# Study the <file>.sh for more information.
+# Study the <test case>.sh code for more information.
 #
 # read once and loop [[ str =~~ RE ]]   # t1a
 # read once and loop case..MATCH..end   # t1b
@@ -188,8 +199,8 @@ FILE: t-file-grep-vs-match-in-memory.sh
 FILE: t-file-newest-in-dir.sh
 #! /bin/bash
 #
-# Q: What is the fastest way to get newest file in directory
-# A: find + awk is tad faster but more complex. Use find + filters.
+# Q: What is the fastest way to get newest file in a directory
+# A: Use find + filters. find + awk would be tad faster but more complex.
 #
 # t1 real    0m0.417s   find + awk
 # t2 real    0m0.523s   find + sort + head + cut
@@ -210,12 +221,14 @@ FILE: t-file-newest-in-dir.sh
 #
 # Notes:
 #
-# awk(1) binary is smaller that sed(1)
+# awk(1) binary is smaller that sed(1).
 #
 # Probably small head(1) and cut(1) combined is still
 # faster than sed(1) which uses regexp engine.
 #
-# These can't tell files from directories:
+# These can't tell files from directories, so they
+# are not usable if the directory ocntains both files
+# and directories.
 #
 #   ls -t   sort by time
 #   stat
@@ -237,8 +250,8 @@ FILE: t-file-pipe-vs-process-substitution.sh
 FILE: t-file-read-cat-vs-bash.sh
 #! /bin/bash
 #
-# Q: Is Bash $(< FILE) faster than $(cat FILE)?
-# A: The $(< FILE) is about 2x faster for small files
+# Q: Should I use `$(< FILE)´ over `$(cat FILE)`?
+# A: The  `$(< FILE)´ 1s bbout 2x faster for small files
 #
 # real    0m0.166s $(< file)
 # real    0m0.365s $(cat file)
@@ -259,7 +272,7 @@ FILE: t-file-read-content-loop.sh
 #! /bin/bash
 #
 # Q: Fastest to process lines: readarray vs 'while read < file' ?
-# A: readarray/mapfiles+for is 2x faster than 'while read < file'
+# A: It is about 2x faster to use readarray+for
 #
 # t1  real       0m0.037s t1  mapfile + for
 # t2a real       0m0.036s t2a readarray + for
@@ -281,8 +294,9 @@ FILE: t-file-read-content-loop.sh
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /bin/bash
 #
-# Q: process file: will prefilter lines using grep(1) help?
-# A: grep(1) + loop is 2x faster than doing filtering in loop
+# Q: would grep(1) prefilter help before loop?
+# A: grep(1) before loop is 2x faster than doing filtering in loop
+# priority: 7
 #
 # t1a real    0m0.436s grep prefilter before loop
 # t1b real    0m0.469s grep prefilter before loop (proc)
@@ -319,7 +333,7 @@ FILE: t-file-read-match-lines-loop-vs-grep.sh
 FILE: t-file-read-shell-result.sh
 #! /bin/bash
 #
-# Q: Command result: var=$() vs reading output from a temporary file?
+# Q: Capturing command's output: var=$() vs reading from a temporary file?
 # A: The var=$() is 2x faster than using a temporary file
 #
 # t1 real    0m0.428s val=$(cmd)
@@ -329,7 +343,7 @@ FILE: t-file-read-with-size-check.sh
 #! /bin/bash
 #
 # Q: Is empty file check useful before reading file's content?
-# A: It is significantly faster (~10x) to use [ -s file ] before reading
+# A: It is about 10x faster to use `[ -s file ]` before reading
 #
 # real    0m0.105s $(< file)
 # real    0m0.006s [ -s file] && $(< file)
@@ -338,7 +352,7 @@ FILE: t-file-size-info.sh
 #! /bin/bash
 #
 # Q: What is the fastest way to read a file's size?
-# A: GNU 'wc -c'. The stat(1) is not in POSIX + options are not portable.
+# A: Prefer GNU `wc -c`. The non-POSIX stat(1) and it's options are not portable.
 #
 # t1 real    0m0.288s stat -c file
 # t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
@@ -347,8 +361,8 @@ FILE: t-file-size-info.sh
 FILE: t-function-return-value.sh
 #! /bin/bash
 #
-# Q: Bash name ref to return values vs val=$(funcall)
-# A: Using name ref is about 40x faster
+# Q: Howabout Bash nameref to return value vs val=$(funcall)
+# A: It is about 40x faster to use nameref to return value from a function
 #
 # t1 real    0m0.089s t1 $(funcall)
 # t2 real    0m0.002s t2 funcall nameref
@@ -362,8 +376,8 @@ FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
 #! /bin/bash
 #
-# Q: for-loop: ((...)) vs {1..N} vs $(seq N) vs POSIX i++
-# A: The {1..N} and $(seq N) are very fast.
+# Q: for-loop: {1..N} vs $(seq N) vs ((...)) vs POSIX i++
+# A: The {1..N} and $(seq N) are very fast
 #
 # t1 real    0m0.003s for i in {1..N}
 # t2 real    0m0.004s for i in $(seq ...)
@@ -392,11 +406,11 @@ FILE: t-statement-arithmetic-increment.sh
 # t1     real    0m0.025s ((i++))      Bash
 # t2     real    0m0.047s let i++      Bash
 # t3     real    0m0.045s i=$((i + 1)) POSIX
-# t4     real    0m0.061s : $((i++))   POSIX (side effect)
+# t4     real    0m0.061s : $((i++))   POSIX (true; with side effect)
 #
 # Notes:
 #
-# The tests were using 10,000 repeats, which is
+# The tests were using 10 000 repeats, which is
 # unrealistic for any program. There really is no
 # practical difference whichever you choose. The
 # portable POSIX version works in all shells:
@@ -405,14 +419,14 @@ FILE: t-statement-arithmetic-increment.sh
 FILE: t-statement-if-test-posix-vs-bash.sh
 #! /bin/bash
 #
-# Q: POSIX [ $var = 1 ] vs Bash [[ $var = 1 ]] etc
-# A: In practise, not much difference
+# Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
+# A: In practise, no real differences
 #
-# t1val     real    0m0.002s [ "$var" = "1" ]
-# t2val     real    0m0.003s [[ $var = 1 ]]
+# t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
+# t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
 #
-# t1empty   real    0m0.002s [ ! "$var" ]     # modern
-# t2empty   real    0m0.002s [ -z "$var" ]    # archaic
+# t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
+# t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
 # t3empty   real    0m0.003s [[ ! $var ]]     # Bash
 #
 # Notes:
@@ -422,10 +436,10 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 #
 # loop_max=10000 ./statement-if-posix-vs-bash.sh
 #
-# t1val          real 0.055  user 0.054  sys 0.000
+# t1val          real 0.055  user 0.054  sys 0.000  POSIX
 # t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
 #
-# t1empty        real 0.052  user 0.045  sys 0.007
+# t1empty        real 0.052  user 0.045  sys 0.007  POSIX
 # t2empty        real 0.053  user 0.050  sys 0.003
 # t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
@@ -433,23 +447,23 @@ FILE: t-string-trim-whitespace.sh
 #! /bin/bash
 #
 # Q: Trim whitepace using Bash RE vs sed(1)
-# A: Bash is much faster; especially with fn() name ref
+# A: Bash is much faster; especially with fn() using nameref
 #
-# t2 real    0m0.025s Bash fn() RE, name ref
+# t2 real    0m0.025s Bash fn() RE, using nameref for return value
 # t2 real    0m0.107s Bash fn() RE
 # t1 real    0m0.440s echo | sed RE
 #
 # Code:
 #
-# t1 var=$(echo .. | sed <trim>)    # external call
-# t2 var=$(bashTrim)                # fn() return by value
-# t2 BashTrim var                   # fn() use name ref
+# t1 BashTrim var                    # fn() using nameref
+# t2 var=$(bashTrim "$str")          # fn() return by value
+# t3 var=$(echo "$str" | sed <trim>) # subshell call
 
 FILE: t-variable-array-split-string.sh
 #! /bin/bash
 #
-# Q: split string into an array: eval vs read?
-# A: eval is 2-3x faster
+# Q: Split string into an array: `eval` vs `read`?
+# A: It is about 2-3x faster to use `eval`
 #
 # t1 real    0m0.012s eval
 # t2 real    0m0.025s read -ra
@@ -466,6 +480,6 @@ FILE: t-variable-array-split-string.sh
 # IFS for the execution of the command.
 #
 # The reason why `<<<` is slower is that it
-# uses a temporary file, whereas `eval` operates
-# entirely in memory.
+# uses a pipe buffer (in latest Bash),
+# whereas `eval` operates entirely in memory.
 
