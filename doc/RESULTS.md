@@ -42,8 +42,8 @@ _priority: 2_
 *A: No real difference. Process substitution preserves variables in loop.*<br/>
 _priority: 0_
 
-    t1 real    0m0.750s  cmd | while
-    t2 real    0m0.760s  process substitution
+    t1 real 0m0.750s  cmd | while
+    t2 real 0m0.760s  process substitution
 
 ## Code
 
@@ -66,8 +66,8 @@ afterward.
 *A: $PWD is about 7x faster considering `pwd` is even bash built-in*<br/>
 _priority: 4_
 
-    t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
-    t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
+    t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
+    t2 real 0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
 
 ## Notes
 
@@ -81,10 +81,10 @@ for calling command substitution `$(command)`.
 *A: array+glob is faster than built-in `compgen`*<br/>
 _priority: 3_
 
-    t1 real    0m0.054s   array+glob
-    t2 real    0m0.104s   compgen
-    t3 real    0m0.304s   ls
-    t3 real    0m0.480s   find | read
+    t1 real 0m0.054s   array+glob
+    t2 real 0m0.104s   compgen
+    t3 real 0m0.304s   ls
+    t3 real 0m0.480s   find | read
 
 ## Code
 
@@ -101,17 +101,17 @@ _priority:_
 
 For 20 directories:
 
-    t1 real    0m0.003s compgen -G */
-    t2 real    0m0.001s for-loop
-    t3 real    0m0.004s ls -d */
-    t4 real    0m0.007s find . -maxdepth 1-type d
+    t1 real 0m0.003s compgen -G */
+    t2 real 0m0.001s for-loop
+    t3 real 0m0.004s ls -d */
+    t4 real 0m0.007s find . -maxdepth 1-type d
 
 For 100 directories:
 
-    t1 real    0m0.012s compgen -G */
-    t2 real    0m0.015s for-loop
-    t3 real    0m0.010s ls -d */
-    t4 real    0m0.011s find . -maxdepth 1 -type d
+    t1 real 0m0.012s compgen -G */
+    t2 real 0m0.015s for-loop
+    t3 real 0m0.010s ls -d */
+    t4 real 0m0.011s find . -maxdepth 1 -type d
 
 ## Notes
 
@@ -129,9 +129,9 @@ tests manually:
 **Q: If you need a copy of file, should you test before copy?**<br/>
 *A: Yes, test existense of file before cp(1). Hardlinks are fast.*<br/>
 
-    t1 real    0m1.002s cp A B
-    t2 real    0m0.013s <file test> cp
-    t2 real    0m0.009s <file test> cp (hardlink)
+    t1 real 0m1.002s cp A B
+    t2 real 0m0.013s <file test> cp
+    t2 real 0m0.009s <file test> cp (hardlink)
 
 ## Code
 
@@ -145,8 +145,8 @@ tests manually:
 **Q: for-loop file-by-file to awk vs awk handling all the files?**<br/>
 *A: is is at least 2x faster to do it all in awk*<br/>
 
-    t1 real    0m0.213s awk '{...}' <file> <file> ...
-    t1 real    0m0.584s for <files> do ... awk <file> ... done
+    t1 real 0m0.213s awk '{...}' <file> <file> ...
+    t1 real 0m0.584s for <files> do ... awk <file> ... done
 
 
 # t-file-glob-bash-compgen-vs-stat.sh
@@ -154,9 +154,9 @@ tests manually:
 **Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)**<br/>
 *A: `compgen` and array+glob are slightly faster than stat(1)*<br/>
 
-    t1 real    0m0.026s   Bash compgen GLOB
-    t2 real    0m0.028s   Bash array: (GLOB)
-    t2 real    0m0.039s   stat -t GLOB
+    t1 real 0m0.026s   Bash compgen GLOB
+    t2 real 0m0.028s   Bash array: (GLOB)
+    t2 real 0m0.039s   stat -t GLOB
 
 ## Code
 
@@ -202,12 +202,12 @@ to read file once and then apply matching.
 **Q: What is the fastest way to get newest file in a directory**<br/>
 *A: Use find + filters. find + awk would be tad faster but more complex.*<br/>
 
-    t1 real    0m0.417s   find + awk
-    t2 real    0m0.523s   find + sort + head + cut
-    t3 real    0m0.575s   find + sort + sed
+    t1 real 0m0.417s   find + awk
+    t2 real 0m0.523s   find + sort + head + cut
+    t3 real 0m0.575s   find + sort + sed
 
-    t4 real    0m0.382s   stat (not a generic solution)
-    t5 real    0m0.330s   ls -t (not a generic solution)
+    t4 real 0m0.382s   stat (not a generic solution)
+    t5 real 0m0.330s   ls -t (not a generic solution)
 
 ## Code
 
@@ -239,19 +239,19 @@ and directories.
 **Q: Would pipe be slower than using process substitution?**<br/>
 *A: No real difference. Pipes are efficient.*<br/>
 
-t1 real    0m0.790s  pipes
-t2 real    0m0.745s  process substitution
+    t1 real 0m0.790s  pipes
+    t2 real 0m0.745s  process substitution
 
 ## Code
 
-cmd | cmd | cmd           # t1
-< <( < <(cmd) cmd) cmd    # t2
+    cmd | cmd | cmd           # t1
+    < <( < <(cmd) cmd) cmd    # t2
 
 
 # t-file-read-cat-vs-bash.sh
 
 **Q: Should I use `$(< FILE)´ over `$(cat FILE)`?**<br/>
-*A: The  `$(< FILE)´ 1s bbout 2x faster for small files*<br/>
+*A: The `$(< FILE)´ 1s bbout 2x faster for small files*<br/>
 
     t1 real 0m0.166s $(< file)
     t2 real 0m0.365s $(cat file)
@@ -263,10 +263,10 @@ With big files, they are equal.
     . ./t-lib.sh; RandomWordsDictionary 1M > t.1M
 
     time bash -c 's=$(cat t.1M); echo "$s" > /dev/null'
-    real    0m0.059s
+    real 0m0.059s
 
     time bash -c 's=$(< t.1M); echo "$s" > /dev/null'
-    real  0m0.056s
+    real 0m0.056s
 
 
 # t-file-read-content-loop.sh
@@ -274,17 +274,17 @@ With big files, they are equal.
 **Q: Fastest to process lines: readarray vs 'while read < file' ?**<br/>
 *A: It is about 2x faster to use readarray+for*<br/>
 
-t1  real       0m0.037s t1  mapfile + for
-t2a real       0m0.036s t2a readarray + for
-t2b real       0m0.081s t2b readarray + for ((i++))
-t3  real       0m0.085s t3  while read < file
+    t1  real 0m0.037s t1  mapfile + for
+    t2a real 0m0.036s t2a readarray + for
+    t2b real 0m0.081s t2b readarray + for ((i++))
+    t3  real 0m0.085s t3  while read < file
 
 ## Code
 
- mapfile -t array < file   ; for <array> ...        # t1
- readarray -t array < file ; for i in <array> ...   # t2a
- readarray -t array < file ; for ((i... <array> ... # t2b
- while read ... done < file                         # t3
+    t1  mapfile -t array < file   ; for <array> ...
+    t1a readarray -t array < file ; for i in <array> ...
+    t1b readarray -t array < file ; for ((i... <array> ...
+    t1  while read ... done < file
 
 ## Notes
 
@@ -298,10 +298,10 @@ so they should behave equally.
 *A: grep(1) before loop is 2x faster than doing filtering in loop*<br/>
 _priority: 7_
 
-    t1a real    0m0.436s grep prefilter before loop
-    t1b real    0m0.469s grep prefilter before loop (proc)
-    t2a real    0m1.105s loop: POSIX glob match with case...esac
-    t2b real    0m1.127s loop: Bash glob match using [[ ]]
+    t1a real 0m0.436s grep prefilter before loop
+    t1b real 0m0.469s grep prefilter before loop (proc)
+    t2a real 0m1.105s loop: POSIX glob match with case...esac
+    t2b real 0m1.127s loop: Bash glob match using [[ ]]
 
 ## Code
 
@@ -337,8 +337,8 @@ the Kernel's file cache.
 **Q: Capturing command's output: var=$() vs reading from a temporary file?**<br/>
 *A: The var=$() is 2x faster than using a temporary file*<br/>
 
-    t1 real    0m0.428s val=$(cmd)
-    t2 real    0m0.899s cmd > file; val=$(< file)
+    t1 real 0m0.428s val=$(cmd)
+    t2 real 0m0.899s cmd > file; val=$(< file)
 
 
 # t-file-read-with-size-check.sh
@@ -346,8 +346,8 @@ the Kernel's file cache.
 **Q: Is empty file check useful before reading file's content?**<br/>
 *A: It is about 10x faster to use `[ -s file ]` before reading*<br/>
 
-    t1 real    0m0.105s $(< file)
-    t2 real    0m0.006s [ -s file] && $(< file)
+    t1 real 0m0.105s $(< file)
+    t2 real 0m0.006s [ -s file] && $(< file)
 
 
 # t-file-size-info.sh
@@ -355,9 +355,9 @@ the Kernel's file cache.
 **Q: What is the fastest way to read a file's size?**<br/>
 *A: Prefer GNU `wc -c`. The non-POSIX stat(1) and it's options are not portable.*<br/>
 
-    t1 real    0m0.288s stat -c file
-    t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
-    t3 real    0m0.461s ls -l + awk
+    t1 real 0m0.288s stat -c file
+    t2 real 0m0.380s wc -c file; GNU version efectively is like stat(1)
+    t3 real 0m0.461s ls -l + awk
 
 
 # t-function-return-value.sh
@@ -365,8 +365,8 @@ the Kernel's file cache.
 **Q: Howabout Bash nameref to return value vs val=$(funcall)**<br/>
 *A: It is about 40x faster to use nameref to return value from a function*<br/>
 
-    t1 real    0m0.089s t1 $(funcall)
-    t2 real    0m0.002s t2 funcall nameref
+    t1 real 0m0.089s t1 $(funcall)
+    t2 real 0m0.002s t2 funcall nameref
 
 ## Code
 
@@ -381,10 +381,10 @@ the Kernel's file cache.
 **Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`**<br/>
 *A: The `{1..N}` and `$(seq N)` are very fast*<br/>
 
-    t1 real    0m0.003s for i in {1..N}
-    t2 real    0m0.004s for i in $(seq ...)
-    t3 real    0m0.006s for ((i=0; i < N; i++))
-    t4 real    0m0.010s while [ $i -le $N ] ... i++
+    t1 real 0m0.003s for i in {1..N}
+    t2 real 0m0.004s for i in $(seq ...)
+    t3 real 0m0.006s for ((i=0; i < N; i++))
+    t4 real 0m0.010s while [ $i -le $N ] ... i++
 
 ## Notes
 
@@ -406,10 +406,10 @@ tests.
 **Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.**<br/>
 *A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine*<br/>
 
-    t1 real    0m0.025s ((i++))      Bash
-    t2 real    0m0.047s let i++      Bash
-    t3 real    0m0.045s i=$((i + 1)) POSIX
-    t4 real    0m0.061s : $((i++))   POSIX (true; with side effect)
+    t1 real 0m0.025s ((i++))      Bash
+    t2 real 0m0.047s let i++      Bash
+    t3 real 0m0.045s i=$((i + 1)) POSIX
+    t4 real 0m0.061s : $((i++))   POSIX (true; with side effect)
 
 ## Notes
 
@@ -425,12 +425,12 @@ portable POSIX version works in all shells:
 **Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc**<br/>
 *A: In practise, no real differences*<br/>
 
-    t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
-    t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
+    t1val     real 0m0.002s [ "$var" = "1" ] # POSIX
+    t2val     real 0m0.003s [[ $var = 1 ]]   # Bash
 
-    t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
-    t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
-    t3empty   real    0m0.003s [[ ! $var ]]     # Bash
+    t1empty   real 0m0.002s [ ! "$var" ]     # modern POSIX
+    t2empty   real 0m0.002s [ -z "$var" ]    # archaic POSIX
+    t3empty   real 0m0.003s [[ ! $var ]]     # Bash
 
 ## Notes
 
@@ -452,9 +452,9 @@ loop_max=10000 ./statement-if-posix-vs-bash.sh
 **Q: Trim whitepace using Bash RE vs sed(1)**<br/>
 *A: Bash is much faster; especially with fn() using nameref*<br/>
 
-    t2 real    0m0.025s Bash fn() RE, using nameref for return value
-    t2 real    0m0.107s Bash fn() RE
-    t1 real    0m0.440s echo | sed RE
+    t2 real 0m0.025s Bash fn() RE, using nameref for return value
+    t2 real 0m0.107s Bash fn() RE
+    t1 real 0m0.440s echo | sed RE
 
 ## Code
 
@@ -468,8 +468,8 @@ loop_max=10000 ./statement-if-posix-vs-bash.sh
 **Q: Split string into an array: `eval` vs `read`?**<br/>
 *A: It is about 2-3x faster to use `eval`*<br/>
 
-    t1 real    0m0.012s eval
-    t2 real    0m0.025s read -ra
+    t1 real 0m0.012s eval
+    t2 real 0m0.025s read -ra
 
 ## Code
 
