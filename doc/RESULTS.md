@@ -274,7 +274,7 @@ With big files, they are equal.
 
 **Q: To process lines: `readarray` vs `while read < file`**<br/>
 *A: It is about 2x faster to use `readarray`*<br/>
-_priority: 8_
+_priority: 6_
 
     t1  real 0m0.037s t1  mapfile + for
     t2a real 0m0.036s t2a readarray + for
