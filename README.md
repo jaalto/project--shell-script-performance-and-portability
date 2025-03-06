@@ -159,8 +159,8 @@ full listing, see RESULTS above.
     done < FILE
 ```
 
-- To process only certain lines, use a
-  prefilter with grep (about 2 times faster)
+- It is about 2 times faster to prefilter with `grep`
+  to process only certain lines
   instead of reading the whole file
   into a loop and then selecting lines. Bash
   loops are generally slow. The
