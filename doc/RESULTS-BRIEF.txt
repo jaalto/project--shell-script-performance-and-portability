@@ -68,7 +68,7 @@ FILE: t-file-read-with-size-check.sh
 
 FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
-# A: Prefer GNU `wc -c`. The non-POSIX stat(1) and it's options are not portable.
+# A: Use stat(1) or portable GNU `wc -c`.
 
 FILE: t-function-return-value.sh
 # Q: Howabout Bash nameref to return value vs val=$(funcall)
