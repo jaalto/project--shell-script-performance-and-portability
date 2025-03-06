@@ -3,11 +3,11 @@
 # Q: To search file for matches: in memry searh vs grep(1)
 # A: Fastest is to read file once into memory and then do matching
 #
-#     t1a real   0m0.049s read + bash regexp (read file once + use loop)
-#     t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
-#     t2  real   0m0.482s read + case..MATCH..esac (separate file calls)
-#     t3  real   0m0.448s read + bash regexp (separate file calls)
-#     t4  real   0m0.404s external grep(1)
+#     t1a real 0m0.049s read + bash regexp (read file once + use loop)
+#     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
+#     t2  real 0m0.482s read + case..MATCH..esac (separate file calls)
+#     t3  real 0m0.448s read + bash regexp (separate file calls)
+#     t4  real 0m0.404s external grep(1)
 #
 # Code:
 #
