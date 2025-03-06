@@ -13,7 +13,7 @@
 #
 # Code:
 #
-# See <file>.sh for more details.
+# See the test code for more information. Overview:
 #
 #     t1 find -maxdepth 1 -type f ... | awk '<complex code>'
 #     t2 find -maxdepth 1 -type f | sort -r | head -1 | cut ...
