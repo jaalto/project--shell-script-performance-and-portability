@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: Split string into an array by IFS?
-# A: Is is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
+# A: It is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
 # priority: 8
 #
 #     t1 real 0m0.005s (array)
