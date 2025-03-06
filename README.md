@@ -216,6 +216,11 @@ full listing, see RESULTS above.
   operates entirely in memory. The pipe
   buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
+  *Warning*: Please note that using the `(list)`
+  statement will undergo pathname expansion.
+  Use it only in situations where the string does
+  not contain any globbing characters
+  like `*`, `?`, etc.
   See [code](./bin/t-variable-array-split-string.sh).
 
 
