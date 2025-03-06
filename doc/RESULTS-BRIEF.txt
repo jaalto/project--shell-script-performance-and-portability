@@ -91,6 +91,6 @@ FILE: t-string-trim-whitespace.sh
 # A: It is 8x faster to use Bash, especially with fn() nameref
 
 FILE: t-variable-array-split-string.sh
-# Q: Split string into an array: `eval` vs `read`?
-# A: It is about 2-3x faster to use `eval`
+# Q: Split string into an array by IFS?
+# A: Is is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
 

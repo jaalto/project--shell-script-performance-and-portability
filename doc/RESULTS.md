@@ -480,25 +480,48 @@ _priority: 10_
 
 # t-variable-array-split-string.sh
 
-**Q: Split string into an array: `eval` vs `read`?**<br/>
-*A: It is about 2-3x faster to use `eval`*<br/>
+**Q: Split string into an array by IFS?**<br/>
+*A: Is is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton*<br/>
 _priority: 8_
 
-    t1 real 0m0.012s eval
-    t2 real 0m0.025s read -ra
+    t1 real 0m0.005s (array)
+    t2 real 0m0.011s IFS= eval ...
+    t3 real 0m0.030s read -ra
 
 ## Code
 
-    t1 IFS=":" eval 'array=($PATH)'
-    t2 IFS=":" read -ra array <<< "$PATH"
+    t1 saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
+    t2 IFS=":" eval 'array=($PATH)'
+    t3 IFS=":" read -ra array <<< "$PATH"
 
 ## Notes
+
+This test must be run separately to clear the
+string from memory between invocations:
+
+     for i in t{1..3}; do ./t-variable-array-split-string.sh $i; done
 
 This test involves splitting by an arbitrary
 character, which requires setting a local
 `IFS` for the execution of the command.
 
+The local IFS can be defined for one
+statement only if `eval` is used.
+
 The reason why `<<<` is slower is that it
 uses a pipe buffer (in latest Bash),
 whereas `eval` operates entirely in memory.
+
+*Warning*
+
+Please note that using the `(list)`
+statement will undergo pathname expansion.
+Use it only in situations where the string does
+not contain any globbing characters
+like `*`, `?`, etc.
+
+You can prevent `(list)` to undergo pathname
+expansion inside function, by disabling it with:
+
+    local - set -f
 
