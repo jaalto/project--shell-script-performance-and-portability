@@ -58,7 +58,7 @@ EXAMPLES
     ./$PROGRAM t-test-case.sh
     ./$PROGRAM --shell ksh t-test-case.sh
 
-    # Modify the default repeat count $loop_max (see t-lib.sh)
+    # Modify the default repeat count \$loop_max (see t-lib.sh)
     loop_max=500 ./$PROGRAM t-test-case.sh"
 
     exit 0
