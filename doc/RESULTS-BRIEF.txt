@@ -36,7 +36,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 
 FILE: t-file-grep-vs-match-in-memory.sh
 # Q: To search file for matches: in memry searh vs grep(1)
-# A: Fastest is to read file once into memory and then do matching
+# A: It is at 8-10x faster to read file into memory and then do matching
 
 FILE: t-file-newest-in-dir.sh
 # Q: What is the fastest way to get newest file in a directory

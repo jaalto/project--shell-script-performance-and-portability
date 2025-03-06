@@ -175,7 +175,7 @@ stat(1) does more work by opening each found file.
 # t-file-grep-vs-match-in-memory.sh
 
 **Q: To search file for matches: in memry searh vs grep(1)**<br/>
-*A: Fastest is to read file once into memory and then do matching*<br/>
+*A: It is at 8-10x faster to read file into memory and then do matching*<br/>
 
     t1a real 0m0.049s read + bash regexp (read file once + use loop)
     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
