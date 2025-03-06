@@ -64,14 +64,14 @@ full listing, see RESULTS above.
   massive speed gains.
   See [vmtouch](https://hoytech.com/vmtouch/).
 
-- If you have tasks that can be run concurrently, use  
-  [GNU parallel](https://www.gnu.org/software/parallel/) for massive gains in performance. See also  
-  how to use  
-  [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore) to wait for all concurrent  
-  tasks to finish before continuing with the rest of  
-  the tasks in the pipeline. In some cases, even  
-  parallelizing work with GNU  
-  [`xargs --max-procs=0`](https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html) can help.
+- If you have tasks that can be run concurrently, use
+  [GNU parallel](https://www.gnu.org/software/parallel/) for massive gains in performance. See also how to use
+  [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
+  to wait for all concurrent tasks to finish
+  before continuing with the rest of the tasks in
+  the pipeline. In some cases, even parallelizing
+  work with GNU
+[`xargs --max-procs=0`](https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html) can help.
 
 - Minimize extra processes as much as possible.
   In most cases, a single
