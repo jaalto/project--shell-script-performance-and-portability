@@ -251,7 +251,7 @@ and directories.
 # t-file-read-cat-vs-bash.sh
 
 **Q: Should I use `$(< FILE)´ over `$(cat FILE)`?**<br/>
-*A: The `$(< FILE)´ 1s bbout 2x faster for small files*<br/>
+*A: The `$(< FILE)´ is about 2x faster for small files*<br/>
 
     t1 real 0m0.166s $(< file)
     t2 real 0m0.365s $(cat file)
@@ -334,8 +334,8 @@ the Kernel's file cache.
 
 # t-file-read-shell-result.sh
 
-**Q: Capturing command's output: var=$() vs reading from a temporary file?**<br/>
-*A: The var=$() is 2x faster than using a temporary file*<br/>
+**Q: Capturing command's output: `var=$()` vs reading from a temporary file?**<br/>
+*A: The `var=$()` is 2x faster than using a temporary file*<br/>
 
     t1 real 0m0.428s val=$(cmd)
     t2 real 0m0.899s cmd > file; val=$(< file)

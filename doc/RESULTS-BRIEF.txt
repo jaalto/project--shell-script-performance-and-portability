@@ -48,7 +48,7 @@ FILE: t-file-pipe-vs-process-substitution.sh
 
 FILE: t-file-read-cat-vs-bash.sh
 # Q: Should I use `$(< FILE)´ over `$(cat FILE)`?
-# A: The `$(< FILE)´ 1s bbout 2x faster for small files
+# A: The `$(< FILE)´ is about 2x faster for small files
 
 FILE: t-file-read-content-loop.sh
 # Q: Fastest to process lines: readarray vs 'while read < file' ?
@@ -59,8 +59,8 @@ FILE: t-file-read-match-lines-loop-vs-grep.sh
 # A: grep(1) before loop is 2x faster than doing filtering in loop
 
 FILE: t-file-read-shell-result.sh
-# Q: Capturing command's output: var=$() vs reading from a temporary file?
-# A: The var=$() is 2x faster than using a temporary file
+# Q: Capturing command's output: `var=$()` vs reading from a temporary file?
+# A: The `var=$()` is 2x faster than using a temporary file
 
 FILE: t-file-read-with-size-check.sh
 # Q: Is empty file check useful before reading file's content?
