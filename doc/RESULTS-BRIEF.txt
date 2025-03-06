@@ -47,7 +47,7 @@ FILE: t-file-pipe-vs-process-substitution.sh
 # A: No real difference. Pipes are efficient.
 
 FILE: t-file-read-cat-vs-bash.sh
-# Q: Should I use `$(< FILE)´ over `$(cat FILE)`?
+# Q: Howabout `$(< FILE)` vs `$(cat FILE)`
 # A: The `$(< FILE)´ is about 2x faster for small files
 
 FILE: t-file-read-content-loop.sh

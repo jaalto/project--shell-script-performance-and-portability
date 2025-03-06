@@ -250,7 +250,7 @@ and directories.
 
 # t-file-read-cat-vs-bash.sh
 
-**Q: Should I use `$(< FILE)´ over `$(cat FILE)`?**<br/>
+**Q: Howabout `$(< FILE)` vs `$(cat FILE)`**<br/>
 *A: The `$(< FILE)´ is about 2x faster for small files*<br/>
 
     t1 real 0m0.166s $(< file)
