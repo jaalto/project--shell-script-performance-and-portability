@@ -48,7 +48,7 @@ FILE: t-file-pipe-vs-process-substitution.sh
 
 FILE: t-file-read-cat-vs-bash.sh
 # Q: Howabout `$(< FILE)` vs `$(cat FILE)`
-# A: It is abut 2x faster to use `$(< FILE)` for small files
+# A: It is about 2x faster to use `$(< FILE)` for small files
 
 FILE: t-file-read-content-loop.sh
 # Q: To process lines: `readarray` vs `while read < file`

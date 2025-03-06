@@ -251,7 +251,7 @@ _priority: 0_
 # t-file-read-cat-vs-bash.sh
 
 **Q: Howabout `$(< FILE)` vs `$(cat FILE)`**<br/>
-*A: It is abut 2x faster to use `$(< FILE)` for small files*<br/>
+*A: It is about 2x faster to use `$(< FILE)` for small files*<br/>
 _priority: 10_
 
     t1 real 0m0.166s $(< file)
