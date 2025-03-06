@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: The check if GLOB matches file: stat or Bash compgen?
-# A: Bash array+glob/compgen are much faster than stat(1)
+# Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
+# A: `compgen` and array+glob are slightly faster than stat(1)
 #
 # t1 real    0m0.026s   Bash compgen GLOB
 # t2 real    0m0.028s   Bash array: (GLOB)
@@ -9,9 +9,9 @@
 #
 # Code:
 #
-# arr=("file"*)
-# compgen -G "file"*
-# stat -t "file"*
+# t1 compgen -G "file"*
+# t2 arr=("file"*)
+# t3 stat -t "file"*
 #
 # Notes:
 #
