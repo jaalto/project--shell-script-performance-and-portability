@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: Trim whitepace using Bash RE vs sed(1)
-# A: Bash is much faster; especially with fn() using nameref
+# A: It is 8x faster to use Bash, especially with fn() nameref
 # priority: 10
 #
 #     t2 real 0m0.025s Bash fn() RE, using nameref for return value
