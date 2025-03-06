@@ -51,6 +51,10 @@ follows regarding the impact on performance:
                   variable-hash-*
 ```
 
+- Name the test case functions using `t<something>()`, like
+  t1, t2 and t3. Order the test cases (if posisble) by fastest
+  solution first and slowest last.
+
 # GENERAL CODING STYLE CONSIDERATIONS
 
 Use relaxed conventions for maximum clarity
