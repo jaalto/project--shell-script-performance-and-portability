@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: To check file for matches: repeat read, inline match or grep(1)?
-# A: Fastest is to read file once into memory and then match
+# Q: To search file for matches: in memry searh vs grep(1)
+# A: Fastest is to read file once into memory and then do matching
 #
 # t1a real   0m0.049s read + bash regexp (read file once + use loop)
 # t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
@@ -11,7 +11,7 @@
 #
 # Code:
 #
-# Study the <file>.sh for more information.
+# Study the <test case>.sh code for more information.
 #
 # read once and loop [[ str =~~ RE ]]   # t1a
 # read once and loop case..MATCH..end   # t1b
