@@ -93,6 +93,14 @@ full listing, see RESULTS above.
     cmd | grep ... | sed ...
 ```
 
+- *Note*: if you have hordes of RAM,
+  no shortage of cores, and big data files, then
+  utilize pipelines `<cmd> | ...` as much as
+  possible because the kernel will optimize
+  things in memory better. In more powerful
+  systems, many latency/performance issues are
+  not as relevant.
+
 - Use Shell
   [built-ins](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html)
   and not binaries:
