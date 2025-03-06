@@ -39,6 +39,11 @@
 # Use it only in situations where the string does
 # not contain any globbing characters
 # like `*`, `?`, etc.
+#
+# You can prevent `(list)` to undergo pathname
+# expansion inside function, by disabling it with:
+#
+#     local - set -f
 
 . ./t-lib.sh ; f=$random_file
 
@@ -60,6 +65,15 @@ t1 ()
 
 t2 ()
 {
+    # Safeguard "($string)" from
+    # undergoing pathname expansion
+    #
+    # Not really relevant here, but
+    # to remind you to use it in production
+    # code
+
+    local - set -f
+
     for i in $(seq $loop_max)
     do
         # local IFS for the statement only
