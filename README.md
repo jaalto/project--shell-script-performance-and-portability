@@ -1,7 +1,7 @@
 # SHELL SCRIPT PERFORMANCE TESTS
 
 How can you write faster and more optimized shell scripts?
-That's the question these test cases on GitHub aim to answer.
+That's the question these test cases on aim to answer.
 
 - [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
