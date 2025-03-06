@@ -210,9 +210,13 @@ full listing, see RESULTS above.
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
   See [code](./bin/t-variable-array-split-string.sh).
 
+
 ```
-    # Fastest
+    # Prepare a string with
+    # 100 "words"
     string=$(echo {1..100})
+
+    # Fastest
     eval 'array=($string)'
 
     # Much slower
