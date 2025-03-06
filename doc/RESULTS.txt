@@ -384,7 +384,6 @@ FILE: t-function-return-value.sh
 #     t1 fn(): ... echo "<value>"
 #     t2 fn(): local -n ret=$1; ... ret="<value>"
 
-FILE: t-lib.sh
 FILE: t-statement-arithmetic-for-loop.sh
 #! /bin/bash
 #

@@ -385,8 +385,6 @@ _priority: 10_
     t2 fn(): local -n ret=$1; ... ret="<value>"
 
 
-# t-lib.sh
-
 # t-statement-arithmetic-for-loop.sh
 
 **Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`**<br/>
