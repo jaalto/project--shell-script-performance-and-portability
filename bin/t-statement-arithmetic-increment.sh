@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
-# A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine
+# A: No noticeable difference, POSIX `i=$((i + 1))` will do fine
 # priority: 1
 #
 #     t1 real 0m0.025s ((i++))      Bash
