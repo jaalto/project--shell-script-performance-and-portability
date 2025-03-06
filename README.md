@@ -268,6 +268,10 @@ for details and further commentary.
     [ -z "$var" ]    # archaic
 ```
 
+# NO PERFORMANCE GAINS
+
+None of these offer any advantages to speed up shell scripts.
+
 - There are no practical differences between
   these. The POSIX `$(())` statement
   will do fine. Note that the odd-looking
@@ -327,10 +331,6 @@ for details and further commentary.
         i=$((i + 1))
     done
 ```
-
-# NO PERFORMANCE GAINS
-
-None of these offer any advantages to speed up shell scripts.
 
 - There is no performance difference between a
   regular loop and a
