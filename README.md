@@ -207,9 +207,8 @@ full listing, see RESULTS above.
 
 # MODERATE PERFORMANCE GAINS
 
-- It is about 2-3 times faster to split a string
-  into an array using `eval`
-  than using a
+- It is about 4-5 times faster to split a string
+  into an array using Bash list   rather than
   here-string. This is because Bash
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a
@@ -223,13 +222,15 @@ full listing, see RESULTS above.
 ```
     # Prepare a string with
     # 100 "words"
-    printf -v string "%s " {1..100}
+    printf -v string "%s:" {1..100}
 
     # Fastest
-    eval 'array=($string)'
+    saved=$IFS
+    array=($string)
+    IFS=$saved
 
     # Much slower
-    read -ra array <<< "$string"
+    IFS=":" read -ra array <<< "$string"
 
     # To see what Bash uses
     # for HERE STRING: pipe or
