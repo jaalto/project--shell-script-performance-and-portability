@@ -28,7 +28,7 @@ FILE: t-file-copy-check-exist.sh
 
 FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?
-# A: is is at least 2x faster to do it all in awk
+# A: It is about 2-3x faster to do it all in awk
 
 FILE: t-file-glob-bash-compgen-vs-stat.sh
 # Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
@@ -36,7 +36,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 
 FILE: t-file-grep-vs-match-in-memory.sh
 # Q: To search file for matches: in memry searh vs grep(1)
-# A: It is at 8-10x faster to read file into memory and then do matching
+# A: It is about 8-10x faster to read file into memory and then do matching
 
 FILE: t-file-newest-in-dir.sh
 # Q: What is the fastest way to get newest file in a directory
@@ -56,11 +56,11 @@ FILE: t-file-read-content-loop.sh
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 # Q: Howabout using grep(1) to prefilter before loop?
-# A: It's about 2x faster to use grep(1) than doing all in a loop
+# A: It is about 2x faster to use grep(1) than doing all in a loop
 
 FILE: t-file-read-shell-result.sh
 # Q: Capturing command's output: `var=$()` vs reading from a temporary file?
-# A: The `var=$()` is 2x faster than using a temporary file
+# A: It is about 2x faster to use `var=$()`
 
 FILE: t-file-read-with-size-check.sh
 # Q: Is empty file check useful before reading file's content?
@@ -71,7 +71,7 @@ FILE: t-file-size-info.sh
 # A: Use stat(1) or portable GNU `wc -c`.
 
 FILE: t-function-return-value.sh
-# Q: Howabout Bash nameref to return value vs val=$(funcall)
+# Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 40x faster to use nameref to return value from a function
 
 FILE: t-statement-arithmetic-for-loop.sh

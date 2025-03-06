@@ -144,7 +144,7 @@ FILE: t-file-for-loop-vs-awk.sh
 #! /bin/bash
 #
 # Q: for-loop file-by-file to awk vs awk handling all the files?
-# A: is is at least 2x faster to do it all in awk
+# A: It is about 2-3x faster to do it all in awk
 # priority: 7
 #
 #     t1 real 0m0.213s awk '{...}' <file> <file> ...
@@ -175,7 +175,7 @@ FILE: t-file-grep-vs-match-in-memory.sh
 #! /bin/bash
 #
 # Q: To search file for matches: in memry searh vs grep(1)
-# A: It is at 8-10x faster to read file into memory and then do matching
+# A: It is about 8-10x faster to read file into memory and then do matching
 #
 #     t1a real 0m0.049s read + bash regexp (read file once + use loop)
 #     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
@@ -297,7 +297,7 @@ FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /bin/bash
 #
 # Q: Howabout using grep(1) to prefilter before loop?
-# A: It's about 2x faster to use grep(1) than doing all in a loop
+# A: It is about 2x faster to use grep(1) than doing all in a loop
 # priority: 7
 #
 #     t1a real 0m0.436s grep prefilter before loop
@@ -337,7 +337,7 @@ FILE: t-file-read-shell-result.sh
 #! /bin/bash
 #
 # Q: Capturing command's output: `var=$()` vs reading from a temporary file?
-# A: The `var=$()` is 2x faster than using a temporary file
+# A: It is about 2x faster to use `var=$()`
 # priority: 8
 #
 #     t1 real 0m0.428s val=$(cmd)
@@ -374,7 +374,7 @@ FILE: t-file-size-info.sh
 FILE: t-function-return-value.sh
 #! /bin/bash
 #
-# Q: Howabout Bash nameref to return value vs val=$(funcall)
+# Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 40x faster to use nameref to return value from a function
 # priority: 10
 #
