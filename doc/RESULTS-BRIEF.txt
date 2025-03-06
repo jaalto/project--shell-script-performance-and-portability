@@ -88,7 +88,7 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 
 FILE: t-string-trim-whitespace.sh
 # Q: Trim whitepace using Bash RE vs sed(1)
-# A: Bash is much faster; especially with fn() using nameref
+# A: It is 8x faster to use Bash, especially with fn() nameref
 
 FILE: t-variable-array-split-string.sh
 # Q: Split string into an array: `eval` vs `read`?
