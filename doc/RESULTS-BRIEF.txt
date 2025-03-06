@@ -20,11 +20,11 @@ FILE: t-dir-empty.sh
 
 FILE: t-dir-entries.sh
 # Q: Fastest to get list of dirs: for vs compgen vs ls -d
-# A: In general, simple ls(1) will do fine. No big differences.
+# A: Simple ls(1) will do fine. No real differences.
 
 FILE: t-file-copy-check-exist.sh
-# Q: If you need a copy of file, should you test before copy?
-# A: Yes, test existense of file before cp(1). Hardlinks are fast.
+# Q: Should you test existense before copying?
+# A: It is about 5x faster is you test existense before copying.
 
 FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?

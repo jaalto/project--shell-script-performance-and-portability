@@ -96,8 +96,8 @@ _priority: 3_
 # t-dir-entries.sh
 
 **Q: Fastest to get list of dirs: for vs compgen vs ls -d**<br/>
-*A: In general, simple ls(1) will do fine. No big differences.*<br/>
-_priority:_
+*A: Simple ls(1) will do fine. No real differences.*<br/>
+_priority: 1_
 
 For 20 directories:
 
@@ -126,8 +126,9 @@ tests manually:
 
 # t-file-copy-check-exist.sh
 
-**Q: If you need a copy of file, should you test before copy?**<br/>
-*A: Yes, test existense of file before cp(1). Hardlinks are fast.*<br/>
+**Q: Should you test existense before copying?**<br/>
+*A: It is about 5x faster is you test existense before copying.*<br/>
+_priority: 5_
 
     t1 real 0m1.002s cp A B
     t2 real 0m0.013s <file test> cp
@@ -144,6 +145,7 @@ tests manually:
 
 **Q: for-loop file-by-file to awk vs awk handling all the files?**<br/>
 *A: is is at least 2x faster to do it all in awk*<br/>
+_priority: 7_
 
     t1 real 0m0.213s awk '{...}' <file> <file> ...
     t1 real 0m0.584s for <files> do ... awk <file> ... done
@@ -153,6 +155,7 @@ tests manually:
 
 **Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)**<br/>
 *A: `compgen` and array+glob are slightly faster than stat(1)*<br/>
+_priority: 2_
 
     t1 real 0m0.026s   Bash compgen GLOB
     t2 real 0m0.028s   Bash array: (GLOB)
@@ -201,6 +204,7 @@ to read file once and then apply matching.
 
 **Q: What is the fastest way to get newest file in a directory**<br/>
 *A: Use find + filters. find + awk would be tad faster but more complex.*<br/>
+_priority: 3_
 
     t1 real 0m0.417s   find + awk
     t2 real 0m0.523s   find + sort + head + cut
@@ -238,6 +242,7 @@ and directories.
 
 **Q: Would pipe be slower than using process substitution?**<br/>
 *A: No real difference. Pipes are efficient.*<br/>
+_priority: 0_
 
     t1 real 0m0.790s  pipes
     t2 real 0m0.745s  process substitution
@@ -252,6 +257,7 @@ and directories.
 
 **Q: Howabout `$(< FILE)` vs `$(cat FILE)`**<br/>
 *A: It is abut 2x faster to use `$(< FILE)` for small files*<br/>
+_priority: 10_
 
     t1 real 0m0.166s $(< file)
     t2 real 0m0.365s $(cat file)
@@ -357,6 +363,7 @@ _priority: 8_
 
 **Q: What is the fastest way to read a file's size?**<br/>
 *A: Use stat(1) or portable GNU `wc -c`.*<br/>
+_priority: 5_
 
     t1 real 0m0.288s stat -c file
     t2 real 0m0.380s wc -c file; GNU version efectively is like stat(1)
@@ -389,6 +396,7 @@ _priority: 10_
 
 **Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`**<br/>
 *A: The `{1..N}` and `$(seq N)` are very fast*<br/>
+_priority: 2_
 
     t1 real 0m0.003s for i in {1..N}
     t2 real 0m0.004s for i in $(seq ...)
@@ -414,6 +422,7 @@ tests.
 
 **Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.**<br/>
 *A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine*<br/>
+_priority: 1_
 
     t1 real 0m0.025s ((i++))      Bash
     t2 real 0m0.047s let i++      Bash
@@ -433,6 +442,7 @@ portable POSIX version works in all shells:
 
 **Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc**<br/>
 *A: In practise, no real differences*<br/>
+_priority: 0_
 
     t1val     real 0m0.002s [ "$var" = "1" ] # POSIX
     t2val     real 0m0.003s [[ $var = 1 ]]   # Bash
@@ -460,6 +470,7 @@ slight differences in favor of Bash `[[ ]]`.
 
 **Q: Trim whitepace using Bash RE vs sed(1)**<br/>
 *A: Bash is much faster; especially with fn() using nameref*<br/>
+_priority: 10_
 
     t2 real 0m0.025s Bash fn() RE, using nameref for return value
     t2 real 0m0.107s Bash fn() RE
@@ -476,6 +487,7 @@ slight differences in favor of Bash `[[ ]]`.
 
 **Q: Split string into an array: `eval` vs `read`?**<br/>
 *A: It is about 2-3x faster to use `eval`*<br/>
+_priority: 8_
 
     t1 real 0m0.012s eval
     t2 real 0m0.025s read -ra
