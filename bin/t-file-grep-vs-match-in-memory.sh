@@ -22,7 +22,7 @@
 # Notes:
 #
 # Repeated reads of the same file probably utilizes
-# Kernel cache to some extent. But is is still much faster
+# Kernel cache to some extent. But it is still much faster
 # to read file once and then apply matching.
 
 . ./t-lib.sh ; rand=$random_file
