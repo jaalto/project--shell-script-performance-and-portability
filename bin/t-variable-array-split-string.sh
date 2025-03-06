@@ -15,7 +15,7 @@
 #
 # This test involves splitting by an arbitrary
 # character, which requires setting a local
-# IFS for the execution of the command.
+# `IFS` for the execution of the command.
 #
 # The reason why `<<<` is slower is that it
 # uses a pipe buffer (in latest Bash),
