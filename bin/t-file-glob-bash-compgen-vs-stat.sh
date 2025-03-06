@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: Sheck if GLOB matches file: arrays vs `compgen` vs `stat`
+# Q: How to check if GLOB matches any files: arrays vs `compgen` vs `stat`
 # A: `compgen` and array+glob are slightly faster than `stat`
 # priority: 2
 #
