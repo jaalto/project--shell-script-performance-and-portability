@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: How much is POSIX `$PWD` faster than `pwd`?
-# A: It is about 7x faster to use $PWD to `pwd` even though it is Bash built-in
+# A: It is about 7x faster to use `$PWD` to `pwd` (Bash built-in)
 # priority: 4
 #
 #     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
