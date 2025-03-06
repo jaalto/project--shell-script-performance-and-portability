@@ -6,11 +6,11 @@
 # t1     real    0m0.025s ((i++))      Bash
 # t2     real    0m0.047s let i++      Bash
 # t3     real    0m0.045s i=$((i + 1)) POSIX
-# t4     real    0m0.061s : $((i++))   POSIX (side effect)
+# t4     real    0m0.061s : $((i++))   POSIX (true; with side effect)
 #
 # Notes:
 #
-# The tests were using 10,000 repeats, which is
+# The tests were using 10 000 repeats, which is
 # unrealistic for any program. There really is no
 # practical difference whichever you choose. The
 # portable POSIX version works in all shells:
