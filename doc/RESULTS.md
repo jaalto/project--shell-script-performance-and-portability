@@ -5,11 +5,11 @@
 *A: No, parallel won't help in typical cases. Use only with huge files.*<br/>
 _priority: 1_
 
-    t0  real  0m0.005s grep baseline
-    t1a real  0m0.210s --block-size <default> --pipepart
-    t1b real  0m0.240s --block-size <default> (Linux 64k)
-    t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
-    t3  real  0m0.224s --block-size 32k
+    t0  real 0m0.005s grep baseline
+    t1a real 0m0.210s --block-size <default> --pipepart
+    t1b real 0m0.240s --block-size <default> (Linux 64k)
+    t2  real 0m0.234s --block-size 64k (grep instance for every 1k lines)
+    t3  real 0m0.224s --block-size 32k
 
 ## Notes
 
@@ -24,16 +24,16 @@ file sizes are relatively small (test file: ~600 lines).
 # t-command-grep.sh
 
 **Q: In grep, is option --fixed-strings faster?**<br/>
-*A: Not real difference between --extended-regexp, --perl-regexp, --ignore-case*<br/>
+*A: No real difference between --extended-regexp, --perl-regexp, --ignore-case*<br/>
 _priority: 2_
 
-    t1pure     real   0m0.382s LANG=C --fixed-strings
-    t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
-    t1extended real   0m0.382s LANG=C --extended-regexp
-    t1perl     real   0m0.381s LANG=C --perl-regexp
+    t1pure     real 0m0.382s LANG=C --fixed-strings
+    t1utf8     real 0m0.389s LANG=C.UTF-8 --fixed-strings
+    t1extended real 0m0.382s LANG=C --extended-regexp
+    t1perl     real 0m0.381s LANG=C --perl-regexp
 
-    t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
-    t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
+    t2icasef   real 0m0.386s LANG=C --ignore-case --fixed-strings
+    t2icasee   real 0m0.397s LANG=C --ignore-case --extended-regexp
 
 
 # t-command-output-vs-process-substitution.sh
@@ -177,11 +177,11 @@ stat(1) does more work by opening each found file.
 **Q: To search file for matches: in memry searh vs grep(1)**<br/>
 *A: Fastest is to read file once into memory and then do matching*<br/>
 
-    t1a real   0m0.049s read + bash regexp (read file once + use loop)
-    t1b real   0m0.117s read + case..MATCH..esac (read file once + use loop)
-    t2  real   0m0.482s read + case..MATCH..esac (separate file calls)
-    t3  real   0m0.448s read + bash regexp (separate file calls)
-    t4  real   0m0.404s external grep(1)
+    t1a real 0m0.049s read + bash regexp (read file once + use loop)
+    t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
+    t2  real 0m0.482s read + case..MATCH..esac (separate file calls)
+    t3  real 0m0.448s read + bash regexp (separate file calls)
+    t4  real 0m0.404s external grep(1)
 
 ## Code
 

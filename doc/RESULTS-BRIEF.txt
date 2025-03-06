@@ -4,7 +4,7 @@ FILE: t-command-grep-parallel.sh
 
 FILE: t-command-grep.sh
 # Q: In grep, is option --fixed-strings faster?
-# A: Not real difference between --extended-regexp, --perl-regexp, --ignore-case
+# A: No real difference between --extended-regexp, --perl-regexp, --ignore-case
 
 FILE: t-command-output-vs-process-substitution.sh
 # Q: `cmd | while` vs `while ... done < <(process substitution)`
