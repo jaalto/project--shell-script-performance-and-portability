@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: Is empty file check useful before reading file's content?
-# A: It is significantly faster (~10x) to use [ -s file ] before reading
+# A: It is about 10x faster to use `[ -s file ]` before reading
 #
 # real    0m0.105s $(< file)
 # real    0m0.006s [ -s file] && $(< file)
