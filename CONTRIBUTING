@@ -1,102 +1,113 @@
-CODE NOTES
+# CONRIBUTING
 
-    information for contributing more test cases.
+information for contributing more test cases.
 
-    FILE LAYOUT
+# TEST CASE FILE LAYOUT
 
-	Q: <Test case descriptio in one sentence>
-	A: <Major results in one sentence>
-	priority: 0-10
+```
+    Q: <In one sentence, test case description>
+    A: <In one sentence, major results>
+    priority: 0-10
 
-	<Performance reaults form time(1)>
+    <The time(1) performance results>
 
-	Code:
+    Code:
 
-	<More explnatory code to for the reader>
+    <Optinal explanatory code for the reader>
 
-	Notes:
+    Notes:
 
-	<About the test cases, analysis of the results,
-	moe commentary or notes....>
+    <About the test cases, analysis
+    of the results, commentary, notes>
+```
 
-    Based on the results, select <priority> as follows:
+Based on the results, select <priority> as
+follows regarding impact on performance:
 
-	9-10 critical – Performance is highly important and must be optimized.
-	7-8  high – Significant impact on performance.
-	5-6  medium – Some impact, but not critical.
-	3-4  low – Minimal impact, but still measurable.
-	0-2  negligible – No effect or unimportant for performance.
+```
+    9-10 critical – High impact
+    7-8  high – Significant impact
+    5-6  medium – Some, but not critical
+    3-4  low – Minimal, but still measurable
+    0-2  negligible – Consider unimportant
+```
 
-    GENERAL <TEST CASE> FILE CONVENTIONS
+# GENERAL TEST CASE FILE CONVENTIONS
 
-    - Start with readable shebang with space "#! /bin/bash"
+- Start with readable shebang with
+  space "#! /bin/bash"
 
-    - Name test files "t-<category>-*.sh", where
-      category is one of:
+- Name test files "t-<category>-*.sh", where
+  category is one of:
 
-	command	    - extermal commands
-	dir	    - directory related
-	file	    - file manipulation
-	function    - function usage
-	statement   - language structures
-	string	    - string manipulation
-	variable    - Anything about variables.
-		      Use subtype prefix:
-		      variable-var-*
-		      variable-array-*
-		      variable-hash-*
+```
+    command      - extermal commands
+    dir         - directory related
+    file        - file manipulation
+    function    - function usage
+    statement   - language structures
+    string      - string manipulation
+    variable    - Anything about variables.
+                  Use subtype prefix:
+                  variable-var-*
+                  variable-array-*
+                  variable-hash-*
+```
 
-    GENERAL CODING STYLE CONSIDERATIONS
+# GENERAL CODING STYLE CONSIDERATIONS
 
-    Use relaxed conventions for
-    maximum clarity and simplicity:
+Use relaxed conventions for maximum clarity
+and simplicity. The <test case> files are
+intended to be as straightforward as possible
+and not Production Code.
 
-    - Use readable --long options everywhere.
+No need to lint using shellcheck(1) etc.
+Ref: <https://www.shellcheck.net>.
 
-    - Do not "$quote"; unless absolutely needed.
-      No 'local' for variable unless needed.
-      Remember, there are <test cases> and
-      not Procuction Code.
+- Use readable --long options everywhere.
 
-    - No need to lint using shellcheck(1) etc.
-      The <test case> files are intended to be as
-      straightforward as possible.
-      Ref: <https://www.shellcheck.net>.
+- Do not "$quote" unless needed.
 
-    - Allman style for these:
+- No 'local' variables unless needed.
 
-	fn()
-	{
-	    ...
-	}
+- Allman style for these:
 
-	for <test>
-	do
-	    ...
-	done
+```
+    fn()
+    {
+        ...
+    }
 
-	case "$var" in
-	    glob) ...
-		  ;;
-	    glob) ...
-		  ;;
-	fi
+    for <test>
+    do
+        ...
+    done
 
-    - K&R style for placing 'then'
-      provided that <cmd> is short and simple
-      enough.
+    case "$var" in
+        glob) ...
+              ;;
+        glob) ...
+              ;;
+    fi
+```
 
-	if <cmd>; then
-	    ...
-	fi
+- K&R style for placing 'then'
+  provided that <cmd> is short and simple
+  enough.
 
-    References
+```
+    if <cmd>; then
+        ...
+    fi
+```
 
-    - Allman aka BSD style
-      https://en.wikipedia.org/wiki/Indentation_style#Allman_style
-    - K&R style
-      https://en.wikipedia.org/wiki/Indentation_style#K&R
-    - Linting - static code analysis
-      https://en.wikipedia.org/wiki/Lint_(software)
+# REFERENCES
+
+- Allman aka BSD style
+  https://en.wikipedia.org/wiki/Indentation_style#Allman_style
+- K&R style
+  https://en.wikipedia.org/wiki/Indentation_style#K&R
+- Linting - static code analysis
+  https://en.wikipedia.org/wiki/Lint_(software)
 
 End of file
