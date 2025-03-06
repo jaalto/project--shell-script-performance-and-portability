@@ -1,16 +1,16 @@
 #! /bin/bash
 #
 # Q: In grep, is option --fixed-strings faster?
-# A: Not real difference between --extended-regexp, --perl-regexp, --ignore-case
+# A: No real difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
-#     t1pure     real   0m0.382s LANG=C --fixed-strings
-#     t1utf8     real   0m0.389s LANG=C.UTF-8 --fixed-strings
-#     t1extended real   0m0.382s LANG=C --extended-regexp
-#     t1perl     real   0m0.381s LANG=C --perl-regexp
+#     t1pure     real 0m0.382s LANG=C --fixed-strings
+#     t1utf8     real 0m0.389s LANG=C.UTF-8 --fixed-strings
+#     t1extended real 0m0.382s LANG=C --extended-regexp
+#     t1perl     real 0m0.381s LANG=C --perl-regexp
 #
-#     t2icasef   real   0m0.386s LANG=C --ignore-case --fixed-strings
-#     t2icasee   real   0m0.397s LANG=C --ignore-case --extended-regexp
+#     t2icasef   real 0m0.386s LANG=C --ignore-case --fixed-strings
+#     t2icasee   real 0m0.397s LANG=C --ignore-case --extended-regexp
 
 . ./t-lib.sh # ; f=$random_file
 
