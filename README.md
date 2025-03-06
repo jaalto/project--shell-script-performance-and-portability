@@ -176,7 +176,7 @@ full listing, see RESULTS above.
         ...
     done < <(grep -E "$re" file)
 
-    # Probelm: while runs in
+    # Problem: while runs in
     # a separate environment
     grep -E "$re" file) |
     while read -r ...
