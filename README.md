@@ -421,6 +421,16 @@ testing:
 
     echo 3 > /proc/sys/vm/drop_caches
 
+# FURTHER READING
+
+- See Greg's Bash Wiki and FAQ
+  https://mywiki.wooledge.org/BashGuide
+- Lint scripts for potential mistakes with
+  https://www.shellcheck.net
+- In Debian, to help to write portable POSIX
+  scripts, install package "devscripts" and see
+  https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
+
 # COPYRIGHT
 
 Copyright (C) 2024-2025 Jari Aalto
