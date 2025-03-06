@@ -226,7 +226,7 @@ full listing, see RESULTS above.
 
 # MINOR PERFORMANCE GAINS
 
-According to the tests, none of
+According to the results, none of
 these offer real practical benefits. See the
 raw test [results](./doc/RESULTS.md)
 for details and further commentary.
