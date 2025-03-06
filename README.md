@@ -252,6 +252,10 @@ for details and further commentary.
     LANG=C grep <any of above> --ignore-case ...
 ```
 
+# NO PERFORMANCE GAINS
+
+None of these offer any advantages to speed up shell scripts.
+
 - The Bash-specific `[[ ]]` might offer a
   minuscule advantage but only in loops of
   10,000 iterations. Unless the safeguards
@@ -267,10 +271,6 @@ for details and further commentary.
     [[ ! $var ]]     # Bash
     [ -z "$var" ]    # archaic
 ```
-
-# NO PERFORMANCE GAINS
-
-None of these offer any advantages to speed up shell scripts.
 
 - There are no practical differences between
   these. The POSIX `$(())` statement
