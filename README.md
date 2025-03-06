@@ -26,10 +26,10 @@ each test case produced the fastest results.
 
     bin/          The tests
     doc/          Results by "make doc"
-    COPYING       License file (GNU GPL)
+    COPYING       License (GNU GPL)
     INSTALL       Install instructions
     USAGE.md      How to run the tests
-    CONTRIBUTING  Contributing more test cases
+    CONTRIBUTING  Writing test cases
 
 ## Project details
 
@@ -91,9 +91,9 @@ each test case produced the fastest results.
   and not binaries:
 
 ```
-    echo ...    # not /usr//bin/echo
-    printf ...  # not /usr/bin/printf
-    [ ... ]     # not /usr//bin/test
+    echo     # not /usr/bin/echo
+    printf   # not /usr/bin/printf
+    [ ... ]  # not /usr/bin/test
 ```
 
 # MAJOR PERFORMANCE GAINS
@@ -107,7 +107,8 @@ each test case produced the fastest results.
 ```
     fn()
     {
-        # Use nameref to return value
+        # Use nameref for the
+        # return value
         local -n retref=$1
         shift
         local arg=$1
@@ -127,8 +128,8 @@ each test case produced the fastest results.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # Suppose 100 KiB buffer is enough
-   read -N$((100 * 1024)) < "$file"
+   # 100 KiB buffer
+   read -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
        ...
@@ -175,7 +176,7 @@ each test case produced the fastest results.
     while read -r ...
     do
         ...
-    done < <(grep -E "$re" "$file")
+    done < <(grep -E "$re" file)
 
     # slow, without prefilter
     while read -r ...
@@ -185,7 +186,7 @@ each test case produced the fastest results.
        fi
 
        ...
-    done < "$file"
+    done < file
 
 ```
 
@@ -210,8 +211,10 @@ each test case produced the fastest results.
     # Much slower
     read -ra array <<< "$string"
 
-    # To see what Bash uses for HERE STRING
-    bash -c 'ls -lL /proc/self/fd/0 <<<hello'
+    # To see what Bash uses
+    # for HERE STRING: pipe or
+    # temporary file
+    bash -c 'ls -lL /proc/self/fd/0 <<< hello'
 ```
 
 # MINOR PERFORMANCE GAINS
@@ -255,16 +258,21 @@ commentary.
 
     [ ! "$var" ]     # POSIX
     [[ ! $var ]]     # Bash
-    [ -z "$var" ]    # archaic (POSIX)
+    [ -z "$var" ]    # archaic
 ```
 
 - There are no practical differences between
-  these. The POSIX statement will do fine.
+  these. The POSIX `$(())` statement
+  will do fine. Note that the odd-looking
+  [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
+  utilizes the true operator's side effect
+  and therefore may not be the most
+  readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
 
 ```
     i=$((i + 1))     # POSIX
-    : $((i++))       # POSIX, Uhm...
+    : $((i++))       # POSIX, Uhm
     ((i++))          # Bash
     let i++          # Bash
 ```
