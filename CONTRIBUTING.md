@@ -14,7 +14,7 @@ See [txt2markdown.sh](./bin/Makefile::d).
     A: <In one sentence, major results>
     priority: 0-10
 
-    <The time(1) performance results>
+    <The time performance results>
 
     Code:
 
@@ -67,7 +67,7 @@ and simplicity. The <test case> files are
 intended to be as clear and straightforward
 as possible and not Production Code.
 
-No need to lint using shellcheck(1) etc.
+No need to lint using `shellcheck` etc.
 Ref: <https://www.shellcheck.net>.
 
 - For readability, use space in shebang line:
