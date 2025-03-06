@@ -74,11 +74,6 @@ Convert ()
             next
         }
 
-        /^t[0-9]/ {
-            printf(">%s\n", $0)
-            next
-        }
-
         /(Notes|Code):/ {
             sub(":", "")
             printf("## %s\n", $0)
