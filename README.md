@@ -226,10 +226,10 @@ full listing, see RESULTS above.
 
 # MINOR PERFORMANCE GAINS
 
-According to the tests, note that none of
+According to the tests, none of
 these offer real practical benefits. See the
-raw test results for details and further
-commentary.
+raw test [results](./doc/RESULTS.md)
+for details and further commentary.
 
 - One might think that choosing optimized
   `grep` options would make a difference.
