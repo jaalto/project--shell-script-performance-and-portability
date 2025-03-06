@@ -55,8 +55,8 @@ FILE: t-file-read-content-loop.sh
 # A: It is about 2x faster to use `readarray`
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
-# Q: would grep(1) prefilter help before loop?
-# A: grep(1) before loop is 2x faster than doing filtering in loop
+# Q: Howabout using grep(1) to prefilter before loop?
+# A: It's about 2x faster to use grep(1) than doing all in a loop
 
 FILE: t-file-read-shell-result.sh
 # Q: Capturing command's output: `var=$()` vs reading from a temporary file?

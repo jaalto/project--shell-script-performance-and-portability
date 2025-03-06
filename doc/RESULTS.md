@@ -295,8 +295,8 @@ so they should behave equally.
 
 # t-file-read-match-lines-loop-vs-grep.sh
 
-**Q: would grep(1) prefilter help before loop?**<br/>
-*A: grep(1) before loop is 2x faster than doing filtering in loop*<br/>
+**Q: Howabout using grep(1) to prefilter before loop?**<br/>
+*A: It's about 2x faster to use grep(1) than doing all in a loop*<br/>
 _priority: 7_
 
     t1a real 0m0.436s grep prefilter before loop
