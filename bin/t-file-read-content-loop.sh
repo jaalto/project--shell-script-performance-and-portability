@@ -2,6 +2,7 @@
 #
 # Q: To process lines: `readarray` vs `while read < file`
 # A: It is about 2x faster to use `readarray`
+# priority: 8
 #
 #     t1  real 0m0.037s t1  mapfile + for
 #     t2a real 0m0.036s t2a readarray + for
