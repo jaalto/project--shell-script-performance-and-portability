@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
-# A: `ls` will do fine. No real differences.
+# A: `ls` is good enough. No real differences.
 # priority: 1
 #
 # For 20 directories:
