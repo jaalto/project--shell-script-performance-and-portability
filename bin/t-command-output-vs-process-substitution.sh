@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: CMD | while vs while ... <(process substitution)
+# Q: `cmd | while` vs `while ... done < <(process substitution)`
 # A: No real difference. Process substitution preserves variables in loop.
 # priority: 0
 #
