@@ -41,10 +41,10 @@ full listing, see RESULTS above.
   see homepage.
 
 - Depends:
-  Bash and POSIX shell.
+  Bash
 
 - Optional depends:
-  `make` (any version). Used as
+  GNU `make`. Used as
   a frontend to call utilities.
 
 # GENERAL ADVICE
