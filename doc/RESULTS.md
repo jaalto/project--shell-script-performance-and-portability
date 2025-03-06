@@ -253,20 +253,20 @@ cmd | cmd | cmd           # t1
 **Q: Should I use `$(< FILE)´ over `$(cat FILE)`?**<br/>
 *A: The  `$(< FILE)´ 1s bbout 2x faster for small files*<br/>
 
-real    0m0.166s $(< file)
-real    0m0.365s $(cat file)
+    t1 real 0m0.166s $(< file)
+    t2 real 0m0.365s $(cat file)
 
 ## Notes
 
 With big files, they are equal.
 
-. ./t-lib.sh; RandomWordsDictionary 1M > t.1M
+    . ./t-lib.sh; RandomWordsDictionary 1M > t.1M
 
-time bash -c 's=$(cat t.1M); echo "$s" > /dev/null'
-real    0m0.059s
+    time bash -c 's=$(cat t.1M); echo "$s" > /dev/null'
+    real    0m0.059s
 
-time bash -c 's=$(< t.1M); echo "$s" > /dev/null'
-real  0m0.056s
+    time bash -c 's=$(< t.1M); echo "$s" > /dev/null'
+    real  0m0.056s
 
 
 # t-file-read-content-loop.sh
