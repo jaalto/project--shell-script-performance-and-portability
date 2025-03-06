@@ -15,7 +15,7 @@
 # Only with very high amount of repeats, there are
 # slight differences in favor of Bash `[[ ]]`.
 #
-# loop_max=10000 ./statement-if-posix-vs-bash.sh
+#     loop_max=10000 ./statement-if-posix-vs-bash.sh
 #
 #     t1val          real 0.055  user 0.054  sys 0.000  POSIX
 #     t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
