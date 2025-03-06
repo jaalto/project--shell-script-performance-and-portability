@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: for-loop file-by-file to awk vs awk handling all the files?
-# A: is is at least 2x faster to do it all in awk
+# A: It is about 2-3x faster to do it all in awk
 # priority: 7
 #
 #     t1 real 0m0.213s awk '{...}' <file> <file> ...
