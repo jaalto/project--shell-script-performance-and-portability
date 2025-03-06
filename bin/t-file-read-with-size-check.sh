@@ -3,8 +3,8 @@
 # Q: Is empty file check useful before reading file's content?
 # A: It is about 10x faster to use `[ -s file ]` before reading
 #
-# real    0m0.105s $(< file)
-# real    0m0.006s [ -s file] && $(< file)
+#     t1 real    0m0.105s $(< file)
+#     t2 real    0m0.006s [ -s file] && $(< file)
 
 . ./t-lib.sh ; f=$random_file
 

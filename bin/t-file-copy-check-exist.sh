@@ -3,15 +3,15 @@
 # Q: If you need a copy of file, should you test before copy?
 # A: Yes, test existense of file before cp(1). Hardlinks are fast.
 #
-# t1 real    0m1.002s cp A B
-# t2 real    0m0.013s <file test> cp
-# t2 real    0m0.009s <file test> cp (hardlink)
+#     t1 real    0m1.002s cp A B
+#     t2 real    0m0.013s <file test> cp
+#     t2 real    0m0.009s <file test> cp (hardlink)
 #
 # Code:
 #
-# cp --preserve=timestamps A B                       # t1
-# [ A -nt B ] || cp --preserve=timestamps ...        # t2
-# [ A -ef B ] || cp --preserve=timestamps --link ... # t3
+#     t1 cp --preserve=timestamps A B
+#     t2 [ A -nt B ] || cp --preserve=timestamps ...
+#     t3 [ A -ef B ] || cp --preserve=timestamps --link ...
 
 . ./t-lib.sh ; f=$random_file
 

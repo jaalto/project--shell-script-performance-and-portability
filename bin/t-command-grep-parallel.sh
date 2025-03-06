@@ -4,11 +4,11 @@
 # A: No, parallel won't help in typical cases. Use only with huge files.
 # priority: 1
 #
-# t0  real  0m0.005s grep baseline
-# t1a real  0m0.210s --block-size <default> --pipepart
-# t1b real  0m0.240s --block-size <default> (Linux 64k)
-# t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
-# t3  real  0m0.224s --block-size 32k
+#     t0  real  0m0.005s grep baseline
+#     t1a real  0m0.210s --block-size <default> --pipepart
+#     t1b real  0m0.240s --block-size <default> (Linux 64k)
+#     t2  real  0m0.234s --block-size 64k (grep instance for every 1k lines)
+#     t3  real  0m0.224s --block-size 32k
 #
 # Notes:
 #

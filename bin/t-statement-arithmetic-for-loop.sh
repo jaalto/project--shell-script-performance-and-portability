@@ -1,18 +1,19 @@
 #! /bin/bash
 #
-# Q: for-loop: {1..N} vs $(seq N) vs ((...)) vs POSIX i++
-# A: The {1..N} and $(seq N) are very fast
+# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
+# A: The `{1..N}` and `$(seq N)` are very fast
 #
-# t1 real    0m0.003s for i in {1..N}
-# t2 real    0m0.004s for i in $(seq ...)
-# t3 real    0m0.006s for ((i=0; i < N; i++))
-# t4 real    0m0.010s while [ $i -le $N ] ... i++
+#     t1 real    0m0.003s for i in {1..N}
+#     t2 real    0m0.004s for i in $(seq ...)
+#     t3 real    0m0.006s for ((i=0; i < N; i++))
+#     t4 real    0m0.010s while [ $i -le $N ] ... i++
 #
 # Notes:
 #
-# A simple, elegant, and practical winner: $(seq N)
+# Surprisingly, a simple, elegant, and practical winner
+# is `$(seq N)`.
 #
-# {1..N} problem: The Bash brace
+# The is a problem with `{N..M}`. The Bash brace
 # expansion cannot be parameterized, so it
 # is only useful if N is known beforehand.
 #

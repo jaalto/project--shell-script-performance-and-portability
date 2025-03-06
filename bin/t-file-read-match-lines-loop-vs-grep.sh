@@ -4,27 +4,28 @@
 # A: grep(1) before loop is 2x faster than doing filtering in loop
 # priority: 7
 #
-# t1a real    0m0.436s grep prefilter before loop
-# t1b real    0m0.469s grep prefilter before loop (proc)
-# t2a real    0m1.105s loop: POSIX glob match with case...esac
-# t2b real    0m1.127s loop: Bash glob match using [[ ]]
+#     t1a real    0m0.436s grep prefilter before loop
+#     t1b real    0m0.469s grep prefilter before loop (proc)
+#     t2a real    0m1.105s loop: POSIX glob match with case...esac
+#     t2b real    0m1.127s loop: Bash glob match using [[ ]]
 #
 # Code:
 #
-# grep | while ... done                      # t1a
-# while ... done < <(grep)                   # t1b
-# while read ... case..esac ... done < file  # t2a
-# while read ... [[ ]] ... done < file       # t2b
+#     t1a grep | while ... done
+#     t1b while ... done < <(grep)
+#     t2a while read ... case..esac ... done < file
+#     t2b while read ... [[ ]] ... done < file
 #
 # Notes:
 #
-# The practical winner in scripts is the `while read
-# do .. done < <(proc)` due to variables being
-# visible in the same scope. The "grep | while"
-# would create a subshell and release the variables
-# after the for-loop.
+# The practical winner in scripts is the
+# `while read do .. done < <(proc)` due to
+# variables being visible in the same scope.
+# The `grep | while` would create a subshell
+# and release the variables after the
+# for-loop.
 #
-# About the test cases
+# _About the test cases_
 #
 # The file contents read during the test cases are
 # probably cached in the Kernel. When the tests are

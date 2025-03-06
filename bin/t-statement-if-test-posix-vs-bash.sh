@@ -3,12 +3,12 @@
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: In practise, no real differences
 #
-# t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
-# t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
+#     t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
+#     t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
 #
-# t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
-# t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
-# t3empty   real    0m0.003s [[ ! $var ]]     # Bash
+#     t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
+#     t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
+#     t3empty   real    0m0.003s [[ ! $var ]]     # Bash
 #
 # Notes:
 #
@@ -17,12 +17,12 @@
 #
 # loop_max=10000 ./statement-if-posix-vs-bash.sh
 #
-# t1val          real 0.055  user 0.054  sys 0.000  POSIX
-# t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
+#     t1val          real 0.055  user 0.054  sys 0.000  POSIX
+#     t2val          real 0.032  user 0.030  sys 0.003  [[ ]]
 #
-# t1empty        real 0.052  user 0.045  sys 0.007  POSIX
-# t2empty        real 0.053  user 0.050  sys 0.003
-# t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
+#     t1empty        real 0.052  user 0.045  sys 0.007  POSIX
+#     t2empty        real 0.053  user 0.050  sys 0.003
+#     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 . ./t-lib.sh ; f=$random_file
 

@@ -3,36 +3,36 @@
 # Q: What is the fastest way to get newest file in a directory
 # A: Use find + filters. find + awk would be tad faster but more complex.
 #
-# t1 real    0m0.417s   find + awk
-# t2 real    0m0.523s   find + sort + head + cut
-# t3 real    0m0.575s   find + sort + sed
+#     t1 real    0m0.417s   find + awk
+#     t2 real    0m0.523s   find + sort + head + cut
+#     t3 real    0m0.575s   find + sort + sed
 #
-# t4 real    0m0.382s   stat (not a generic solution)
-# t5 real    0m0.330s   ls -t (not a generic solution)
+#     t4 real    0m0.382s   stat (not a generic solution)
+#     t5 real    0m0.330s   ls -t (not a generic solution)
 #
 # Code:
 #
 # See <file>.sh for more details.
 #
-# find -maxdepth 1 -type f ... | awk '<complex code>'       # t1
-# find -maxdepth 1 -type f | sort -r | head -1 | cut ...    # t2
-# find -maxdepth 1 -type f | sort -r | sed ...              # t3
-# stat ... | sort -r | sed ...                              # t4
-# ls --sort=time | head -1                                  # t5
+#     t1 find -maxdepth 1 -type f ... | awk '<complex code>'
+#     t2 find -maxdepth 1 -type f | sort -r | head -1 | cut ...
+#     t3 find -maxdepth 1 -type f | sort -r | sed ...
+#     t4 stat ... | sort -r | sed ...
+#     t5 ls --sort=time | head -1
 #
 # Notes:
 #
-# awk(1) binary is smaller that sed(1).
 #
 # Probably small head(1) and cut(1) combined is still
-# faster than sed(1) which uses regexp engine.
+# faster than sed(1) which uses regexp engine. And
+# awk(1) binary is smaller that sed(1).
 #
 # These can't tell files from directories, so they
 # are not usable if the directory ocntains both files
 # and directories.
 #
-#   ls -t   sort by time
-#   stat
+#     ls -t   sort by time
+#     stat
 
 . ./t-lib.sh ; f=$random_file
 

@@ -4,13 +4,13 @@
 # A: $PWD is about 7x faster considering `pwd` is even bash built-in
 # priority: 4
 #
-# t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
-# t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
+#     t1 real    0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
+#     t2 real    0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
 #
 # Notes:
 #
 # Even though pwd(1) is a Bash built-in, there is still a penalty
-# for calling command substitution $(command).
+# for calling command substitution `$(command)`.
 
 . ./t-lib.sh ; f=$random_file
 
