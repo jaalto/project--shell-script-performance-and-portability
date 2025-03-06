@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Q: Howabout `$(< FILE)´ vs `$(cat FILE)`
+# Q: Howabout `$(< FILE)` vs `$(cat FILE)`
 # A: The `$(< FILE)´ is about 2x faster for small files
 #
 #     t1 real 0m0.166s $(< file)
