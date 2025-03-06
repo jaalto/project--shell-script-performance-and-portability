@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Howabout grep(1) with GNU parallel(1)?
-# A: No, considerably slower in typical cases, use only with huge files.
+# Q: Howabout using parallel(1) to speed up grep(1)?
+# A: No, parallel won't help in typical cases. Use only with huge files.
 # priority: 1
 #
 # t0  real  0m0.005s grep baseline
