@@ -6,7 +6,7 @@ endif
 
 DOCDIR   = doc
 MAKEFILE = Makefile
-DOC      = RESULTS.txt
+DOC      = RESULTS
 BRIEF    = RESULTS-BRIEF.txt
 BIN_RUN  = run.sh
 BIN_DOC  = results.sh
@@ -50,7 +50,8 @@ doc: doc-all doc-brief
 
 define doc-function
 	cd bin && \
-	./$(BIN_DOC) t-* > ../$(DOCDIR)/$(DOC)
+	./$(BIN_DOC) t-* > ../$(DOCDIR)/$(DOC).txt
+	bin/txt2markdown.sh $(DOCDIR)/$(DOC).txt > $(DOCDIR)/$(DOC).md
 endef
 
 .PHONY: doc-all
@@ -61,8 +62,8 @@ $(DOCDIR)/$(DOC):
 	$(call doc-function)
 
 .PHONY: doc-brief
-doc-brief: $(DOCDIR)/$(DOC)
-	$(GREP) "^($$|FILE:|# [QA]:)" $(DOCDIR)/$(DOC) > $(DOCDIR)/$(BRIEF)
+doc-brief: $(DOCDIR)/$(DOC).txt
+	$(GREP) "^($$|FILE:|# [QA]:)" $(DOCDIR)/$(DOC).txt > $(DOCDIR)/$(BRIEF)
 
 # clean - Delete generated doc files
 .PHONY: clean
