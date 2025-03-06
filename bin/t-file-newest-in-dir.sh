@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: What is the fastest way to get newest file in directory
-# A: find + awk is tad faster but more complex. Use find + filters.
+# Q: What is the fastest way to get newest file in a directory
+# A: Use find + filters. find + awk would be tad faster but more complex.
 #
 # t1 real    0m0.417s   find + awk
 # t2 real    0m0.523s   find + sort + head + cut
@@ -22,12 +22,14 @@
 #
 # Notes:
 #
-# awk(1) binary is smaller that sed(1)
+# awk(1) binary is smaller that sed(1).
 #
 # Probably small head(1) and cut(1) combined is still
 # faster than sed(1) which uses regexp engine.
 #
-# These can't tell files from directories:
+# These can't tell files from directories, so they
+# are not usable if the directory ocntains both files
+# and directories.
 #
 #   ls -t   sort by time
 #   stat
