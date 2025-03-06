@@ -2,6 +2,7 @@
 #
 # Q: Is empty file check useful before reading file's content?
 # A: It is about 10x faster to use `[ -s file ]` before reading
+# priority: 8
 #
 #     t1 real 0m0.105s $(< file)
 #     t2 real 0m0.006s [ -s file] && $(< file)
