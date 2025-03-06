@@ -3,8 +3,8 @@
 # Q: Split string into an array: `eval` vs `read`?
 # A: It is about 2-3x faster to use `eval`
 #
-#     t1 real    0m0.012s eval
-#     t2 real    0m0.025s read -ra
+#     t1 real 0m0.012s eval
+#     t2 real 0m0.025s read -ra
 #
 # Code:
 #

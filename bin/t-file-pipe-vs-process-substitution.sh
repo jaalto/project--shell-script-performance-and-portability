@@ -3,13 +3,13 @@
 # Q: Would pipe be slower than using process substitution?
 # A: No real difference. Pipes are efficient.
 #
-# t1 real    0m0.790s  pipes
-# t2 real    0m0.745s  process substitution
+#     t1 real 0m0.790s  pipes
+#     t2 real 0m0.745s  process substitution
 #
 # Code:
 #
-# cmd | cmd | cmd           # t1
-# < <( < <(cmd) cmd) cmd    # t2
+#     cmd | cmd | cmd           # t1
+#     < <( < <(cmd) cmd) cmd    # t2
 
 . ./t-lib.sh ; f=$random_file
 

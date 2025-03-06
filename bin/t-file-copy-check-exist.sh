@@ -3,9 +3,9 @@
 # Q: If you need a copy of file, should you test before copy?
 # A: Yes, test existense of file before cp(1). Hardlinks are fast.
 #
-#     t1 real    0m1.002s cp A B
-#     t2 real    0m0.013s <file test> cp
-#     t2 real    0m0.009s <file test> cp (hardlink)
+#     t1 real 0m1.002s cp A B
+#     t2 real 0m0.013s <file test> cp
+#     t2 real 0m0.009s <file test> cp (hardlink)
 #
 # Code:
 #

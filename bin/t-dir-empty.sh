@@ -4,10 +4,10 @@
 # A: array+glob is faster than built-in `compgen`
 # priority: 3
 #
-#     t1 real    0m0.054s   array+glob
-#     t2 real    0m0.104s   compgen
-#     t3 real    0m0.304s   ls
-#     t3 real    0m0.480s   find | read
+#     t1 real 0m0.054s   array+glob
+#     t2 real 0m0.104s   compgen
+#     t3 real 0m0.304s   ls
+#     t3 real 0m0.480s   find | read
 #
 # Code:
 #

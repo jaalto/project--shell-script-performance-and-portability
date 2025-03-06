@@ -6,17 +6,17 @@
 #
 # For 20 directories:
 #
-#     t1 real    0m0.003s compgen -G */
-#     t2 real    0m0.001s for-loop
-#     t3 real    0m0.004s ls -d */
-#     t4 real    0m0.007s find . -maxdepth 1-type d
+#     t1 real 0m0.003s compgen -G */
+#     t2 real 0m0.001s for-loop
+#     t3 real 0m0.004s ls -d */
+#     t4 real 0m0.007s find . -maxdepth 1-type d
 #
 # For 100 directories:
 #
-#     t1 real    0m0.012s compgen -G */
-#     t2 real    0m0.015s for-loop
-#     t3 real    0m0.010s ls -d */
-#     t4 real    0m0.011s find . -maxdepth 1 -type d
+#     t1 real 0m0.012s compgen -G */
+#     t2 real 0m0.015s for-loop
+#     t3 real 0m0.010s ls -d */
+#     t4 real 0m0.011s find . -maxdepth 1 -type d
 #
 # Notes:
 #

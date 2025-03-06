@@ -3,8 +3,8 @@
 # Q: Howabout Bash nameref to return value vs val=$(funcall)
 # A: It is about 40x faster to use nameref to return value from a function
 #
-#     t1 real    0m0.089s t1 $(funcall)
-#     t2 real    0m0.002s t2 funcall nameref
+#     t1 real 0m0.089s t1 $(funcall)
+#     t2 real 0m0.002s t2 funcall nameref
 #
 # Code:
 #

@@ -3,10 +3,10 @@
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
 # A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine
 #
-#     t1 real    0m0.025s ((i++))      Bash
-#     t2 real    0m0.047s let i++      Bash
-#     t3 real    0m0.045s i=$((i + 1)) POSIX
-#     t4 real    0m0.061s : $((i++))   POSIX (true; with side effect)
+#     t1 real 0m0.025s ((i++))      Bash
+#     t2 real 0m0.047s let i++      Bash
+#     t3 real 0m0.045s i=$((i + 1)) POSIX
+#     t4 real 0m0.061s : $((i++))   POSIX (true; with side effect)
 #
 # Notes:
 #

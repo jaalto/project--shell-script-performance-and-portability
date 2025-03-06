@@ -4,8 +4,8 @@
 # A: No real difference. Process substitution preserves variables in loop.
 # priority: 0
 #
-#     t1 real    0m0.750s  cmd | while
-#     t2 real    0m0.760s  process substitution
+#     t1 real 0m0.750s  cmd | while
+#     t2 real 0m0.760s  process substitution
 #
 # Code:
 #

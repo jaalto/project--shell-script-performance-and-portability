@@ -3,17 +3,17 @@
 # Q: Fastest to process lines: readarray vs 'while read < file' ?
 # A: It is about 2x faster to use readarray+for
 #
-# t1  real       0m0.037s t1  mapfile + for
-# t2a real       0m0.036s t2a readarray + for
-# t2b real       0m0.081s t2b readarray + for ((i++))
-# t3  real       0m0.085s t3  while read < file
+#     t1  real 0m0.037s t1  mapfile + for
+#     t2a real 0m0.036s t2a readarray + for
+#     t2b real 0m0.081s t2b readarray + for ((i++))
+#     t3  real 0m0.085s t3  while read < file
 #
 # Code:
 #
-#  mapfile -t array < file   ; for <array> ...        # t1
-#  readarray -t array < file ; for i in <array> ...   # t2a
-#  readarray -t array < file ; for ((i... <array> ... # t2b
-#  while read ... done < file                         # t3
+#     t1  mapfile -t array < file   ; for <array> ...
+#     t1a readarray -t array < file ; for i in <array> ...
+#     t1b readarray -t array < file ; for ((i... <array> ...
+#     t1  while read ... done < file
 #
 # Notes:
 #

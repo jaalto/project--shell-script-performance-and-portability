@@ -3,12 +3,12 @@
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: In practise, no real differences
 #
-#     t1val     real    0m0.002s [ "$var" = "1" ] # POSIX
-#     t2val     real    0m0.003s [[ $var = 1 ]]   # Bash
+#     t1val     real 0m0.002s [ "$var" = "1" ] # POSIX
+#     t2val     real 0m0.003s [[ $var = 1 ]]   # Bash
 #
-#     t1empty   real    0m0.002s [ ! "$var" ]     # modern POSIX
-#     t2empty   real    0m0.002s [ -z "$var" ]    # archaic POSIX
-#     t3empty   real    0m0.003s [[ ! $var ]]     # Bash
+#     t1empty   real 0m0.002s [ ! "$var" ]     # modern POSIX
+#     t2empty   real 0m0.002s [ -z "$var" ]    # archaic POSIX
+#     t3empty   real 0m0.003s [[ ! $var ]]     # Bash
 #
 # Notes:
 #
