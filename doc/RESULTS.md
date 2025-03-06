@@ -64,7 +64,7 @@ afterward.
 # t-command-pwd-vs-variable-pwd.sh
 
 **Q: How much is POSIX `$PWD` faster than `pwd`?**<br/>
-*A: Is is about 7x faster to use $PWD to `pwd` even though it is Bash built-in*<br/>
+*A: It is about 7x faster to use `$PWD` to `pwd` (Bash built-in)*<br/>
 _priority: 4_
 
     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
@@ -98,7 +98,7 @@ _priority: 3_
 # t-dir-entries.sh
 
 **Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`**<br/>
-*A: `ls` will do fine. No real differences.*<br/>
+*A: `ls` is good enough. No real differences.*<br/>
 _priority: 1_
 
 For 20 directories:
@@ -198,7 +198,7 @@ See the test code for more information. Overview:
 ## Notes
 
 Repeated reads of the same file probably utilizes
-Kernel cache to some extent. But is is still much faster
+Kernel cache to some extent. But it is still much faster
 to read file once and then apply matching.
 
 
@@ -483,7 +483,7 @@ _priority: 10_
 # t-variable-array-split-string.sh
 
 **Q: Split string into an array by IFS?**<br/>
-*A: Is is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton*<br/>
+*A: It is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton*<br/>
 _priority: 8_
 
     t1 real 0m0.005s (array)

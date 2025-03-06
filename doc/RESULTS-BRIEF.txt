@@ -12,7 +12,7 @@ FILE: t-command-output-vs-process-substitution.sh
 
 FILE: t-command-pwd-vs-variable-pwd.sh
 # Q: How much is POSIX `$PWD` faster than `pwd`?
-# A: Is is about 7x faster to use $PWD to `pwd` even though it is Bash built-in
+# A: It is about 7x faster to use `$PWD` to `pwd` (Bash built-in)
 
 FILE: t-dir-empty.sh
 # Q: What is the fastest way to check empty directory?
@@ -20,7 +20,7 @@ FILE: t-dir-empty.sh
 
 FILE: t-dir-entries.sh
 # Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
-# A: `ls` will do fine. No real differences.
+# A: `ls` is good enough. No real differences.
 
 FILE: t-file-copy-check-exist.sh
 # Q: Should you test existense before copying?
@@ -92,5 +92,5 @@ FILE: t-string-trim-whitespace.sh
 
 FILE: t-variable-array-split-string.sh
 # Q: Split string into an array by IFS?
-# A: Is is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
+# A: It is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
 
