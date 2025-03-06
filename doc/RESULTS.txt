@@ -1,8 +1,8 @@
 FILE: t-command-grep-parallel.sh
 #! /bin/bash
 #
-# Q: Howabout using parallel(1) to speed up grep(1)?
-# A: No, parallel won't help in typical cases. Use only with huge files.
+# Q: Howabout using `parallel` to speed up `grep`?
+# A: `parallel` won't help in typical cases. Use only with huge files.
 # priority: 1
 #
 #     t0  real 0m0.005s grep baseline
@@ -13,12 +13,13 @@ FILE: t-command-grep-parallel.sh
 #
 # Notes:
 #
-# Split file into chunks and run grep(1) in parallel
-# for each chunk.
+# The idea was to split file into chunks and run
+# grep` in parallel for each chunk.
 #
-# The grep(1) by itself is very fast. The startup time
-# of perl(1) is taking the toll with the parallel if the
-# file sizes are relatively small (test file: ~600 lines).
+# The `grep` by itself is very fast. The startup time
+# of `parallel`, implemented in `perl`, is taking the
+# toll with the parallel if the file sizes are
+# relatively small (test file: ~600 lines).
 
 FILE: t-command-grep.sh
 #! /bin/bash
@@ -62,8 +63,8 @@ FILE: t-command-output-vs-process-substitution.sh
 FILE: t-command-pwd-vs-variable-pwd.sh
 #! /bin/bash
 #
-# Q: How much is POSIX `$PWD` faster than pwd(1)?
-# A: $PWD is about 7x faster considering `pwd` is even bash built-in
+# Q: How much is POSIX `$PWD` faster than `pwd`?
+# A: Is is about 7x faster to use $PWD to `pwd` even though it is Bash built-in
 # priority: 4
 #
 #     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
@@ -71,8 +72,9 @@ FILE: t-command-pwd-vs-variable-pwd.sh
 #
 # Notes:
 #
-# Even though pwd(1) is a Bash built-in, there is still a penalty
-# for calling command substitution `$(command)`.
+# Even though `pwd` is a Bash built-in, there
+# is still a penalty for calling command
+# substitution `$(command)`.
 
 FILE: t-dir-empty.sh
 #! /bin/bash
@@ -95,8 +97,8 @@ FILE: t-dir-empty.sh
 FILE: t-dir-entries.sh
 #! /bin/bash
 #
-# Q: Fastest to get list of dirs: for vs compgen vs ls -d
-# A: Simple ls(1) will do fine. No real differences.
+# Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
+# A: `ls` will do fine. No real differences.
 # priority: 1
 #
 # For 20 directories:
@@ -153,8 +155,8 @@ FILE: t-file-for-loop-vs-awk.sh
 FILE: t-file-glob-bash-compgen-vs-stat.sh
 #! /bin/bash
 #
-# Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
-# A: `compgen` and array+glob are slightly faster than stat(1)
+# Q: Sheck if GLOB matches file: arrays vs `compgen` vs `stat`
+# A: `compgen` and array+glob are slightly faster than `stat`
 # priority: 2
 #
 #     t1 real 0m0.026s   Bash compgen GLOB
@@ -169,19 +171,19 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 #
 # Notes:
 #
-# stat(1) does more work by opening each found file.
+# Command `stat` does more work by opening each found file.
 
 FILE: t-file-grep-vs-match-in-memory.sh
 #! /bin/bash
 #
-# Q: To search file for matches: in memry searh vs grep(1)
+# Q: To search file for matches: in memory searh vs `grep`
 # A: It is about 8-10x faster to read file into memory and then do matching
 #
 #     t1a real 0m0.049s read + bash regexp (read file once + use loop)
 #     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
 #     t2  real 0m0.482s read + case..MATCH..esac (separate file calls)
 #     t3  real 0m0.448s read + bash regexp (separate file calls)
-#     t4  real 0m0.404s external grep(1)
+#     t4  real 0m0.404s external grep
 #
 # Code:
 #
@@ -225,8 +227,8 @@ FILE: t-file-newest-in-dir.sh
 #
 # Notes:
 #
-# Interestingly head(1) and cut(1) combined was
-# faster than sed(1).
+# Interestingly `head` and `cut` combined was
+# faster than `sed`.
 #
 # Commads `ls` and `stat` can't tell files from
 # directories, so they are not usable if a
@@ -296,8 +298,8 @@ FILE: t-file-read-content-loop.sh
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /bin/bash
 #
-# Q: Howabout using grep(1) to prefilter before loop?
-# A: It is about 2x faster to use grep(1) than doing all in a loop
+# Q: Howabout using `grep` to prefilter before loop?
+# A: It is about 2x faster to use `grep` than doing all in a loop
 # priority: 7
 #
 #     t1a real 0m0.436s grep prefilter before loop
@@ -357,16 +359,16 @@ FILE: t-file-size-info.sh
 #! /bin/bash
 #
 # Q: What is the fastest way to read a file's size?
-# A: Use stat(1) or portable GNU `wc -c`.
+# A: Use `stat` or portable GNU `wc -c`.
 # priority: 5
 #
 #     t1 real 0m0.288s stat -c file
-#     t2 real 0m0.380s wc -c file; GNU version efectively is like stat(1)
+#     t2 real 0m0.380s wc -c file; GNU version efectively is like stat
 #     t3 real 0m0.461s ls -l + awk
 #
 # Notes:
 #
-# If you don't need portability, `stat(1)` is the
+# If you don't need portability, `stat` is the
 # fastest. The caveat is that it is not defined in
 # POSIX, and the options differ from one operating
 # system to another.
@@ -463,7 +465,7 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 FILE: t-string-trim-whitespace.sh
 #! /bin/bash
 #
-# Q: Trim whitepace using Bash RE vs sed(1)
+# Q: Trim whitepace using Bash RE vs `sed`
 # A: It is 8x faster to use Bash, especially with fn() nameref
 # priority: 10
 #

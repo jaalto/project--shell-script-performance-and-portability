@@ -1,8 +1,8 @@
 
 # t-command-grep-parallel.sh
 
-**Q: Howabout using parallel(1) to speed up grep(1)?**<br/>
-*A: No, parallel won't help in typical cases. Use only with huge files.*<br/>
+**Q: Howabout using `parallel` to speed up `grep`?**<br/>
+*A: `parallel` won't help in typical cases. Use only with huge files.*<br/>
 _priority: 1_
 
     t0  real 0m0.005s grep baseline
@@ -13,12 +13,13 @@ _priority: 1_
 
 ## Notes
 
-Split file into chunks and run grep(1) in parallel
-for each chunk.
+The idea was to split file into chunks and run
+grep` in parallel for each chunk.
 
-The grep(1) by itself is very fast. The startup time
-of perl(1) is taking the toll with the parallel if the
-file sizes are relatively small (test file: ~600 lines).
+The `grep` by itself is very fast. The startup time
+of `parallel`, implemented in `perl`, is taking the
+toll with the parallel if the file sizes are
+relatively small (test file: ~600 lines).
 
 
 # t-command-grep.sh
@@ -62,8 +63,8 @@ afterward.
 
 # t-command-pwd-vs-variable-pwd.sh
 
-**Q: How much is POSIX `$PWD` faster than pwd(1)?**<br/>
-*A: $PWD is about 7x faster considering `pwd` is even bash built-in*<br/>
+**Q: How much is POSIX `$PWD` faster than `pwd`?**<br/>
+*A: Is is about 7x faster to use $PWD to `pwd` even though it is Bash built-in*<br/>
 _priority: 4_
 
     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
@@ -71,8 +72,9 @@ _priority: 4_
 
 ## Notes
 
-Even though pwd(1) is a Bash built-in, there is still a penalty
-for calling command substitution `$(command)`.
+Even though `pwd` is a Bash built-in, there
+is still a penalty for calling command
+substitution `$(command)`.
 
 
 # t-dir-empty.sh
@@ -95,8 +97,8 @@ _priority: 3_
 
 # t-dir-entries.sh
 
-**Q: Fastest to get list of dirs: for vs compgen vs ls -d**<br/>
-*A: Simple ls(1) will do fine. No real differences.*<br/>
+**Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`**<br/>
+*A: `ls` will do fine. No real differences.*<br/>
 _priority: 1_
 
 For 20 directories:
@@ -153,8 +155,8 @@ _priority: 7_
 
 # t-file-glob-bash-compgen-vs-stat.sh
 
-**Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)**<br/>
-*A: `compgen` and array+glob are slightly faster than stat(1)*<br/>
+**Q: Sheck if GLOB matches file: arrays vs `compgen` vs `stat`**<br/>
+*A: `compgen` and array+glob are slightly faster than `stat`*<br/>
 _priority: 2_
 
     t1 real 0m0.026s   Bash compgen GLOB
@@ -169,19 +171,19 @@ _priority: 2_
 
 ## Notes
 
-stat(1) does more work by opening each found file.
+Command `stat` does more work by opening each found file.
 
 
 # t-file-grep-vs-match-in-memory.sh
 
-**Q: To search file for matches: in memry searh vs grep(1)**<br/>
+**Q: To search file for matches: in memory searh vs `grep`**<br/>
 *A: It is about 8-10x faster to read file into memory and then do matching*<br/>
 
     t1a real 0m0.049s read + bash regexp (read file once + use loop)
     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
     t2  real 0m0.482s read + case..MATCH..esac (separate file calls)
     t3  real 0m0.448s read + bash regexp (separate file calls)
-    t4  real 0m0.404s external grep(1)
+    t4  real 0m0.404s external grep
 
 ## Code
 
@@ -225,8 +227,8 @@ See the test code for more information. Overview:
 
 ## Notes
 
-Interestingly head(1) and cut(1) combined was
-faster than sed(1).
+Interestingly `head` and `cut` combined was
+faster than `sed`.
 
 Commads `ls` and `stat` can't tell files from
 directories, so they are not usable if a
@@ -296,8 +298,8 @@ so they should behave equally.
 
 # t-file-read-match-lines-loop-vs-grep.sh
 
-**Q: Howabout using grep(1) to prefilter before loop?**<br/>
-*A: It is about 2x faster to use grep(1) than doing all in a loop*<br/>
+**Q: Howabout using `grep` to prefilter before loop?**<br/>
+*A: It is about 2x faster to use `grep` than doing all in a loop*<br/>
 _priority: 7_
 
     t1a real 0m0.436s grep prefilter before loop
@@ -357,16 +359,16 @@ _priority: 8_
 # t-file-size-info.sh
 
 **Q: What is the fastest way to read a file's size?**<br/>
-*A: Use stat(1) or portable GNU `wc -c`.*<br/>
+*A: Use `stat` or portable GNU `wc -c`.*<br/>
 _priority: 5_
 
     t1 real 0m0.288s stat -c file
-    t2 real 0m0.380s wc -c file; GNU version efectively is like stat(1)
+    t2 real 0m0.380s wc -c file; GNU version efectively is like stat
     t3 real 0m0.461s ls -l + awk
 
 ## Notes
 
-If you don't need portability, `stat(1)` is the
+If you don't need portability, `stat` is the
 fastest. The caveat is that it is not defined in
 POSIX, and the options differ from one operating
 system to another.
@@ -463,7 +465,7 @@ slight differences in favor of Bash `[[ ]]`.
 
 # t-string-trim-whitespace.sh
 
-**Q: Trim whitepace using Bash RE vs sed(1)**<br/>
+**Q: Trim whitepace using Bash RE vs `sed`**<br/>
 *A: It is 8x faster to use Bash, especially with fn() nameref*<br/>
 _priority: 10_
 
