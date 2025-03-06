@@ -218,11 +218,14 @@ full listing, see RESULTS above.
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
   *Warning*: Please note that using the `(list)`
   statement will undergo pathname expansion.
-  Use it only in situations where the string does
-  not contain any globbing characters
-  like `*`, `?`, etc.
+  Use it only in situations where the string
+  does not contain any globbing characters
+  like `*`, `?`, etc. The pathname expansion
+  can be disabled with
+  `set -f; ...code...; set +f`.
+  To disable it locally in a function,
+  use `local -; set -f`.
   See [code](./bin/t-variable-array-split-string.sh).
-
 
 ```
     # Prepare a string with
