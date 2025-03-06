@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Sheck if GLOB matches file: arrays vs `compgen` vs stat(1)
-# A: `compgen` and array+glob are slightly faster than stat(1)
+# Q: Sheck if GLOB matches file: arrays vs `compgen` vs `stat`
+# A: `compgen` and array+glob are slightly faster than `stat`
 # priority: 2
 #
 #     t1 real 0m0.026s   Bash compgen GLOB
@@ -16,7 +16,7 @@
 #
 # Notes:
 #
-# stat(1) does more work by opening each found file.
+# Command `stat` does more work by opening each found file.
 
 . ./t-lib.sh ; f=$random_file
 

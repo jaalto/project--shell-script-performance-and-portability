@@ -1,13 +1,13 @@
 #! /bin/bash
 #
-# Q: To search file for matches: in memry searh vs grep(1)
+# Q: To search file for matches: in memory searh vs `grep`
 # A: It is about 8-10x faster to read file into memory and then do matching
 #
 #     t1a real 0m0.049s read + bash regexp (read file once + use loop)
 #     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
 #     t2  real 0m0.482s read + case..MATCH..esac (separate file calls)
 #     t3  real 0m0.448s read + bash regexp (separate file calls)
-#     t4  real 0m0.404s external grep(1)
+#     t4  real 0m0.404s external grep
 #
 # Code:
 #
@@ -112,7 +112,7 @@ t4 ()
 {
     for i in $(seq $loop_max)
     do
-        # grep(1) is almost aways the "grep -E" version, so use it in test
+        # "grep -E" is the one that is typically used
         grep --quiet --extended-regexp --files-with-matches "$re" $f
     done
 }

@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: How much is POSIX `$PWD` faster than pwd(1)?
-# A: $PWD is about 7x faster considering `pwd` is even bash built-in
+# Q: How much is POSIX `$PWD` faster than `pwd`?
+# A: Is is about 7x faster to use $PWD to `pwd` even though it is Bash built-in
 # priority: 4
 #
 #     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
@@ -9,8 +9,9 @@
 #
 # Notes:
 #
-# Even though pwd(1) is a Bash built-in, there is still a penalty
-# for calling command substitution `$(command)`.
+# Even though `pwd` is a Bash built-in, there
+# is still a penalty for calling command
+# substitution `$(command)`.
 
 . ./t-lib.sh ; f=$random_file
 

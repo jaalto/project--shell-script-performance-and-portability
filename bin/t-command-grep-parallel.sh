@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Howabout using parallel(1) to speed up grep(1)?
-# A: No, parallel won't help in typical cases. Use only with huge files.
+# Q: Howabout using `parallel` to speed up `grep`?
+# A: `parallel` won't help in typical cases. Use only with huge files.
 # priority: 1
 #
 #     t0  real 0m0.005s grep baseline
@@ -12,12 +12,13 @@
 #
 # Notes:
 #
-# Split file into chunks and run grep(1) in parallel
-# for each chunk.
+# The idea was to split file into chunks and run
+# grep` in parallel for each chunk.
 #
-# The grep(1) by itself is very fast. The startup time
-# of perl(1) is taking the toll with the parallel if the
-# file sizes are relatively small (test file: ~600 lines).
+# The `grep` by itself is very fast. The startup time
+# of `parallel`, implemented in `perl`, is taking the
+# toll with the parallel if the file sizes are
+# relatively small (test file: ~600 lines).
 
 . ./t-lib.sh # ; f=$random_file
 
@@ -77,7 +78,7 @@ echo "test file: $(ls -l $f)"
 echo "test file: lines $(wc -l $f)"
 
 if ! command -v parallel > /dev/null; then
-    Warn "INFO: no parallel(1). Skipping tests."
+    Warn "INFO: no parallel found. Skipping tests."
 else
 
     t t0

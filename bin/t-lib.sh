@@ -163,7 +163,7 @@ t () # Run a test case
         hasformat="TIMEFORMAT"
     elif [ "$KSH_VERSION" ]; then
         case "$KSH_VERSION" in
-            *MIRBSD*) # No format in mksh(1)
+            *MIRBSD*) # No format choise in mksh(1)
                 ;;
             *)  hasformat="TIMEFORMAT"
                 ;;
@@ -196,7 +196,7 @@ t () # Run a test case
 
         # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
         # =============================
-        # sed(1) to delete this part and limit output to 2 spaces.
+        # sed to delete this part and limit output to 2 spaces.
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |

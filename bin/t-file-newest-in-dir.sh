@@ -23,8 +23,8 @@
 #
 # Notes:
 #
-# Interestingly head(1) and cut(1) combined was
-# faster than sed(1).
+# Interestingly `head` and `cut` combined was
+# faster than `sed`.
 #
 # Commads `ls` and `stat` can't tell files from
 # directories, so they are not usable if a
