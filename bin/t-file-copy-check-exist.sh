@@ -1,11 +1,11 @@
 #! /bin/bash
 #
-# Q: Need a copy of file. Call cp(1), make hardlink, or do test before copy?
-# A: Faster is to test existense of file before cp(1). Hardlink is fast.
+# Q: If you need a copy of file, should you test before copy?
+# A: Yes, test existense of file before cp(1). Hardlinks are fast.
 #
 # t1 real    0m1.002s cp A B
-# t2 real    0m0.013s [ A -nt B] && cp
-# t2 real    0m0.009s [ A -ef B] || cp (using hardlink)
+# t2 real    0m0.013s <file test> cp
+# t2 real    0m0.009s <file test> cp (hardlink)
 #
 # Code:
 #
@@ -48,7 +48,7 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        if [ ! $f -ef $copy ]; then  # same hardlink?
+        if [ ! $f -ef $copy ]; then  # not the same hardlink?
             cp --preserve=timestamps --link $f $copy # make a hardlink
         fi
     done
