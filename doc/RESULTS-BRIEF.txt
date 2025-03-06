@@ -80,7 +80,7 @@ FILE: t-statement-arithmetic-for-loop.sh
 
 FILE: t-statement-arithmetic-increment.sh
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
-# A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine
+# A: No noticeable difference, POSIX `i=$((i + 1))` will do fine
 
 FILE: t-statement-if-test-posix-vs-bash.sh
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc

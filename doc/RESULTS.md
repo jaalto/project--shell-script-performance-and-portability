@@ -416,7 +416,7 @@ tests.
 # t-statement-arithmetic-increment.sh
 
 **Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.**<br/>
-*A: No noticeable difference, POSIX ´i=$((i + 1))` will do fine*<br/>
+*A: No noticeable difference, POSIX `i=$((i + 1))` will do fine*<br/>
 _priority: 1_
 
     t1 real 0m0.025s ((i++))      Bash
