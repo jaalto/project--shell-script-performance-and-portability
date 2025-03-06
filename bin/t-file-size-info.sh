@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: What is the fastest way to read a file's size?
-# A: GNU 'wc -c'. The stat(1) is not in POSIX + options are not portable.
+# A: Prefer GNU `wc -c`. The non-POSIX stat(1) and it's options are not portable.
 #
 # t1 real    0m0.288s stat -c file
 # t2 real    0m0.380s wc -c file; GNU version efectively is like stat(1)
