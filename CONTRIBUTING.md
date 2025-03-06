@@ -1,4 +1,4 @@
-# CONRIBUTING
+# CONTRIBUTING
 
 information for contributing more test cases.
 
@@ -13,7 +13,7 @@ information for contributing more test cases.
 
     Code:
 
-    <Optinal explanatory code for the reader>
+    <Optional explanatory code for the reader>
 
     Notes:
 
@@ -22,26 +22,23 @@ information for contributing more test cases.
 ```
 
 Based on the results, select <priority> as
-follows regarding impact on performance:
+follows regarding the impact on performance:
 
 ```
     9-10 critical – High impact
-    7-8  high – Significant impact
-    5-6  medium – Some, but not critical
+    7-8  high – Significant
+    5-6  medium – Some
     3-4  low – Minimal, but still measurable
     0-2  negligible – Consider unimportant
 ```
 
 # GENERAL TEST CASE FILE CONVENTIONS
 
-- Start with readable shebang with
-  space "#! /bin/bash"
-
-- Name test files "t-<category>-*.sh", where
-  category is one of:
+- Name test files as "t-<category>-*.sh",
+  where category is one of:
 
 ```
-    command      - extermal commands
+    command     - external commands
     dir         - directory related
     file        - file manipulation
     function    - function usage
@@ -58,19 +55,29 @@ follows regarding impact on performance:
 
 Use relaxed conventions for maximum clarity
 and simplicity. The <test case> files are
-intended to be as straightforward as possible
-and not Production Code.
+intended to be as clear and straightforward
+as possible and not Production Code.
 
 No need to lint using shellcheck(1) etc.
 Ref: <https://www.shellcheck.net>.
 
-- Use readable --long options everywhere.
+- For readability, use space in shebang line:
 
-- Do not "$quote" unless needed.
+```
+  #! /bin/bash
+  ... code
+```
 
-- No 'local' variables unless needed.
+- Use 4 spaces for indentation.
 
-- Allman style for these:
+- Use readable `--long` options for commands
+  that support them.
+
+- Do not `"$quote"` variables unless needed.
+
+- No `local` variables unless needed.
+
+- Use Allman style for these:
 
 ```
     fn()
@@ -78,25 +85,27 @@ Ref: <https://www.shellcheck.net>.
         ...
     }
 
-    for <test>
+    <loop statement>
     do
         ...
     done
 
-    case "$var" in
-        glob) ...
-              ;;
-        glob) ...
-              ;;
+    case <string> in
+        pattern)
+			...
+			;;
+        pattern)
+			...
+			;;
     fi
 ```
 
-- K&R style for placing 'then'
-  provided that <cmd> is short and simple
-  enough.
+- K&R style for placing `then` keyword
+  provided that `<statement>` is short and
+  simple enough.
 
 ```
-    if <cmd>; then
+    if <statement>; then
         ...
     fi
 ```
