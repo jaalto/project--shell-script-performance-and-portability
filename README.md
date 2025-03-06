@@ -228,7 +228,7 @@ full listing, see RESULTS above.
 
 According to the results, none of
 these offer real practical benefits. See the
-raw test [results](./doc/RESULTS.md)
+[results](./doc/RESULTS.md)
 for details and further commentary.
 
 - One might think that choosing optimized
