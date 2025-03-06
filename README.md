@@ -22,12 +22,12 @@ full listing, see RESULTS above.
 
 ## The project structure
 
-    bin/          The tests
-    doc/          Results by "make doc"
-    COPYING       License (GNU GPL)
-    INSTALL       Install instructions
-    USAGE.md      How to run the tests
-    CONTRIBUTING  Writing test cases
+    bin/            The tests
+    doc/            Results by "make doc"
+    COPYING         License (GNU GPL)
+    INSTALL         Install instructions
+    USAGE.md        How to run the tests
+    CONTRIBUTING.md Writing test cases
 
 ## Project details
 
