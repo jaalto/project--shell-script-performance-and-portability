@@ -31,7 +31,7 @@ FILE: t-file-for-loop-vs-awk.sh
 # A: It is about 2-3x faster to do it all in awk
 
 FILE: t-file-glob-bash-compgen-vs-stat.sh
-# Q: Sheck if GLOB matches file: arrays vs `compgen` vs `stat`
+# Q: How to check if GLOB matches any files: arrays vs `compgen` vs `stat`
 # A: `compgen` and array+glob are slightly faster than `stat`
 
 FILE: t-file-grep-vs-match-in-memory.sh

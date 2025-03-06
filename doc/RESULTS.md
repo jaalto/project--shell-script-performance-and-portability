@@ -155,7 +155,7 @@ _priority: 7_
 
 # t-file-glob-bash-compgen-vs-stat.sh
 
-**Q: Sheck if GLOB matches file: arrays vs `compgen` vs `stat`**<br/>
+**Q: How to check if GLOB matches any files: arrays vs `compgen` vs `stat`**<br/>
 *A: `compgen` and array+glob are slightly faster than `stat`*<br/>
 _priority: 2_
 
