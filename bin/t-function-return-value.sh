@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Bash name ref to return values vs val=$(funcall)
-# A: Using name ref is about 40x faster
+# Q: Howabout Bash nameref to return value vs val=$(funcall)
+# A: It is about 40x faster to use nameref to return value from a function
 #
 # t1 real    0m0.089s t1 $(funcall)
 # t2 real    0m0.002s t2 funcall nameref
