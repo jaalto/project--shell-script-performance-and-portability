@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: Fastest to process lines: readarray vs 'while read < file' ?
-# A: readarray/mapfiles+for is 2x faster than 'while read < file'
+# A: It is about 2x faster to use readarray+for
 #
 # t1  real       0m0.037s t1  mapfile + for
 # t2a real       0m0.036s t2a readarray + for
