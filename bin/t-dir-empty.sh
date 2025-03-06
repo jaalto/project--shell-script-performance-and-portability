@@ -1,13 +1,19 @@
 #! /bin/bash
 #
 # Q: What is the fastest way to check empty directory?
-# A: array+glob is faster than built-in compgen
+# A: array+glob is faster than built-in `compgen`
 # priority: 3
 #
 # t1 real    0m0.054s   array+glob
 # t2 real    0m0.104s   compgen
-# t3 real    0m0.304s   ls (out of curiosity)
+# t3 real    0m0.304s   ls
 # t3 real    0m0.480s   find | read
+#
+# Code:
+#
+# t1 files=("$dir"/*)
+# t2 compgen -G "$dir"/*
+# ...
 
 . ./t-lib.sh ; f=$random_file
 
@@ -57,8 +63,6 @@ t2 ()
 
 t3 ()
 {
-    # Do not use. Just out of curiosity.
-
     for i in $(seq $loop_max)
     do
         if [ "$(ls "$dir")" ]; then
@@ -69,7 +73,8 @@ t3 ()
 
 t4 ()
 {
-    # Just out of curiosity.
+    # `read` will return error status if there
+    # is nothing in input.
 
     for i in $(seq $loop_max)
     do
