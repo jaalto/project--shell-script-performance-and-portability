@@ -23,10 +23,8 @@
 #
 # Notes:
 #
-#
-# Probably small head(1) and cut(1) combined is still
-# faster than sed(1) which uses regexp engine. And
-# awk(1) binary is smaller that sed(1).
+# Interestingly head(1) and cut(1) combined was
+# faster than sed(1).
 #
 # Commads `ls` and `stat` can't tell files from
 # directories, so they are not usable if a
