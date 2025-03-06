@@ -378,12 +378,12 @@ manual page how to use `time`
 command to display results in different
 formats:
 
-        TIMEFORMAT='real: %R'  # '%R %U %S'
+    TIMEFORMAT='real: %R'  # '%R %U %S'
 
 You could also drop kernel cache before
 testing:
 
-        echo 3 > /proc/sys/vm/drop_caches
+    echo 3 > /proc/sys/vm/drop_caches
 
 # COPYRIGHT
 
