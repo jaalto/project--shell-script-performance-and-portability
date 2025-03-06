@@ -6,7 +6,7 @@ scripts?
 That's the question these tests try to answer.
 See files:
 
-- [RESULTS](./doc/RESULTS.txt)
+- [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
 - The test cases and code in [bin/](./bin/)
 - [USAGE](./USAGE.md)
@@ -21,6 +21,10 @@ results only as guidance, as they reflect only
 the system used at the time of testing.
 Instead, compare the relative order in which
 each test case produced the fastest results.
+
+The results presented in this README provide
+only an excerpt from the test case. For the
+full listing, see RESULTS above.
 
 ## The project structure
 
