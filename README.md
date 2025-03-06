@@ -198,8 +198,9 @@ full listing, see RESULTS above.
 
 # MODERATE PERFORMANCE GAINS
 
-- To split a string into an array, use `eval`,
-  which is 2-3 times faster than using a
+- It is about 2-3 times faster to split a string
+  into an array using `eval`
+  than using a
   here-string. This is because Bash
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a
