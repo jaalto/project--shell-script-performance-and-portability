@@ -15,11 +15,12 @@
 # t1 real    0m0.012s compgen -G */
 # t2 real    0m0.015s for-loop
 # t3 real    0m0.010s ls -d */
+# t4 real    0m0.010s find -type d
 #
 # Notes:
 #
-# Because the OS caches files and directories, you have to
-# manually run tests:
+# Because the OS caches files and directories, run
+# tests manually:
 #
 #     max_dirs=20 ./t-dir-entries.sh t1
 #     max_dirs=20 ./t-dir-entries.sh t2
@@ -48,15 +49,12 @@ AtExit ()
 {
     [ -d "$tmpdir" ] || return 0
 
-    rm -rf "$tmpdir"
+    rm --recursive --force "$tmpdir"
 }
 
 t1 ()
 {
-    pwd=$PWD
-    cd $tmpdir
     compgen -A directory > /dev/null
-    cd $pwd
 }
 
 
@@ -76,13 +74,21 @@ t3 ()
     ls -d -- $tmpdir/*/ > /dev/null
 }
 
+t4 ()
+{
+    find . -maxdepth 1 -type d
+}
+
 trap AtExit EXIT HUP INT QUIT TERM
+
 Setup
+cd $tmpdir
 
 if [ ! "$1" ]; then
     t t1
     t t2
     t t3
+    t t4
 else
     t "$1"
 fi
