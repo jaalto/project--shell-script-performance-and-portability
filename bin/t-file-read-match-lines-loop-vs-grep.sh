@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: would grep(1) prefilter help before loop?
-# A: grep(1) before loop is 2x faster than doing filtering in loop
+# Q: Howabout using grep(1) to prefilter before loop?
+# A: It's about 2x faster to use grep(1) than doing all in a loop
 # priority: 7
 #
 #     t1a real 0m0.436s grep prefilter before loop
