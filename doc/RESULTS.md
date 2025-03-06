@@ -452,15 +452,15 @@ loop_max=10000 ./statement-if-posix-vs-bash.sh
 **Q: Trim whitepace using Bash RE vs sed(1)**<br/>
 *A: Bash is much faster; especially with fn() using nameref*<br/>
 
-t2 real    0m0.025s Bash fn() RE, using nameref for return value
-t2 real    0m0.107s Bash fn() RE
-t1 real    0m0.440s echo | sed RE
+    t2 real    0m0.025s Bash fn() RE, using nameref for return value
+    t2 real    0m0.107s Bash fn() RE
+    t1 real    0m0.440s echo | sed RE
 
 ## Code
 
-t1 BashTrim var                    # fn() using nameref
-t2 var=$(bashTrim "$str")          # fn() return by value
-t3 var=$(echo "$str" | sed <trim>) # subshell call
+    t1 BashTrim var                    # fn() using nameref
+    t2 var=$(bashTrim "$str")          # fn() return by value
+    t3 var=$(echo "$str" | sed <trim>) # subshell call
 
 
 # t-variable-array-split-string.sh
