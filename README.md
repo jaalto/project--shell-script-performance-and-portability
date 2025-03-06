@@ -178,7 +178,15 @@ each test case produced the fastest results.
         ...
     done < <(grep -E "$re" file)
 
-    # Slower, in-loop filter
+    # Probelm: while runs in
+    # a separate environment
+    grep -E "$re" file) |
+    while read -r ...
+    do
+        ...
+    done
+
+    # Slowest, in-loop filter
     while read -r ...
     do
        if [[ ! <match> ]]; then
