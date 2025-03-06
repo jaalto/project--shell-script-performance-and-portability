@@ -295,23 +295,27 @@ commentary.
     N=1
     M=100
 
-    for i in {1..100}  # Bash
+    # Bash
+    for i in {1..100}
     do
         ...
     done
 
-    for i in $(seq $M) # binary, still fast
+    # seq binary, still fast
+    for i in $(seq $M)
     do
         ...
     done
 
-    for ((i=$N; i <= $M; i++)) # Bash
+    # Bash, slow
+    for ((i=$N; i <= $M; i++))
     do
         ...
     done
 
+    # POSIX, slowest
     i=$N
-    while [ "$i" -le "$M" ] # POSIX
+    while [ "$i" -le "$M" ]
     do
         i=$((i + 1))
     done
