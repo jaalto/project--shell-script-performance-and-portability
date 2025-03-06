@@ -364,10 +364,10 @@ _priority: 8_
 
 ## Notes
 
-If you don't need to be portable, the stat(1) is
-the fastest. The stat(1) is not defined in
-POSIX, and the options are different between the
-operating Systems.
+If you don't need portability, `stat(1)` is the
+fastest. The caveat is that it is not defined in
+POSIX, and the options differ from one operating
+system to another.
 
 
 # t-function-return-value.sh
