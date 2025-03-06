@@ -359,7 +359,6 @@ None of these offer any advantages to speed up shell scripts.
 - With `grep`, the use of
   [GNU parallel](https://www.gnu.org/software/parallel/),
   a `perl` script,
-
   makes things notably slower for typical file
   sizes. Otherwise, GNU `parallel` is
   excellent for making full use of multiple
