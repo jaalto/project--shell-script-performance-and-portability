@@ -1,6 +1,6 @@
 # SHELL SCRIPT PERFORMANCE TESTS
 
-How can you write faster and more optimized shell scripts?
+How can you make shell scripts to run faster?
 That's the question these test cases on aim to answer.
 
 - [RESULTS](./doc/RESULTS.md)
