@@ -50,7 +50,7 @@ doc: doc-all doc-brief
 
 define doc-function
 	cd bin && \
-	./$(BIN_DOC) t-* > ../$(DOCDIR)/$(DOC).txt
+	./$(BIN_DOC) $$(ls t-* | grep -v t-lib.sh) > ../$(DOCDIR)/$(DOC).txt
 	bin/txt2markdown.sh $(DOCDIR)/$(DOC).txt > $(DOCDIR)/$(DOC).md
 endef
 
