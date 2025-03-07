@@ -305,6 +305,51 @@ these offer real practical benefits. See the
 [results](./doc/RESULTS.md)
 for details and further commentary.
 
+- The Bash
+  [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion) `{N..M}` might offer a
+  minuscule advantage, but it may be impractical
+  because `N..M` cannot be parameterized.
+  Surprisingly, the simple and elegant `$(seq N M)`
+  is fast, even though
+  [command substitution](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Command-Substitution)
+  uses a subshell. We can only guess that the
+  reason is that any kind of looping, increments,
+  and tests are inherently slow. The last POSIX
+  `while` loop example was slightly slower in all
+  subsequent tests.
+  See [code](./bin/t-statement-arithmetic-for-loop.sh).
+
+```
+
+    N=1
+    M=100
+
+    # Bash
+    for i in {1..100}
+    do
+        ...
+    done
+
+    # seq binary, still fast
+    for i in $(seq $M)
+    do
+        ...
+    done
+
+    # Bash, slow
+    for ((i=$N; i <= $M; i++))
+    do
+        ...
+    done
+
+    # POSIX, slowest
+    i=$N
+    while [ "$i" -le "$M" ]
+    do
+        i=$((i + 1))
+    done
+```
+
 - One might think that choosing optimized
   `grep` options would make a difference.
   In practice, performance is nearly identical
@@ -360,51 +405,6 @@ None of these offer any advantages to speed up shell scripts.
     : $((i++))       # POSIX, Uhm
     ((i++))          # Bash
     let i++          # Bash
-```
-
-- The Bash
-  [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion) `{N..M}` might offer a
-  minuscule advantage, but it may be impractical
-  because `N..M` cannot be parameterized.
-  Surprisingly, the simple and elegant `$(seq N M)`
-  is fast, even though
-  [command substitution](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Command-Substitution)
-  uses a subshell. We can only guess that the
-  reason is that any kind of looping, increments,
-  and tests are inherently slow. The last POSIX
-  `while` loop example was slightly slower in all
-  subsequent tests.
-  See [code](./bin/t-statement-arithmetic-for-loop.sh).
-
-```
-
-    N=1
-    M=100
-
-    # Bash
-    for i in {1..100}
-    do
-        ...
-    done
-
-    # seq binary, still fast
-    for i in $(seq $M)
-    do
-        ...
-    done
-
-    # Bash, slow
-    for ((i=$N; i <= $M; i++))
-    do
-        ...
-    done
-
-    # POSIX, slowest
-    i=$N
-    while [ "$i" -le "$M" ]
-    do
-        i=$((i + 1))
-    done
 ```
 
 - There is no performance difference between a
