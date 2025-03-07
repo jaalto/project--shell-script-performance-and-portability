@@ -468,6 +468,9 @@ testing:
 
 - See Greg's Bash Wiki and FAQ
   https://mywiki.wooledge.org/BashGuide
+- List of which features were added to specific
+  releases of Bash
+  https://mywiki.wooledge.org/BashFAQ/061
 - See BashFAQ why
   [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   is preferrable over archaic backtics as in \`cmd\`.
