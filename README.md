@@ -264,8 +264,7 @@ full listing, see RESULTS above.
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
-    # Prepare a string with
-    # 100 "words"
+    # Make 100 "words"
     printf -v string "%s:" {1..100}
 
     # Fastest
