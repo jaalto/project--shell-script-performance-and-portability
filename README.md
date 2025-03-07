@@ -520,5 +520,5 @@ along with these programs. If not, see <http://www.gnu.org/licenses/>.
 
 License: GPL-2-or-later - https://spdx.org/licenses
 
-Keywords: shell, sh, posix, bash, programming,
+Keywords: shell, sh, POSIX, bash, programming,
 optimize, performance, profiling
