@@ -114,8 +114,8 @@ full listing, see RESULTS above.
 # MAJOR PERFORMANCE GAINS
 
 - It is about 20-70 times faster to do string manipulation
-  in memory, than calling external utilities to manipulate
-  strings. Seeing the measurements just how expensive it is,
+  in memory, than calling external utilities.
+  Seeing the measurements just how expensive it is,
   reminds us to utilize the possibilities of
   [parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion) to their fullest in shell scripts.
   See [code](./bin/t-string-file-path-component-explode.sh).
