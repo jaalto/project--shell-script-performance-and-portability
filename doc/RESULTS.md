@@ -1,4 +1,14 @@
 
+# t-command-echo-vs-printf.sh
+
+**Q: The classic: `echo` vs `printf'**<br/>
+*A: Rhere is no real difference*<br/>
+_priority: 0_
+
+    t1 real 0m0.272s echo
+    t2 real 0m0.278s printf
+
+
 # t-command-grep-parallel.sh
 
 **Q: Howabout using `parallel` to speed up `grep`?**<br/>
@@ -541,11 +551,6 @@ _priority: 8_
     t3 IFS=":" read -ra array <<< "$PATH"
 
 ## Notes
-
-This test must be run separately to clear the
-string from memory between invocations:
-
-     for i in t{1..3}; do ./t-variable-array-split-string.sh $i; done
 
 This test involves splitting by an arbitrary
 character, which requires setting a local

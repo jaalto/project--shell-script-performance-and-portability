@@ -1,3 +1,13 @@
+FILE: t-command-echo-vs-printf.sh
+#! /bin/bash
+#
+# Q: The classic: `echo` vs `printf'
+# A: Rhere is no real difference
+# priority: 0
+#
+#     t1 real 0m0.272s echo
+#     t2 real 0m0.278s printf
+
 FILE: t-command-grep-parallel.sh
 #! /bin/bash
 #
@@ -541,11 +551,6 @@ FILE: t-variable-array-split-string.sh
 #     t3 IFS=":" read -ra array <<< "$PATH"
 #
 # Notes:
-#
-# This test must be run separately to clear the
-# string from memory between invocations:
-#
-#      for i in t{1..3}; do ./t-variable-array-split-string.sh $i; done
 #
 # This test involves splitting by an arbitrary
 # character, which requires setting a local
