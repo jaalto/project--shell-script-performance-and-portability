@@ -4,11 +4,11 @@
 # A: It is 20-40x faster to use in memory parameter expansion where possible
 # priority: 10
 #
-#     t1aBase real 0.007  parameter expanion
+#     t1aBase real 0.007  parameter expansion
 #     t1bBase real 0.298  basename
-#     t2aDir  real 0.007  parameter expanion
+#     t2aDir  real 0.007  parameter expansion
 #     t2bDir  real 0.282  dirname
-#     t3aExt  real 0.004  parameter expanion
+#     t3aExt  real 0.004  parameter expansion
 #     t3bExt  real 0.393  cut
 #     t3cExt  real 0.430  awk
 #     t3dExt  real 0.460  sed
