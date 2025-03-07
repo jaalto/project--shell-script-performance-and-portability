@@ -281,12 +281,11 @@ full listing, see RESULTS above.
         # make 'set' local
         local -
         set -f
-        ...
+
         local saved=$IFS
         IFS=":"
         array=($string)
         IFS=$saved
-        ...
     }
 
     # One liner but much slower
