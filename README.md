@@ -41,7 +41,7 @@ full listing, see RESULTS above.
   see homepage.
 
 - Depends:
-  Bash
+  Bash, GNU coreutils
 
 - Optional depends:
   GNU `make`. Used as
@@ -112,6 +112,28 @@ full listing, see RESULTS above.
 ```
 
 # MAJOR PERFORMANCE GAINS
+
+- It is about 20-70 times faster to do string
+  manipulation in memory, than calling external
+  utilities. Seeing the measurements just how
+  expensive it is, reminds us to utilize the
+  possibilities of
+[parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion) to their fullest
+  especially in loops.
+  See [code](./bin/t-string-file-path-component-explode.sh).
+
+```
+    str="/tmp/filename.txt.gz"
+
+    # Almost instantaneous
+    ext=${str#*.}  # Delete up till first "."
+
+    # Over 50x slower
+    ext=$(echo "$str" | cut --delimiter="." --fields=2,3)
+
+    # Even worse, over 70x slower
+    ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
+```
 
 - In functions, using Bash
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
