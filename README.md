@@ -224,12 +224,9 @@ full listing, see RESULTS above.
     done
 
     # Slowest, in-loop filter
-    while read -r ...
+    while read -r line
     do
-       if [[ ! <match> ]]; then
-           continue
-       fi
-
+       [[ $line =~ $re ]] || continue
        ...
     done < file
 
