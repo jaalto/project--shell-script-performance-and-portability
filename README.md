@@ -120,7 +120,7 @@ full listing, see RESULTS above.
   possibilities of
 [parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion) to their fullest
   especially in loops.
-  See [code](./bin/t-string-file-path-component-explode.sh).
+  See [code](./bin/t-string-file-path-components-and-parameter-expansion.sh).
 
 ```
     str="/tmp/filename.txt.gz"
