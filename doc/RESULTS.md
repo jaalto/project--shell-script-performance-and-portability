@@ -463,6 +463,49 @@ slight differences in favor of Bash `[[ ]]`.
     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 
+# t-string-file-path-component-explode.sh
+
+**Q: Extract /path/file.txt componens: parameter expansion vs ´basename` etc.**<br/>
+*A: It is 20-40x faster to use in memory parameter expansion where possible*<br/>
+_priority: 10_
+
+    t1aBase real 0.007  parameter expanion
+    t1bBase real 0.298  basename
+    t2aDir  real 0.007  parameter expanion
+    t2bDir  real 0.282  dirname
+    t3aExt  real 0.004  parameter expanion
+    t3bExt  real 0.393  cut
+    t3cExt  real 0.430  awk
+    t3dExt  real 0.460  sed
+
+## Code
+
+    t1aBase  ${str##*/}
+    t1bBase  basename "$str"
+    t2aDir   ${str%/*}
+    t2bDir   dirname "$str"
+    t3aExt   ${str#*.}
+    t3bExt   echo "$str" | cut --delimiter="." --fields=2,3
+    t3cExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
+    t3dExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
+
+## Notes
+
+It is obvious that doing everything in memory is very
+fast. Seeing the measurements, and just how expensive it is,
+reminds us to utilize the possibilities of
+[parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
+more effectively in shell scripts.
+
+In the tests, we assume that directory names
+do not contain the dot (`.`) character.
+
+The tests do not aim to present generic
+solutions to expand all paths like:
+
+    /path/project.git/README.txt
+
+
 # t-string-trim-whitespace.sh
 
 **Q: Trim whitepace using Bash RE vs `sed`**<br/>

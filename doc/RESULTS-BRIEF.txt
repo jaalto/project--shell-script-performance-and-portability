@@ -86,6 +86,10 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: In practise, no real differences
 
+FILE: t-string-file-path-component-explode.sh
+# Q: Extract /path/file.txt componens: parameter expansion vs ´basename` etc.
+# A: It is 20-40x faster to use in memory parameter expansion where possible
+
 FILE: t-string-trim-whitespace.sh
 # Q: Trim whitepace using Bash RE vs `sed`
 # A: It is 8x faster to use Bash, especially with fn() nameref
