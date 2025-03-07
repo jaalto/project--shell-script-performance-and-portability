@@ -274,12 +274,13 @@ full listing, see RESULTS above.
     array=($string)
     IFS=$saved
 
-    # In function, temporarily disable
-    # pathname expansion (-f)
     fn()
     {
-        # make 'set' local
+        # Make 'set' local
         local -
+
+        # Disable pathname
+        # expansion
         set -f
 
         local saved=$IFS
