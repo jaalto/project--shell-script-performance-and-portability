@@ -259,8 +259,8 @@ full listing, see RESULTS above.
   like `*`, `?`, etc. The pathname expansion
   can be disabled with
   `set -f; ...code...; set +f`.
-  To disable it locally in a function,
-  use statement `local - set -f`.
+  It is also posisble to disable it locally in
+  a function,
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
@@ -278,7 +278,8 @@ full listing, see RESULTS above.
     # pathname expansion (-f)
     fn()
     {
-        local - set -f
+        local -  # make 'set local
+        set -f
         ...
         local saved=$IFS
         IFS=":"
