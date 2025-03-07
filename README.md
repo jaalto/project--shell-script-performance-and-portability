@@ -90,7 +90,7 @@ full listing, see RESULTS above.
   nothing that can replace the speed of `perl`
   unless you go even lower-level languages like
   `C`. But then again, we assume that you know
-  how to choose your tools.
+  how to choose your tools in those cases.
 
 ```
     cmd | awk '{...}'
