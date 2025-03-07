@@ -264,6 +264,18 @@ full listing, see RESULTS above.
     array=($string)
     IFS=$saved
 
+    # In function temporarily disable
+    # pathname expansion (-f)
+    fn()
+    {
+        local - set -f
+        ...
+        local saved=$IFS
+        array=($string)
+        IFS=$saved
+        ...
+    }
+
     # Much slower
     IFS=":" read -ra array <<< "$string"
 
