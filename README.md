@@ -251,7 +251,7 @@ full listing, see RESULTS above.
   can be disabled with
   `set -f; ...code...; set +f`.
   To disable it locally in a function,
-  use `local -; set -f`.
+  use statement `local - set -f`.
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
