@@ -491,7 +491,9 @@ testing:
 
 For the curious readers:
 
-- Details how the `read' command works
+- Details how the
+  [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
+  command works
   https://unix.stackexchange.com/a/209184
 - Super simple `s` command interpreter to write
   shell-like scripts (security oriented):
