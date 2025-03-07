@@ -362,7 +362,8 @@ None of these offer any advantages to speed up shell scripts.
     let i++          # Bash
 ```
 
-- The Bash-specific `{N..M}` might offer a
+- The Bash
+  [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion) `{N..M}` might offer a
   minuscule advantage, but it may be impractical
   because `N..M` cannot be parameterized.
   Surprisingly, the simple and elegant `$(seq M)`
