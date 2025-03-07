@@ -486,6 +486,12 @@ testing:
   scripts, install package "devscripts" and see
   https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
 
+For the curious readers:
+
+- Super simple `s` command interpreter to write
+  shell-like scripts (security oriented):
+  https://github.com/rain-1/s
+
 # COPYRIGHT
 
 Copyright (C) 2024-2025 Jari Aalto
