@@ -17,7 +17,7 @@ Instead, compare the relative order in which
 each test case produced the fastest results.
 
 The results presented in this README provide
-only an excerpt from the test case. For the
+only some highlighs from the test cases. For the
 full listing, see RESULTS above.
 
 ## The project structure
