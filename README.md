@@ -366,7 +366,7 @@ None of these offer any advantages to speed up shell scripts.
   [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion) `{N..M}` might offer a
   minuscule advantage, but it may be impractical
   because `N..M` cannot be parameterized.
-  Surprisingly, the simple and elegant `$(seq M)`
+  Surprisingly, the simple and elegant `$(seq N M)`
   is fast, even though
   [command substitution](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Command-Substitution)
   uses a subshell. We can only guess that the
