@@ -159,9 +159,9 @@ full listing, see RESULTS above.
 
 - It is about 10 times faster to read a file
   into memory as a string and use Bash regular
-  expression tests on that string. This is
-  much more efficient than calling the
-  external `grep` command.
+  expression tests on that string multiple
+  times. This is much more efficient than calling
+  `grep` command many times.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
