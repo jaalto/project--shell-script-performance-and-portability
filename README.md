@@ -223,7 +223,7 @@ full listing, see RESULTS above.
         ...
     done
 
-    # Slowest, in-loop filter
+    # Slowest, in-loop prefilter
     while read -r line
     do
        [[ $line =~ $re ]] || continue
