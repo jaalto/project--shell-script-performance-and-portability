@@ -278,7 +278,7 @@ full listing, see RESULTS above.
         ...
     }
 
-    # Much slower
+    # One liner but much slower
     IFS=":" read -ra array <<< "$string"
 
     # To see what Bash uses
