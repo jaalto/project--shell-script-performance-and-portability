@@ -213,11 +213,11 @@ full listing, see RESULTS above.
     while read -r ...
     do
         ...
-    done < <(grep -E "$re" file)
+    done < <(grep --extended-regexp "$re" file)
 
     # Problem: while runs in
     # a separate environment
-    grep -E "$re" file) |
+    grep --extended-regexp "$re" file) |
     while read -r ...
     do
         ...
