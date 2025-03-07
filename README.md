@@ -261,6 +261,7 @@ full listing, see RESULTS above.
 
     # Fastest
     saved=$IFS
+    IFS=":"
     array=($string)
     IFS=$saved
 
@@ -271,6 +272,7 @@ full listing, see RESULTS above.
         local - set -f
         ...
         local saved=$IFS
+        IFS=":"
         array=($string)
         IFS=$saved
         ...
