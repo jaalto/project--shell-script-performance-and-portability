@@ -350,15 +350,15 @@ None of these offer any advantages to speed up shell scripts.
 ```
 
 - The Bash-specific `{N..M}` might offer a
-  minuscule advantage, but it may be
-  impractical because `N..M` cannot be
-  parameterized. Surprisingly, the simple and elegant
-  `$(seq M)` is fast, even though it calls a
-  subshell with a binary. We can only guess
-  that the reason is that any kind of
-  looping, increments, and tests are
-  inherently slow. The last POSIX `while` loop
-  example was slightly slower in all
+  minuscule advantage, but it may be impractical
+  because `N..M` cannot be parameterized.
+  Surprisingly, the simple and elegant `$(seq M)`
+  is fast, even though
+  [command substitution](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Command-Substitution)
+  uses a subshell. We can only guess that the
+  reason is that any kind of looping, increments,
+  and tests are inherently slow. The last POSIX
+  `while` loop example was slightly slower in all
   subsequent tests.
   See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
@@ -456,8 +456,20 @@ testing:
 
 - See Greg's Bash Wiki and FAQ
   https://mywiki.wooledge.org/BashGuide
+- See BashFAQ why
+  [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
+  is preferrable over archaic backtics as in \`cmd\`.
+  https://mywiki.wooledge.org/BashFAQ/082
+**Note**: for 20 years even all the `sh` shells
+  have supported the readable `$()`command
+  substitution syntax. This includes very
+  conservarive HP-UX and Solaris 10 from 2005 whose
+  support ended in
+  [2021](https://www.liquisearch.com/solaris_operating_system/version_history).
 - Lint scripts for potential mistakes with
-  https://www.shellcheck.net
+  https://www.shellcheck.net. In Debian,
+  install package "shellcheck" and see
+  https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
 - In Debian, to help to write portable POSIX
   scripts, install package "devscripts" and see
   https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
