@@ -178,6 +178,7 @@ Command `stat` does more work by opening each found file.
 
 **Q: To search file for matches: in memory searh vs `grep`**<br/>
 *A: It is about 8-10x faster to read file into memory and then do matching*<br/>
+_priority: 10_
 
     t1a real 0m0.049s read + bash regexp (read file once + use loop)
     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
