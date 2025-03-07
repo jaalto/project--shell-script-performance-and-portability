@@ -274,7 +274,7 @@ full listing, see RESULTS above.
     array=($string)
     IFS=$saved
 
-    # In function temporarily disable
+    # In function, temporarily disable
     # pathname expansion (-f)
     fn()
     {
