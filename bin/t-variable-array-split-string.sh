@@ -16,11 +16,6 @@
 #
 # Notes:
 #
-# This test must be run separately to clear the
-# string from memory between invocations:
-#
-#      for i in t{1..3}; do ./t-variable-array-split-string.sh $i; done
-#
 # This test involves splitting by an arbitrary
 # character, which requires setting a local
 # `IFS` for the execution of the command.
@@ -65,6 +60,8 @@ t1 ()
 
 t2 ()
 {
+    # Enable local '-f' feature
+    #
     # Safeguard "($string)" from
     # undergoing pathname expansion
     #
@@ -72,7 +69,8 @@ t2 ()
     # to remind you to use it in production
     # code
 
-    local - set -f
+    local -
+    set -f
 
     for i in $(seq $loop_max)
     do
@@ -92,16 +90,8 @@ t3 ()
     done
 }
 
-if [ "$1" ]; then
-  t "$1"
-else
-    echo "\
-# WARN: Run this test with more accurate results using:
-for i in t{1..3}; do ./t-variable-array-split-string.sh \$i; done" >&2
-
-    t t1
-    t t2
-    t t3
-fi
+t t1
+t t2
+t t3
 
 # End of file

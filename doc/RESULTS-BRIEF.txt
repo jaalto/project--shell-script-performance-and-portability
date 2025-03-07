@@ -1,3 +1,7 @@
+FILE: t-command-echo-vs-printf.sh
+# Q: The classic: `echo` vs `printf'
+# A: Rhere is no real difference
+
 FILE: t-command-grep-parallel.sh
 # Q: Howabout using `parallel` to speed up `grep`?
 # A: `parallel` won't help in typical cases. Use only with huge files.

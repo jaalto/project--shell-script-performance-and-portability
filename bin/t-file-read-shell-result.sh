@@ -9,13 +9,13 @@
 
 . ./t-lib.sh ; f=$random_file
 
-tmp=t.$$.tmp
+f=t.$$.tmp
 
 AtExit ()
 {
-    [ -f "$tmp" ] || return 0
+    [ -f "$f" ] || return 0
 
-    rm --force "$tmp"
+    rm --force "$f"
 }
 
 t1 ()
@@ -30,8 +30,8 @@ t2 ()
 {
     for i in $(seq $loop_max)
     do
-        grep --count --fixed-strings "12" $f > $tmp
-        count=$(< $tmp)
+        grep --count --fixed-strings "12" $f > $f
+        count=$(< $f)
     done
 }
 
