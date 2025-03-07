@@ -84,7 +84,7 @@ full listing, see RESULTS above.
   [python](https://www.python.org)
   scripts where startup time and higher
   memory consumption is a factor.
-  *Note*: If you need to process large data files,
+  *Note*: If you need to process large files,
   use a lot of regular expressions, manipulate or
   work on data extensively, there is probably
   nothing that can replace the speed of `perl`
@@ -103,7 +103,7 @@ full listing, see RESULTS above.
 ```
 
 - *Note*: if you have hordes of RAM,
-  no shortage of cores, and large data files, then
+  no shortage of cores, and large files, then
   utilize pipelines `<cmd> | ...` as much as
   possible because the kernel will optimize
   things in memory better. In more powerful
@@ -359,7 +359,7 @@ for details and further commentary.
   `--fixed-strings`, and avoiding
   `--ignore-case` might improve performance,
   at least according to StackOverflow
-  discussions with   huge data files.
+  discussions with large files.
   See [code](./bin/t-command-grep.sh).
 
 ```
