@@ -135,12 +135,13 @@ full listing, see RESULTS above.
     str="/tmp/filename.txt.gz"
 
     # Almost instantaneous
-    ext=${str#*.}  # Delete up till first "."
+    # Delete up till first "."
+    ext=${str#*.}
 
     # Over 50x slower
     ext=$(echo "$str" | cut --delimiter="." --fields=2,3)
 
-    # Even worse, over 70x slower
+    # Over 70x slower
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
