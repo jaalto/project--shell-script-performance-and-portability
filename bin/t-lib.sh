@@ -44,9 +44,11 @@
 # Exported variables
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
+PROGRAM=$0
 
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
+RUNNER=t.run
 
 Warn ()
 {
@@ -68,6 +70,16 @@ Verbose ()
 IsCygwin ()
 {
     [ -d /cygdrive/c ]
+}
+
+Runner ()
+{
+    local run="$RUNNER.$$"
+
+    echo "$*" > "$run"
+
+    sh ./"$run"
+    rm --force "$run"
 }
 
 RandomWordsGibberish ()
