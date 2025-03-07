@@ -88,7 +88,8 @@ full listing, see RESULTS above.
 ```
     cmd | awk '{...}'
 
-    # ... coult replace all of these
+    # ... could probably
+    # replace all of these
     cmd | head ... | cut ...
     cmd | grep ... | sed ...
     cmd | grep ... | grep -v | cut ...
