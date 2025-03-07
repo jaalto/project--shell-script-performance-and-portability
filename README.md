@@ -135,10 +135,10 @@ full listing, see RESULTS above.
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
-- In functions, using Bash
+- Is is about 40 times faster In functions
+  to use Bash
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
-  to return a value is about 40 times faster
-  than `ret=$(fn)`.
+  to return a value than with `ret=$(fn)`.
   See [code](./bin/t-function-return-value.sh).
 
 ```
