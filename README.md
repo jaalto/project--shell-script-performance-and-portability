@@ -491,6 +491,8 @@ testing:
 
 For the curious readers:
 
+- Details how the `read' command works
+  https://unix.stackexchange.com/a/209184
 - Super simple `s` command interpreter to write
   shell-like scripts (security oriented):
   https://github.com/rain-1/s
