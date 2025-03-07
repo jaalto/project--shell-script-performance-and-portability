@@ -10,7 +10,8 @@
 #     t2bDir  real 0.282  dirname
 #     t3aExt  real 0.004  parameter expanion
 #     t3bExt  real 0.393  cut
-#     t3cExt  real 0.460  sed
+#     t3cExt  real 0.430  awk
+#     t3dExt  real 0.460  sed
 #
 # Code:
 #
@@ -20,7 +21,8 @@
 #     t2bDir   dirname "$str"
 #     t3aExt   ${str#*.}
 #     t3bExt   echo "$str" | cut --delimiter="." --fields=2,3
-#     t3cExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
+#     t3cExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
+#     t3dExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
 #
 # Notes:
 #
@@ -94,6 +96,14 @@ t3cExt ()
 {
     for i in $(seq $loop_max)
     do
+        item=$(awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}')
+    done
+}
+
+t3dExt ()
+{
+    for i in $(seq $loop_max)
+    do
         item=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
     done
 }
@@ -105,5 +115,6 @@ t t2bDir
 t t3aExt
 t t3bExt
 t t3cExt
+t t3dExt
 
 # End of file
