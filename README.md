@@ -204,7 +204,7 @@ full listing, see RESULTS above.
     while read -r ...
     do
         ...
-    done < FILE
+    done < file
 ```
 
 - It is about 2 times faster to prefilter with `grep`
