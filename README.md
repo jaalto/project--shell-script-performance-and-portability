@@ -429,8 +429,9 @@ None of these offer any advantages to speed up shell scripts.
   chunks of lines and running the search in
   parallel is intriguing, but the overhead of
   starting perl with `parallel` is orders of
-  magnitude more expensive compared to `grep`
-  binary. Based on StackOverflow discussions,
+  magnitude more expensive compared to running
+  already optimized `grep` only once.
+  Based on StackOverflow discussions,
   if file sizes are in the tens of megabytes,
   GNU `parallel` can help speed things up.
   See [code](./bin/t-command-grep-parallel.sh).
