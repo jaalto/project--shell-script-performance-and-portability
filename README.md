@@ -1,7 +1,7 @@
 # SHELL SCRIPT PERFORMANCE TESTS
 
-How can you make shell scripts to run faster?
-That's the question these test cases on aim to answer.
+How can you make shell scripts run faster?
+That's the question these test cases aim to answer.
 
 - [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
