@@ -67,6 +67,7 @@ full listing, see RESULTS above.
 - If you have tasks that can be run concurrently, use
   [GNU parallel](https://www.gnu.org/software/parallel/) for massive gains in performance. See also how to use
   [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
+  ([tutorial](https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore))
   to wait for all concurrent tasks to finish
   before continuing with the rest of the tasks in
   the pipeline. In some cases, even parallelizing
