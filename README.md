@@ -88,9 +88,10 @@ full listing, see RESULTS above.
 ```
     cmd | awk '{...}'
 
-    # ... Avoid
+    # ... coult replace all of these
     cmd | head ... | cut ...
     cmd | grep ... | sed ...
+    cmd | grep ... | grep -v | cut ...
 ```
 
 - *Note*: if you have hordes of RAM,
