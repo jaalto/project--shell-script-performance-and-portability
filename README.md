@@ -278,7 +278,8 @@ full listing, see RESULTS above.
     # pathname expansion (-f)
     fn()
     {
-        local -  # make 'set local
+        # make 'set' local
+        local -
         set -f
         ...
         local saved=$IFS
