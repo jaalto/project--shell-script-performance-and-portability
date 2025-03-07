@@ -235,11 +235,11 @@ full listing, see RESULTS above.
 # MODERATE PERFORMANCE GAINS
 
 - It is about 4-5 times faster to split a string
-  into an array using Bash list   rather than
+  into an array using Bash list rather than
   here-string. This is because Bash
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a
-  pipe or temporary file, whereas `eval`
+  pipe or temporary file, whereas Bash list
   operates entirely in memory. The pipe
   buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
