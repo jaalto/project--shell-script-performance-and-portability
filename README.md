@@ -103,7 +103,7 @@ full listing, see RESULTS above.
 ```
 
 - *Note*: if you have hordes of RAM,
-  no shortage of cores, and big data files, then
+  no shortage of cores, and large data files, then
   utilize pipelines `<cmd> | ...` as much as
   possible because the kernel will optimize
   things in memory better. In more powerful
