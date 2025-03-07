@@ -84,7 +84,7 @@ full listing, see RESULTS above.
   [python](https://www.python.org)
   scripts where startup time and higher
   memory consumption is a factor.
-  *Note*: If you need to process big data files,
+  *Note*: If you need to process large data files,
   use a lot of regular expressions, manipulate or
   work on data extensively, there is probably
   nothing that can replace the speed of `perl`
