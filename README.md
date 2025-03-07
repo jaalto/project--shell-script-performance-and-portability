@@ -281,7 +281,7 @@ full listing, see RESULTS above.
     # One liner but much slower
     IFS=":" read -ra array <<< "$string"
 
-    # To see what Bash uses
+    # In Linux, to see what Bash uses
     # for HERE STRING: pipe or
     # temporary file
     bash -c 'ls -lL /proc/self/fd/0 <<< hello'
