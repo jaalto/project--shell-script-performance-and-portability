@@ -288,8 +288,7 @@ full listing, see RESULTS above.
         IFS=$saved
     }
 
-    # One liner but
-    # much slower
+    # One liner but much slower
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
