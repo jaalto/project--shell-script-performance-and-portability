@@ -462,10 +462,10 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 #     t2empty        real 0.053  user 0.050  sys 0.003
 #     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
-FILE: t-string-file-path-component-explode.sh
+FILE: t-string-file-path-components-and-parameter-expansion.sh
 #! /bin/bash
 #
-# Q: Extract /path/file.txt componens: parameter expansion vs ´basename` etc.
+# Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
 # A: It is 20-40x faster to use in memory parameter expansion where possible
 # priority: 10
 #

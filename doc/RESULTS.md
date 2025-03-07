@@ -463,9 +463,9 @@ slight differences in favor of Bash `[[ ]]`.
     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 
-# t-string-file-path-component-explode.sh
+# t-string-file-path-components-and-parameter-expansion.sh
 
-**Q: Extract /path/file.txt componens: parameter expansion vs ´basename` etc.**<br/>
+**Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.**<br/>
 *A: It is 20-40x faster to use in memory parameter expansion where possible*<br/>
 _priority: 10_
 
