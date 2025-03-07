@@ -118,7 +118,7 @@ full listing, see RESULTS above.
   utilities. Seeing the measurements just how
   expensive it is, reminds us to utilize the
   possibilities of
-[parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion) to their fullest
+[parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion) to their fullest;
   especially in loops.
   See [code](./bin/t-string-file-path-components-and-parameter-expansion.sh).
 
