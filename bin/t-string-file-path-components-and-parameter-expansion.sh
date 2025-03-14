@@ -92,7 +92,15 @@ t3bExt ()
     done
 }
 
-t3cExt ()
+t3cExt2 ()
+{
+    for i in $(seq $loop_max)
+    do
+        item=$(cut --delimiter="." --fields=2,3 <<< "$str")
+    done
+}
+
+t3dExt ()
 {
     for i in $(seq $loop_max)
     do
@@ -100,7 +108,7 @@ t3cExt ()
     done
 }
 
-t3dExt ()
+t3eExt ()
 {
     for i in $(seq $loop_max)
     do
