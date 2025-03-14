@@ -16,7 +16,7 @@ with namerefs.
 
 Shell scripting is about combining redirections,
 pipes, calling external utilities, and gluing them
-all together. Shell scripots are also quite
+all together. Shell scripts are also quite
 portable by default, requiring no additional
 installation. Perl or Python excel in their
 respective fields, where the requirements differ
