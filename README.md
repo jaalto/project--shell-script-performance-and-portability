@@ -3,22 +3,33 @@
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
 
-- [RESULTS](./doc/RESULTS.md)
-- [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
-- The test cases and code in [bin/](./bin/)
-- [USAGE](./USAGE.md)
-- [CONTRIBUTING](./CONTRIBUTING.md)
-
-Consider the raw
+The results presented in this README provide
+only some highlighs from the test cases
+listed in RESULTS. Consider the raw
 [`time`](https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words)
 results only as guidance, as they reflect only
 the system used at the time of testing.
 Instead, compare the relative order in which
 each test case produced the fastest results.
 
-The results presented in this README provide
-only some highlighs from the test cases. For the
-full listing, see RESULTS above.
+
+- [RESULTS](./doc/RESULTS.md)
+- [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
+- The test cases and code in [bin/](./bin/)
+- [USAGE](./USAGE.md)
+- [CONTRIBUTING](./CONTRIBUTING.md)
+
+Table of Contents
+
+- [GENERAL ADVICE](#general-advice)
+- [MAJOR PERFORMANCE GAINS](#major-performance-gains)
+- [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
+- [MINOR PERFORMANCE GAINS](#minor-performance-gains)
+- [NO PERFORMANCE GAINS](#no-performance-gains)
+- [RANDOM NOTES](#random-notes)
+- [FURTHER READING](#further-reading)
+- [COPYRIGHT](#copyright)
+- [LICENSE](#license)
 
 ## The project structure
 
