@@ -3,6 +3,25 @@
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
 
+The main focus are the features found in
+Bash and less in pure POSIX.
+
+From a performance point of view, for serious shell
+scripting, Bash is the sensible choice for
+efficient data manipulation in memory (arrays, fast
+string handling with an extended set of parameter
+expansions, regular expressions, extracting regex
+matches) and utilizing blazingly fast functions
+with namerefs.
+
+Shell scripting is about combining redirections,
+pipes, calling external utilities, and gluing them
+all together. Shell scripots are also quite
+portable by default, requiring no additional
+installation. Perl or Python excel in their
+respective fields, where the requirements differ
+from those of the shell.
+
 The results presented in this README provide
 only some highlighs from the test cases
 listed in RESULTS. Consider the raw
@@ -55,6 +74,7 @@ Table of Contents
   Bash, GNU coreutils
 
 - Optional depends:
+  Test cases: GNU paralle
   GNU `make`. Used as
   a frontend to call utilities.
 
@@ -138,9 +158,10 @@ Table of Contents
   manipulation in memory, than calling external
   utilities. Seeing the measurements just how
   expensive it is, reminds us to utilize the
-  possibilities of
-[parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion) to their fullest;
-  especially in loops.
+  possibilities of basic `#` `##` `%` `%%`
+[parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02)
+and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
+  to their fullest.
   See [code](./bin/t-string-file-path-components-and-parameter-expansion.sh).
 
 ```
