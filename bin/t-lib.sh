@@ -72,6 +72,16 @@ IsCygwin ()
     [ -d /cygdrive/c ]
 }
 
+IsHereString ()
+{
+    # Check HERE STRING support like this:
+    # cmd <<< "str
+    # Ref: https://mywiki.wooledge.org/BashFAQ/061
+
+    # Any version of Bash or Zsh
+    [ "$BASH_VERSINFO" ] || [ "$ZSH_VERSION" ]
+}
+
 Runner ()
 {
     local run="$RUNNER.$$"
@@ -153,7 +163,7 @@ RandomNumbersPython ()
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
-t () # Run a test case
+RunTestCase () # Run a test case
 {
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
@@ -241,6 +251,31 @@ TestData ()
 
     if [ ! -f "$random_file" ]; then
         RandomNumbersAwk "$1" > "$random_file"
+    fi
+}
+
+t ()
+{
+    # Can be called in following Ways
+    #
+    #   t <test case> [<check feature>]
+    #
+    # Where optionsl <CheckFeature> determines
+    # if <test case> should be being run.
+
+    if [ "$2" ]; then
+        local test=$1
+        local check=$2
+
+        if $check; then
+            RunTestCase $test
+        else
+            printf "%s ... skip, no pre-condition: %s" $test $check >&2
+        fi
+    elif [ "$1" ]; then
+        RunTestCase "$1"
+    else
+        Warn "WARN: t() called without a test case"
     fi
 }
 
