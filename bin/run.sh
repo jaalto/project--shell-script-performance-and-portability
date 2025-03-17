@@ -26,8 +26,9 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
-PREFIX="-- "
 PROGRAM=${0##*/}
+
+PREFIX="-- "
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
 RUN_SHELL=""
 
@@ -47,6 +48,10 @@ SYNOPSIS
 OPTIONS
     -s, --shell SHELL
         Run test case unser SHELL. Like ksh, mksh etc.
+        Note that the SHELL must have built-in time
+        keyword than can be used to call functions.
+        The Shells that cannot be used are dash and
+        zsh.
 
     -h, --help
         Display help.
@@ -62,6 +67,17 @@ EXAMPLES
     loop_max=500 ./$PROGRAM t-test-case.sh"
 
     exit 0
+}
+
+Warn ()
+{
+    echo "$*" >&2
+}
+
+Die ()
+{
+    Warn "$PROGRAM: $*"
+    exit 1
 }
 
 FileInfo ()
@@ -96,10 +112,25 @@ Run ()
     fi
 }
 
+ValidateShell ()
+{
+    case $1 in
+        *zsh* | *dash* )
+            Die "Abort $1: no suitable built-in time for calling function"
+            ;;
+        *)  str=$("$1" -c "command -v time")
+
+            case $str in
+                /*) # /usr/bin/time
+                    Die "Abort $1: external time(1) not suitable built-in for calling function"
+                    ;;
+            esac
+            ;;
+    esac
+}
+
 Main ()
 {
-    local dummy
-
     while :
     do
         # Unused, but useful during debug
@@ -108,8 +139,11 @@ Main ()
 
         case "$1" in
             -s | --shell)
-                RUN_SHELL=$2
-                shift ; shift
+                shift
+                [ "$1" ] || Die "ERROR: missing --shell ARG"
+                ValidateShell "$1"
+                RUN_SHELL=$1
+                shift
                 ;;
             -h | --help)
                 shift
