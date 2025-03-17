@@ -77,4 +77,6 @@ t t2
 t t3 IsShellBash
 t t4
 
+rm --force t.bash
+
 # End of file
