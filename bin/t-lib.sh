@@ -104,7 +104,7 @@ IsFeatureHereString ()
 
 IsFeatureArray ()
 {
-    IsShellBash || IsShellZsh || IsShellKshModern
+    IsShellBash || IsShellZsh || IsShellKsh
 }
 
 IsCommandParallel ()
