@@ -21,14 +21,9 @@
 # In Bash, the `readarray` built-in is a synonym for `mapfile`,
 # so they should behave equally.
 
-FILE="t-file-read-content-loop.sh"
-
-if [ ! "$BASH_VERSINFO" ]; then
-    echo "$FILE: NOTE: Skip, Bash shell tests only"
-    exit 1
-fi
-
 . ./t-lib.sh ; f=$random_file
+
+RequireBash "t-file-read-content-loop.sh"
 
 t1 ()
 {
