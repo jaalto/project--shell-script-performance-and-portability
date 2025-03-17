@@ -42,12 +42,12 @@
 #           $loop_max
 
 # Exported variables
-random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
-loop_max=${loop_max:-100}
-
 PROGRAM=$0
 
-STAT="stat" # GNU version
+random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
+loop_max=${loop_max:-100}
+STAT=${STAT:-"stat"} # GNU version
+
 
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
