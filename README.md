@@ -71,14 +71,16 @@ Table of Contents
   see homepage.
 
 - Depends:
-  Bash, GNU coreutils. The ´time` command
-  is required (built in Bash).
-  Install Debian package "time" for
-  running tests under Dash shell.
+  Bash, GNU coreutils.
 
 - Optional depends:
   GNU make for Makefile.
   For some tests: GNU parallel.
+
+- Other reqyuirements: the `time`
+  cómmand must be work with function.
+  Zsh's built-in `time` or external
+  time(1) command cannot be used.
 
 # GENERAL ADVICE
 
