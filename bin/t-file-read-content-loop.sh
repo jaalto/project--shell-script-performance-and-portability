@@ -21,11 +21,17 @@
 # In Bash, the `readarray` built-in is a synonym for `mapfile`,
 # so they should behave equally.
 
+FILE="t-file-read-content-loop.sh"
+
+if [ ! "$BASH_VERSINFO" ]; then
+    echo "$FILE: NOTE: Skip, Bash shell tests only"
+    exit 1
+fi
+
 . ./t-lib.sh ; f=$random_file
 
 t1 ()
 {
-    local -a array
     array=()
 
     mapfile -t array < $f
@@ -38,7 +44,6 @@ t1 ()
 
 t2a ()
 {
-    local -a array
     array=()
 
     readarray -t array < $f
@@ -51,7 +56,6 @@ t2a ()
 
 t2b ()
 {
-    local -a array
     array=()
 
     readarray -t array < $f
