@@ -44,7 +44,10 @@
 # Exported variables
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
+
 PROGRAM=$0
+
+STAT="stat" # GNU version
 
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
@@ -64,9 +67,21 @@ Die ()
 RequireBash ()
 {
     if [ ! "$BASH_VERSINFO" ]; then
-        echo "$1: NOTE: Skip, Bash shell tests only"
-        exit 1
+        Die "$1: NOTE: Skip, Bash shell tests only"
     fi
+}
+
+RequireGnuStat ()
+{
+    case "$(stat --version 2> /dev/null)" in
+        *GNU*)
+            return 0
+            ;;
+        *)
+            Die "$1: NOTE: Skip, no GNU stat(1) command in PATH or set envvar STAT"
+            return 1
+            ;;
+    esac
 }
 
 Verbose ()
@@ -78,6 +93,11 @@ Verbose ()
 IsOsCygwin ()
 {
     [ -d /cygdrive/c ]
+}
+
+IsOsLinux ()
+{
+    [ "$(uname)" = "Linux" ]
 }
 
 IsShellKsh ()
