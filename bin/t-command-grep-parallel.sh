@@ -6,8 +6,8 @@
 #
 #     t0  real 0m0.005s grep baseline
 #     t1a real 0m0.210s --block-size <default> --pipepart
-#     t1b real 0m0.240s --block-size <default> (Linux 64k)
-#     t2  real 0m0.234s --block-size 64k (grep instance for every 1k lines)
+#     t1b real 0m0.240s --block-size <default> (Linux)
+#     t2  real 0m0.234s --block-size 64k
 #     t3  real 0m0.224s --block-size 32k
 #
 # Notes:
@@ -77,13 +77,13 @@ Setup
 echo "test file: $(ls -l $f)"
 echo "test file: lines $(wc -l $f)"
 
-if ! command -v parallel > /dev/null; then
-    Warn "INFO: no parallel found. Skipping tests."
+if ! IsCommandParallel; then
+    Warn "INFO: Skip, no parallel(1) in PATH."
 else
 
     t t0
 
-    if IsCygwin; then
+    if IsOsCygwin; then
         echo "# t1 ... skip on Cygwin (no 64k blocksize in parallel)"
     else
         t t1a
