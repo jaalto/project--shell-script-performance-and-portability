@@ -1,11 +1,13 @@
 #! /bin/bash
 #
-# Q: How much is POSIX `$PWD` faster than `pwd`?
-# A: It is about 7x faster to use `$PWD` to `pwd` (Bash built-in)
-# priority: 4
+# Q: How much is POSIX `$PWD` and `$OLDPWD` faster than `pwd`?
+# A: It is about 7x faster to `pwd`
+# priority: 2
 #
-#     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
-#     t2 real 0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
+#     t1 real 0.004 cd ...do.. ; cd $OLDPWD
+#     t2 real 0.006 olddir=$PWD ; cd ...do.. ; cd $olddir
+#     t3 real 0.011 pushd ; cd ...do.. ; popd
+#     t4 real 0.086 olddir=$(pwd) ; cd ...do.. ; cd $olddir
 #
 # Notes:
 #
@@ -19,14 +21,37 @@ t1 ()
 {
     for i in $(seq $loop_max)
     do
-        oldddir=$PWD
         cd /
         # ... do the things
-        cd "$olddir"    # or POSIX: cd "$OLDPWD"
+        cd "$OLDDIR"    # POSIX
     done
 }
 
 t2 ()
+{
+    # Just to see effect of extra variable
+
+    for i in $(seq $loop_max)
+    do
+        oldddir=$PWD
+        cd /
+        # ... do the things
+        cd "$olddir"
+    done
+}
+
+t3 ()
+{
+    for i in $(seq $loop_max)
+    do
+        pushd . > /dev/null
+        cd /
+        # ... do the things
+        popd > /dev/null
+    done
+}
+
+t4 ()
 {
     for i in $(seq $loop_max)
     do
@@ -39,5 +64,7 @@ t2 ()
 
 t t1
 t t2
+t t3 IsCommandPushd
+t t4
 
 # End of file
