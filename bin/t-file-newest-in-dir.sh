@@ -60,7 +60,7 @@ t1 ()
     for i in $(seq $loop_max)
     do
         find . -maxdepth 1 -type f -printf "%T@ %p\n" |
-        awk '
+        $AWK '
             {
                if ($1 > recent)
                {
@@ -68,7 +68,10 @@ t1 ()
                    file = $2
                }
             }
-            END { print file }
+
+            END {
+                print file
+            }
         ' > /dev/null
     done
 }
