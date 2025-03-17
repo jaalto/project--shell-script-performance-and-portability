@@ -111,6 +111,10 @@ IsCommandParallel ()
 {
     command -v parallel > /dev/null
 }
+IsCommandStat ()
+{
+    command -v stat > /dev/null
+}
 
 Runner ()
 {
