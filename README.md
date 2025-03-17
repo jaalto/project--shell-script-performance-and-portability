@@ -71,12 +71,14 @@ Table of Contents
   see homepage.
 
 - Depends:
-  Bash, GNU coreutils
+  Bash, GNU coreutils. The ´time` command
+  is required (built in Bash).
+  Install Debian package "time" for
+  running tests under Dash shell.
 
 - Optional depends:
-  Test cases: GNU paralle
-  GNU `make`. Used as
-  a frontend to call utilities.
+  GNU make for Makefile.
+  For some tests: GNU parallel.
 
 # GENERAL ADVICE
 
