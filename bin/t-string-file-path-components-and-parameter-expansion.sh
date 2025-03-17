@@ -144,7 +144,7 @@ t t2aDir
 t t2bDir
 
 t t3aExt
-t t3bExt IsHereString
+t t3bExt IsFeatureHereString
 t t3cExt
 t t3dExt
 t t3eExt
