@@ -68,8 +68,8 @@ t3 ()
 trap AtExit EXIT HUP INT QUIT TERM
 Setup
 
-t t1
-t t2
-t t3
+t t1 IsShellBash
+t t2 IsFeatureArray
+t t3 IsCommandStat
 
 # End of file
