@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Howabout using `parallel` to speed up `grep`?
-# A: `parallel` won't help in typical cases. Use only with huge files.
+# Q: Is `grep' faster with `parallel`?
+# A: In typical files, grep is much faster. Use `parallel`only with huge files.
 # priority: 1
 #
 #     t0  real 0m0.005s grep baseline
