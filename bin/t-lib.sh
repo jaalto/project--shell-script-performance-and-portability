@@ -125,6 +125,11 @@ IsCommandStat ()
     command -v stat > /dev/null
 }
 
+IsCommandPushd ()
+{
+    command -v pushd > /dev/null
+}
+
 IsCommandGnuVersion ()
 {
     case "$("$1" --version 2> /dev/null)" in
