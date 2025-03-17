@@ -21,7 +21,7 @@ t1 ()
 {
     for i in $(seq $loop_max)
     do
-        size=$(stat -c %s "$f")
+        size=$($STAT -c %s "$f")
     done
 }
 
