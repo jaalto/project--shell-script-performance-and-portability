@@ -244,6 +244,16 @@ RunTestCase () # Run a test case
     # Run
     # -------------------------------------------------------
 
+    timecmd=""
+
+    case "$(command -v time 2>&1)" in
+        /*) # /usr/bin/time - cannot be used to run functions
+            ;;
+        time)
+            timecmd="time"
+            ;;
+    esac
+
     if [ "$hasformat" ]; then
         eval "timeformat=\$$hasformat" # save
         printf "# %-15s" "$1"
@@ -255,7 +265,8 @@ RunTestCase () # Run a test case
         eval "$hasformat='$timeformat'" # restore
         unset timeformat
 
-    elif command -v time 2> /dev/null 2>&1; then
+    elif [ "$timecmd" ]; then
+
         # format the output using other means.
 
         printf "# $1  "
@@ -274,10 +285,10 @@ RunTestCase () # Run a test case
 
         echo  # Add newline
     else
-        Die "ERROR: t(): Abort, no time(1) command"
+        Die "ERROR: t(): Abort, no suitable built-in time command in Shell"
     fi
 
-    unset hasformat format
+    unset hasformat format timecmd
 }
 
 TestData ()
