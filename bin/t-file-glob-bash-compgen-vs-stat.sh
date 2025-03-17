@@ -26,7 +26,7 @@ AtExit ()
 {
     [ "$TMPBASE" ] || return 0
 
-    rm -f "$TMPBASE"*
+    rm --force "$TMPBASE"*
 }
 
 Setup ()
