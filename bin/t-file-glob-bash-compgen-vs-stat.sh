@@ -20,6 +20,8 @@
 
 . ./t-lib.sh ; f=$random_file
 
+file_count=${$file_count:-100}
+
 TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
 
 AtExit ()
@@ -31,7 +33,10 @@ AtExit ()
 
 Setup ()
 {
-    touch $TMPBASE.{1..100}
+    for i in $(seq $file_count)
+    do
+        touch $TMPBASE.$i
+    done
 }
 
 t1 ()
