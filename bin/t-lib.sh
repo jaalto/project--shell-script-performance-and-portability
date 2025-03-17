@@ -64,26 +64,6 @@ Die ()
     exit 1
 }
 
-RequireBash ()
-{
-    if [ ! "$BASH_VERSINFO" ]; then
-        Die "$1: NOTE: Skip, Bash shell tests only"
-    fi
-}
-
-RequireGnuStat ()
-{
-    case "$(stat --version 2> /dev/null)" in
-        *GNU*)
-            return 0
-            ;;
-        *)
-            Die "$1: NOTE: Skip, no GNU stat(1) command in PATH or set envvar STAT"
-            return 1
-            ;;
-    esac
-}
-
 Verbose ()
 {
     [ "$verbose" ] || return 0
@@ -139,9 +119,53 @@ IsCommandParallel ()
 {
     command -v parallel > /dev/null
 }
+
 IsCommandStat ()
 {
     command -v stat > /dev/null
+}
+
+IsCommandGnuVersion ()
+{
+    case "$("$1" --version 2> /dev/null)" in
+        *GNU*)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+IsCommandGnuStat ()
+{
+    IsCommandGnuVersion stat
+}
+
+IsCommandGnuAwk ()
+{
+    IsCommandGnuVersion awk
+}
+
+RequireBash ()
+{
+    if [ ! "$BASH_VERSINFO" ]; then
+        Die "$1: NOTE: Skip, Bash shell tests only"
+    fi
+}
+
+RequireGnuStat ()
+{
+    if ! IsCommandGnuStat; then
+        Die "$1: NOTE: Skip, no GNU stat(1) command in PATH or set envvar STAT"
+    fi
+}
+
+RequireGnuAwk ()
+{
+    if ! IsCommandGnuAwk; then
+        Die "$1: NOTE: Skip, no GNU awk(1) command in PATH or set envvar AWK"
+    fi
 }
 
 Runner ()
@@ -174,7 +198,7 @@ RandomWordsDictionary ()
         Die "ERROR: missing word dict. Debian: apt-get install wamerican"
     else
         shuf --head-count=200000 /usr/share/dict/words |
-        awk '
+        $AWK '
             BEGIN {
                 total_size = 0;
             }
@@ -208,7 +232,10 @@ RandomWordsDictionary ()
 
 RandomNumbersAwk ()
 {
-    awk -v n="$1" '
+    RequireGnuAwk "t-lib.sh"
+
+    $AWK -v n="$1" \
+    '
     BEGIN {
         srand();
 
