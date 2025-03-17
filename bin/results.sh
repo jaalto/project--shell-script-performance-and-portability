@@ -26,6 +26,7 @@
 # Extract results from test files
 
 PROGRAM=${0##*/}
+AWK=${AWK:-awk}   # GNU version
 
 pwd=$(cd "$(dirname "$0")" && pwd)
 
@@ -50,9 +51,20 @@ DESCRIPTION
     exit 0
 }
 
+Warn ()
+{
+    echo "$*" >&2
+}
+
+Die ()
+{
+    Warn "$PROGRAM: $*"
+    exit 1
+}
+
 Result ()
 {
-    awk '
+    $AWK '
         BEGINFILE {
             delete arr
             count=0
@@ -74,6 +86,16 @@ Result ()
 
 
     ' "$@"
+}
+
+Require ()
+{
+    case "$($AWK --version)" in
+        *GNU*)
+            return 0
+            ;;
+        *)  Die "ERROR: awk in is not GNU version (alternatively set envvar AWK to GNU awk)"
+    esac
 }
 
 Main ()
