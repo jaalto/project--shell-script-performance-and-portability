@@ -42,8 +42,13 @@
 
 . ./t-lib.sh ; f=$random_file
 
-# Prepare string  string with 100 "words"
-printf -v string "%s," {1..100}
+RequireBash "t-variable-array-split-string.sh"
+
+Setup ()
+{
+    # Prepare string  string with 100 "words"
+    printf -v string "%s," {1..100}
+}
 
 t1 ()
 {
@@ -90,6 +95,7 @@ t3 ()
     done
 }
 
+Setup
 t t1
 t t2
 t t3

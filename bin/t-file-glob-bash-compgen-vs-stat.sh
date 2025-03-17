@@ -20,18 +20,23 @@
 
 . ./t-lib.sh ; f=$random_file
 
+file_count=${$file_count:-100}
+
 TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
 
 AtExit ()
 {
     [ "$TMPBASE" ] || return 0
 
-    rm -f "$TMPBASE"*
+    rm --force "$TMPBASE"*
 }
 
 Setup ()
 {
-    touch $TMPBASE.{1..100}
+    for i in $(seq $file_count)
+    do
+        touch $TMPBASE.$i
+    done
 }
 
 t1 ()
@@ -68,8 +73,8 @@ t3 ()
 trap AtExit EXIT HUP INT QUIT TERM
 Setup
 
-t t1
-t t2
-t t3
+t t1 IsShellBash
+t t2 IsFeatureArray
+t t3 IsCommandStat
 
 # End of file

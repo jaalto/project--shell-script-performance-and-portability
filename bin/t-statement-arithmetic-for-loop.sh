@@ -34,7 +34,7 @@ loop_max=${loop_count:-1000}
 
 t1 ()
 {
-    for i in $(seq $loop_max)
+    for i in {1..1000}
     do
         item=$i
     done
@@ -48,6 +48,9 @@ t2 ()
     done
 }
 
+t3 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t3 ()
 {
     for ((i=1; i <= $loop_max; i++))
@@ -55,6 +58,9 @@ t3 ()
         item=$i
     done
 }
+EOF
+
+IsShellBash && . ./t.bash
 
 t4 ()
 {
@@ -68,7 +74,9 @@ t4 ()
 
 t t1
 t t2
-t t3
+t t3 IsShellBash
 t t4
+
+rm --force t.bash
 
 # End of file

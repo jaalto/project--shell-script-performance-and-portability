@@ -23,9 +23,10 @@
 
 . ./t-lib.sh ; f=$random_file
 
+RequireBash "t-file-read-content-loop.sh"
+
 t1 ()
 {
-    local -a array
     array=()
 
     mapfile -t array < $f
@@ -38,7 +39,6 @@ t1 ()
 
 t2a ()
 {
-    local -a array
     array=()
 
     readarray -t array < $f
@@ -51,7 +51,6 @@ t2a ()
 
 t2b ()
 {
-    local -a array
     array=()
 
     readarray -t array < $f
