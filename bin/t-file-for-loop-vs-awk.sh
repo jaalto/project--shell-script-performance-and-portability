@@ -15,7 +15,7 @@ TMP=$(mktemp -d -t test-XXXX)
 
 Setup ()
 {
-    for i in {1..100}
+    for i in $(setq 100)
     do
         cp "$f" "$TMP/$f.$i"
     done
@@ -23,7 +23,7 @@ Setup ()
 
 AtExit ()
 {
-    rm -rf "$TMP"
+    rm --recursive --force "$TMP"
 }
 
 Awk ()
