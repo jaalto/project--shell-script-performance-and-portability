@@ -101,7 +101,7 @@ t4 ()
 {
     for i in $(seq $loop_max)
     do
-        stat --format="%Y %n" * |
+        $STAT --format="%Y %n" * |
             sort --reverse |
             sed --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
             > /dev/null
