@@ -95,6 +95,7 @@ Require ()
             return 0
             ;;
         *)  Die "ERROR: awk in is not GNU version (alternatively set envvar AWK to GNU awk)"
+            ;;
     esac
 }
 
