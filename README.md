@@ -3,8 +3,9 @@
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
 
-The main focus are the features found in
-Bash and less in pure POSIX.
+The main focus is on the features found in Bash
+rather than pure POSIX. The tests reflect results
+under Linux.
 
 From a performance point of view, for serious shell
 scripting, Bash is the sensible choice for
@@ -233,13 +234,13 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
     readarray -t array < file
 
-    for i in "${array[@]}"
+    for line in "${array[@]}"
     do
         ...
     done
 
     # Slower
-    while read -r ...
+    while read -r line
     do
         ...
     done < file
