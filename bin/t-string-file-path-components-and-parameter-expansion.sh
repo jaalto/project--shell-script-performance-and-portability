@@ -125,7 +125,7 @@ t3dExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}')
+        item=$($AWK -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}')
     done
 }
 
@@ -146,7 +146,7 @@ t t2bDir
 t t3aExt
 t t3bExt IsFeatureHereString
 t t3cExt
-t t3dExt
+t t3dExt IsCommandGnuAwk
 t t3eExt
 
 # End of file
