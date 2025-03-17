@@ -61,6 +61,14 @@ Die ()
     exit 1
 }
 
+RequireBash ()
+{
+    if [ ! "$BASH_VERSINFO" ]; then
+        echo "$1: NOTE: Skip, Bash shell tests only"
+        exit 1
+    fi
+}
+
 Verbose ()
 {
     [ "$verbose" ] || return 0
