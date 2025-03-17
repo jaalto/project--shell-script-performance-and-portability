@@ -6,36 +6,57 @@
 #
 #     t1aBase real 0.007  parameter expansion
 #     t1bBase real 0.298  basename
+#
 #     t2aDir  real 0.007  parameter expansion
 #     t2bDir  real 0.282  dirname
+#
 #     t3aExt  real 0.004  parameter expansion
-#     t3bExt  real 0.393  cut
-#     t3cExt  real 0.430  awk
-#     t3dExt  real 0.460  sed
+#     t3bExt  real 0.338  cut with Bash HERE STRING
+#     t3bExt  real 0.336  cut
+#     t3cExt  real 0.411  awk
+#     t3dExt  real 0.425  sed
 #
 # Code:
 #
 #     t1aBase  ${str##*/}
 #     t1bBase  basename "$str"
+#
 #     t2aDir   ${str%/*}
 #     t2bDir   dirname "$str"
+#
 #     t3aExt   ${str#*.}
-#     t3bExt   echo "$str" | cut --delimiter="." --fields=2,3
-#     t3cExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
-#     t3dExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
+#     t3bExt   cut --delimiter="." --fields=2,3 <<< "$str"
+#     t3cExt   echo "$str" | cut --delimiter="." --fields=2,3
+#     t3dExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
+#     t3eExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
 #
 # Notes:
 #
-# It is obvious that doing everything in memory is very
+# It is obvious that doing everything in memory
+# using POSIX parameter expansion is very
 # fast. Seeing the measurements, and just how expensive it is,
 # reminds us to utilize the possibilities of
 # [parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
 # more effectively in shell scripts.
 #
-# In the tests, we assume that directory names
-# do not contain the dot (`.`) character.
+# It's not surprising that `echo "$str" | cut`
+# perform practically the same as Bash HERE
+# STRINGS in `sut <<< "$str"` use pipes under
+# the hood in lastest Bash versions. See
+# version 5.1 and section "c" in
+# https://github.com/bminor/bash/blob/master/CHANGES
 #
-# The tests do not aim to present generic
+# **Notes**
+#
+# Please note that you have to run the test
+# set multiple times to get an idea of relative
+# positions. The milliseconds vary a lot from
+# run to run. The overall picture is that heavier
+# tools `awk` is latert and `sed' remains last.
+#
+# In the tests, we assume that directory names
+# do not contain the dot (`.`) characters.
+# Therefore the tests do not aim to present generic
 # solutions to expand all paths like:
 #
 #     /path/project.git/README.txt
@@ -88,15 +109,15 @@ t3bExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(echo "$str" | cut --delimiter="." --fields=2,3)
+        item=$(cut --delimiter="." --fields=2,3 <<< "$str")
     done
 }
 
-t3cExt2 ()
+t3cExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(cut --delimiter="." --fields=2,3 <<< "$str")
+        item=$(echo "$str" | cut --delimiter="." --fields=2,3)
     done
 }
 
@@ -118,11 +139,14 @@ t3eExt ()
 
 t t1aBase
 t t1bBase
+
 t t2aDir
 t t2bDir
+
 t t3aExt
-t t3bExt
+t t3bExt IsFeatureHereString
 t t3cExt
 t t3dExt
+t t3eExt
 
 # End of file

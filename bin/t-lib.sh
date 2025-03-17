@@ -67,19 +67,61 @@ Verbose ()
     echo "$*"
 }
 
-IsCygwin ()
+IsOsCygwin ()
 {
     [ -d /cygdrive/c ]
 }
 
+IsShellKsh ()
+{
+    [ "$KSH_VERSION" ]
+}
+
+IsShellPosh ()
+{
+    [ "$POSH_VERSINFO" ]   # Pdkd derivate
+}
+
+IsShellBash ()
+{
+    [ "$BASH_VERSINFO" ]
+}
+
+IsShellZsh ()
+{
+    [ "$ZSH_VERSION" ]
+}
+
+IsFeatureHereString ()
+{
+    # Check HERE STRING support like this:
+    # cmd <<< "str
+    # Ref: https://mywiki.wooledge.org/BashFAQ/061
+
+    # Any version of Bash or Zsh
+    IsShellBash || IsShellZsh
+}
+
+IsFeatureArray ()
+{
+    IsShellBash || IsShellZsh || IsShellKshModern
+}
+
+IsCommandParallel ()
+{
+    command -v parallel > /dev/null
+}
+
 Runner ()
 {
-    local run="$RUNNER.$$"
+    runit="$RUNNER.$$"
 
-    echo "$*" > "$run"
+    echo "$*" > "$runit"
 
-    sh ./"$run"
-    rm --force "$run"
+    sh ./"$runit"
+
+    rm --force "$runit"
+    unset runit
 }
 
 RandomWordsGibberish ()
@@ -153,14 +195,12 @@ RandomNumbersPython ()
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
-t () # Run a test case
+RunTestCase () # Run a test case
 {
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
-    #
-    # In Ksh, ignore 'local' keyword
 
-    local format hasformat 2> /dev/null
+    format hasformat 2> /dev/null
     format="real %3R  user %3U  sys %3S" # precision (3): N.NNN
 
     if [ "$ZSH_VERSION" ]; then
@@ -168,14 +208,14 @@ t () # Run a test case
         # hasformat="TIMEFMT"
         # format="real %*E  user %*U  sys %*S"
 
-        # ... maybe some later release
-        Die "ERROR: in function t(), unfortunately zsh cannot time functions"
+        # ... maybe later release can
+        Die "ERROR: t(): Abort, zsh cannot time(1) functions"
     elif [ "$BASH_VERSION" ]; then
         # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
         hasformat="TIMEFORMAT"
     elif [ "$KSH_VERSION" ]; then
         case "$KSH_VERSION" in
-            *MIRBSD*) # No format choise in mksh(1)
+            *MIRBSD*) # No format choice in mksh(1)
                 ;;
             *)  hasformat="TIMEFORMAT"
                 ;;
@@ -188,9 +228,11 @@ t () # Run a test case
         esac
     fi
 
-    if [ "$hasformat" ]; then
-        local timeformat 2> /dev/null
+    # -------------------------------------------------------
+    # Run
+    # -------------------------------------------------------
 
+    if [ "$hasformat" ]; then
         eval "timeformat=\$$hasformat" # save
         printf "# %-15s" "$1"
 
@@ -201,14 +243,15 @@ t () # Run a test case
         eval "$hasformat='$timeformat'" # restore
         unset timeformat
 
-    elif type time 2> /dev/null 2>&1; then
+    elif command -v time 2> /dev/null 2>&1; then
         # format the output using other means.
 
         printf "# $1  "
 
         # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
         # =============================
-        # sed to delete this part and limit output to 2 spaces.
+        # |
+        # sed: delete this part and limit output to 2 spaces.
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
@@ -219,7 +262,7 @@ t () # Run a test case
 
         echo  # Add newline
     else
-        Die "ERROR: in function t(), no 'time' command"
+        Die "ERROR: t(): Abort, no time(1) command"
     fi
 
     unset hasformat format
@@ -241,6 +284,36 @@ TestData ()
 
     if [ ! -f "$random_file" ]; then
         RandomNumbersAwk "$1" > "$random_file"
+    fi
+}
+
+t ()
+{
+    test=$1
+
+    if [ ! "$test" ]; then
+        Warn "WARN: t() called without a test case"
+        return 1
+    fi
+
+    shift
+
+    # Can be called in following Ways
+    #
+    #   t <test case>
+    #   t <test case> <arg> <rgs> ...
+    #
+    # for <args>, run those as "$@" to determine
+    # if <test case> should be being run.
+
+    if [ "$1" ]; then
+        if "$@"; then
+            RunTestCase $test
+        else
+            printf "%s ... skip, pre-condition fail: %s" $test "$*" >&2
+        fi
+    else
+        RunTestCase $test
     fi
 }
 
