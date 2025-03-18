@@ -80,6 +80,11 @@ IsOsLinux ()
     [ "$(uname)" = "Linux" ]
 }
 
+IsOsDebian ()
+{
+    command -v apt-get > /dev/null
+}
+
 IsShellKsh ()
 {
     [ "$KSH_VERSION" ]
@@ -98,6 +103,11 @@ IsShellBash ()
 IsShellZsh ()
 {
     [ "$ZSH_VERSION" ]
+}
+
+IsFeatureDictionary ()
+{
+    [ -e /usr/share/dict/words ]
 }
 
 IsFeatureHereString ()
@@ -152,25 +162,39 @@ IsCommandGnuAwk ()
     IsCommandGnuVersion awk
 }
 
+IsCommandParallel ()
+{
+    command -v parallel
+}
+
+RequireParallel ()
+{
+    IsCommandParallel && return 0
+    Die "$1: ERROR: no requirement: parallel(1) not in PATH"
+}
+
+RequireDictionary ()
+{
+    IsFeatureDictionary && return 0
+    Die "$1: ERROR: no requirement: word dictionary (wamerican)"
+}
+
 RequireBash ()
 {
-    if [ ! "$BASH_VERSINFO" ]; then
-        Die "$1: NOTE: Skip, Bash shell tests only"
-    fi
+    IsShellBash && return 0
+    Die "$1: ERROR: no requirement: Bash"
 }
 
 RequireGnuStat ()
 {
-    if ! IsCommandGnuStat; then
-        Die "$1: NOTE: Skip, no GNU stat(1) command in PATH or set envvar STAT"
-    fi
+    IsCommandGnuStat && return 0
+    Die "$1: ERROR: no requirement: GNU stat(1), or set envvar STAT"
 }
 
 RequireGnuAwk ()
 {
-    if ! IsCommandGnuAwk; then
-        Die "$1: NOTE: Skip, no GNU awk(1) command in PATH or set envvar AWK"
-    fi
+    IsCommandGnuAwk && return 0
+    Die "$1: ERROR: no requirement: GNU awk(1), or set envvar AWK"
 }
 
 Runner ()
@@ -199,40 +223,38 @@ RandomWordsGibberish ()
 
 RandomWordsDictionary ()
 {
-    if [ ! -e /usr/share/dict/words ]; then
-        Die "ERROR: missing word dict. Debian: apt-get install wamerican"
-    else
-        shuf --head-count=200000 /usr/share/dict/words |
-        $AWK '
-            BEGIN {
-                total_size = 0;
-            }
+    RequireDictionary "t-lib.sh"
 
+    shuf --head-count=200000 /usr/share/dict/words |
+    $AWK '
+        BEGIN {
+            total_size = 0;
+        }
+
+        {
+            if (length(line) + length($0) + 1 <= 80)
             {
-                if (length(line) + length($0) + 1 <= 80)
-                {
-                    if (length(line) > 0)
-                        line = line " " $0;
-                    else
-                        line = $0;
-                }
-                else
-                {
-                    print line;
-                    total_size += length(line) + 1;
-                    line = $0;
-                }
-            }
-
-            END {
                 if (length(line) > 0)
-                {
-                    print line;
-                    total_size += length(line) + 1;
-                }
-            }' |
-        head --bytes=${1:-100k}
-    fi
+                    line = line " " $0;
+                else
+                    line = $0;
+            }
+            else
+            {
+                print line;
+                total_size += length(line) + 1;
+                line = $0;
+            }
+        }
+
+        END {
+            if (length(line) > 0)
+            {
+                print line;
+                total_size += length(line) + 1;
+            }
+        }' |
+    head --bytes=${1:-100k}
 }
 
 RandomNumbersAwk ()
