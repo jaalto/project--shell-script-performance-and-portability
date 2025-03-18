@@ -22,6 +22,10 @@
 
 . ./t-lib.sh # ; f=$random_file
 
+FILE="t-command-grep-parallel.sh"
+RequireDictionary "$FILE"
+RequireParallel "$FILE"
+
 LANG=C
 
 # can be set externally
@@ -77,21 +81,10 @@ Setup
 echo "test file: $(ls -l $f)"
 echo "test file: lines $(wc -l $f)"
 
-if ! IsCommandParallel; then
-    Warn "INFO: Skip, no parallel(1) in PATH."
-else
-
-    t t0
-
-    if IsOsCygwin; then
-        echo "# t1 ... skip on Cygwin (no 64k blocksize in parallel)"
-    else
-        t t1a
-        t t1b
-    fi
-
-    t t2
-    t t3
-fi
+t t0
+t t1a IsOsCygwin
+t t1b IsOsCygwin
+t t2
+t t3
 
 # End of file
