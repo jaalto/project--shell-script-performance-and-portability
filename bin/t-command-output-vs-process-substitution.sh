@@ -19,9 +19,11 @@
 # Process substitution is more general because the
 # `while` loop runs under the same environment, and
 # any variables defined or set will persist
-# afterward.
+# afte the loop.
 
 . ./t-lib.sh # ; f=$random_file
+
+RequireDictionary "t-command-output-vs-process-substitution.sh"
 
 size=${size:-10k}
 

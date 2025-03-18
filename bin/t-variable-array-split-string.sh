@@ -1,17 +1,17 @@
 #! /bin/bash
 #
 # Q: Split string into an array by IFS?
-# A: It is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
+# A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING
 # priority: 8
 #
-#     t1 real 0m0.005s (array)
-#     t2 real 0m0.011s IFS= eval ...
-#     t3 real 0m0.030s read -ra
+#     t2 real  0.011 IFS= eval ...
+#     t1 real  0.021 (array)
+#     t3 real  0.098 read -ra
 #
 # Code:
 #
-#     t1 saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
-#     t2 IFS=":" eval 'array=($PATH)'
+#     t1 IFS=":" eval 'array=($PATH)'
+#     t2 saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
 #     t3 IFS=":" read -ra array <<< "$PATH"
 #
 # Notes:
@@ -42,28 +42,19 @@
 
 . ./t-lib.sh ; f=$random_file
 
-RequireBash "t-variable-array-split-string.sh"
+word_count=${word_count:-300}
 
 Setup ()
 {
-    # Prepare string  string with 100 "words"
-    printf -v string "%s," {1..100}
-}
+    string=""
 
-t1 ()
-{
-    for i in $(seq $loop_max)
+    for i in $(seq $word_count)
     do
-        # Localize IFS....
-        saved=$IFS
-        array=($string)
-        IFS=$saved
-
-        item=${array[0]}
+        string=" $string $i"
     done
 }
 
-t2 ()
+t1 ()
 {
     # Enable local '-f' feature
     #
@@ -79,8 +70,21 @@ t2 ()
 
     for i in $(seq $loop_max)
     do
-        # local IFS for the statement only
+        # Bash, local IFS for the statement only
         IFS=',' eval 'array=($string)'
+        item=${array[0]}
+    done
+}
+
+t2 ()
+{
+    for i in $(seq $loop_max)
+    do
+        # Localize IFS Bash, Ksh
+        saved=$IFS
+        array=($string)
+        IFS=$saved
+
         item=${array[0]}
     done
 }
@@ -96,7 +100,7 @@ t3 ()
 }
 
 Setup
-t t1
+t t1 IsShellBash
 t t2
 t t3
 

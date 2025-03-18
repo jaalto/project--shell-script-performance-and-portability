@@ -11,8 +11,24 @@
 #
 #     t2icasef   real 0m0.386s LANG=C --ignore-case --fixed-strings
 #     t2icasee   real 0m0.397s LANG=C --ignore-case --extended-regexp
+#
+# Notes:
+#
+# The tests suggest that with typical file sizes
+# (100 kB), the choice between the "C" locale and
+# UTF-8 is not significant. Similarly, the type of
+# regular expression or case sensitivity does not
+# seem to be a major factor.
+#
+# However, on some operating systems and with large
+# files, there have been reports of significant
+# speed improvements by using the "C" locale,
+# enabling `--fixed-strings`, and avoiding
+# `--ignore-case`.
 
 . ./t-lib.sh # ; f=$random_file
+
+RequireDictionary "t-command-grep.sh"
 
 # can be set externally
 re=${re:-'ad'}

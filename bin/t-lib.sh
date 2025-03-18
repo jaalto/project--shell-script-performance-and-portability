@@ -42,9 +42,12 @@
 #           $loop_max
 
 # Exported variables
+PROGRAM=$0
+
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
-PROGRAM=$0
+STAT=${STAT:-"stat"} # must be GNU version
+AWK=${AWK:-"AWK"}    # preferrably GNU version
 
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
@@ -61,14 +64,6 @@ Die ()
     exit 1
 }
 
-RequireBash ()
-{
-    if [ ! "$BASH_VERSINFO" ]; then
-        echo "$1: NOTE: Skip, Bash shell tests only"
-        exit 1
-    fi
-}
-
 Verbose ()
 {
     [ "$verbose" ] || return 0
@@ -78,6 +73,21 @@ Verbose ()
 IsOsCygwin ()
 {
     [ -d /cygdrive/c ]
+}
+
+IsOsLinux ()
+{
+    [ "$(uname)" = "Linux" ]
+}
+
+IsOsDebian ()
+{
+    command -v apt-get > /dev/null
+}
+
+IsShellBash ()
+{
+    [ "$BASH_VERSINFO" ]
 }
 
 IsShellKsh ()
@@ -90,14 +100,14 @@ IsShellPosh ()
     [ "$POSH_VERSINFO" ]   # Pdkd derivate
 }
 
-IsShellBash ()
-{
-    [ "$BASH_VERSINFO" ]
-}
-
 IsShellZsh ()
 {
     [ "$ZSH_VERSION" ]
+}
+
+IsFeatureDictionary ()
+{
+    [ -e /usr/share/dict/words ]
 }
 
 IsFeatureHereString ()
@@ -119,9 +129,72 @@ IsCommandParallel ()
 {
     command -v parallel > /dev/null
 }
+
 IsCommandStat ()
 {
     command -v stat > /dev/null
+}
+
+IsCommandPushd ()
+{
+    command -v pushd > /dev/null
+}
+
+IsCommandGnuVersion ()
+{
+    case "$("$1" --version 2> /dev/null)" in
+        *GNU*)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+IsCommandGnuStat ()
+{
+    IsCommandGnuVersion stat
+}
+
+IsCommandGnuAwk ()
+{
+    IsCommandGnuVersion awk
+}
+
+IsCommandParallel ()
+{
+    command -v parallel
+}
+
+RequireParallel ()
+{
+    IsCommandParallel && return 0
+    Die "$1: ERROR: no requirement: parallel(1) not in PATH"
+}
+
+RequireDictionary ()
+{
+    IsFeatureDictionary && return 0
+    Die "$1: ERROR: no requirement: word dictionary (wamerican)"
+}
+
+RequireBash ()
+{
+    IsShellBash && return 0
+    Die "$1: ERROR: no requirement: Bash"
+}
+
+RequireGnuStat ()
+{
+    IsCommandGnuStat && return 0
+    Die "$1: ERROR: no requirement: GNU stat(1), or set envvar STAT"
+}
+
+RequireGnuAwk ()
+{
+    IsCommandGnuAwk && return 0
+    Die "$1: ERROR: no requirement: GNU awk(1), or set envvar AWK"
 }
 
 Runner ()
@@ -150,45 +223,46 @@ RandomWordsGibberish ()
 
 RandomWordsDictionary ()
 {
-    if [ ! -e /usr/share/dict/words ]; then
-        Die "ERROR: missing word dict. Debian: apt-get install wamerican"
-    else
-        shuf --head-count=200000 /usr/share/dict/words |
-        awk '
-            BEGIN {
-                total_size = 0;
-            }
+    RequireDictionary "t-lib.sh"
 
+    shuf --head-count=200000 /usr/share/dict/words |
+    $AWK '
+        BEGIN {
+            total_size = 0;
+        }
+
+        {
+            if (length(line) + length($0) + 1 <= 80)
             {
-                if (length(line) + length($0) + 1 <= 80)
-                {
-                    if (length(line) > 0)
-                        line = line " " $0;
-                    else
-                        line = $0;
-                }
-                else
-                {
-                    print line;
-                    total_size += length(line) + 1;
-                    line = $0;
-                }
-            }
-
-            END {
                 if (length(line) > 0)
-                {
-                    print line;
-                    total_size += length(line) + 1;
-                }
-            }' |
-        head --bytes=${1:-100k}
-    fi
+                    line = line " " $0;
+                else
+                    line = $0;
+            }
+            else
+            {
+                print line;
+                total_size += length(line) + 1;
+                line = $0;
+            }
+        }
+
+        END {
+            if (length(line) > 0)
+            {
+                print line;
+                total_size += length(line) + 1;
+            }
+        }' |
+    head --bytes=${1:-100k}
 }
 
 RandomNumbersAwk ()
 {
-    awk -v n="$1" '
+    RequireGnuAwk "t-lib.sh"
+
+    $AWK -v n="$1" \
+    '
     BEGIN {
         srand();
 
@@ -333,7 +407,7 @@ t ()
         if "$@"; then
             RunTestCase $test
         else
-            printf "%s ... skip, pre-condition fail: %s" $test "$*" >&2
+            printf "# %s ... skip, no pre-condition: %s\n" $test "$*" >&2
         fi
     else
         RunTestCase $test

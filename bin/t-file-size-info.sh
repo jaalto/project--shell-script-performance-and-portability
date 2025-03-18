@@ -21,7 +21,7 @@ t1 ()
 {
     for i in $(seq $loop_max)
     do
-        size=$(stat -c %s "$f")
+        size=$($STAT -c %s "$f")
     done
 }
 
@@ -41,7 +41,7 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        size=$(ls -l "$f" | awk '{print $5; exit}')
+        size=$(ls -l "$f" | $AWK '{print $5; exit}')
     done
 }
 

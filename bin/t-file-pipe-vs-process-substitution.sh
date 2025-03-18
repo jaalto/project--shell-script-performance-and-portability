@@ -21,7 +21,7 @@ t1 ()
         # Think "cat" as any program that produces output
         # that needs to be send to pipes. We just
         # cook up something using 2 pipes.
-        cat $f | cut -f1 | awk '/./ {}'
+        cat $f | cut -f1 | $AWK '/./ {}'
     done
 }
 
@@ -29,7 +29,7 @@ t2 ()
 {
     for i in $(seq $loop_max)
     do
-        < <( < <(cat $f) cut -f1) awk '/./ {}'
+        < <( < <(cat $f) cut -f1) $AWK '/./ {}'
     done
 }
 

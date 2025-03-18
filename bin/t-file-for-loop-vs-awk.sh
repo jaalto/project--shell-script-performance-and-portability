@@ -28,7 +28,7 @@ AtExit ()
 
 Awk ()
 {
-    awk '
+    $AWK '
         END {
             print FILENAME " " $0
         }
@@ -38,7 +38,7 @@ Awk ()
 t1 ()
 {
     # GNU version has 'ENDFILE'
-    awk '
+    $AWK '
         ENDFILE {
             print FILENAME " " FNR " " $0
         }
@@ -56,7 +56,7 @@ t2 ()
 trap AtExit EXIT HUP INT QUIT TERM
 
 Setup
-t t1
+t t1 IsCommandGnuAwk
 t t2
 
 # End of file

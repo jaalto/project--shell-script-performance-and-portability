@@ -1,7 +1,7 @@
 #! /bin/bash
 #
-# Q: Howabout using `parallel` to speed up `grep`?
-# A: `parallel` won't help in typical cases. Use only with huge files.
+# Q: Is `grep' faster with `parallel`?
+# A: In typical files, grep is much faster. Use `parallel`only with huge files.
 # priority: 1
 #
 #     t0  real 0m0.005s grep baseline
@@ -21,6 +21,10 @@
 # relatively small (test file: ~600 lines).
 
 . ./t-lib.sh # ; f=$random_file
+
+FILE="t-command-grep-parallel.sh"
+RequireDictionary "$FILE"
+RequireParallel "$FILE"
 
 LANG=C
 
@@ -77,21 +81,10 @@ Setup
 echo "test file: $(ls -l $f)"
 echo "test file: lines $(wc -l $f)"
 
-if ! IsCommandParallel; then
-    Warn "INFO: Skip, no parallel(1) in PATH."
-else
-
-    t t0
-
-    if IsOsCygwin; then
-        echo "# t1 ... skip on Cygwin (no 64k blocksize in parallel)"
-    else
-        t t1a
-        t t1b
-    fi
-
-    t t2
-    t t3
-fi
+t t0
+t t1a IsOsCygwin
+t t1b IsOsCygwin
+t t2
+t t3
 
 # End of file

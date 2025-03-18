@@ -6,7 +6,7 @@
 #
 #     t1 real 0m0.026s   Bash compgen GLOB
 #     t2 real 0m0.028s   Bash array: (GLOB)
-#     t2 real 0m0.039s   stat -t GLOB
+#     t3 real 0m0.039s   stat -t GLOB
 #
 # Code:
 #
@@ -18,9 +18,11 @@
 #
 # Command `stat` does more work by opening each found file.
 
+FILE="t-file-glob-bash-compgen-vs-stat.sh"
+
 . ./t-lib.sh ; f=$random_file
 
-file_count=${$file_count:-100}
+file_count=${file_count:-100}
 
 TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
 
@@ -35,7 +37,7 @@ Setup ()
 {
     for i in $(seq $file_count)
     do
-        touch $TMPBASE.$i
+        touch "$TMPBASE.$i"
     done
 }
 
@@ -64,7 +66,7 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        if stat -t "$TMPBASE"* > /dev/null; then
+        if $STAT -t "$TMPBASE"* > /dev/null; then
             dummy="glob match"
         fi
     done
@@ -75,6 +77,7 @@ Setup
 
 t t1 IsShellBash
 t t2 IsFeatureArray
-t t3 IsCommandStat
+
+RequireGnuStat $FILE && t t3
 
 # End of file
