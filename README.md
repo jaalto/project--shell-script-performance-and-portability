@@ -72,7 +72,9 @@ Table of Contents
   see homepage.
 
 - Depends:
-  Bash, GNU coreutils.
+  Bash, GNU coreutils,
+  wamerican dictionary.
+  (Debian package wamerican).
 
 - Optional depends:
   GNU make for Makefile.
