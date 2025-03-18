@@ -28,6 +28,8 @@
 
 . ./t-lib.sh # ; f=$random_file
 
+RequireDictionary "t-command-grep.sh"
+
 # can be set externally
 re=${re:-'ad'}
 size=${size:-10k}
