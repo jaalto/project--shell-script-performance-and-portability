@@ -85,6 +85,11 @@ IsOsDebian ()
     command -v apt-get > /dev/null
 }
 
+IsShellBash ()
+{
+    [ "$BASH_VERSINFO" ]
+}
+
 IsShellKsh ()
 {
     [ "$KSH_VERSION" ]
@@ -93,11 +98,6 @@ IsShellKsh ()
 IsShellPosh ()
 {
     [ "$POSH_VERSINFO" ]   # Pdkd derivate
-}
-
-IsShellBash ()
-{
-    [ "$BASH_VERSINFO" ]
 }
 
 IsShellZsh ()
@@ -407,7 +407,7 @@ t ()
         if "$@"; then
             RunTestCase $test
         else
-            printf "%s ... skip, pre-condition fail: %s" $test "$*" >&2
+            printf "# %s ... skip, no pre-condition: %s\n" $test "$*" >&2
         fi
     else
         RunTestCase $test
