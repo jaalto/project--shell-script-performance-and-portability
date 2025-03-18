@@ -23,6 +23,8 @@
 
 . ./t-lib.sh # ; f=$random_file
 
+RequireDictionary "t-command-output-vs-process-substitution.sh"
+
 size=${size:-10k}
 
 dict=t.random.dictionary.$size
