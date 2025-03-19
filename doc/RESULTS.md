@@ -2,7 +2,7 @@
 # t-command-echo-vs-printf.sh
 
 **Q: The classic: `echo` vs `printf`**<br/>
-*A: There is no real difference*<br/>
+*A: No notable difference*<br/>
 _priority: 0_
 
     t1 real 0m0.272s echo
@@ -35,7 +35,7 @@ relatively small (test file: ~600 lines).
 # t-command-grep.sh
 
 **Q: In grep, is option --fixed-strings faster?**<br/>
-*A: No real difference between --extended-regexp, --perl-regexp, --ignore-case*<br/>
+*A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case*<br/>
 _priority: 2_
 
     t1pure     real 0m0.382s LANG=C --fixed-strings
@@ -64,16 +64,18 @@ enabling `--fixed-strings`, and avoiding
 # t-command-output-vs-process-substitution.sh
 
 **Q: `cmd | while` vs `while ... done < <(process substitution)`**<br/>
-*A: No real difference. Process substitution preserves variables in loop.*<br/>
-_priority: 0_
+*A: No notable difference. Process substitution preserves variables in loop.*<br/>
+_priority: 1_
 
-    t1 real 0m0.750s  cmd | while
-    t2 real 0m0.760s  process substitution
+    t1 real 0m0.670s  POSIX. cmd > file ; while ... < file
+    t2 real 0m0.760s  Bash process substitution
+    t3 real 0m0.780s  POSIX. cmd | while
 
 ## Code
 
-    t1 cmd | while read -r ... done
+    t1 cmd > file ;  while read -r ... done < file
     t2 while read -r ... done < <(cmd)
+    t3 cmd | while read -r ... done
 
 ## Notes
 
@@ -124,7 +126,7 @@ _priority: 3_
 # t-dir-entries.sh
 
 **Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`**<br/>
-*A: `ls` is good enough. No real differences.*<br/>
+*A: No notable differences.`ls` is good enough.*<br/>
 _priority: 1_
 
 For 20 directories:
@@ -265,7 +267,7 @@ directory contains both.
 # t-file-pipe-vs-process-substitution.sh
 
 **Q: Would pipe be slower than using process substitution?**<br/>
-*A: No real difference. Pipes are efficient.*<br/>
+*A: No notable difference. Pipes are efficient.*<br/>
 _priority: 0_
 
     t1 real 0m0.790s  pipes
@@ -486,7 +488,7 @@ portable POSIX version works in all shells:
 # t-statement-if-test-posix-vs-bash.sh
 
 **Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc**<br/>
-*A: In practise, no real differences*<br/>
+*A: No notable difference.*<br/>
 _priority: 0_
 
     t1val     real 0m0.002s [ "$var" = "1" ] # POSIX

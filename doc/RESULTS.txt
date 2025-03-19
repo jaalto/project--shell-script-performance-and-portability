@@ -2,7 +2,7 @@ FILE: t-command-echo-vs-printf.sh
 #! /bin/bash
 #
 # Q: The classic: `echo` vs `printf`
-# A: There is no real difference
+# A: No notable difference
 # priority: 0
 #
 #     t1 real 0m0.272s echo
@@ -35,7 +35,7 @@ FILE: t-command-grep.sh
 #! /bin/bash
 #
 # Q: In grep, is option --fixed-strings faster?
-# A: No real difference between --extended-regexp, --perl-regexp, --ignore-case
+# A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
 #     t1pure     real 0m0.382s LANG=C --fixed-strings
@@ -64,16 +64,18 @@ FILE: t-command-output-vs-process-substitution.sh
 #! /bin/bash
 #
 # Q: `cmd | while` vs `while ... done < <(process substitution)`
-# A: No real difference. Process substitution preserves variables in loop.
-# priority: 0
+# A: No notable difference. Process substitution preserves variables in loop.
+# priority: 1
 #
-#     t1 real 0m0.750s  cmd | while
-#     t2 real 0m0.760s  process substitution
+#     t1 real 0m0.670s  POSIX. cmd > file ; while ... < file
+#     t2 real 0m0.760s  Bash process substitution
+#     t3 real 0m0.780s  POSIX. cmd | while
 #
 # Code:
 #
-#     t1 cmd | while read -r ... done
+#     t1 cmd > file ;  while read -r ... done < file
 #     t2 while read -r ... done < <(cmd)
+#     t3 cmd | while read -r ... done
 #
 # Notes:
 #
@@ -124,7 +126,7 @@ FILE: t-dir-entries.sh
 #! /bin/bash
 #
 # Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
-# A: `ls` is good enough. No real differences.
+# A: No notable differences.`ls` is good enough.
 # priority: 1
 #
 # For 20 directories:
@@ -265,7 +267,7 @@ FILE: t-file-pipe-vs-process-substitution.sh
 #! /bin/bash
 #
 # Q: Would pipe be slower than using process substitution?
-# A: No real difference. Pipes are efficient.
+# A: No notable difference. Pipes are efficient.
 # priority: 0
 #
 #     t1 real 0m0.790s  pipes
@@ -486,7 +488,7 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 #! /bin/bash
 #
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
-# A: In practise, no real differences
+# A: No notable difference.
 # priority: 0
 #
 #     t1val     real 0m0.002s [ "$var" = "1" ] # POSIX

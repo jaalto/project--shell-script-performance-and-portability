@@ -1,6 +1,6 @@
 FILE: t-command-echo-vs-printf.sh
 # Q: The classic: `echo` vs `printf`
-# A: There is no real difference
+# A: No notable difference
 
 FILE: t-command-grep-parallel.sh
 # Q: Is `grep' faster with `parallel`?
@@ -8,11 +8,11 @@ FILE: t-command-grep-parallel.sh
 
 FILE: t-command-grep.sh
 # Q: In grep, is option --fixed-strings faster?
-# A: No real difference between --extended-regexp, --perl-regexp, --ignore-case
+# A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
 
 FILE: t-command-output-vs-process-substitution.sh
 # Q: `cmd | while` vs `while ... done < <(process substitution)`
-# A: No real difference. Process substitution preserves variables in loop.
+# A: No notable difference. Process substitution preserves variables in loop.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
 # Q: How much is POSIX `$PWD` and `$OLDPWD` faster than `pwd`?
@@ -24,7 +24,7 @@ FILE: t-dir-empty.sh
 
 FILE: t-dir-entries.sh
 # Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
-# A: `ls` is good enough. No real differences.
+# A: No notable differences.`ls` is good enough.
 
 FILE: t-file-copy-check-exist.sh
 # Q: Should you test existense before copying?
@@ -48,7 +48,7 @@ FILE: t-file-newest-in-dir.sh
 
 FILE: t-file-pipe-vs-process-substitution.sh
 # Q: Would pipe be slower than using process substitution?
-# A: No real difference. Pipes are efficient.
+# A: No notable difference. Pipes are efficient.
 
 FILE: t-file-read-cat-vs-bash.sh
 # Q: Howabout `$(< FILE)` vs `$(cat FILE)`
@@ -88,7 +88,7 @@ FILE: t-statement-arithmetic-increment.sh
 
 FILE: t-statement-if-test-posix-vs-bash.sh
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
-# A: In practise, no real differences
+# A: No notable difference.
 
 FILE: t-string-file-path-components-and-parameter-expansion.sh
 # Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
