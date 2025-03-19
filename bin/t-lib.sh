@@ -46,8 +46,12 @@ PROGRAM=$0
 
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
+
 STAT=${STAT:-"stat"} # must be GNU version
 AWK=${AWK:-"AWK"}    # preferrably GNU version
+
+DICTIONARY_DEFAULT="/usr/share/dict/words"
+DICTIONARY=${DICTIONARY:-$DICTIONARY_DEFAULT}
 
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
@@ -107,7 +111,7 @@ IsShellZsh ()
 
 IsFeatureDictionary ()
 {
-    [ -e /usr/share/dict/words ]
+    [ -e "$DICTIONARY" ]
 }
 
 IsFeatureHereString ()
@@ -176,7 +180,7 @@ RequireParallel ()
 RequireDictionary ()
 {
     IsFeatureDictionary && return 0
-    Die "$1: ERROR: no requirement: word dictionary (wamerican)"
+    Die "$1: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY"
 }
 
 RequireBash ()
@@ -225,7 +229,7 @@ RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
-    shuf --head-count=200000 /usr/share/dict/words |
+    shuf --head-count=200000 "$DICTIONARY" |
     $AWK '
         BEGIN {
             total_size = 0;
