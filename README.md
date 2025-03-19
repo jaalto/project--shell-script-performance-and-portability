@@ -127,10 +127,9 @@ Table of Contents
 
 # GENERAL ADVICE
 
-Regardless of the shell you might use for
-scripting (sh, ksh, bash), consider
-taking these factors into serious
-consideration.
+Regardless of the shell you use for scripting
+(sh, ksh, bash), consider these factors
+carefully.
 
 - If you run scripts on many small files, set
   up a RAM disk and copy the files to it. This
