@@ -32,7 +32,7 @@ see also POSIX in
 > a symbolic link to `dash` (on Linux), `ksh`
 > (on others), or it may even point to `bash`.
 > See section
-> [ABOUT POSIX AND PORTABILITY](#about-posix-and-portability).
+> [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability).
 
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
@@ -84,7 +84,7 @@ Table of Contents
 - [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
 - [MINOR PERFORMANCE GAINS](#minor-performance-gains)
 - [NO PERFORMANCE GAINS](#no-performance-gains)
-- [ABOUT POSIX AND PORTABILITY](#about-posix-and-portability)
+- [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability)
 - [RANDOM NOTES](#random-notes)
 - [FURTHER READING](#further-reading)
 - [COPYRIGHT](#copyright)
@@ -128,8 +128,10 @@ Table of Contents
 # GENERAL ADVICE
 
 Regardless of the shell you use for scripting
-(sh, ksh, bash), consider these factors
-carefully.
+([sh](https://tracker.debian.org/pkg/dash),
+[ksh](https://tracker.debian.org/pkg/ksh93u+m),
+[bash](https://www.gnu.org/software/bash)),
+consider these factors.
 
 - If you run scripts on many small files, set
   up a RAM disk and copy the files to it. This
@@ -548,7 +550,7 @@ None of these offer any advantages to speed up shell scripts.
     parallel --pipepart grep "$re" < "$megafile"
 ```
 
-# ABOUT POSIX AND PORTABILITY
+# ABOUT POSIX, SHELLS AND PORTABILITY
 
 TODO: upcoming.
 
