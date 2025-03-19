@@ -410,7 +410,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # In Linux, to see what Bash uses
     # for HERE STRING: pipe or
     # temporary file
-    bash -c 'ls -lL /proc/self/fd/0 <<< hello'
+    bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
 ```
 
 # MINOR PERFORMANCE GAINS
