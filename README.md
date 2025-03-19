@@ -639,7 +639,7 @@ testing:
   https://www.shellcheck.net. In Debian,
   install package "shellcheck" and see
   https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
-- Use `checkbasism` command to help to
+- Use `checkbashisms` command to help to
   improve and write portable POSIX scripts.
   In Debian, the command is available
   in package "devscripts". See
