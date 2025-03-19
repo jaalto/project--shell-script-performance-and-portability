@@ -519,7 +519,7 @@ None of these offer any advantages to speed up shell scripts.
   null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   utilizes the command's side effect
-  "do nothing, but evaluate elements"
+  to "do nothing, but evaluate elements"
   and therefore may not be the most
   readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
