@@ -203,7 +203,7 @@ consider these factors.
   utilize pipelines `<cmd> | ...` as much as
   possible because the Linux Kernel will optimize
   things in memory better. In more powerful
-  systems, many latency/performance issues are
+  systems, many latency and performance issues are
   not as relevant.
 
 - Use Shell
