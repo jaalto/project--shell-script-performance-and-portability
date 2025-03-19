@@ -1,3 +1,7 @@
+<!--
+Github Markdown Guide: https://is.gd/nqSonp
+-->
+
 # SHELL SCRIPT PERFORMANCE TESTS
 
 How can you make shell scripts run faster?
@@ -77,18 +81,18 @@ Table of Contents
 - Source repository:
   see homepage.
 
-- Depends:
+- **Depends**:
   Bash, GNU coreutils,
   wamerican dictionary.
   (Debian package wamerican).
 
-- Optional depends:
+- **Optional depends**:
   GNU make for Makefile.
   For some tests: GNU parallel.
 
-- Other reqyuirements: the `time`
-  cómmand must be work with function.
-  Zsh's built-in `time` or external
+- Other requirements: the `time`
+  cómmand must be work with functions.
+  The Zsh's built-in `time` or external
   time(1) command cannot be used.
 
 # GENERAL ADVICE
