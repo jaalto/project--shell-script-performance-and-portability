@@ -2,7 +2,7 @@
 Github Markdown Guide: https://is.gd/nqSonp
 -->
 
-# SHELL SCRIPT PERFORMANCE TESTS
+# SHELL SCRIPT PERFORMANCE
 
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
