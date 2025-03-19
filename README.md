@@ -416,7 +416,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 # MINOR PERFORMANCE GAINS
 
 According to the results, none of
-these offer real practical benefits. See the
+these offer practical benefits. See the
 [results](./doc/RESULTS.md)
 for details and further commentary.
 
