@@ -61,17 +61,24 @@ t1 ()
     # Safeguard "($string)" from
     # undergoing pathname expansion
     #
-    # Not really relevant here, but
-    # to remind you to use it in production
-    # code
+    # Not really relevant in <test case>
+    # but reminds to use it in
+    # production code
 
     local -
     set -f
 
     for i in $(seq $loop_max)
     do
-        # Bash, local IFS for the statement only
-        IFS=',' eval 'array=($string)'
+        # Bash.
+        #
+        # NOTE: POSIX require 'command' before
+        # special keywords like "eval" in order
+        # to allow assignments in the same line
+        #
+        #  var=value command eval <statement>
+
+        IFS=":" eval 'array=($string)'
         item=${array[0]}
     done
 }
