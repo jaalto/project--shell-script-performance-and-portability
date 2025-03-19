@@ -492,7 +492,9 @@ for details and further commentary.
 
 None of these offer any advantages to speed up shell scripts.
 
-- The Bash-specific `[[ ]]` might offer a
+- The Bash-specific
+  [`[[ ]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  might offer a
   minuscule advantage but only in loops of
   10,000 iterations. Unless the safeguards
   provided by Bash `[[ ]]` are important, the
@@ -509,11 +511,15 @@ None of these offer any advantages to speed up shell scripts.
 ```
 
 - There are no practical differences between
-  these. The POSIX `$(())` statement
+  these. The POSIX
+  [arithmetic expansion](https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion)
+  `$(())`
+  statement
   will do fine. Note that the odd-looking
   null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   utilizes the command's side effect
+  "do nothing, but evaluate elements"
   and therefore may not be the most
   readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
