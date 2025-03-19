@@ -244,8 +244,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 - In Bash, the using `ret=$(fn)` to call functions
   is very slow. On the other hand, in Ksh shells
-  is is fast. Therefore in Bash scrips, it is
-  about 8 times faster to to use
+  that would be fast. Therefore in Bash scrips, it is
+  better, about 8 times faster, to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a values.
   See [code](./bin/t-function-return-value.sh).
@@ -279,14 +279,19 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
 
 - It is about 10 times faster to read a file
-  into memory as a string and use Bash regular
-  expression tests on that string multiple
-  times. This is much more efficient than calling
-  `grep` command many times.
+  into memory as a string and use
+  [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
+  or Bash regular expressions
+  binary operator
+  [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  on string. In-memory handling is much more
+  efficient than calling the `grep` command on a
+  file, especially if multiple matches are
+  needed.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # 100 KiB buffer
+   # 100 KiB buffer. Stored in $REPLY.
    read -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
@@ -301,7 +306,10 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   an array and then loop through the array.
   If you're wondering about
   [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
-  vs `mapfile`, there is no difference.
+  vs
+  [`mapfile`](https://www.gnu.org/software/bash/manual/bash.html#index-mapfile),
+  there is no difference.
+  Built-in `readarray`is a synonym for `mapfile`.
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```
@@ -356,8 +364,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 # MODERATE PERFORMANCE GAINS
 
 - It is about 5 times faster to split a string
-  into an array using Bash list rather than
-  here-string. This is because Bash
+  into an array using list rather than
+  using Bash here-string. This is because
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a
   pipe or temporary file, whereas Bash list
@@ -376,7 +384,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
     string="1:2:3"
 
-    # Bash, Ksh
+    # Bash, Ksh. Fastest.
     IFS=":" eval 'array=($string)'
 
     fn() # Bash
@@ -396,20 +404,19 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         ...
     }
 
-    # Bash one liner but much
-    # slower than 'eval' above
+    # Bash. Much slower than 'eval'.
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
     # for HERE STRING: pipe or
     # temporary file
-    bash -c 'ls -lL /proc/self/fd/0 <<< hello'
+    bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
 ```
 
 # MINOR PERFORMANCE GAINS
 
 According to the results, none of
-these offer real practical benefits. See the
+these offer practical benefits. See the
 [results](./doc/RESULTS.md)
 for details and further commentary.
 
@@ -438,7 +445,7 @@ for details and further commentary.
         ...
     done
 
-    # seq binary, still fast
+    # POSIX, seq binary, still fast
     for i in $(seq $N $M)
     do
         ...
@@ -460,7 +467,9 @@ for details and further commentary.
 
 - One might think that choosing optimized
   `grep` options would make a difference.
-  In practice, performance is nearly identical
+  In practice, for typical file sizes
+  (below few Megabytes),
+  performance is nearly identical
   even with the ignore case option included.
   Nonetheless, there may
   be cases where selecting `LANG=C`, using
@@ -483,7 +492,9 @@ for details and further commentary.
 
 None of these offer any advantages to speed up shell scripts.
 
-- The Bash-specific `[[ ]]` might offer a
+- The Bash-specific
+  [`[[ ]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  might offer a
   minuscule advantage but only in loops of
   10,000 iterations. Unless the safeguards
   provided by Bash `[[ ]]` are important, the
@@ -500,11 +511,15 @@ None of these offer any advantages to speed up shell scripts.
 ```
 
 - There are no practical differences between
-  these. The POSIX `$(())` statement
+  these. The POSIX
+  [arithmetic expansion](https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion)
+  `$(())`
+  statement
   will do fine. Note that the odd-looking
   null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   utilizes the command's side effect
+  to "do nothing, but evaluate elements"
   and therefore may not be the most
   readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
