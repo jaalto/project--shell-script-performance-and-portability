@@ -7,9 +7,28 @@ Github Markdown Guide: https://is.gd/nqSonp
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
 
+The tests reflect results under Linux.
 The main focus is on the features found in Bash
-rather than pure POSIX. The tests reflect results
-under Linux.
+rather than minimalistic `sh`
+[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
+shells;
+see also POSIX in
+[wikipedia](https://en.wikipedia.org/wiki/POSIX).
+
+> Please note that by `sh` here, we refer to
+> modern, mostly POSIX-compatible shells like
+> [dash](https://tracker.debian.org/pkg/dash) and
+> [posh](https://tracker.debian.org/pkg/posh),
+> and not the ancient (some 50+-year-old)
+> Bourne shell, which is best left gathering
+> dust, forgotten, and its scripts read only by
+> historians. All modern operating systems
+> including HP-UX, Solaris, and AIX,
+> have had for 10-20 years now
+> an `sh` that is POSIX-capable. On many
+> systems, `sh` is a symbolic link to `dash`
+> (Linux) or `ksh` (others), or it may even
+> point to `bash'.
 
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
