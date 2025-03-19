@@ -629,15 +629,20 @@ testing:
   [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   is preferrable over archaic backtics as in \`cmd\`.
   https://mywiki.wooledge.org/BashFAQ/082
-  **Note**: for 20 years even all the `sh` shells
-  have supported the readable `$()`command
-  substitution syntax. This includes very
+  **Note**: for 20 years all the modern `sh` shells
+  have supported the readable `$()` command
+  substitution syntax. This includes e.g.
   conservarive HP-UX and Solaris 10 from 2005 whose
   support ended in
   [2021](https://www.liquisearch.com/solaris_operating_system/version_history).
-- Lint scripts for potential mistakes with
+- Use `checkkcheck` (Haskell) to
+  to help to
+  improve and write portable POSIX scripts.
+  It can statically Lint scripts for potential
+  mistakes. There is also a web interface where
+  you can upload the script at
   https://www.shellcheck.net. In Debian,
-  install package "shellcheck" and see
+  see package "shellcheck". See manual page at
   https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
 - Use `checkbashisms` command to help to
   improve and write portable POSIX scripts.
