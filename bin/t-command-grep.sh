@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: In grep, is option --fixed-strings faster?
-# A: No real difference between --extended-regexp, --perl-regexp, --ignore-case
+# A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
 #     t1pure     real 0m0.382s LANG=C --fixed-strings

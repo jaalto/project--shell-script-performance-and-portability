@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: Would pipe be slower than using process substitution?
-# A: No real difference. Pipes are efficient.
+# A: No notable difference. Pipes are efficient.
 # priority: 0
 #
 #     t1 real 0m0.790s  pipes

@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
-# A: In practise, no real differences
+# A: No notable difference.
 # priority: 0
 #
 #     t1val     real 0m0.002s [ "$var" = "1" ] # POSIX

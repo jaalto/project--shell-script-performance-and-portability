@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Q: The classic: `echo` vs `printf`
-# A: There is no real difference
+# A: No notable difference
 # priority: 0
 #
 #     t1 real 0m0.272s echo
