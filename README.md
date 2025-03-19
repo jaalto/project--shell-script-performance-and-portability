@@ -284,7 +284,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 # MODERATE PERFORMANCE GAINS
 
-- It is about 4-5 times faster to split a string
+- It is about 5 times faster to split a string
   into an array using Bash list rather than
   here-string. This is because Bash
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
@@ -294,30 +294,24 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
   *Warning*: Please note that using the `(list)`
-  statement will undergo pathname expansion.
-  Use it only in situations where the string
-  does not contain any globbing characters
-  like `*`, `?`, etc. The pathname expansion
+  statement will undergo pathname expansion
+  so globbing characters
+  like `*`, `?`, etc. in string would be a problem.
+  The pathname expansion
   can be disabled with
   `set -f; ...code...; set +f`.
-  It is also posisble to disable it locally in
-  a function,
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
     string="1:2:3"
 
-    # Bash, fastest
-    IFS=":" eval array=($string)
-
-    # Same in Ksh
-	saved=$IFS
-	IFS=:"
-	array=($string)
-	IFS=$saved
+    # Bash, Ksh
+    IFS=":" eval 'array=($string)'
 
     fn() # Bash
     {
+        local string=$1
+
         # Make 'set' local
         local -
 
@@ -325,10 +319,14 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         # expansion
         set -f
 
-        IFS=":" eval array=($string)
+        local -a array
+
+        IFS=":" eval 'array=($string)'
+		...
     }
 
-    # Bash one liner but much slower
+    # Bash one liner but much
+	# slower than 'eval' above
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
