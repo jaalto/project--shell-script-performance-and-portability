@@ -404,8 +404,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         ...
     }
 
-    # Bash one liner but much
-    # slower than 'eval' above
+    # Bash. Much slower than 'eval'.
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
