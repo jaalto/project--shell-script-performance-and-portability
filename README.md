@@ -309,6 +309,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   vs
   [`mapfile`](https://www.gnu.org/software/bash/manual/bash.html#index-mapfile),
   there is no difference.
+  Built-in `readarray`is a synonym for `mapfile`.
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```
