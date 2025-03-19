@@ -81,10 +81,17 @@ _priority: 1_
 
 There is no practical difference.
 
-Process substitution is more general because the
+Process substitution is general because the
 `while` loop runs under the same environment, and
 any variables defined or set will persist
-afte the loop.
+afer the loop.
+
+Even though t1 (POSIX), which uses a temporary
+file, seems to be faster, it really isn't. What is
+not shown in the measurement is the extra `rm`
+cleanup for the temporary file, which must be taken
+into account, thus nullifying any perceived speed
+gains.
 
 
 # t-command-pwd-vs-variable-pwd.sh
