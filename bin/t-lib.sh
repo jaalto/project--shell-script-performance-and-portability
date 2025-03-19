@@ -341,7 +341,7 @@ RunTestCase () # Run a test case
 
     elif [ "$timecmd" ]; then
 
-        # format the output using other means.
+        # Format the output using other means.
 
         printf "# $1  "
 
@@ -355,8 +355,8 @@ RunTestCase () # Run a test case
             sed --regexp-extended \
                 --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
                 --expression 's,   +,  ,g' \
-                --expression 's,\t,  ,g'
-
+                --expression 's,\t,  ,g' |
+            tr -d '\n'
         echo  # Add newline
     else
         Die "ERROR: t(): Abort, no suitable built-in time command in Shell"
