@@ -532,13 +532,16 @@ None of these offer any advantages to speed up shell scripts.
     let i++          # Bash, Ksh
 ```
 
-- There is no performance difference between a
-  regular loop and a
+- There is no performance
+  difference between a
+  regular while loop and a
   [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
   loop. However, the latter is more general,
   as any variable set during the loop will
-  persist after the loop because all
-  statements run in the same environment.
+  persist after *and* there is no need to clean
+  up temporary files like in POSIX (1) solution.
+  The POSIX (1) loop is marginally faster but
+  the speed gain is lost by the extra `rm` command.
   See [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```
@@ -549,7 +552,17 @@ None of these offer any advantages to speed up shell scripts.
         ...
     done < <(command)
 
-    # POSIX
+    # POSIX (1)
+    # Same, but with
+	# temporary file
+    command > file
+    while read -r ...
+    do
+        ...
+    done < file
+	rm file
+
+    # POSIX (2)
     # while is being run in
     # separate environment
 	# due to pipe(|)
