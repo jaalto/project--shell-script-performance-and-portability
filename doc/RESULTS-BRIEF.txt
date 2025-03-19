@@ -1,10 +1,10 @@
 FILE: t-command-echo-vs-printf.sh
-# Q: The classic: `echo` vs `printf'
-# A: Rhere is no real difference
+# Q: The classic: `echo` vs `printf`
+# A: There is no real difference
 
 FILE: t-command-grep-parallel.sh
-# Q: Howabout using `parallel` to speed up `grep`?
-# A: `parallel` won't help in typical cases. Use only with huge files.
+# Q: Is `grep' faster with `parallel`?
+# A: In typical files, grep is much faster. Use `parallel`only with huge files.
 
 FILE: t-command-grep.sh
 # Q: In grep, is option --fixed-strings faster?
@@ -15,8 +15,8 @@ FILE: t-command-output-vs-process-substitution.sh
 # A: No real difference. Process substitution preserves variables in loop.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
-# Q: How much is POSIX `$PWD` faster than `pwd`?
-# A: It is about 7x faster to use `$PWD` to `pwd` (Bash built-in)
+# Q: How much is POSIX `$PWD` and `$OLDPWD` faster than `pwd`?
+# A: It is about 7x faster to `pwd`
 
 FILE: t-dir-empty.sh
 # Q: What is the fastest way to check empty directory?
@@ -28,7 +28,7 @@ FILE: t-dir-entries.sh
 
 FILE: t-file-copy-check-exist.sh
 # Q: Should you test existense before copying?
-# A: It is about 5x faster is you test existense before copying.
+# A: It is about 50x faster is you test existense before copying.
 
 FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?
@@ -100,5 +100,5 @@ FILE: t-string-trim-whitespace.sh
 
 FILE: t-variable-array-split-string.sh
 # Q: Split string into an array by IFS?
-# A: It is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
+# A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING
 

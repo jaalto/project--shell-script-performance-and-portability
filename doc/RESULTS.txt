@@ -1,8 +1,8 @@
 FILE: t-command-echo-vs-printf.sh
 #! /bin/bash
 #
-# Q: The classic: `echo` vs `printf'
-# A: Rhere is no real difference
+# Q: The classic: `echo` vs `printf`
+# A: There is no real difference
 # priority: 0
 #
 #     t1 real 0m0.272s echo
@@ -11,14 +11,14 @@ FILE: t-command-echo-vs-printf.sh
 FILE: t-command-grep-parallel.sh
 #! /bin/bash
 #
-# Q: Howabout using `parallel` to speed up `grep`?
-# A: `parallel` won't help in typical cases. Use only with huge files.
+# Q: Is `grep' faster with `parallel`?
+# A: In typical files, grep is much faster. Use `parallel`only with huge files.
 # priority: 1
 #
 #     t0  real 0m0.005s grep baseline
 #     t1a real 0m0.210s --block-size <default> --pipepart
-#     t1b real 0m0.240s --block-size <default> (Linux 64k)
-#     t2  real 0m0.234s --block-size 64k (grep instance for every 1k lines)
+#     t1b real 0m0.240s --block-size <default> (Linux)
+#     t2  real 0m0.234s --block-size 64k
 #     t3  real 0m0.224s --block-size 32k
 #
 # Notes:
@@ -45,6 +45,20 @@ FILE: t-command-grep.sh
 #
 #     t2icasef   real 0m0.386s LANG=C --ignore-case --fixed-strings
 #     t2icasee   real 0m0.397s LANG=C --ignore-case --extended-regexp
+#
+# Notes:
+#
+# The tests suggest that with typical file sizes
+# (100 kB), the choice between the "C" locale and
+# UTF-8 is not significant. Similarly, the type of
+# regular expression or case sensitivity does not
+# seem to be a major factor.
+#
+# However, on some operating systems and with large
+# files, there have been reports of significant
+# speed improvements by using the "C" locale,
+# enabling `--fixed-strings`, and avoiding
+# `--ignore-case`.
 
 FILE: t-command-output-vs-process-substitution.sh
 #! /bin/bash
@@ -68,17 +82,19 @@ FILE: t-command-output-vs-process-substitution.sh
 # Process substitution is more general because the
 # `while` loop runs under the same environment, and
 # any variables defined or set will persist
-# afterward.
+# afte the loop.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
 #! /bin/bash
 #
-# Q: How much is POSIX `$PWD` faster than `pwd`?
-# A: It is about 7x faster to use `$PWD` to `pwd` (Bash built-in)
-# priority: 4
+# Q: How much is POSIX `$PWD` and `$OLDPWD` faster than `pwd`?
+# A: It is about 7x faster to `pwd`
+# priority: 2
 #
-#     t1 real 0m0.010s olddir=$PWD ; cd ...do.. ; cd $olddir
-#     t2 real 0m0.075s olddir=$(pwd) ; cd ...do.. ; cd $olddir
+#     t1 real 0.004 cd ...do.. ; cd $OLDPWD
+#     t2 real 0.006 olddir=$PWD ; cd ...do.. ; cd $olddir
+#     t3 real 0.011 pushd ; cd ...do.. ; popd
+#     t4 real 0.086 olddir=$(pwd) ; cd ...do.. ; cd $olddir
 #
 # Notes:
 #
@@ -139,18 +155,18 @@ FILE: t-file-copy-check-exist.sh
 #! /bin/bash
 #
 # Q: Should you test existense before copying?
-# A: It is about 5x faster is you test existense before copying.
-# priority: 5
+# A: It is about 50x faster is you test existense before copying.
+# priority: 1
 #
-#     t1 real 0m1.002s cp A B
-#     t2 real 0m0.013s <file test> cp
+#     t1 real 0m0.013s <file test> cp
 #     t2 real 0m0.009s <file test> cp (hardlink)
+#     t3 real 0m1.812s cp A B
 #
 # Code:
 #
-#     t1 cp --preserve=timestamps A B
-#     t2 [ A -nt B ] || cp --preserve=timestamps ...
-#     t3 [ A -ef B ] || cp --preserve=timestamps --link ...
+#     t1 [ A -nt B ] || cp --preserve=timestamps ...
+#     t2 [ A -ef B ] || cp --preserve=timestamps --link ...
+#     t3 cp --preserve=timestamps A B
 
 FILE: t-file-for-loop-vs-awk.sh
 #! /bin/bash
@@ -171,7 +187,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 #
 #     t1 real 0m0.026s   Bash compgen GLOB
 #     t2 real 0m0.028s   Bash array: (GLOB)
-#     t2 real 0m0.039s   stat -t GLOB
+#     t3 real 0m0.039s   stat -t GLOB
 #
 # Code:
 #
@@ -482,36 +498,57 @@ FILE: t-string-file-path-components-and-parameter-expansion.sh
 #
 #     t1aBase real 0.007  parameter expansion
 #     t1bBase real 0.298  basename
+#
 #     t2aDir  real 0.007  parameter expansion
 #     t2bDir  real 0.282  dirname
+#
 #     t3aExt  real 0.004  parameter expansion
-#     t3bExt  real 0.393  cut
-#     t3cExt  real 0.430  awk
-#     t3dExt  real 0.460  sed
+#     t3bExt  real 0.338  cut with Bash HERE STRING
+#     t3bExt  real 0.336  cut
+#     t3cExt  real 0.411  awk
+#     t3dExt  real 0.425  sed
 #
 # Code:
 #
 #     t1aBase  ${str##*/}
 #     t1bBase  basename "$str"
+#
 #     t2aDir   ${str%/*}
 #     t2bDir   dirname "$str"
+#
 #     t3aExt   ${str#*.}
-#     t3bExt   echo "$str" | cut --delimiter="." --fields=2,3
-#     t3cExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
-#     t3dExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
+#     t3bExt   cut --delimiter="." --fields=2,3 <<< "$str"
+#     t3cExt   echo "$str" | cut --delimiter="." --fields=2,3
+#     t3dExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
+#     t3eExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
 #
 # Notes:
 #
-# It is obvious that doing everything in memory is very
+# It is obvious that doing everything in memory
+# using POSIX parameter expansion is very
 # fast. Seeing the measurements, and just how expensive it is,
 # reminds us to utilize the possibilities of
 # [parameter expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
 # more effectively in shell scripts.
 #
-# In the tests, we assume that directory names
-# do not contain the dot (`.`) character.
+# It's not surprising that `echo "$str" | cut`
+# perform practically the same as Bash HERE
+# STRINGS in `sut <<< "$str"` use pipes under
+# the hood in lastest Bash versions. See
+# version 5.1 and section "c" in
+# https://github.com/bminor/bash/blob/master/CHANGES
 #
-# The tests do not aim to present generic
+# **Notes**
+#
+# Please note that you have to run the test
+# set multiple times to get an idea of relative
+# positions. The milliseconds vary a lot from
+# run to run. The overall picture is that heavier
+# tools `awk` is latert and `sed' remains last.
+#
+# In the tests, we assume that directory names
+# do not contain the dot (`.`) characters.
+# Therefore the tests do not aim to present generic
 # solutions to expand all paths like:
 #
 #     /path/project.git/README.txt
@@ -537,17 +574,17 @@ FILE: t-variable-array-split-string.sh
 #! /bin/bash
 #
 # Q: Split string into an array by IFS?
-# A: It is about 4-5 times faster to save/restore IFS than use Bash array `<<<` injecton
+# A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING
 # priority: 8
 #
-#     t1 real 0m0.005s (array)
-#     t2 real 0m0.011s IFS= eval ...
-#     t3 real 0m0.030s read -ra
+#     t2 real  0.011 IFS= eval ...
+#     t1 real  0.021 (array)
+#     t3 real  0.098 read -ra
 #
 # Code:
 #
-#     t1 saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
-#     t2 IFS=":" eval 'array=($PATH)'
+#     t1 IFS=":" eval 'array=($PATH)'
+#     t2 saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
 #     t3 IFS=":" read -ra array <<< "$PATH"
 #
 # Notes:
