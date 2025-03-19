@@ -99,7 +99,7 @@ Table of Contents
 # GENERAL ADVICE
 
 Regardless of the shell you might use for
-scripting (sh, dash, ksh93, mksh, etc.), consider
+scripting (sh, ksh, bash), consider
 taking these factors into serious
 consideration.
 
