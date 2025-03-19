@@ -168,7 +168,11 @@ consider these factors.
 - Minimize extra processes as much as possible.
   In most cases, a single
   [awk](https://www.gnu.org/software/gawk/)
-  can handle all of `sed`, `cut`, `grep` etc.
+  can handle all of
+  [`sed`](https://www.gnu.org/software/sed/),
+  [`cut`](https://www.gnu.org/software/coreutils/manual/html_node/index.html),
+  [`grep`](https://www.gnu.org/software/grep/)
+  etc.
   chains. The `awk` binary program is *very*
   fast and more efficient than
   [Perl](https://www.perl.org)
