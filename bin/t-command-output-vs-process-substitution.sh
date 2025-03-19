@@ -1,16 +1,18 @@
 #! /bin/bash
 #
 # Q: `cmd | while` vs `while ... done < <(process substitution)`
-# A: No real difference. Process substitution preserves variables in loop.
-# priority: 0
+# A: No notable difference. Process substitution preserves variables in loop.
+# priority: 1
 #
-#     t1 real 0m0.750s  cmd | while
-#     t2 real 0m0.760s  process substitution
+#     t1 real 0m0.670s  POSIX. cmd > file ; while ... < file
+#     t2 real 0m0.760s  Bash process substitution
+#     t3 real 0m0.780s  POSIX. cmd | while
 #
 # Code:
 #
-#     t1 cmd | while read -r ... done
+#     t1 cmd > file ;  while read -r ... done < file
 #     t2 while read -r ... done < <(cmd)
+#     t3 cmd | while read -r ... done
 #
 # Notes:
 #
@@ -30,12 +32,14 @@ size=${size:-10k}
 dict=t.random.dictionary.$size
 f=$dict
 
+TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
+
 AtExit ()
 {
     [ "$dict" ] || return 0
     [ -f "$dict" ] || return 0
 
-    rm --force "$dict"
+    rm --force "$dict" "$TMPBASE"*
 }
 
 Setup ()
@@ -43,15 +47,17 @@ Setup ()
     RandomWordsDictionary $size > $dict
 }
 
-t1 ()
+t1 () # POSIX
 {
+    tmp=$TMPBASE.cut
+
     for i in $(seq $loop_max)
     do
-        cut --delimiter=" " --fields=1 $f |
+        cut --delimiter=" " --fields=1 $f > $tmp
         while read -r item
         do
             item=$item
-        done
+        done < $tmp
     done
 }
 
@@ -66,8 +72,23 @@ t2 ()
     done
 }
 
+t3 () # POSIX
+{
+    for i in $(seq $loop_max)
+    do
+        cut --delimiter=" " --fields=1 $f |
+        while read -r item
+        do
+            item=$item
+        done
+    done
+}
+
+trap AtExit EXIT HUP INT QUIT TERM
+
 Setup
 t t1
-t t2
+t t2 IsShellBash
+t t3
 
 # End of file
