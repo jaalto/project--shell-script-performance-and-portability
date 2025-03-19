@@ -384,7 +384,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
     string="1:2:3"
 
-    # Bash, Ksh
+    # Bash, Ksh. Fastest.
     IFS=":" eval 'array=($string)'
 
     fn() # Bash
