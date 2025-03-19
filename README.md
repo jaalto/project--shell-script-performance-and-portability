@@ -639,8 +639,10 @@ testing:
   https://www.shellcheck.net. In Debian,
   install package "shellcheck" and see
   https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
-- In Debian, to help to write portable POSIX
-  scripts, install package "devscripts" and see
+- Use `checkbasism` command to help to
+  improve and write portable POSIX scripts.
+  In Debian, the command is available
+  in package "devscripts". See
   https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
 
 For the curious readers:
