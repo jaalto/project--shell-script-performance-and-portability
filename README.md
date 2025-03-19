@@ -244,8 +244,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 - In Bash, the using `ret=$(fn)` to call functions
   is very slow. On the other hand, in Ksh shells
-  is is fast. Therefore in Bash scrips, it is
-  about 8 times faster to to use
+  that would be fast. Therefore in Bash scrips, it is
+  better, about 8 times faster, to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a values.
   See [code](./bin/t-function-return-value.sh).
