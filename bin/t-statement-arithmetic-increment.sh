@@ -21,8 +21,6 @@
 
 . ./t-lib.sh ; f=$random_file
 
-RequireBash "t-statement-arithmetic-increment.sh"
-
 loop_max=${loop_count:-10000}
 
 t1 ()
