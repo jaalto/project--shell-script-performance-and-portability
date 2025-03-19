@@ -527,7 +527,7 @@ None of these offer any advantages to speed up shell scripts.
 ```
     i=$((i + 1))     # POSIX (use this)
     : $((i++))       # POSIX, Uhm
-    : $((i = i + 1)) # ... not portable
+    : $((i = i + 1)) # POSIX, Uhm!
     ((i++))          # Bash, Ksh
     let i++          # Bash, Ksh
 ```
