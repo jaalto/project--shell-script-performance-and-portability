@@ -445,7 +445,7 @@ for details and further commentary.
         ...
     done
 
-    # seq binary, still fast
+    # POSIX, seq binary, still fast
     for i in $(seq $N $M)
     do
         ...
