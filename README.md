@@ -364,8 +364,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 # MODERATE PERFORMANCE GAINS
 
 - It is about 5 times faster to split a string
-  into an array using Bash list rather than
-  here-string. This is because Bash
+  into an array using list rather than
+  using Bash here-string. This is because
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
   `<<<` uses a
   pipe or temporary file, whereas Bash list
