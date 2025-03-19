@@ -91,7 +91,7 @@ Table of Contents
   For some tests: GNU parallel.
 
 - Other requirements: the `time`
-  cómmand must be work with functions.
+  command must be work with functions.
   The Zsh's built-in `time` or external
   time(1) command cannot be used.
 
