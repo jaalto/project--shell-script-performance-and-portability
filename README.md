@@ -7,13 +7,19 @@ The main focus is on the features found in Bash
 rather than pure POSIX. The tests reflect results
 under Linux.
 
-From a performance point of view, for serious shell
-scripting, Bash is the sensible choice for
-efficient data manipulation in memory (arrays, fast
-string handling with an extended set of parameter
-expansions, regular expressions, extracting regex
-matches) and utilizing blazingly fast functions
-with namerefs.
+In Linux like systems, from a performance point
+of view, for serious shell scripting, Bash is
+the sensible choice for efficient data
+manipulation in memory (arrays), fast string
+handling with an extended set of parameter
+expansions, regular expressions (also
+extracting regex matches) and utilizing fast
+functions with namerefs.
+
+In other operating systems, like BSD, the obvious
+choice for shell scripting would be fast Ksh
+(ksh93, mksh, etc.), unless an extended set of
+features only found in Bash is needed.
 
 Shell scripting is about combining redirections,
 pipes, calling external utilities, and gluing them
@@ -336,11 +342,11 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         local -a array
 
         IFS=":" eval 'array=($string)'
-		...
+        ...
     }
 
     # Bash one liner but much
-	# slower than 'eval' above
+    # slower than 'eval' above
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
