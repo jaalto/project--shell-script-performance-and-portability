@@ -306,7 +306,9 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   an array and then loop through the array.
   If you're wondering about
   [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
-  vs `mapfile`, there is no difference.
+  vs
+  [`mapfile`](https://www.gnu.org/software/bash/manual/bash.html#index-mapfile),
+  there is no difference.
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```
