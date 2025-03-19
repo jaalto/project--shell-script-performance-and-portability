@@ -57,7 +57,11 @@ Shell scripting is about combining redirections,
 pipes, calling external utilities, and gluing them
 all together. Shell scripts are also quite
 portable by default, requiring no additional
-installation. Perl or Python excel in their
+installation.
+[Perl](https://www.perl.org)
+or
+[python](https://www.python.org)
+excel in their
 respective fields, where the requirements differ
 from those of the shell.
 
@@ -148,7 +152,10 @@ consider these factors.
   massive speed gains.
   In Linux, see [vmtouch](https://hoytech.com/vmtouch/).
 
-- If you have tasks that can be run concurrently, use
+- If you have tasks that can be run concurrently,
+  use
+  [Perl](https://www.perl.org)
+  based
   [GNU parallel](https://www.gnu.org/software/parallel/) for massive gains in performance. See also how to use
   [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
   ([tutorial](https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore))
@@ -164,9 +171,9 @@ consider these factors.
   can handle all of `sed`, `cut`, `grep` etc.
   chains. The `awk` binary program is *very*
   fast and more efficient than
-  [perl](https://www.perl.org)
+  [Perl](https://www.perl.org)
   or
-  [python](https://www.python.org)
+  [Python](https://www.python.org)
   scripts where startup time and higher
   memory consumption is a factor.
   *Note*: If you need to process large files,
