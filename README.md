@@ -514,7 +514,7 @@ None of these offer any advantages to speed up shell scripts.
   these. The POSIX
   [arithmetic expansion](https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion)
   `$(())`
-  statement
+  compound command
   will do fine. Note that the odd-looking
   null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
@@ -525,10 +525,11 @@ None of these offer any advantages to speed up shell scripts.
   See [code](./bin/t-statement-arithmetic-increment.sh).
 
 ```
-    i=$((i + 1))     # POSIX
+    i=$((i + 1))     # POSIX (use this)
     : $((i++))       # POSIX, Uhm
-    ((i++))          # Bash
-    let i++          # Bash
+    : $((i = i + 1)) # POSIX, Uhm!
+    ((i++))          # Bash, Ksh
+    let i++          # Bash, Ksh
 ```
 
 - There is no performance difference between a
