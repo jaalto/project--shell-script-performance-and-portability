@@ -542,13 +542,17 @@ None of these offer any advantages to speed up shell scripts.
   See [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```
+
+    # Bash, Ksh
     while read -r ...
     do
         ...
     done < <(command)
 
-    # while is not being run
-    # in the same environment
+    # POSIX
+    # while is being run
+    # in differen environment
+	# due to pipe(|)
     command |
     while read -r ...
     do
