@@ -467,7 +467,9 @@ for details and further commentary.
 
 - One might think that choosing optimized
   `grep` options would make a difference.
-  In practice, performance is nearly identical
+  In practice, for typical file sizes
+  (below few Megabytes),
+  performance is nearly identical
   even with the ignore case option included.
   Nonetheless, there may
   be cases where selecting `LANG=C`, using
