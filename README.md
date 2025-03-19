@@ -279,14 +279,19 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
 
 - It is about 10 times faster to read a file
-  into memory as a string and use Bash regular
-  expression tests on that string multiple
-  times. This is much more efficient than calling
-  `grep` command many times.
+  into memory as a string and use
+  [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
+  or Bash regular expressions
+  binary operator
+  [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  on string. In-memory handling is much more
+  efficient than calling the `grep` command on a
+  file, especially if multiple matches are
+  needed.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # 100 KiB buffer
+   # 100 KiB buffer. Stored in $REPLY.
    read -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
