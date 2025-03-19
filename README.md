@@ -146,7 +146,7 @@ consider these factors.
 - If you know the files beforehand, preload
   them into memory. This can also lead to
   massive speed gains.
-  See [vmtouch](https://hoytech.com/vmtouch/).
+  In Linux, see [vmtouch](https://hoytech.com/vmtouch/).
 
 - If you have tasks that can be run concurrently, use
   [GNU parallel](https://www.gnu.org/software/parallel/) for massive gains in performance. See also how to use
