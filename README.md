@@ -91,9 +91,10 @@ Table of Contents
   For some tests: GNU parallel.
 
 - Other requirements: the `time`
-  command must be work with functions.
-  The Zsh's built-in `time` or external
-  time(1) command cannot be used.
+  command must be cabable of operating
+  on functions. The Zsh's built-in `time`
+  and the external time(1) command
+  cannot time functions.
 
 # GENERAL ADVICE
 
