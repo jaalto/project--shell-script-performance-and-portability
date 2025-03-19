@@ -185,10 +185,12 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
-- Is is about 8 times faster In functions
-  to use POSIX or Bash
+- In Bash, the using `ret=$(fn)` to call functions
+  is very slow. On the other hand, in Ksh shells
+  is is fast. Therefore in Bash scrips, it is
+  about 8 times faster to to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
-  to return a value than with `ret=$(fn)`.
+  to return a values.
   See [code](./bin/t-function-return-value.sh).
 
 ```
@@ -214,7 +216,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         retref=$arg
     }
 
-    # Return value in 'ret'
+    # Fast way to return value in 'ret'
     fnPosix ret "arg"
     fnBash ret "arg"
 ```
