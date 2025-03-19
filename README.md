@@ -587,7 +587,9 @@ None of these offer any advantages to speed up shell scripts.
   already optimized `grep` only once.
   Based on StackOverflow discussions,
   if file sizes are in the tens of megabytes,
-  GNU `parallel` can help speed things up.
+  GNU
+  [`parallel`](https://www.gnu.org/software/parallel/)
+  can help speed things up.
   See [code](./bin/t-command-grep-parallel.sh).
 
 ```
