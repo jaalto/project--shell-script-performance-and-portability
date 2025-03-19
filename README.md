@@ -98,6 +98,11 @@ Table of Contents
 
 # GENERAL ADVICE
 
+Regardless of the shell you might use for
+scripting (sh, dash, ksh93, mksh, etc.), consider
+taking these factors into serious
+consideration.
+
 - If you run scripts on many small files, set
   up a RAM disk and copy the files to it. This
   can lead to massive speed gains. See
