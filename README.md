@@ -17,7 +17,7 @@ see also POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
-> modern, mostly POSIX-compatible, shells like
+> modern, best-of-effort POSIX-compatible, shells like
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
 > The legacy `sh`
