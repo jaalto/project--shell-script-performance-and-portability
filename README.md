@@ -3,8 +3,9 @@
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
 
-The main focus are the features found in
-Bash and less in pure POSIX.
+The main focus is on the features found in Bash
+rather than pure POSIX. The tests reflect results
+under Linux.
 
 From a performance point of view, for serious shell
 scripting, Bash is the sensible choice for
@@ -71,7 +72,9 @@ Table of Contents
   see homepage.
 
 - Depends:
-  Bash, GNU coreutils.
+  Bash, GNU coreutils,
+  wamerican dictionary.
+  (Debian package wamerican).
 
 - Optional depends:
   GNU make for Makefile.
@@ -233,13 +236,13 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
     readarray -t array < file
 
-    for i in "${array[@]}"
+    for line in "${array[@]}"
     do
         ...
     done
 
     # Slower
-    while read -r ...
+    while read -r line
     do
         ...
     done < file
@@ -281,7 +284,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 # MODERATE PERFORMANCE GAINS
 
-- It is about 4-5 times faster to split a string
+- It is about 5 times faster to split a string
   into an array using Bash list rather than
   here-string. This is because Bash
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
@@ -291,28 +294,24 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   buffer behavor was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
   *Warning*: Please note that using the `(list)`
-  statement will undergo pathname expansion.
-  Use it only in situations where the string
-  does not contain any globbing characters
-  like `*`, `?`, etc. The pathname expansion
+  statement will undergo pathname expansion
+  so globbing characters
+  like `*`, `?`, etc. in string would be a problem.
+  The pathname expansion
   can be disabled with
   `set -f; ...code...; set +f`.
-  It is also posisble to disable it locally in
-  a function,
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
-    # Make 100 "words"
-    printf -v string "%s:" {1..100}
+    string="1:2:3"
 
-    # Fastest
-    saved=$IFS
-    IFS=":"
-    array=($string)
-    IFS=$saved
+    # Bash, Ksh
+    IFS=":" eval 'array=($string)'
 
-    fn()
+    fn() # Bash
     {
+        local string=$1
+
         # Make 'set' local
         local -
 
@@ -320,13 +319,14 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         # expansion
         set -f
 
-        local saved=$IFS
-        IFS=":"
-        array=($string)
-        IFS=$saved
+        local -a array
+
+        IFS=":" eval 'array=($string)'
+		...
     }
 
-    # One liner but much slower
+    # Bash one liner but much
+	# slower than 'eval' above
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
@@ -368,7 +368,7 @@ for details and further commentary.
     done
 
     # seq binary, still fast
-    for i in $(seq $M)
+    for i in $(seq $N $M)
     do
         ...
     done
@@ -431,8 +431,9 @@ None of these offer any advantages to speed up shell scripts.
 - There are no practical differences between
   these. The POSIX `$(())` statement
   will do fine. Note that the odd-looking
+  null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
-  utilizes the true operator's side effect
+  utilizes the command's side effect
   and therefore may not be the most
   readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
@@ -515,7 +516,7 @@ testing:
   [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   is preferrable over archaic backtics as in \`cmd\`.
   https://mywiki.wooledge.org/BashFAQ/082
-**Note**: for 20 years even all the `sh` shells
+  **Note**: for 20 years even all the `sh` shells
   have supported the readable `$()`command
   substitution syntax. This includes very
   conservarive HP-UX and Solaris 10 from 2005 whose
