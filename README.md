@@ -185,14 +185,25 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
-- Is is about 40 times faster In functions
-  to use Bash
+- Is is about 8 times faster In functions
+  to use POSIX or Bash
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value than with `ret=$(fn)`.
   See [code](./bin/t-function-return-value.sh).
 
 ```
-    fn()
+    fnPosix()
+    {
+        # Use nameref for the
+        # return value
+        retref=$1
+        shift
+        arg=$1
+
+        eval "$retref=\$arg"
+    }
+
+    fnBash()
     {
         # Use nameref for the
         # return value
@@ -200,11 +211,12 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         shift
         local arg=$1
 
-        retref="value"
+        retref=$arg
     }
 
-    # return value in 'ret'
-    fn ret "arg"
+    # Return value in 'ret'
+    fnPosix ret "arg"
+    fnBash ret "arg"
 ```
 
 - It is about 10 times faster to read a file
