@@ -305,16 +305,18 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
-    # Make 100 "words"
-    printf -v string "%s:" {1..100}
+    string="1:2:3"
 
-    # Fastest
-    saved=$IFS
-    IFS=":"
-    array=($string)
-    IFS=$saved
+    # Bash, fastest
+    IFS=":" eval array=($string)
 
-    fn()
+    # Same in Ksh
+	saved=$IFS
+	IFS=:"
+	array=($string)
+	IFS=$saved
+
+    fn() # Bash
     {
         # Make 'set' local
         local -
@@ -323,13 +325,10 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         # expansion
         set -f
 
-        local saved=$IFS
-        IFS=":"
-        array=($string)
-        IFS=$saved
+        IFS=":" eval array=($string)
     }
 
-    # One liner but much slower
+    # Bash one liner but much slower
     IFS=":" read -ra array <<< "$string"
 
     # In Linux, to see what Bash uses
@@ -371,7 +370,7 @@ for details and further commentary.
     done
 
     # seq binary, still fast
-    for i in $(seq $M)
+    for i in $(seq $N $M)
     do
         ...
     done
@@ -434,8 +433,9 @@ None of these offer any advantages to speed up shell scripts.
 - There are no practical differences between
   these. The POSIX `$(())` statement
   will do fine. Note that the odd-looking
+  null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
-  utilizes the true operator's side effect
+  utilizes the command's side effect
   and therefore may not be the most
   readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
@@ -518,7 +518,7 @@ testing:
   [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   is preferrable over archaic backtics as in \`cmd\`.
   https://mywiki.wooledge.org/BashFAQ/082
-**Note**: for 20 years even all the `sh` shells
+  **Note**: for 20 years even all the `sh` shells
   have supported the readable `$()`command
   substitution syntax. This includes very
   conservarive HP-UX and Solaris 10 from 2005 whose
