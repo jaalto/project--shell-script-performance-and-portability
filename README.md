@@ -550,8 +550,8 @@ None of these offer any advantages to speed up shell scripts.
     done < <(command)
 
     # POSIX
-    # while is being run
-    # in differen environment
+    # while is being run in
+    # separate environment
 	# due to pipe(|)
     command |
     while read -r ...
