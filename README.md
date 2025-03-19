@@ -8,41 +8,50 @@ How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
 
 The tests reflect results under Linux.
-The main focus is on the features found in Bash
+The main focus is on the features found in
+[Bash](https://www.gnu.org/software/bash)
 rather than minimalistic `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
 shells;
 see also POSIX in
-[wikipedia](https://en.wikipedia.org/wiki/POSIX).
+[Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
-> Please note that by `sh` here, we refer to
-> modern, mostly POSIX-compatible shells like
+> Please note that `sh` here refers to
+> modern, mostly POSIX-compatible, shells like
 > [dash](https://tracker.debian.org/pkg/dash) and
-> [posh](https://tracker.debian.org/pkg/posh),
-> and not the ancient (some 50+-year-old)
-> Bourne shell, which is best left gathering
-> dust, forgotten, and its scripts read only by
-> historians. All modern operating systems
-> including HP-UX, Solaris, and AIX,
-> have had for 10-20 years now
-> an `sh` that is POSIX-capable. On many
-> systems, `sh` is a symbolic link to `dash`
-> (Linux) or `ksh` (others), or it may even
-> point to `bash'.
+> [posh](https://tracker.debian.org/pkg/posh).
+> The legacy `sh`
+> ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
+> is not a relevant
+> target for shell scripting, and old scripting
+> practices are best left to archaeologists and
+> historians. Even UNIX operating systems,
+> e.g. HP-UX, Solaris, and AIX, have had
+> for 20 years an `sh` that is POSIX-capable.
+> Note that on many Operating Systems, `sh` is
+> a symbolic link to `dash` (on Linux), `ksh`
+> (on others), or it may even point to `bash`.
+> See section
+> [ABOUT POSIX AND PORTABILITY](#about-posix-and-portability).
 
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
 the sensible choice for efficient data
-manipulation in memory (arrays), fast string
-handling with an extended set of parameter
-expansions, regular expressions (also
-extracting regex matches) and utilizing fast
+manipulation in memory with arrays and strings
+with an extended set of parameter
+expansions, regular expressions, including
+extracting regex matches and utilizing fast
 functions with namerefs.
 
-In other operating systems, like BSD, the obvious
-choice for shell scripting would be fast Ksh
-(ksh93, mksh, etc.), unless an extended set of
-features only found in Bash is needed.
+In other operating systems, for example BSD,
+the obvious choice for shell scripting would be
+fast
+[Ksh](https://en.wikipedia.org/wiki/KornShell)
+([ksh93](https://tracker.debian.org/pkg/ksh93u+m),
+[mksh](https://tracker.debian.org/pkg/mksh),
+etc.), unless an
+extended set of features only found in Bash are
+needed.
 
 Shell scripting is about combining redirections,
 pipes, calling external utilities, and gluing them
@@ -75,6 +84,7 @@ Table of Contents
 - [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
 - [MINOR PERFORMANCE GAINS](#minor-performance-gains)
 - [NO PERFORMANCE GAINS](#no-performance-gains)
+- [ABOUT POSIX AND PORTABILITY](#about-posix-and-portability)
 - [RANDOM NOTES](#random-notes)
 - [FURTHER READING](#further-reading)
 - [COPYRIGHT](#copyright)
@@ -538,6 +548,10 @@ None of these offer any advantages to speed up shell scripts.
 ```
     parallel --pipepart grep "$re" < "$megafile"
 ```
+
+# ABOUT POSIX AND PORTABILITY
+
+TODO: upcoming.
 
 # RANDOM NOTES
 
