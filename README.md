@@ -82,9 +82,9 @@ Table of Contents
   see homepage.
 
 - **Depends**:
-  Bash, GNU coreutils,
-  wamerican dictionary.
-  (Debian package wamerican).
+  Bash, GNU coreutils, file
+  /usr/share/dict/words
+  (Debian package: wamerican).
 
 - **Optional depends**:
   GNU make for Makefile.
