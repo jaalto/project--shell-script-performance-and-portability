@@ -135,7 +135,7 @@ consider these factors.
 
 - If you run scripts on many small files, set
   up a RAM disk and copy the files to it. This
-  can lead to massive speed gains. See
+  can lead to massive speed gains. In Linux, see
   [tmpfs](https://en.wikipedia.org/wiki/Tmpfs),
   which allows you to set a size limit, unlike
   the memory-hogging
