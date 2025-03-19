@@ -593,7 +593,7 @@ None of these offer any advantages to speed up shell scripts.
   See [code](./bin/t-command-grep-parallel.sh).
 
 ```
-    parallel --pipepart grep "$re" < "$megafile"
+    parallel --pipepart --arg-file MEGAFILE grep "$re"
 ```
 
 # ABOUT POSIX, SHELLS AND PORTABILITY
