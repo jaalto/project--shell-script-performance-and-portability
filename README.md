@@ -602,10 +602,10 @@ TODO: upcoming.
 
 # RANDOM NOTES
 
-See the
-[Bash](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
-manual page how to use `time`
-command to display results in different
+See the Bash manual how to use `time`
+with
+[TIMEFORMAT](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
+to display results in different
 formats:
 
     TIMEFORMAT='real: %R'  # '%R %U %S'
