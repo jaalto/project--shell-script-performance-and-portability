@@ -602,11 +602,14 @@ TODO: upcoming.
 
 # RANDOM NOTES
 
-See the Bash manual how to use `time`
-with
+See the Bash manual how to use
+[`time`](https://www.gnu.org/software/bash/manual/bash.html#Pipeline)
+reserved word with
 [TIMEFORMAT](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
-to display results in different
-formats:
+variable to display results in different
+formats. The use of time as a reserved word
+permits the timing of shell builtins, shell
+functions, and pipelines.
 
     TIMEFORMAT='real: %R'  # '%R %U %S'
 
