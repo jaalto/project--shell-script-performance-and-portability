@@ -16,7 +16,12 @@
 #
 # Notes:
 #
-# Calling functions using `$()` is epxensive.
+# In Bash, calling functions using
+# `$()` is expensive.
+#
+# In Ksh, `$()` does not slow down the
+# code, and the times for t1 and t2 are
+# the same.
 #
 # It is possible to use `eval` to emulate
 # Bash's nameref `local -n var=...` syntax.
