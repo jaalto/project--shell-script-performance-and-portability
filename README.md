@@ -2,7 +2,7 @@
 Github Markdown Guide: https://is.gd/nqSonp
 -->
 
-# SHELL SCRIPT PERFORMANCE TESTS
+# SHELL SCRIPT PERFORMANCE
 
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
@@ -82,9 +82,9 @@ Table of Contents
   see homepage.
 
 - **Depends**:
-  Bash, GNU coreutils,
-  wamerican dictionary.
-  (Debian package wamerican).
+  Bash, GNU coreutils, file
+  /usr/share/dict/words
+  (Debian package: wamerican).
 
 - **Optional depends**:
   GNU make for Makefile.
