@@ -282,7 +282,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # 100 KiB buffer. Read into $REPLY.
+   # Read max 100 KiB to $REPLY
    read -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
@@ -356,8 +356,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     done < tmpfile
     rm tmpfile
 
-    # Bash
-    # Slowest, in-loop prefilter
+    # Bash, Slowest,
+    # in-loop prefilter
     while read -r line
     do
        [[ $line =~ $re ]] || continue
@@ -409,10 +409,10 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         ...
     }
 
-    # Bash. Much slower than 'eval'.
+    # Bash. Slower than 'eval'.
     IFS=":" read -ra array <<< "$str"
 
-    # In Linux, to see what Bash uses
+    # In Linux, see what Bash uses
     # for HERE STRING: pipe or
     # temporary file
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
