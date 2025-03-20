@@ -774,7 +774,7 @@ see the well-rounded discussion on StackExchange.
   [Ksh family](https://en.wikipedia.org/wiki/KornShell).
 - On many commercial, conservative UNIX systems
   `sh` is nowadays quite capable
-  ([ksh93](https://tracker.debian.org/pkg/ksh93u+m).
+  [ksh93](https://tracker.debian.org/pkg/ksh93u+m).
 - On macOS, `sh` points to `bash --posix`, where
   the Bash version is indefinitely stuck at
   version 3.2.x due to Apple avoiding the GPL-3
