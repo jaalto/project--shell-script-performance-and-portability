@@ -628,26 +628,29 @@ Examples or archaic coding practises:
 ```
     if [ x"$a" = "y" ]; then ...
 
-    if [ -n "$a" ]; then ...
+    # Variable lenght is non-zero
+    if [ -n "$a" ] ...
 
-    if [ -z "$a" ]; then ...
+    # Variable lenght is zero
+    if [ -z "$a" ] ...
 
     # Deprecated. POSIX will
-    # remove logical -o (OR) and -a (AND)
-    if [ "$a" = "y" -o "$b" = "y" ]; then ...
+    # remove logical -o (OR)
+    # and -a (AND)
+    if [ "$a" = "y" -o "$b" = "y" ] ...
 
 ```
 Modern equivalents:
 ```
 
-    # Equality in double quotes
-    if [ "$a" = "y" ]; then ..
+    # Equality
+    if [ "$a" = "y" ] ..
 
-    # Test if variable has something
-    if [ "$a" ]; then ...
+    # Variable has something
+    if [ "$a" ] ...
 
-    # Test if variable is empty
-    if [ ! "$a" ]; then ...
+    # Variable is empty
+    if [ ! "$a" ] ...
 
     if [ "$a" = "y" ] || [ "$b" = "y" ]; then ...
 
