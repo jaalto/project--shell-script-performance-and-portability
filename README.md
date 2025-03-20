@@ -347,8 +347,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     done
 
     # POSIX
-    # Problem: Slow, exatra call
-    # rewquired to delete tmpfile
+    # Problem: Slow, extra call
+    # required to delete tmpfile
     grep "$re" file) > tmpfile
     while read -r ...
     do
