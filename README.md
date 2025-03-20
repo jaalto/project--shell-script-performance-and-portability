@@ -673,13 +673,12 @@ Writing shell scripts inherently involves considering several factors.
   ([Git Bash](https://gitforwindows.org/),
   [Cygwin](https://cygwin.com),
   [MSYS2](https://www.msys2.org) [\*][\*\*]) —
-  the best choice would be Bash. Between macOS and
+  the obvious choice would be Bash. Between macOS and
   Linux, writing scripts in Bash is generally
   more portable than writing them in
   Zsh because Linux doesn't have Zsh installed
-  by default. On the other hand in macOS the
-  version of Bash is ancient 3.2 which poses
-  other issues.
+  by default. With macOS however, the choice
+  of Bash is a bit more involved (see next).
 
 - *POSIX-compliant scripts*. If you intend to
   use the scripts across a variety of operating
