@@ -334,11 +334,11 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     while read -r ...
     do
         ...
-    done < <(grep --extended-regexp "$re" file)
+    done < <(grep "$re" file)
 
     # Problem: while runs in
     # a separate environment
-    grep --extended-regexp "$re" file) |
+    grep "$re" file) |
     while read -r ...
     do
         ...
