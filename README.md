@@ -264,7 +264,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         retref=$arg
     }
 
-    # Fast way to return value in 'ret'
+    # Return value in 'ret'
     fnPosix ret "arg"
     fnBash ret "arg"
 ```
@@ -282,7 +282,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # 100 KiB buffer. Stored in $REPLY.
+   # 100 KiB buffer. Read into $REPLY.
    read -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
@@ -755,12 +755,12 @@ scripts even more.
         for script in "$@"
         do
             for shell in \
-				posh \
-				dash \
-				"busybox ash" \
-				mksh \
-				ksh \
-				bash
+                posh \
+                dash \
+                "busybox ash" \
+                mksh \
+                ksh \
+                bash
             do
                 echo "-- check: $shell"
                 "$shell" -nx "$script"
@@ -794,12 +794,12 @@ mandated or defined by POSIX.
     #
     # 1. Space is allowed after "#!"
     #    for readability
-	#
-	# 2. The <interpreter> must be full
-	#    path name. Not like:
-	#
-	#    #! sh
-	#
+    #
+    # 2. The <interpreter> must be full
+    #    path name. Not like:
+    #
+    #    #! sh
+    #
     # 3. ONE option word could be added
     #    after the <interpreter>. Any
     #    more than that is nor portable
@@ -857,6 +857,22 @@ Notable observations:
   echo -n "without newline"
 ```
 
+- [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
+  No `-N` option to support reading
+  file into memory for fast
+  in-memory pattern matching.
+
+```
+   # Not POSIX
+   # 100 KiB buffer. Read into $REPLY.
+   read -N$((100 * 1024)) < file
+
+   case $REPLY in
+		*pattern*)
+			# match
+			;;
+   esac
+```
 
 - [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html).
   To check if a command exists, use `command -v
