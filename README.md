@@ -18,24 +18,9 @@ see also POSIX in
 
 > Please note that `sh` here refers to
 > modern, best-of-effort POSIX-compatible,
-> shells like
+> minimal shells like
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
->
-> In typical cases, the legacy `sh`
-> ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
-> or aiming to *pure* POSIX compliant sripts,
-> is not a relevant target for shell scripting.
-> The ancient Bourne Shell
-> scripting practices are best left to
-> archaeologists and historians to study;
-> time has long eroded their relevance. All relevant
-> UNIX operating systems have long provided an
-> `sh` that is POSIX-compliant enough. Note that
-> nowadays `sh` is
-> usually a symbolic link to `dash` (on Linux),
-> `ksh` (on others), or it may point to `bash`
-> (on older MacOS systems).
 > See section
 > [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability).
 
@@ -559,18 +544,18 @@ None of these offer any advantages to speed up shell scripts.
 
     # POSIX (1)
     # Same, but with
-	# temporary file
+    # temporary file
     command > file
     while read -r ...
     do
         ...
     done < file
-	rm file
+    rm file
 
     # POSIX (2)
     # while is being run in
     # separate environment
-	# due to pipe(|)
+    # due to pipe(|)
     command |
     while read -r ...
     do
@@ -603,7 +588,118 @@ None of these offer any advantages to speed up shell scripts.
 
 # ABOUT POSIX, SHELLS AND PORTABILITY
 
-TODO: upcoming.
+## The Legacy Bourne Shell scripting is only for archeologists
+
+In typical cases, the legacy `sh`
+([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
+is not a relevant target for shell scripting.
+The ancient Bourne Shell
+scripting practices are best left to
+archaeologists and historians to study;
+time has long eroded their relevance. All
+Linux and and relevant UNIX operating systems
+have long provided an
+`sh` that is POSIX-compliant enough. Note that
+nowadays `sh` is
+usually a symbolic link to
+[dash](https://tracker.debian.org/pkg/dash)
+(on Linux),
+[ksh](https://tracker.debian.org/pkg/ksh93u+m)
+(on others), or it may point to
+[Bash](https://www.gnu.org/software/bash)
+(on older MacOS systems).
+
+## Requirements and shell scripts
+
+Writing shell scripts inherently involves considering several factors.
+
+- *Personal scripts.* When writing scripts for
+  personal use, choose whichever shell best suits
+  your environment. On Linux, the obvious choice
+  is Bash. On BSD systems, it would be Ksh. On
+  macOS, Zsh is the default and preferred option.
+
+- *Portable scripts.* If you intend to use the
+  scripts across some operating systems — from
+  Linux to Windows
+  ([Git Bash shell](https://gitforwindows.org/),
+  [Cygwin](https://cygwin.com),
+  [MSYS2](https://www.msys2.org) [\*][\*\*]) —
+  the best choice would be Bash. Between macOS and
+  Linux, writing scripts in Bash is generally
+  more portable than writing them in
+  Zsh because Linux doesn't have Zsh installed
+  by default. On the other hand in macOS the
+  version of Bash is ancient 3.2 which poses
+  other issues.
+
+- *POSIX-compliant scripts*. If you intend to
+  use the scripts across a variety of operating
+  systems — from Linux, BSD, and macOS to various
+  Windows Linux-like environments — the issues
+  become quite complex. Skipping Bash might be an
+  option due to the old 3.2 version in macOS, and
+  you may consider writing only `sh`
+  POSIX-compliant scripts and testing them with
+  [dash](https://tracker.debian.org/pkg/dash).
+
+[\*] "Git Bash" is available with the popular
+native Windows installation of Git. Under the
+hood, it is based on MSYS, which in turn is
+based on Cygwin... so the common denominator of
+all Windows Linux-like environments is the
+Cygwin base. In all practical terms, it
+provides the same Linux-like command-line
+utilities, including Bash.
+
+[\*\*] In Windows, there is also the Windows
+Subsystem for Linux
+([WSL](https://learn.microsoft.com/en-us/windows/wsl/)),
+where you can install Linux distributions like
+Debian and Ubuntu. Bash is the obvious choice
+for shell scripts in this environment.
+
+## Writing POSIX compliant shell scrips
+
+TODO: ...incomplete...
+
+**Case Study: sed**
+
+It's not just about
+choosing to write in `sh` shell; the utilities called from
+the script also pose problems. For example, the
+Linux GNU `sed(1)` and its options differ or
+are incompatible. The Linux GNU
+[`sed`](https://www.gnu.org/software/sed/)
+`--in-place` option for replacing file content
+cannot be used in macOS and BSD. Additionally,
+in macOS and BSD, you will find GNU programs
+under a `g`-prefix, such as `gsed(1)`, etc.
+
+```
+    # In Linux
+	# GNU sed(1)
+	# Replace 'this' with 'that' in file.
+
+    sed -i 's/this/that/g' file
+
+    # In macOS
+	# The same does not work.
+	# The '-i' option has different syntax
+	# and semantics. There is not workaround
+	# to make the '-i' option work accross
+	# all operating systems.
+
+    sed -i 's/this/that/g' file
+
+    # Portable
+    # The most portable is to rewrite calls
+	# in Perl. Perl is almost always installed
+	# although not part of the POSIX utilities.
+
+    perl -i -pe 's/this/that/g' file
+
+```
 
 # RANDOM NOTES
 
