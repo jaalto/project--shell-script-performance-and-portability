@@ -589,13 +589,12 @@ None of these offer any advantages to speed up shell scripts.
 
 # ABOUT POSIX, SHELLS AND PORTABILITY
 
-## The Legacy Bourne Shell scripting is only for archeologists
+## About Legacy Bourne Shell scripting practises
 
 In typical cases, the legacy `sh`
 ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
 is not a relevant target for shell scripting.
-The ancient Bourne Shell
-scripting practices are best left to
+These practices are best left to
 archaeologists and historians to study;
 time has long eroded their relevance. All
 Linux and and relevant UNIX operating systems
@@ -608,7 +607,7 @@ usually a symbolic link to
 [ksh](https://tracker.debian.org/pkg/ksh93u+m)
 (on others), or it may point to
 [Bash](https://www.gnu.org/software/bash)
-(on older MacOS systems).
+(on macOS).
 
 Examples or archaic coding practises:
 
