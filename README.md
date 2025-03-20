@@ -769,7 +769,7 @@ scripts even more.
     # External utility to check code
     shellcheck script.sh
 
-    # Another external utility to check code
+    # External utility to check code
     checkbashisms script.sh
 
 **Shebang line in shell scripts**
