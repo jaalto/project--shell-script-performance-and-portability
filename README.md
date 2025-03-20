@@ -693,7 +693,114 @@ for shell scripts in this environment.
 
 ## Writing POSIX compliant shell scrips
 
-TODO: ...incomplete...
+**Shells and POSIX compliant scripts**
+
+For all practical purposes, there is no need to
+overthink or attempt to write *pure* POSIX shell
+scripts. Let's consider shells in order
+of their strictness to POSIX:
+
+
+- [posh](https://tracker.debian.org/pkg/posh).
+  Minimal `sh`, Policy-compliant Ordinary SHell.
+  Very close to POSIX. Stricter than
+  `dash'. Supports for example
+  `local` keyword not defined in POSIX.
+- [dash](https://tracker.debian.org/pkg/dash).
+  Minimal `sh`, Debian Almquish Shell.
+  Close to POSIX. Supports for example
+  `local` keyword not defined in POSIX.
+  The shell aims to meet the
+  requirements of Debian Linux distribution.
+- [Busybox ash](https://www.busybox.net) is based
+  on `dash` but some more features added.
+  See ServerFault
+  ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
+
+Let's also consider `/bin/sh` in
+different Operating Systems:
+
+- In Linux, most distributions
+  use, or are moving towards using `dash`.
+- In macOS, `sh` points to `bash --posix`, where
+  the Bash version is indefinitely stuck at
+  version 3.2.x due to Apple avoiding the GPL-3
+  license in later Bash versions. If you write
+  `/bin/sh` scripts in macOS, it is best to check
+  them explicitly for portability with:
+```
+    # Ensure better /bin/sh compliance
+    dash -nx script.sh
+```
+
+In practical terms, if you plan to aim
+for POSIX-compliant shell scripts, the best
+shells for testing are `posh` and `dash`. You can
+also extend testing with BSD Ksh shells and
+other shells. See
+[FURTHER READING](#further-reading) for external
+utilities to check and improve shell
+scripts even more.
+
+    # Save in shell startup file
+    # like ~/.bashrc
+    shelltest()
+    {
+        for shell in posh dash mksh ksh bash
+        do
+            for script in "$@"
+            do
+                echo "-- check: $shell"
+                $shell -nx "$script"
+            done
+        done
+
+        unset shell script
+    }
+
+    # Use is like:
+    shelltest script.sh
+
+	# External utility to check code
+	shellcheck script.sh
+
+	# Another external utility to check code
+	checkbashisms script.sh
+
+**Shebang line in shell scripts**
+
+POSIX `sh` script's first line contains
+special shebang comment which is read by
+the Kernel. Note that is is only a de facto
+convention universally supported by all but not
+mandated or defined by POSIX.
+
+```
+    #! /bin/sh
+    #
+    # 1. Space is allowed after "#!"
+    #    for readability
+    # 2. ONE option word could be added
+    #    after the <interpreter>. Any
+    #    more than that is nor portable
+    #    accross Linux, BSD Kernels etc.
+    #
+    #    #! /bin/sh -eu
+    #    #! /usr/bin/awk -f
+```
+
+Note that in macOS, `/bin/bash` is hard-coded
+to Bash version 3.2.57 (in 2025 Bash is at
+5.2). You cannot uninstall
+it, even with root access, without disabling
+System Integrity Protection. If you install a
+newer Bash version with `brew install bash`, it
+will be located in `/usr/local/bin/bash`. Due
+to this limitation, for Bash, the shebang line
+— from a portability point of view — is best
+written in the following format:
+
+    #! /usr/bin/env bash
 
 **Portability of utilities**
 
@@ -702,7 +809,7 @@ The utilities that you use in scripts, those of
 scripts. If you want to ensure portability,
 make sure you only use options defined in
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/).
-See Top left menu "Shell & Utilities"
+See top left menu "Shell & Utilities"
 followed by bottom left menu
 ["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html)
 
@@ -711,8 +818,7 @@ Notable observations:
 - [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html).
   Use
   [`printf`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html)
-  when `echo`
-  is not adequate.
+  when more is needed.
 
 ```
   # Not POSIX
@@ -736,26 +842,25 @@ Notable observations:
   consistently supported across shells.
 
 ```
-	REQUIRE="sqlite curl"
+    REQUIRE="sqlite curl"
 
     RequireFeatures ()
-	{
+    {
         for cmd in $REQUIRE
-		do
-			if ! command -v "$cmd" > /dev/null; then
-				echo "ERROR: missing required command: $cmd" >&2
-				exit 1
-			fi
-		done
+        do
+            if ! command -v "$cmd" > /dev/null; then
+                echo "ERROR: missing required command: $cmd" >&2
+                exit 1
+            fi
+        done
 
-		unset cmd
-	}
+        unset cmd
+    }
 
     # Before program starts
-	RequireFeatures
-	...
+    RequireFeatures
+    ...
 ```
-
 
 **Case Study: sed**
 
@@ -770,7 +875,11 @@ cannot be used in macOS and BSD. Additionally,
 in macOS and BSD, you will find GNU programs
 under a `g`-prefix, such as `gsed(1)`, etc.
 See StackOverflow discussion
-["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068)
+["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068). For more
+discussions about the topic, see
+[1](https://stackoverflow.com/q/48712373),
+[2](https://stackoverflow.com/q/16745988),
+[3](https://stackoverflow.com/q/7573368).
 
 ```
     # In Linux
