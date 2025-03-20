@@ -749,11 +749,18 @@ scripts even more.
 
     # Save in shell startup file
     # like ~/.bashrc
+
     shelltest()
     {
-        for shell in posh dash "busybox ash" mksh ksh bash
+        for script in "$@"
         do
-            for script in "$@"
+            for shell in \
+				posh \
+				dash \
+				"busybox ash" \
+				mksh \
+				ksh \
+				bash
             do
                 echo "-- check: $shell"
                 "$shell" -nx "$script"
