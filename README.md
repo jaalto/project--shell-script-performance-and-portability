@@ -751,12 +751,12 @@ scripts even more.
     # like ~/.bashrc
     shelltest()
     {
-        for shell in posh dash mksh ksh bash
+        for shell in posh dash "busybox ash" mksh ksh bash
         do
             for script in "$@"
             do
                 echo "-- check: $shell"
-                $shell -nx "$script"
+                "$shell" -nx "$script"
             done
         done
 
