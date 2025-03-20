@@ -685,7 +685,7 @@ Writing shell scripts inherently involves considering several factors.
   systems — from Linux, BSD, and macOS to various
   Windows Linux-like environments — the issues
   become quite complex.
-  You are probably better off writing only `sh`
+  You are probably better off writing `sh`
   POSIX-compliant scripts and testing them with
   [dash](https://tracker.debian.org/pkg/dash),
   since relying on Bash can lead to
