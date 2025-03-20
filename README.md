@@ -782,7 +782,7 @@ see the well-rounded discussion on StackExchange.
   `/bin/sh` scripts in macOS, it is best to check
   them explicitly for portability with:
 ```
-    # Ensure better /bin/sh compliance
+    # Check /bin/sh compliance
     dash -nx script.sh
 ```
 
