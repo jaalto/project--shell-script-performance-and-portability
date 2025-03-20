@@ -331,13 +331,13 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```
-	# Bash
+    # Bash
     while read -r ...
     do
         ...
     done < <(grep "$re" file)
 
-	# POSIX
+    # POSIX
     # Problem: while runs in
     # a separate environment
     grep "$re" file) |
@@ -346,17 +346,17 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         ...
     done
 
-	# POSIX
+    # POSIX
     # Problem: Slow, exatra call
-	# rewquired to delete tmpfile
+    # rewquired to delete tmpfile
     grep "$re" file) > tmpfile
     while read -r ...
     do
         ...
     done < tmpfile
-	rm tmpfile
+    rm tmpfile
 
-	# Bash
+    # Bash
     # Slowest, in-loop prefilter
     while read -r line
     do
