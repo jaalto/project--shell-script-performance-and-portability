@@ -304,7 +304,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```
-	# Bash
+    # Bash
     readarray -t array < file
 
     for line in "${array[@]}"
@@ -869,9 +869,9 @@ Notable observations:
    read -N$((100 * 1024)) < file
 
    case $REPLY in
-		*pattern*)
-			# match
-			;;
+        *pattern*)
+            # match
+            ;;
    esac
 ```
 
