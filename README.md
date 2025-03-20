@@ -17,20 +17,25 @@ see also POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
-> modern, best-of-effort POSIX-compatible, shells like
+> modern, best-of-effort POSIX-compatible,
+> shells like
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
-> The legacy `sh`
+>
+> In typical cases, the legacy `sh`
 > ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
-> is not a relevant
-> target for shell scripting, and old scripting
-> practices are best left to archaeologists and
-> historians. Even UNIX operating systems,
-> e.g. HP-UX, Solaris, and AIX, have had
-> for 20 years an `sh` that is POSIX-capable.
-> Note that on many Operating Systems, `sh` is
-> a symbolic link to `dash` (on Linux), `ksh`
-> (on others), or it may even point to `bash`.
+> or aiming to *pure* POSIX compliant sripts,
+> is not a relevant target for shell scripting.
+> The ancient Bourne Shell
+> scripting practices are best left to
+> archaeologists and historians to study;
+> time has long eroded their relevance. All relevant
+> UNIX operating systems have long provided an
+> `sh` that is POSIX-compliant enough. Note that
+> nowadays `sh` is
+> usually a symbolic link to `dash` (on Linux),
+> `ksh` (on others), or it may point to `bash`
+> (on older MacOS systems).
 > See section
 > [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability).
 
@@ -251,7 +256,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-function-return-value.sh).
 
 ```
-    fnPosix()
+    fnPosix() # works in Dash shell
     {
         # Use nameref for the
         # return value
@@ -625,16 +630,22 @@ testing:
 - List of which features were added to specific
   releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
-- See BashFAQ why
-  [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
-  is preferrable over archaic backtics as in \`cmd\`.
+- Use
+  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
+  `$(cmd)`
+  command substituion instead of
+  archaic backtics as in \`cmd\`. For more
+  information, see
   https://mywiki.wooledge.org/BashFAQ/082
-  **Note**: for 20 years all the modern `sh` shells
-  have supported the readable `$()` command
-  substitution syntax. This includes e.g.
-  conservarive HP-UX and Solaris 10 from 2005 whose
-  support ended in
-  [2021](https://www.liquisearch.com/solaris_operating_system/version_history).
+  **Note**: For the past 20 years, all
+  modern `sh` shells have supported the readable
+  `$()` substitution syntax. This includes, for
+  example, UNIX operating systems like HP-UX and
+  Oracle Solaris 10 from 2005. Oracle Solaris 10
+  support ends in
+[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
+  (see
+  [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 - Use `checkkcheck` (Haskell) to
   to help to
   improve and write portable POSIX scripts.
