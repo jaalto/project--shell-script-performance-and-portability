@@ -685,16 +685,18 @@ Writing shell scripts inherently involves considering several factors.
   use the scripts across a variety of operating
   systems — from Linux, BSD, and macOS to various
   Windows Linux-like environments — the issues
-  become quite complex.. You may are probably
-  better off writing only `sh`
+  become quite complex.
+  You are probably better off writing only `sh`
   POSIX-compliant scripts and testing them with
-  [dash](https://tracker.debian.org/pkg/dash).
-  The problem with Bash is that you cannot be
-  certain of the Bash version on other Operating
-  Systems. A Bash script written in Linux may not
-  work in macOS, where `/bin/bash` points to a
-  very old Bash 3.2 version; requiring users to
-  install a newer version is not trivial because
+  [dash](https://tracker.debian.org/pkg/dash),
+  since relying on Bash can lead to
+  unexpected issues — different systems have
+  different Bash versions, and there’s no
+  guarantee that a script written on Linux will
+  run without problems on older Bash versions,
+  such as the outdated 3.2 version in `/bin/bash`
+  on macOS. Requiring users to install a newer
+  version on macOS is not trivial because
   `/bin/bash` is not replaceaple.
 
 [\*] "Git Bash" is available with the popular
