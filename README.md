@@ -785,7 +785,13 @@ mandated or defined by POSIX.
     #
     # 1. Space is allowed after "#!"
     #    for readability
-    # 2. ONE option word could be added
+	#
+	# 2. The <interpreter> must be full
+	#    path name. Not like:
+	#
+	#    #! sh
+	#
+    # 3. ONE option word could be added
     #    after the <interpreter>. Any
     #    more than that is nor portable
     #    accross Linux, BSD Kernels etc.
