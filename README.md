@@ -733,7 +733,7 @@ of their strictness to POSIX:
 - [posh](https://tracker.debian.org/pkg/posh).
   Minimal `sh`, Policy-compliant Ordinary SHell.
   Very close to POSIX. Stricter than
-  `dash'. Supports for defining
+  `dash`. Supports for defining
   `local` variables in functions. The
   keyword is not defined in POSIX.
 - [dash](https://tracker.debian.org/pkg/dash).
