@@ -697,7 +697,7 @@ Writing shell scripts inherently involves considering several factors.
   such as the outdated 3.2 version in `/bin/bash`
   on macOS. Requiring users to install a newer
   version on macOS is not trivial because
-  `/bin/bash` is not replaceaple.
+  `/bin/bash` is not replaceable.
 
 [\*] "Git Bash" is available with the popular
 native Windows installation of Git. Under the
