@@ -582,15 +582,15 @@ None of these offer any advantages to speed up shell scripts.
   [GNU parallel](https://www.gnu.org/software/parallel/),
   a `perl` program,
   makes things notably slower for typical file
-  sizes. Otherwise, GNU `parallel` is
-  excellent for making full use of multiple
-  cores. The idea of splitting a file into
+  sizes. The idea of splitting a file into
   chunks of lines and running the search in
   parallel is intriguing, but the overhead of
   starting perl with `parallel` is orders of
   magnitude more expensive compared to running
   already optimized `grep` only once.
-  Based on StackOverflow discussions,
+  Otherwise, GNU `parallel` is
+  excellent for making full use of multiple
+  cores. Based on StackOverflow discussions,
   if file sizes are in the tens of megabytes,
   GNU
   [`parallel`](https://www.gnu.org/software/parallel/)
