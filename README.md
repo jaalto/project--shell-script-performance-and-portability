@@ -1,5 +1,6 @@
 <!--
 Github Markdown Guide: https://is.gd/nqSonp
+VSCode: preview markdown C-S-v
 -->
 
 # SHELL SCRIPT PERFORMANCE
@@ -609,6 +610,37 @@ usually a symbolic link to
 [Bash](https://www.gnu.org/software/bash)
 (on older MacOS systems).
 
+Examples or archaic coding practises:
+
+```
+    if [ x"$var" = "x" ]; then ...
+
+    if [ -n "$var" ]; then ...
+
+    if [ -z "$var" ]; then ...
+
+    # Deprecated. POSIX will
+    # remove logical -o (OR) and -a (AND)
+    if [ "$var = "yes" -o "$other" = "no" ]; then ...
+
+```
+Modern equivalents:
+```
+
+    # Equality in double quotes
+    if [ "$var" = "x" ]; then ..
+
+    # Test if variable has something
+    if [ "$var" ]; then ...
+
+    # Test if variable is empty
+    if [ ! "$var" ]; then ...
+
+    if [ "$var = "yes" ] || [ "$other" = "no" ]; then ...
+
+```
+
+
 ## Requirements and shell scripts
 
 Writing shell scripts inherently involves considering several factors.
@@ -663,9 +695,71 @@ for shell scripts in this environment.
 
 TODO: ...incomplete...
 
+**Portability of utilities**
+
+The utilities that you use in scripts, those of
+`echo`, `cut`, `tail` make big part of of the
+scripts. If you want to ensure portability,
+make sure you only use options defined in
+[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/).
+See Top left menu "Shell & Utilities"
+followed by bottom left menu
+["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html)
+
+Notable observations:
+
+- [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html).
+  Use
+  [`printf`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html)
+  when `echo`
+  is not adequate.
+
+```
+  # Not POSIX
+  echo -e "line\nline"
+  echo -n "without newline"
+```
+
+
+- [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html).
+  To check if a command exists, use `command -v
+  <command>` and not `which <command>`. "which"
+  is not part of POSIX and is not a portable
+  solution. Note that POSIX also defines
+  [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  as in `type <command>`, but in practice, the
+  semantics, return codes, and output are not as
+  uniform compared to `command -v`. POSIX also
+  has
+  [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  as in `hash <command>`, but it is less
+  consistently supported across shells.
+
+```
+	REQUIRE="sqlite curl"
+
+    RequireFeatures ()
+	{
+        for cmd in $REQUIRE
+		do
+			if ! command -v "$cmd" > /dev/null; then
+				echo "ERROR: missing required command: $cmd" >&2
+				exit 1
+			fi
+		done
+
+		unset cmd
+	}
+
+    # Before program starts
+	RequireFeatures
+	...
+```
+
+
 **Case Study: sed**
 
-It's not just about
+jIt's not just about
 choosing to write in `sh` shell; the utilities called from
 the script also pose problems. For example, the
 Linux GNU `sed(1)` and its options differ or
@@ -675,27 +769,29 @@ are incompatible. The Linux GNU
 cannot be used in macOS and BSD. Additionally,
 in macOS and BSD, you will find GNU programs
 under a `g`-prefix, such as `gsed(1)`, etc.
+See StackOverflow discussion
+["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068)
 
 ```
     # In Linux
-	# GNU sed(1)
-	# Replace 'this' with 'that' in file.
+    # GNU sed(1)
+    # Replace 'this' with 'that' in file.
 
     sed -i 's/this/that/g' file
 
     # In macOS
-	# The same does not work.
-	# The '-i' option has different syntax
-	# and semantics. There is not workaround
-	# to make the '-i' option work accross
-	# all operating systems.
+    # The same does not work.
+    # The '-i' option has different syntax
+    # and semantics. There is not workaround
+    # to make the '-i' option work accross
+    # all operating systems.
 
     sed -i 's/this/that/g' file
 
     # Portable
     # The most portable is to rewrite calls
-	# in Perl. Perl is almost always installed
-	# although not part of the POSIX utilities.
+    # in Perl. Perl is almost always installed
+    # although not part of the POSIX utilities.
 
     perl -i -pe 's/this/that/g' file
 
