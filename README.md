@@ -733,12 +733,13 @@ of their strictness to POSIX:
 - [posh](https://tracker.debian.org/pkg/posh).
   Minimal `sh`, Policy-compliant Ordinary SHell.
   Very close to POSIX. Stricter than
-  `dash'. Supports for example
-  `local` keyword not defined in POSIX.
+  `dash'. Supports for defining
+  `local` variables in functions. The
+  keyword is not defined in POSIX.
 - [dash](https://tracker.debian.org/pkg/dash).
   Minimal `sh`, Debian Almquish Shell.
   Close to POSIX. Supports for example
-  `local` keyword not defined in POSIX.
+  `local` keyword.
   The shell aims to meet the
   requirements of Debian Linux distribution.
 - [Busybox ash](https://www.busybox.net) is based
