@@ -311,7 +311,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         ...
     done
 
-    # Slower
+    # POSIX. Slower
     while read -r line
     do
         ...
