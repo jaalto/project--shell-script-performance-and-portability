@@ -838,7 +838,7 @@ from the
 The utilities that you use in scripts, those of
 `echo`, `cut`, `tail` make big part of of the
 scripts. If you want to ensure portability,
-make sure you only use options defined in
+check options defined in
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/).
 See top left menu "Shell & Utilities"
 followed by bottom left menu
