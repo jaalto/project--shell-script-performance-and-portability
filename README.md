@@ -304,6 +304,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```
+	# Bash
     readarray -t array < file
 
     for line in "${array[@]}"
