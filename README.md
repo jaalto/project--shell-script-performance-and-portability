@@ -450,7 +450,7 @@ for details and further commentary.
         ...
     done
 
-    # POSIX, seq binary, still fast
+    # POSIX, fast
     for i in $(seq $N $M)
     do
         ...
