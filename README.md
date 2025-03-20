@@ -233,12 +233,12 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
-- In Bash, the using `ret=$(fn)` to call functions
+- In Bash, using `ret=$(fn)` to call functions
   is very slow. On the other hand, in Ksh shells
-  that would be fast. Therefore in Bash scrips, it is
-  better, about 8 times faster, to use
+  that would be fast. Therefore in Bash scrips,
+  it is about 8 times faster, to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
-  to return a values.
+  to return a value.
   See [code](./bin/t-function-return-value.sh).
 
 ```
