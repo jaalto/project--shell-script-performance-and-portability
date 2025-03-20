@@ -775,7 +775,9 @@ scripts even more.
 **Shebang line in shell scripts**
 
 POSIX `sh` script's first line contains
-special shebang comment which is read by
+special
+[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+comment which is read by
 the Kernel. Note that is is only a de facto
 convention universally supported by all but not
 mandated or defined by POSIX.
@@ -812,6 +814,17 @@ to this limitation, for Bash, the shebang line
 written in the following format:
 
     #! /usr/bin/env bash
+
+See POSIX and shebang
+from the
+[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html#tag_16_111_08)
+
+> (...) Another way that some historical
+> implementations handle shell scripts is by
+> recognizing the first two bytes of the file as
+> the character string "#!" and using the
+> remainder of the first line of the file as the
+> name of the command interpreter to execute.
 
 **Portability of utilities**
 
