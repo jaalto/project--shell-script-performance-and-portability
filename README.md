@@ -242,13 +242,13 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-function-return-value.sh).
 
 ```
-    fnPosix() # works in Dash shell
+    fnPosix() # dash
     {
         # Use nameref for the
         # return value
-        retref=$1
+        local retref=$1
         shift
-        arg=$1
+        local arg=$1
 
         eval "$retref=\$arg"
     }
