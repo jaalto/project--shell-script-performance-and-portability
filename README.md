@@ -3,7 +3,7 @@ Github Markdown Guide: https://is.gd/nqSonp
 VSCode: preview markdown C-S-v
 -->
 
-# SHELL SCRIPT PERFORMANCE
+# SHELL SCRIPT PERFORMANCE AND PORTABILITY
 
 How can you make shell scripts run faster?
 That's the question these test cases aim to answer.
@@ -829,13 +829,25 @@ scripts even more.
 
 **Shebang line in shell scripts**
 
-The first bytes of a POSIX `sh` script contain
-two special ASCII codes, the
-[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
-comment, which is read by the kernel. Note that
-this is a de facto convention, but universally
-supported. It is not mandated or defined by
+Note that POSIX does not defined the
+[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
+See
+[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html#tag_16_111_08)
+
+> (...) Another way that some historical
+> implementations handle shell scripts is by
+> recognizing the first two bytes of the file as
+> the character string "#!" and using the
+> remainder of the first line of the file as the
+> name of the command interpreter to execute.
+
+The first bytes of a script typically contain
+two special ASCII codes, a special comment if
+you wish, which is read by the kernel. Note
+that this is a de facto convention, universally
+supported even though it is not defined by
 POSIX.
+
 ```
     #! /bin/sh
     #
@@ -857,9 +869,10 @@ POSIX.
     #    #! /usr/bin/awk -f
 ```
 
-Note that in macOS, `/bin/bash` is hard-coded
-to Bash version 3.2.57 (in 2025 Bash is at
-5.2). You cannot uninstall
+Note that on macOS, `/bin/bash` is hard-coded
+to Bash version 3.2.57 where in 2025 lastest Bash is
+[5.2](https://tracker.debian.org/pkg/bash).
+You cannot uninstall
 it, even with root access, without disabling
 System Integrity Protection. If you install a
 newer Bash version with `brew install bash`, it
@@ -869,17 +882,6 @@ to this limitation, for Bash, the shebang line
 written in the following format:
 
     #! /usr/bin/env bash
-
-See POSIX and shebang
-from the
-[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html#tag_16_111_08)
-
-> (...) Another way that some historical
-> implementations handle shell scripts is by
-> recognizing the first two bytes of the file as
-> the character string "#!" and using the
-> remainder of the first line of the file as the
-> name of the command interpreter to execute.
 
 **Portability of utilities**
 
