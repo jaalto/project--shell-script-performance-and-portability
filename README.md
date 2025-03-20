@@ -748,11 +748,34 @@ of their strictness to POSIX:
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
 
 Let's also consider `/bin/sh` in
-different Operating Systems:
+different Operating Systems. For more about the history of the `sh` shell,
+see the well-rounded discussion on StackExchange.
+ [What does it mean to be "sh compatible"?](https://unix.stackexchange.com/q/145522)
 
-- In Linux, most distributions
-  use, or are moving towards using `dash`.
-- In macOS, `sh` points to `bash --posix`, where
+<!-- <contactme2016@tangentsoft.com> -->
+[Picture](https://tangentsoft.com/misc/unix-shells.svg)
+"Bourne Family Shells" by
+[tangentsoft.com](tangentsoft.com)
+<picture>
+    <source srcset="https://tangentsoft.com/misc/unix-shells-large.png">
+    <img src="pic/unix-shells.svg" alt="Bourne Family Shells" style="width:auto;">
+</picture>
+
+- On Linux, most distributions already use, or
+  are moving towards using, `sh` as a symlink to
+  [dash](https://tracker.debian.org/pkg/dash).
+- On the most conservative NetBSD, it is `ash`,
+  the old Almquist shell.
+  On FreeBSD, `sh` is based on `dash`.
+  On
+  [OpenBSD, sh](https://man.netbsd.org/sh.1) is
+  [ksh93](https://tracker.debian.org/pkg/ksh93u+m)
+  from the
+  [Ksh family](https://en.wikipedia.org/wiki/KornShell).
+- On many commercial, conservative UNIX systems
+  `sh` is nowadays quite capable
+  ([ksh93](https://tracker.debian.org/pkg/ksh93u+m).
+- On macOS, `sh` points to `bash --posix`, where
   the Bash version is indefinitely stuck at
   version 3.2.x due to Apple avoiding the GPL-3
   license in later Bash versions. If you write
@@ -936,7 +959,7 @@ Notable observations:
 
 **Case Study: sed**
 
-jIt's not just about
+It's not just about
 choosing to write in `sh` shell; the utilities called from
 the script also pose problems. For example, the
 Linux GNU `sed(1)` and its options differ or
