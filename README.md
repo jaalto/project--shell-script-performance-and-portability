@@ -829,29 +829,29 @@ scripts even more.
 
 **Shebang line in shell scripts**
 
-POSIX `sh` script's first line contains
-special
+The first bytes of a POSIX `sh` script contain
+two special ASCII codes, the
 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
-comment which is read by
-the Kernel. Note that is is only a de facto
-convention universally supported by all but not
-mandated or defined by POSIX.
-
+comment, which is read by the kernel. Note that
+this is a de facto convention, but universally
+supported. It is not mandated or defined by
+POSIX.
 ```
     #! /bin/sh
     #
     # 1. Space is allowed after "#!"
-    #    for readability
+    #    for readability.
     #
     # 2. The <interpreter> must be full
     #    path name. Not like:
     #
     #    #! sh
     #
-    # 3. ONE option word could be added
+    # 3. ONE option word can be added
     #    after the <interpreter>. Any
-    #    more than that is nor portable
-    #    accross Linux, BSD Kernels etc.
+    #    more than that is not portable
+    #    accross other than Linux
+    #    Kernels.
     #
     #    #! /bin/sh -eu
     #    #! /usr/bin/awk -f
