@@ -387,14 +387,14 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
-    string="1:2:3"
+    str="1:2:3"
 
     # Bash, Ksh. Fastest.
-    IFS=":" eval 'array=($string)'
+    IFS=":" eval 'array=($str)'
 
     fn() # Bash
     {
-        local string=$1
+        local str=$1
 
         # Make 'set' local
         local -
@@ -405,12 +405,12 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
         local -a array
 
-        IFS=":" eval 'array=($string)'
+        IFS=":" eval 'array=($str)'
         ...
     }
 
     # Bash. Much slower than 'eval'.
-    IFS=":" read -ra array <<< "$string"
+    IFS=":" read -ra array <<< "$str"
 
     # In Linux, to see what Bash uses
     # for HERE STRING: pipe or
