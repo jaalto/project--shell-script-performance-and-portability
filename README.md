@@ -653,7 +653,7 @@ Writing shell scripts inherently involves considering several factors.
 - *Portable scripts.* If you intend to use the
   scripts across some operating systems — from
   Linux to Windows
-  ([Git Bash shell](https://gitforwindows.org/),
+  ([Git Bash](https://gitforwindows.org/),
   [Cygwin](https://cygwin.com),
   [MSYS2](https://www.msys2.org) [\*][\*\*]) —
   the best choice would be Bash. Between macOS and
@@ -678,10 +678,16 @@ Writing shell scripts inherently involves considering several factors.
 native Windows installation of Git. Under the
 hood, it is based on MSYS, which in turn is
 based on Cygwin... so the common denominator of
-all Windows Linux-like environments is the
+all native Windows Linux-like environments is the
 Cygwin base. In all practical terms, it
 provides the same Linux-like command-line
-utilities, including Bash.
+utilities, including Bash. For curious readers,
+Windows
+[MobaXterm](https://mobaxterm.mobatek.net/),
+a Swiss-army knife for terminals and connectivity,
+includes a Cygwin-based Bash shell with its own `apt`-style
+Debian-like package manager to install additional
+Linux software.
 
 [\*\*] In Windows, there is also the Windows
 Subsystem for Linux
@@ -760,11 +766,11 @@ scripts even more.
     # Use is like:
     shelltest script.sh
 
-	# External utility to check code
-	shellcheck script.sh
+    # External utility to check code
+    shellcheck script.sh
 
-	# Another external utility to check code
-	checkbashisms script.sh
+    # Another external utility to check code
+    checkbashisms script.sh
 
 **Shebang line in shell scripts**
 
