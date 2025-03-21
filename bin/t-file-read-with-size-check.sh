@@ -25,7 +25,11 @@ t2 ()
     done
 }
 
-t t1
-t t2
+t="\
+:
+:t t2
+"
+
+RunTests "$t" "$@"
 
 # End of file
