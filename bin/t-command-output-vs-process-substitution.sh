@@ -36,16 +36,7 @@ RequireDictionary "t-command-output-vs-process-substitution.sh"
 
 size=${size:-10k}
 
-dict=t.random.dictionary.$size
-f=$dict
-
-AtExit ()
-{
-    [ "$dict" ] || return 0
-    [ -f "$dict" ] || return 0
-
-    rm --force "$dict" "$TMPBASE"*
-}
+f=$TMPBASE.random.dictionary.$size
 
 Setup ()
 {
@@ -89,9 +80,9 @@ t3 () # POSIX
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
-
+EnableDefaultTrap
 Setup
+
 t t1
 t t2 IsShellBash
 t t3
