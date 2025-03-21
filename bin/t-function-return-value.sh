@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 8x faster to use nameref to return value from a function

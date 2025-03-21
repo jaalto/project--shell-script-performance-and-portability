@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Would pipe be slower than using process substitution?
 # A: No notable difference. Pipes are efficient.

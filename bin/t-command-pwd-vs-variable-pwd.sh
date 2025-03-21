@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: How much is POSIX `$PWD` and `$OLDPWD` faster than `pwd`?
 # A: It is about 7x faster to `pwd`

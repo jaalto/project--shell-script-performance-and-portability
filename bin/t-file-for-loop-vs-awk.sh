@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: for-loop file-by-file to awk vs awk handling all the files?
 # A: It is about 2-3x faster to do it all in awk

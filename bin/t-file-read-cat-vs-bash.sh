@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Howabout `$(< FILE)` vs `$(cat FILE)`
 # A: It is about 2x faster to use `$(< FILE)` for small files

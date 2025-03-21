@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: No notable difference.

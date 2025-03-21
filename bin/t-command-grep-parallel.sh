@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Is `grep' faster with `parallel`?
 # A: In typical files, grep is much faster. Use `parallel`only with huge files.

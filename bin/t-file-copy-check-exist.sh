@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Should you test existense before copying?
 # A: It is about 40x faster is you test existense before copying.

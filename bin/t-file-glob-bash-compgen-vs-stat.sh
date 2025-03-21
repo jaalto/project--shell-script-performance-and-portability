@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: How to check if GLOB matches any files: arrays vs `compgen` vs `stat`
 # A: `compgen` and array+glob are slightly faster than `stat`

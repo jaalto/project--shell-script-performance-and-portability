@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
 # A: No notable differences.`ls` is good enough.

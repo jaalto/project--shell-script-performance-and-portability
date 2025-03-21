@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
 # A: The `{1..N}` and `$(seq N)` are very fast

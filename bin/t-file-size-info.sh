@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: What is the fastest way to read a file's size?
 # A: Use `stat` or portable GNU `wc -c`.

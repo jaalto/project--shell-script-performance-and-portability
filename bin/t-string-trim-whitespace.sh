@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Trim whitepace using Bash RE vs `sed`
 # A: It is 8x faster to use Bash, especially with fn() nameref

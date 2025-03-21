@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: The classic: `echo` vs `printf`
 # A: No notable difference

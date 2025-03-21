@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Is empty file check useful before reading file's content?
 # A: No need to check. Reading even empty file is fast.

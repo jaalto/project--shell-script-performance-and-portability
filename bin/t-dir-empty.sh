@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: What is the fastest way to check empty directory?
 # A: array+glob is faster than built-in `compgen`
