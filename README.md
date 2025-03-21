@@ -9,9 +9,10 @@ How can you make shell scripts portable and run faster?
 That are the questions these test cases aim to answer.
 
 The tests reflect results under Linux.
-The main focus is on the features found in
+For performance the main focus is on the
+features found in
 [Bash](https://www.gnu.org/software/bash)
-rather than minimalistic `sh`
+rather than POSIX `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
 shells;
 see also POSIX in
