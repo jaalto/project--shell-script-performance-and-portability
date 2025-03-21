@@ -860,7 +860,7 @@ POSIX.
     #    Kernels.
     #
     #    #! /bin/sh -eu
-    #    #! /bin/bash -eu
+    #    #! /usr/bin/env bash
     #    #! /usr/bin/awk -f
 
 Note that on macOS, `/bin/bash` is hard-coded
