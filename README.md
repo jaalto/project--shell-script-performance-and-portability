@@ -1000,11 +1000,11 @@ discussions about the topic, see
 
     # Portable
     #
-    # The most portable is to rewrite
-    # calls in Perl. Perl is
-    # 99 % of the cases installed
-    # although it is not part of the
-    # POSIX utilities.
+    # The most portable is to
+    # rewrite calls in Perl. Perl
+    # is 99 % of the cases
+    # installed although it is not
+    # part of the POSIX utilities.
 
     perl -i -pe 's/this/that/g' file
 
