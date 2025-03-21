@@ -115,10 +115,14 @@ t4 ()
 EnableDefaultTrap
 Setup
 
-t t1a
-t t1b
-t t2
-t t3
-t t4
+t="\
+:t t1a
+:t t1b
+:t t2
+:t t3
+:t t4
+"
+
+RunTests "$t" "$@"
 
 # End of file
