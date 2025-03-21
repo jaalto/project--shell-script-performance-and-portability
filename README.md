@@ -12,7 +12,7 @@ The tests reflect results under Linux.
 For performance the main focus is on the
 features found in
 [Bash](https://www.gnu.org/software/bash)
-rather than POSIX `sh`
+rather than `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
 shells;
 see also POSIX in
