@@ -979,13 +979,15 @@ discussions about the topic, see
 [3](https://stackoverflow.com/q/7573368).
 
 ```
-    # In Linux
+    # Linux
+    #
     # GNU sed(1)
     # Replace 'this' with 'that'
 
     sed -i 's/this/that/g' file
 
-    # In macOS
+    # macOS
+    #
     # The same does not work.
     # The '-i' option has different
 
