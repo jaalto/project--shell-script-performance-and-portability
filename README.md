@@ -850,11 +850,11 @@ POSIX.
 
     #! /bin/sh
     #
-    # 1. Space is allowed after "#!"
-    #    for readability.
+    # 1. Space is allowed after "#!" for
+    #    readability.
     #
-    # 2. The <interpreter> must be full
-    #    path name. Not like:
+    # 2. The <interpreter> must be full path
+    #    name. Not like:
     #
     #    #! sh
     #
