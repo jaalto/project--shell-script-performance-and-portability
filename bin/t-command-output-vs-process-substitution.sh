@@ -39,8 +39,6 @@ size=${size:-10k}
 dict=t.random.dictionary.$size
 f=$dict
 
-TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
-
 AtExit ()
 {
     [ "$dict" ] || return 0
