@@ -48,6 +48,8 @@ t2 ()
     done
 }
 
+# Hide test case from other Shells that
+# won't parse "(( ...))"
 t3 () { : ; } # stub
 
 cat << 'EOF' > t.bash
@@ -72,10 +74,14 @@ t4 ()
     done
 }
 
-t t1
-t t2
-t t3 IsShellBash
-t t4
+t="\
+:t t1
+:t t2
+:t t3 IsShellBash
+:t t4
+"
+
+RunTests "$t" "$@"
 
 rm --force t.bash
 
