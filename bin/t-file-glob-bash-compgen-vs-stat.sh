@@ -24,8 +24,6 @@ FILE="t-file-glob-bash-compgen-vs-stat.sh"
 
 file_count=${file_count:-100}
 
-TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
-
 AtExit ()
 {
     [ "$TMPBASE" ] || return 0
