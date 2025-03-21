@@ -28,16 +28,10 @@
 
 . ./t-lib.sh ; rand=$random_file
 
-f=$rand.t.tmp
+f=$TMPBASE.random.file
 string=abc
 pattern="$string*$string"
 re="$string.*$string"
-
-AtExit ()
-{
-    [ "$f" ] || return 0
-    rm --force "$f"
-}
 
 Setup ()
 {
@@ -118,13 +112,17 @@ t4 ()
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
-
+EnableDefaultTrap
 Setup
-t t1a
-t t1b
-t t2
-t t3
-t t4
+
+t="\
+:t t1a
+:t t1b
+:t t2
+:t t3
+:t t4
+"
+
+RunTests "$t" "$@"
 
 # End of file

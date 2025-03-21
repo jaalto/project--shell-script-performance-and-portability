@@ -24,15 +24,6 @@ FILE="t-file-glob-bash-compgen-vs-stat.sh"
 
 file_count=${file_count:-100}
 
-TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
-
-AtExit ()
-{
-    [ "$TMPBASE" ] || return 0
-
-    rm --force "$TMPBASE"*
-}
-
 Setup ()
 {
     for i in $(seq $file_count)
@@ -72,12 +63,15 @@ t3 ()
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
+EnableDefaultTrap
 Setup
 
-t t1 IsShellBash
-t t2 IsFeatureArray
+t="\
+:t t1 IsShellBash
+:t t2 IsFeatureArray
+:t t3 IsCommandGnuStat
+"
 
-RequireGnuStat $FILE && t t3
+RunTests "$t" "$@"
 
 # End of file

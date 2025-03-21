@@ -44,6 +44,8 @@
 # Exported variables
 PROGRAM=$0
 
+TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test
+
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
 
@@ -56,6 +58,16 @@ DICTIONARY=${DICTIONARY:-$DICTIONARY_DEFAULT}
 # Private variables. Will be unset after end of the file.
 random_file_count=${random_file_count:-10000}
 RUNNER=t.run
+
+AtExit ()
+{
+    rm --force "$TMPBASE"*
+}
+
+EnableDefaultTrap ()
+{
+    trap AtExit EXIT HUP INT QUIT TERM
+}
 
 Warn ()
 {
@@ -89,6 +101,14 @@ IsOsDebian ()
     command -v apt-get > /dev/null
 }
 
+# TODO: IsShellAsh
+# TODO: IsShellDash
+
+IsShellPosh ()
+{
+    [ "$POSH_VERSINFO" ]   # Pdkd derivate
+}
+
 IsShellBash ()
 {
     [ "$BASH_VERSINFO" ]
@@ -99,11 +119,6 @@ IsShellKsh ()
     [ "$KSH_VERSION" ]
 }
 
-IsShellPosh ()
-{
-    [ "$POSH_VERSINFO" ]   # Pdkd derivate
-}
-
 IsShellZsh ()
 {
     [ "$ZSH_VERSION" ]
@@ -112,6 +127,11 @@ IsShellZsh ()
 IsFeatureDictionary ()
 {
     [ -e "$DICTIONARY" ]
+}
+
+IsFeatureArrays ()
+{
+    IsShellBash || IsShellKsh || IsShellZsh
 }
 
 IsFeatureHereString ()
@@ -291,7 +311,7 @@ RunTestCase () # Run a test case
     # which defines TIMEFORMAT
 
     format hasformat 2> /dev/null
-    format="real %3R  user %3U  sys %3S" # precision (3): N.NNN
+    format="real %3R  user %3U  sys %3S" # precision 3: N.NNN
 
     if [ "$ZSH_VERSION" ]; then
         # https://zsh.sourceforge.io/Doc/Release/Parameters.html
@@ -390,6 +410,8 @@ TestData ()
 
 t ()
 {
+    dummy="t()"
+
     test=$1
 
     if [ ! "$test" ]; then
@@ -416,7 +438,74 @@ t ()
     else
         RunTestCase $test
     fi
+
+    unset dummy test
 }
+
+RunTestSet ()
+{
+    dummy="RunTestSet()"
+    testset=$1
+    shift
+
+    saved=$IFS
+    IFS=":
+"
+
+    for test in $testset
+    do
+        eval $test
+    done
+
+    IFS=$saved
+
+    unset dummy test testset saved
+}
+
+RunTests ()
+{
+    dummy="RunTests()"
+
+    # ARG 1 is list of tests to run in
+    # format "[:]<test case>:<test case>..."
+    #
+    # Any newline is ignored.
+    # The <test cases> are separated by colon":"
+    # Leading and trailing colon is ignored.
+    #
+    # if ARG 2 is present, the ARG 1 is ignored
+    # and all argumens from ARG 2 are
+    # considered <test cases> to run,
+
+    tests=${1#:}      # Delete leading ":"
+    tests=${tests%:}  # Delete trailing ":"
+    shift
+
+    if [ "$1" ]; then
+        arg=$1
+        shift
+
+        dummy="check:condition"
+
+        if [ "$1" ]; then # Condition
+            printf "%-28s " "$arg $*"
+            if "$@" ; then
+                $arg
+            else
+                printf "<skip> "
+            fi
+        else
+            printf "%-28s " "$arg"
+            $arg
+        fi
+    else
+        RunTestSet "$tests"
+    fi
+
+    unset dummy arg tests
+}
+
+# Create file
 
 TestData $random_file_count
 unset random_file_count

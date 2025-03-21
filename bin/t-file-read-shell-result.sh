@@ -9,14 +9,7 @@
 
 . ./t-lib.sh ; f=$random_file
 
-f=t.$$.tmp
-
-AtExit ()
-{
-    [ -f "$f" ] || return 0
-
-    rm --force "$f"
-}
+f=$TMPBASE.tmp
 
 t1 ()
 {
@@ -35,9 +28,13 @@ t2 ()
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
+EnableDefaultTrap
 
-t t1
-t t2
+t="\
+:t t1
+:t t2
+"
+
+RunTests "$t" "$@"
 
 # End of file

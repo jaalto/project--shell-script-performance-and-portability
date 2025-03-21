@@ -105,6 +105,10 @@ t3aExt ()
     done
 }
 
+# Hide test case from other Shells that
+t3bExt () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t3bExt ()
 {
     for i in $(seq $loop_max)
@@ -112,6 +116,9 @@ t3bExt ()
         item=$(cut --delimiter="." --fields=2,3 <<< "$str")
     done
 }
+EOF
+
+IsShellBash && . ./t.bash
 
 t3cExt ()
 {
@@ -137,16 +144,20 @@ t3eExt ()
     done
 }
 
-t t1aBase
-t t1bBase
+t="\
+:t t1aBase
+:t t1bBase
+:t t2aDir
+:t t2bDir
+:t t3aExt
+:t t3bExt IsFeatureHereString
+:t t3cExt
+:t t3dExt IsCommandGnuAwk
+:t t3eExt
+"
 
-t t2aDir
-t t2bDir
+RunTests "$t" "$@"
 
-t t3aExt
-t t3bExt IsFeatureHereString
-t t3cExt
-t t3dExt IsCommandGnuAwk
-t t3eExt
+rm --force t.bash
 
 # End of file

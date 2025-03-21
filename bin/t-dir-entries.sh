@@ -86,13 +86,13 @@ trap AtExit EXIT HUP INT QUIT TERM
 Setup
 cd $tmpdir
 
-if [ ! "$1" ]; then
-    t t1
-    t t2
-    t t3
-    t t4
-else
-    t "$1"
-fi
+t="\
+:t t1
+:t t2
+:t t3
+:t t4
+"
+
+RunTests "$t" "$@"
 
 # End of file

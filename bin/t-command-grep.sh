@@ -34,16 +34,7 @@ RequireDictionary "t-command-grep.sh"
 re=${re:-'ad'}
 size=${size:-10k}
 
-dict=t.random.dictionary.$size
-f=$dict
-
-AtExit ()
-{
-    [ "$dict" ] || return 0
-    [ -f "$dict" ] || return 0
-
-    rm --force "$dict"
-}
+f=$TMPBASE.random.dictionary.$size
 
 Setup ()
 {
@@ -107,17 +98,20 @@ t2icasee ()
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
-
+EnableDefaultTrap
 Setup
+
 echo "test file: $(ls -l $f)"
 
-t t1pure
-t t1utf8
-t t1extended
-t t1perl
+t="
+:t t1pure
+:t t1utf8
+:t t1extended
+:t t1perl
+:t t2icasef
+:t t2icasee
+"
 
-t t2icasef
-t t2icasee
+RunTests "$t" "$@"
 
 # End of file

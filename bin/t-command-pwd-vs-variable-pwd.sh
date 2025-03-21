@@ -62,9 +62,13 @@ t4 ()
     done
 }
 
-t t1
-t t2
-t t3 IsCommandPushd
-t t4
+t="\
+:t t1
+:t t2
+:t t3 IsCommandPushd
+:t t4
+"
+
+RunTests "$t" "$@"
 
 # End of file

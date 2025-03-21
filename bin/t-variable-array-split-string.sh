@@ -54,6 +54,12 @@ Setup ()
     done
 }
 
+# Hide test case from other Shells
+t1 () { : ; } # stub
+t2 () { : ; } # stub
+t3 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t1 ()
 {
     # Enable local '-f' feature
@@ -105,10 +111,20 @@ t3 ()
         item=${array[0]}
     done
 }
+EOF
+
+IsFeatureArrays && . ./t.bash
 
 Setup
-t t1 IsShellBash
-t t2
-t t3
+
+t="\
+:t t1 IsShellBash
+:t t2 IsFeatureArrays
+:t t3 IsFeatureArrays
+"
+
+RunTests "$t" "$@"
+
+rm --force t.bash
 
 # End of file

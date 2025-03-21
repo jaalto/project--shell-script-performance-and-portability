@@ -122,8 +122,12 @@ t5 ()
 trap AtExit EXIT HUP INT QUIT TERM
 Setup
 
-t t1
-t t2
+t="\
+:t t1
+t"
+
+RunTests "$t" "$@"
+ t2
 t t3
 t t4
 t t5

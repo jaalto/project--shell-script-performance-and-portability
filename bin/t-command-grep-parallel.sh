@@ -32,20 +32,11 @@ LANG=C
 re=${re:-'ad'}
 size=${size:-50k}
 
-dict=t.random.dictionary.$size
-f=$dict
-
-AtExit ()
-{
-    [ "$dict" ] || return 0
-    [ -f "$dict" ] || return 0
-
-    rm --force "$dict"
-}
+f=$TMPBASE.random.dictionary.$size
 
 Setup ()
 {
-    RandomWordsDictionary $size > $dict
+    RandomWordsDictionary $size > $f
 }
 
 t0 ()  # Baseline
@@ -74,17 +65,20 @@ t3 ()
     parallel --pipe --block-size 16k grep --quiet --fixed-strings "$re" < $f
 }
 
-
-trap AtExit EXIT HUP INT QUIT TERM
-
+EnableDefaultTrap
 Setup
+
 echo "test file: $(ls -l $f)"
 echo "test file: lines $(wc -l $f)"
 
-t t0
-t t1a IsOsCygwin
-t t1b IsOsCygwin
-t t2
-t t3
+t="\
+:t t0
+:t t1a IsOsCygwin
+:t t1b IsOsCygwin
+:t t2
+:t t3
+"
+
+RunTests "$t" "$@"
 
 # End of file

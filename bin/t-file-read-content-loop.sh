@@ -69,9 +69,13 @@ t3 ()
     done < $f
 }
 
-t t1
-t t2a
-t t2b
-t t3
+t="\
+:t t1
+:t t2a
+:t t2b
+:t t3
+"
+
+RunTests "$t" "$@"
 
 # End of file
