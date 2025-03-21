@@ -83,8 +83,12 @@ t3 () # POSIX
 EnableDefaultTrap
 Setup
 
-t t1
-t t2 IsShellBash
-t t3
+t="\
+:t t1
+:t t2 IsShellBash
+:t t3
+#
+
+RunTests "$t" "$@"
 
 # End of file
