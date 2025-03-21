@@ -523,7 +523,7 @@ slight differences in favor of Bash `[[ ]]`.
 # t-string-file-path-components-and-parameter-expansion.sh
 
 **Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.**<br/>
-*A: It is 20-40x faster to use in memory parameter expansion where possible*<br/>
+*A: It is 10-40x faster to use in memory parameter expansion where possible*<br/>
 _priority: 10_
 
     t1aBase real 0.007  parameter expansion

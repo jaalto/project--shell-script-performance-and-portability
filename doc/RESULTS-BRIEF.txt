@@ -93,7 +93,7 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 
 FILE: t-string-file-path-components-and-parameter-expansion.sh
 # Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
-# A: It is 20-40x faster to use in memory parameter expansion where possible
+# A: It is 10-40x faster to use in memory parameter expansion where possible
 
 FILE: t-string-trim-whitespace.sh
 # Q: Trim whitepace using Bash RE vs `sed`
