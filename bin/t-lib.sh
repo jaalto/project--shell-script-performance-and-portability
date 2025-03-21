@@ -59,6 +59,16 @@ DICTIONARY=${DICTIONARY:-$DICTIONARY_DEFAULT}
 random_file_count=${random_file_count:-10000}
 RUNNER=t.run
 
+AtExit ()
+{
+    rm --force "$TMPBASE"*
+}
+
+EnableDefaultTrap ()
+{
+    trap AtExit EXIT HUP INT QUIT TERM
+}
+
 Warn ()
 {
     echo "$*" >&2
