@@ -204,8 +204,8 @@ consider these factors.
   systems, many latency and performance issues are
   not as relevant.
 
-- Use Bash Shell
-  [built-ins](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html)
+- Use Shell built-ins
+  (see [Bash](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html))
   and not binaries:
 
 ```
