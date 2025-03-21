@@ -1051,7 +1051,7 @@ testing:
 [2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
   (see
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
-- Use `checkkcheck` (Haskell) to
+- Use `shellcheck` (Haskell) to
   to help to
   improve and write portable POSIX scripts.
   It can statically Lint scripts for potential
