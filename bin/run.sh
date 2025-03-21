@@ -256,7 +256,7 @@ Main ()
     done
 
     if [ ! "$1" ]; then
-        Die "ERROR: missing <test case file>. See --help."
+        Die "ERROR: missing file <test case>. See --help."
     fi
 
     for file in "$@"
@@ -266,6 +266,6 @@ Main ()
     done
 }
 
-Main "$@"
+Main "${@:-}"
 
 # End of file
