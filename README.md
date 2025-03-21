@@ -907,13 +907,14 @@ Notable observations:
 ```
 
 - [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
-  No `-N` option to support reading
+  No `-N` option to read
   file into memory for fast
-  in-memory pattern matching.
+  in-memory pattern matching
+  later.
 
 ```
    # Not POSIX
-   # 100 KiB buffer. Read into $REPLY.
+   # Read max 100 KiB to $REPLY
    read -N$((100 * 1024)) < file
 
    case $REPLY in
