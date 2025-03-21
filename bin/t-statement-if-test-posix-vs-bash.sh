@@ -72,11 +72,14 @@ t3empty ()
     done
 }
 
+t="\
+:t t1val
+:t t2val
+:t t1empty
+:t t2empty
+:t t3empty
+"
 
-t t1val
-t t2val
-t t1empty
-t t2empty
-t t3empty
+RunTests "$t" "$@"
 
 # End of file
