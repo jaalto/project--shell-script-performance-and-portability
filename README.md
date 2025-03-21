@@ -850,11 +850,11 @@ POSIX.
 
     #! /bin/sh
     #
-    # 1. Space is allowed after "#!" for
-    #    readability.
+    # 1. Space is allowed after "#!"
+    #    for readability.
     #
-    # 2. The <interpreter> must be full path
-    #    name. Not like:
+    # 2. The <interpreter> must be full
+    #     path name. Not like:
     #
     #    #! sh
     #
@@ -865,6 +865,7 @@ POSIX.
     #    Kernels.
     #
     #    #! /bin/sh -eu
+    #    #! /bin/bash -eu
     #    #! /usr/bin/awk -f
 
 Note that on macOS, `/bin/bash` is hard-coded
@@ -978,30 +979,29 @@ discussions about the topic, see
 
     # Linux
     #
-    # GNU sed(1)
-    # Replace 'this' with 'that'
+    # GNU sed(1). Replace 'this' with
+    # 'that'
 
     sed -i 's/this/that/g' file
 
     # macOS
     #
-    # The same does not work.
-    # The '-i' option has different
-
-    # syntax and semantics. There
-    # is not workaround to make
-    # the '-i' option work accross
-    # all Operating Systems.
+    # Does not work. The '-i' option
+    # has different syntax and
+    # semantics. There is not
+    # workaround to make the '-i'
+    # option work accross all Operating
+    # Systems.
 
     sed -i 's/this/that/g' file
 
     # Portable
     #
-    # The most portable is to
-    # rewrite calls in Perl. Perl
-    # is 99 % of the cases
-    # installed although it is not
-    # part of the POSIX utilities.
+    # The most portable is to rewrite
+    # calls in Perl. Perl is 99 % of
+    # the cases installed although it
+    # is not part of the POSIX
+    # utilities.
 
     perl -i -pe 's/this/that/g' file
 
