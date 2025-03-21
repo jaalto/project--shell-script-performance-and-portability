@@ -101,6 +101,14 @@ IsOsDebian ()
     command -v apt-get > /dev/null
 }
 
+# TODO: IsShellAsh
+# TODO: IsShellDash
+
+IsShellPosh ()
+{
+    [ "$POSH_VERSINFO" ]   # Pdkd derivate
+}
+
 IsShellBash ()
 {
     [ "$BASH_VERSINFO" ]
@@ -111,11 +119,6 @@ IsShellKsh ()
     [ "$KSH_VERSION" ]
 }
 
-IsShellPosh ()
-{
-    [ "$POSH_VERSINFO" ]   # Pdkd derivate
-}
-
 IsShellZsh ()
 {
     [ "$ZSH_VERSION" ]
@@ -124,6 +127,11 @@ IsShellZsh ()
 IsFeatureDictionary ()
 {
     [ -e "$DICTIONARY" ]
+}
+
+IsFeatureArrays ()
+{
+    IsShellBash || IsShellKsh || IsShellZsh
 }
 
 IsFeatureHereString ()
