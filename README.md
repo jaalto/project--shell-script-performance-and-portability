@@ -5,8 +5,8 @@ VSCode: preview markdown C-S-v
 
 # SHELL SCRIPT PERFORMANCE AND PORTABILITY
 
-How can you make shell scripts run faster?
-That's the question these test cases aim to answer.
+How can you make shell scripts portable and run faster?
+That are the questions these test cases aim to answer.
 
 The tests reflect results under Linux.
 The main focus is on the features found in
