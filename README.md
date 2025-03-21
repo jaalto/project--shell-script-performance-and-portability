@@ -936,7 +936,8 @@ Notable observations:
   has
   [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
   as in `hash <command>`, but it is less
-  consistently supported across shells.
+  consistently supported across shells. Both
+  `type` and `hash` are not supported by `posh'.
 
 ```
     REQUIRE="sqlite curl"
