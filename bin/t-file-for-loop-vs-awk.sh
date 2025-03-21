@@ -56,7 +56,12 @@ t2 ()
 trap AtExit EXIT HUP INT QUIT TERM
 
 Setup
-t t1 IsCommandGnuAwk
-t t2
+
+t="\
+:t t1 IsCommandGnuAwk
+:t t2
+"
+
+RunTests "$t" "$@"
 
 # End of file
