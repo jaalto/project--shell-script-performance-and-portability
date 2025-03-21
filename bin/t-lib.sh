@@ -491,7 +491,7 @@ RunTests ()
     # and all argumens from ARG 2 are
     # considered <test cases> to run,
 
-    test=${1:-}
+    tests=${1:-}
     tests=${tests#:}  # Delete leading ":"
     tests=${tests%:}  # Delete trailing ":"
     shift
