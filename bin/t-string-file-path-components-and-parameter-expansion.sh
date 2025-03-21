@@ -105,6 +105,10 @@ t3aExt ()
     done
 }
 
+# Hide test case from other Shells that
+t3bExt () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t3bExt ()
 {
     for i in $(seq $loop_max)
@@ -112,6 +116,9 @@ t3bExt ()
         item=$(cut --delimiter="." --fields=2,3 <<< "$str")
     done
 }
+EOF
+
+IsShellBash && . ./t.bash
 
 t3cExt ()
 {
@@ -150,5 +157,7 @@ t="\
 "
 
 RunTests "$t" "$@"
+
+rm --force t.bash
 
 # End of file
