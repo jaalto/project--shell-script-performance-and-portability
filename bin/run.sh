@@ -31,6 +31,7 @@ PROGRAM=${0##*/}
 PREFIX="-- "
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
 RUN_SHELL=""
+TIMEFORMAT="real %3R  user %3U  sys %3S"
 
 pwd=$(cd "$(dirname "$0")" && pwd)
 
@@ -47,11 +48,9 @@ SYNOPSIS
 
 OPTIONS
     -s, --shell SHELL
-        Run test case unser SHELL. Like ksh, mksh etc.
-        Note that the SHELL must have built-in time
-        keyword than can be used to call functions.
-        The Shells that cannot be used are dash and
-        zsh.
+        Run test case file using SHELL. This can
+        be 'dash', 'posh', 'ksh', 'mksh', 'zsh'
+        'busybox ash' etc.
 
     -h, --help
         Display help.
@@ -99,30 +98,71 @@ ${PREFIX}$LINE"
 
 }
 
+Tests ()
+{
+    # Extract test cases in format:
+    #
+    #    :t <test case> <condition>
+
+    awk '
+        /^:t t/ {
+            sub("^: *t +", "")
+            print
+        }
+    ' $1
+}
+
+RunBash ()
+{
+    # Shell does not support timing fucntions.
+    Tests $1 |
+    while read -r test
+    do
+        env TIMEFORMAT="$TIMEFORMAT" \
+        bash -c "time $RUN_SHELL $1 $test"
+    done
+}
+
 Run ()
 {
-    Header "$1"
-    FileInfo "$1"
+    testfile=$1
+    timewithbash=$2
+
+    case "$testfile" in
+        */*) ;;
+          *) testfile="./$testfile"
+             ;;
+    esac
+
+    Header "$testfile"
+    FileInfo "$testfile"
 
     if [ "$RUN_SHELL" ]; then
         echo "Run shell: $RUN_SHELL"
-        $RUN_SHELL "./$1"
+
+        if [ "$timewithbash" ]; then
+            RunBash $testfile
+        else
+            $RUN_SHELL "$testfile"
+        fi
     else
-        "./$1"
+        "$testfile"
     fi
 }
 
-ValidateShell ()
+ValidateTime ()
 {
+    # Check that time keyword can call functions.
+
     case $1 in
-        *zsh* | *dash* )
-            Die "Abort $1: no suitable built-in time for calling function"
+        *zsh* | *dash* | *posh* | *busybox* )
+            return 1
             ;;
         *)  str=$("$1" -c "command -v time")
 
             case $str in
                 /*) # /usr/bin/time
-                    Die "Abort $1: external time(1) not suitable built-in for calling function"
+                    return 1
                     ;;
             esac
             ;;
@@ -131,6 +171,8 @@ ValidateShell ()
 
 Main ()
 {
+    usebash=""
+
     while :
     do
         # Unused, but useful during debug
@@ -141,7 +183,9 @@ Main ()
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"
-                ValidateShell "$1"
+                if ! ValidateTime "$1" ; then
+                    usebash="time-with-bash"
+                fi
                 RUN_SHELL=$1
                 shift
                 ;;
@@ -170,7 +214,7 @@ Main ()
     for file in "$@"
     do
         [ -f "$file" ] || continue
-        Run "$file"
+        Run "$file" "$usebash"
     done
 }
 
