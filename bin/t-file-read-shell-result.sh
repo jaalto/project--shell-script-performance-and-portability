@@ -30,7 +30,11 @@ t2 ()
 
 EnableDefaultTrap
 
-t t1
-t t2
+t="\
+:t t1
+:t t2
+"
+
+RunTests "$t" "$@"
 
 # End of file
