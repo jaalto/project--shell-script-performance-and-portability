@@ -728,17 +728,17 @@ of their strictness to POSIX:
 - [posh](https://tracker.debian.org/pkg/posh).
   Minimal `sh`, Policy-compliant Ordinary SHell.
   Very close to POSIX. Stricter than
-  `dash`. Supports for defining
-  `local` variables in functions. The
+  `dash`. Supports `local` keyword
+  to define local variables in functions. The
   keyword is not defined in POSIX.
 - [dash](https://tracker.debian.org/pkg/dash).
   Minimal `sh`, Debian Almquish Shell.
-  Close to POSIX. Supports for example
-  `local` keyword.
+  Close to POSIX. Supports `local` keyword.
   The shell aims to meet the
-  requirements of Debian Linux distribution.
+  requirements of the Debian Linux distribution.
 - [Busybox ash](https://www.busybox.net) is based
-  on `dash` but some more features added.
+  on `dash` with some more features added.
+  Supports `local` keyword.
   See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
 
@@ -760,8 +760,9 @@ see the well-rounded discussion on StackExchange.
   are moving towards using, `sh` as a symlink to
   [dash](https://tracker.debian.org/pkg/dash).
 - On the most conservative NetBSD, it is `ash`,
-  the old Almquist shell.
-  On FreeBSD, `sh` is based on `dash`.
+  the old
+  [Almquist shell](https://en.wikipedia.org/wiki/Almquist_shell).
+  On FreeBSD, `sh` is also `ash`.
   On
   [OpenBSD, sh](https://man.netbsd.org/sh.1) is
   [ksh93](https://tracker.debian.org/pkg/ksh93u+m)
@@ -777,15 +778,15 @@ see the well-rounded discussion on StackExchange.
   `/bin/sh` scripts in macOS, it is best to check
   them explicitly for portability with:
 ```
-    # Check /bin/sh compliance
+    # Check better /bin/sh compliance
     dash -nx script.sh
 ```
 
 In practical terms, if you plan to aim
 for POSIX-compliant shell scripts, the best
-shells for testing are `posh` and `dash`. You can
-also extend testing with BSD Ksh shells and
-other shells. See
+shells for testing would be `posh` and `dash`.
+You can also extend testing with BSD Ksh
+shells and other shells. See
 [FURTHER READING](#further-reading) for external
 utilities to check and improve shell
 scripts even more.
@@ -806,7 +807,7 @@ scripts even more.
                 bash \
                 zsh
             do
-                if command -v $shell > /dev/null; then
+                if command -v "$shell" > /dev/null; then
                     echo "-- shell: $shell"
                     $shell -nx "$script"
                 fi
@@ -825,7 +826,7 @@ scripts even more.
     # External utility to check code
     checkbashisms script.sh
 
-**Shebang line in shell scripts**
+**Shebang line in scripts**
 
 Note that POSIX does not defined the
 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
@@ -870,16 +871,23 @@ POSIX.
 Note that on macOS, `/bin/bash` is hard-coded
 to Bash version 3.2.57 where in 2025 lastest Bash is
 [5.2](https://tracker.debian.org/pkg/bash).
-You cannot uninstall
-it, even with root access, without disabling
-System Integrity Protection. If you install a
-newer Bash version with `brew install bash`, it
-will be located in `/usr/local/bin/bash`. Due
-to this limitation, for Bash, the shebang line
-— from a portability point of view — is best
-written in the following format:
+You cannot uninstall it, even with root
+access, without disabling System
+Integrity Protection. If you install a
+newer Bash version with `brew install
+bash`, it will be located in
+`/usr/local/bin/bash`. To use the
+latest Bash, the user must arrange
+`/usr/local/bin` first in `PATH`. Due
+to this limitation, for Bash, the
+shebang line — from a portability point
+of view — is best written in the
+following format:
 
     #! /usr/bin/env bash
+
+    ... and not
+    #! /bin/bash
 
 <ins>About Python and shebang</ins>
 
