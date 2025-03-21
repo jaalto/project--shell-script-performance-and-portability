@@ -59,6 +59,8 @@ DICTIONARY=${DICTIONARY:-$DICTIONARY_DEFAULT}
 random_file_count=${random_file_count:-10000}
 RUNNER=t.run
 
+[ "$KSH_VERSION" ] && alias local=typeset
+
 AtExit ()
 {
     rm --force "$TMPBASE"*
