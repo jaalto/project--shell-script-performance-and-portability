@@ -17,8 +17,6 @@
 
 . ./t-lib.sh ; f=$random_file
 
-TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test.compgen.tmp
-
 pwd=$(cd "$(dirname "$0")" && pwd)
 
 Setup ()
