@@ -115,12 +115,6 @@ Table of Contents
   GNU make for Makefile.
   For some tests: GNU parallel.
 
-- Other requirements: the `time`
-  command must be cabable of operating
-  on functions. The Zsh's built-in `time`
-  and the external time(1) command
-  cannot time functions.
-
 # GENERAL ADVICE
 
 Regardless of the shell you use for scripting
