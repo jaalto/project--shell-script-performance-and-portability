@@ -988,22 +988,23 @@ discussions about the topic, see
 
     # macOS
     #
-    # Does not work. The '-i' option
-    # has different syntax and
-    # semantics. There is not
-    # workaround to make the '-i'
-    # option work accross all Operating
-    # Systems.
+    # This does not work. The '-i'
+    # option has different syntax and
+    # semantics. There is no workaround
+    # to make the '-i' option work
+    # across all operating systems.
 
     sed -i 's/this/that/g' file
 
     # Portable
     #
-    # The most portable is to rewrite
-    # calls in Perl. Perl is 99 % of
-    # the cases installed although it
+    # The most portable is to use
+    # Perl which is almost always
+    # available although it
     # is not part of the POSIX
-    # utilities.
+    # utilities. Let's disregard
+    # special cases like busybox
+    # etc.
 
     perl -i -pe 's/this/that/g' file
 
