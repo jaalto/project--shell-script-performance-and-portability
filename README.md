@@ -810,8 +810,8 @@ scripts even more.
                 ksh \
                 bash
             do
-                echo "-- check: $shell"
-                "$shell" -nx "$script"
+                echo "-- shell: $shell"
+                $shell -nx "$script"
             done
         done
 
