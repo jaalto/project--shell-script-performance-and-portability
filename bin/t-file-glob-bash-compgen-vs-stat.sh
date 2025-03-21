@@ -66,9 +66,12 @@ t3 ()
 EnableDefaultTrap
 Setup
 
-t t1 IsShellBash
-t t2 IsFeatureArray
+t="\
+:t t1 IsShellBash
+:t t2 IsFeatureArray
+:t t3 IsCommandGnuStat
+"
 
-RequireGnuStat $FILE && t t3
+RunTests "$t" "$@"
 
 # End of file
