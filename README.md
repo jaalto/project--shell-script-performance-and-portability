@@ -216,7 +216,8 @@ consider these factors.
 
 # MAJOR PERFORMANCE GAINS
 
-- It is about 20-70 times faster to do string
+- It is about 10-40 times (dash 10x, bash 40x)
+  faster to do string
   manipulation in memory, than calling external
   utilities. Seeing the measurements just how
   expensive it is, reminds us to utilize the
