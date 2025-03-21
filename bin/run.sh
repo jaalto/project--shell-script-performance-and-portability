@@ -43,31 +43,44 @@ VERBOSE=""
 
 Help ()
 {
+    program=$PROGRAM
+
+    case "$program" in
+        */*) ;;
+          *) program="./$program"
+             ;;
+    esac
+
     echo "\
 SYNOPSIS
-    $PROGRAM [options] <test case> [<test case> ...]
+    $program [options] <test case> [<test case> ...]
 
 OPTIONS
     -s, --shell SHELL
-        Run test case file using SHELL. This can
+        Run <test case> file using SHELL. This can
         be 'dash', 'posh', 'ksh', 'mksh', 'zsh'
         'busybox ash' etc.
 
     -v, --verbose
-        Display <test case> header.
+        Display <test case> header before
+        running the tests.
 
     -h, --help
         Display help.
 
 DESCRIPTION
-    Display commentary from <test case> and run the file.
+    Run <test case> file(s) using bash or other shell.
 
 EXAMPLES
-    ./$PROGRAM t-test-case.sh
-    ./$PROGRAM --shell ksh t-test-case.sh
+    $program t-test-case.sh
+    $program --verbose t-test-case.sh
+    $program --shell ksh t-test-case.sh
+    $program --shell ksh --verbose t-test-case.sh
 
-    # Modify the default repeat count \$loop_max (see t-lib.sh)
-    loop_max=500 ./$PROGRAM t-test-case.sh"
+    # The default repeat count in <test cases>
+    # can be modified by setting \$loop_max
+
+    loop_max=500 $program t-test-case.sh"
 
     exit 0
 }
@@ -81,6 +94,11 @@ Die ()
 {
     Warn "$PROGRAM: $*"
     exit 1
+}
+
+IsShellBashAvailable ()
+{
+    command -v bash > /dev/null
 }
 
 FileInfo ()
@@ -118,13 +136,22 @@ Tests ()
             sub("^: *t +", "")
             print
         }
-    ' $1
+    ' "$1"
 }
 
 RunBash ()
 {
-    # Shell does not support timing fucntions.
-    Tests $1 |
+    # ignore set -e
+    # shellcheck disable=SC2310
+
+    if ! IsShellBashAvailable; then
+        Die "bash not in PATH. Required for timing."
+    fi
+
+    # Use Bash. Shell does not support proper
+    #time keyword
+
+    Tests "$1" |
     while read -r test
     do
         env TIMEFORMAT="$TIMEFORMAT" \
@@ -154,7 +181,7 @@ Run ()
         echo "Run shell: $RUN_SHELL"
 
         if [ "$timewithbash" ]; then
-            RunBash $testfile
+            RunBash "$testfile"
         else
             $RUN_SHELL "$testfile"
         fi
@@ -196,6 +223,10 @@ Main ()
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"
+
+                # ignore set -e
+                # shellcheck disable=SC2310
+
                 if ! ValidateTime "$1" ; then
                     usebash="time-with-bash"
                 fi
@@ -224,8 +255,8 @@ Main ()
         esac
     done
 
-    if [ ! "$1" ]; then
-        Die "ERROR: missing <test case file>. See --help."
+    if [ ! "${1:-}" ]; then
+        Die "ERROR: missing file <test case>. See --help."
     fi
 
     for file in "$@"
@@ -235,6 +266,6 @@ Main ()
     done
 }
 
-Main "$@"
+Main "${@:-}"
 
 # End of file

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: `cmd | while` vs `while ... done < <(process substitution)`
 # A: No notable difference. Process substitution preserves variables in loop.

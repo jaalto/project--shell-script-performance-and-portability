@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Split string into an array by IFS?
 # A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING

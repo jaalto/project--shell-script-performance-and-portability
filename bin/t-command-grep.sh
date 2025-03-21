@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: In grep, is option --fixed-strings faster?
 # A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case

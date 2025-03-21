@@ -64,6 +64,9 @@ Die ()
 
 Result ()
 {
+    # ignore false positive: Expressions don't expand ...
+    # shellcheck disable=SC2016
+
     $AWK '
         BEGINFILE {
             delete arr
@@ -132,7 +135,7 @@ Main ()
         Die "ERROR: missing <test case file>. See --help."
     fi
 
-    Result "$@"
+    Result "${@:-}"
 }
 
 Main "$@"

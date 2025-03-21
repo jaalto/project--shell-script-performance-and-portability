@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: To process lines: `readarray` vs `while read < file`
 # A: It is about 2x faster to use `readarray`

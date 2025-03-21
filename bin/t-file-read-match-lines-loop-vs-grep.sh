@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Howabout using `grep` to prefilter before loop?
 # A: It is about 2x faster to use `grep` than doing all in a loop

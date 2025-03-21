@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Capturing command's output: `var=$()` vs reading from a temporary file?
 # A: It is about 2x faster to use `var=$()`
