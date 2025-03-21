@@ -848,7 +848,6 @@ that this is a de facto convention, universally
 supported even though it is not defined by
 POSIX.
 
-```
     #! /bin/sh
     #
     # 1. Space is allowed after "#!"
@@ -867,7 +866,6 @@ POSIX.
     #
     #    #! /bin/sh -eu
     #    #! /usr/bin/awk -f
-```
 
 Note that on macOS, `/bin/bash` is hard-coded
 to Bash version 3.2.57 where in 2025 lastest Bash is
@@ -978,7 +976,6 @@ discussions about the topic, see
 [2](https://stackoverflow.com/q/16745988),
 [3](https://stackoverflow.com/q/7573368).
 
-```
     # Linux
     #
     # GNU sed(1)
@@ -1007,8 +1004,6 @@ discussions about the topic, see
     # part of the POSIX utilities.
 
     perl -i -pe 's/this/that/g' file
-
-```
 
 # RANDOM NOTES
 
