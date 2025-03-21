@@ -24,7 +24,7 @@ see also POSIX in
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
 > See section
-> [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability).
+> [POSIX, SHELLS AND PORTABILITY](#posix-shells-and-portability).
 
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
@@ -35,6 +35,16 @@ with an extended set of parameter
 expansions, regular expressions, including
 extracting regex matches and utilizing fast
 functions with namerefs.
+
+It's a myth that Bash is slow,
+considering all its features, if used
+correctly. On the other hand, for small
+and quick shell scripts, POSIX `sh`
+would probably be enough, or even
+faster. But things are not that
+straightforward. More about this in
+section
+[SHELLS AND PERFORMANCE](#shells-and-performance).
 
 In other operating systems, for example BSD,
 the obvious choice for shell scripting would be
@@ -81,7 +91,8 @@ Table of Contents
 - [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
 - [MINOR PERFORMANCE GAINS](#minor-performance-gains)
 - [NO PERFORMANCE GAINS](#no-performance-gains)
-- [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability)
+- [POSIX, SHELLS AND PORTABILITY](#posix-shells-and-portability)
+- [SHELLS AND PERFORMANCE](#shells-and-performance).
 - [RANDOM NOTES](#random-notes)
 - [FURTHER READING](#further-reading)
 - [COPYRIGHT](#copyright)
@@ -597,7 +608,7 @@ None of these offer any advantages to speed up shell scripts.
     parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
-# ABOUT POSIX, SHELLS AND PORTABILITY
+# POSIX, SHELLS AND PORTABILITY
 
 ## About Legacy Bourne Shell scripting practises
 
@@ -1054,6 +1065,10 @@ discussions about the topic, see
     # etc.
 
     perl -i -pe 's/this/that/g' file
+
+# SHELLS AND PERFORMANCE
+
+TODO
 
 # RANDOM NOTES
 
