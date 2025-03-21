@@ -103,12 +103,15 @@ Setup
 
 echo "test file: $(ls -l $f)"
 
-t t1pure
-t t1utf8
-t t1extended
-t t1perl
+t="
+:t t1pure
+:t t1utf8
+:t t1extended
+:t t1perl
+:t t2icasef
+:t t2icasee
+"
 
-t t2icasef
-t t2icasee
+RunTests "$t" "$@"
 
 # End of file
