@@ -702,7 +702,7 @@ Cygwin base. In all practical terms, it
 provides the same Linux-like command-line
 utilities, including Bash. For curious readers,
 Windows
-[MobaXterm](https://mobaxterm.mobatek.net/),
+[MobaXterm](https://mobaxterm.mobatek.net),
 a Swiss-army knife for terminals and connectivity,
 includes a Cygwin-based Bash shell with its own `apt`-style
 Debian-like package manager to install additional
@@ -860,8 +860,9 @@ POSIX.
     #    Kernels.
     #
     #    #! /bin/sh -eu
-    #    #! /usr/bin/env bash
     #    #! /usr/bin/awk -f
+    #    #! /usr/bin/env bash
+    #    #! /usr/bin/env python3
 
 Note that on macOS, `/bin/bash` is hard-coded
 to Bash version 3.2.57 where in 2025 lastest Bash is
@@ -876,6 +877,45 @@ to this limitation, for Bash, the shebang line
 written in the following format:
 
     #! /usr/bin/env bash
+
+<ins>About Python and shebang</ins>
+
+There was a disruptive change from
+Python 2.x to Python 3.x in 2008. The older
+programs did not run without changes with the
+new version. In Python programs, the shebang
+should specify the Python version explicitly,
+either with `python` (2.x) or `python3`.
+These are the only portable choices.
+
+    #! /usr/bin/python
+    #! /usr/bin/python3
+
+    .... Not portable
+
+    #! /usr/bin/python2
+    #! /usr/bin/python3.13.2
+
+Python is also one of those languages which might
+require multiple virtual environments based on
+projects. It is typical to manage these
+environments with tools like
+[uv](https://docs.astral.sh/uv/pip/environments/)
+or older
+[virtualenv](https://virtualenv.pypa.io),
+[pyenv](https://github.com/pyenv/pyenv)
+etc. For even better portability,
+the following would allow
+user to use his active Python environment:
+
+    #! /usr/bin/env python3
+
+The fine print here is that
+[`env`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html)
+is a standard POSIX utility, but its path
+is not mandated by POSIX. However,
+in 99.9% of cases, the de facto location in operating
+systems is `/usr/bin/env`.
 
 **Portability of utilities**
 
