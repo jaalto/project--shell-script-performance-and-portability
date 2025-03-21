@@ -480,14 +480,14 @@ RunTests ()
         dummy="check:condition"
 
         if [ "$1" ]; then # Condition
-            printf "%-20s " "$arg $*"
+            printf "%-28s " "$arg $*"
             if "$@" ; then
                 $arg
             else
                 printf "<skip> "
             fi
         else
-            printf "%-20s " "$arg"
+            printf "%-28s " "$arg"
             $arg
         fi
     else
