@@ -44,6 +44,8 @@
 # Exported variables
 PROGRAM=$0
 
+TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test
+
 random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
 loop_max=${loop_max:-100}
 
