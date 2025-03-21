@@ -107,8 +107,13 @@ t3 ()
 }
 
 Setup
-t t1 IsShellBash
-t t2
-t t3
+
+t="\
+:t t1 IsShellBash
+:t t2
+:t t3
+"
+
+RunTests "$t" "$@"
 
 # End of file
