@@ -27,13 +27,14 @@ set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
 PROGRAM=${0##*/}
+pwd=$(cd "$(dirname "$0")" && pwd)
 
 PREFIX="-- "
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
-RUN_SHELL=""
 TIMEFORMAT="real %3R  user %3U  sys %3S"
 
-pwd=$(cd "$(dirname "$0")" && pwd)
+RUN_SHELL=""
+VERBOSE=""
 
 # ignore follow
 # shellcheck disable=SC1091
@@ -51,6 +52,9 @@ OPTIONS
         Run test case file using SHELL. This can
         be 'dash', 'posh', 'ksh', 'mksh', 'zsh'
         'busybox ash' etc.
+
+    -v, --verbose
+        Display <test case> header.
 
     -h, --help
         Display help.
@@ -91,6 +95,11 @@ FileInfo ()
 
 Header ()
 {
+    if [ "$1" ]; then
+        echo "${PREFIX}$1"
+        return
+    fi
+
     echo "\
 ${PREFIX}$LINE
 ${PREFIX}$1
@@ -134,8 +143,12 @@ Run ()
              ;;
     esac
 
-    Header "$testfile"
-    FileInfo "$testfile"
+    if [ "$VERBOSE" ]; then
+        Header "$testfile"
+        FileInfo "$testfile"
+    else
+        Header "$testfile" "short"
+    fi
 
     if [ "$RUN_SHELL" ]; then
         echo "Run shell: $RUN_SHELL"
@@ -187,6 +200,10 @@ Main ()
                     usebash="time-with-bash"
                 fi
                 RUN_SHELL=$1
+                shift
+                ;;
+            -v | --verbose)
+                VERBOSE="verbose"
                 shift
                 ;;
             -h | --help)
