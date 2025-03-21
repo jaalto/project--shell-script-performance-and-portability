@@ -137,16 +137,18 @@ t3eExt ()
     done
 }
 
-t t1aBase
-t t1bBase
+t="\
+:t t1aBase
+:t t1bBase
+:t t2aDir
+:t t2bDir
+:t t3aExt
+:t t3bExt IsFeatureHereString
+:t t3cExt
+:t t3dExt IsCommandGnuAwk
+:t t3eExt
+"
 
-t t2aDir
-t t2bDir
-
-t t3aExt
-t t3bExt IsFeatureHereString
-t t3cExt
-t t3dExt IsCommandGnuAwk
-t t3eExt
+RunTests "$t" "$@"
 
 # End of file
