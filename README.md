@@ -803,10 +803,13 @@ scripts even more.
                 "busybox ash" \
                 mksh \
                 ksh \
-                bash
+                bash \
+                zsh
             do
-                echo "-- shell: $shell"
-                $shell -nx "$script"
+                if command -v $shell > /dev/null; then
+                    echo "-- shell: $shell"
+                    $shell -nx "$script"
+                fi
             done
         done
 
