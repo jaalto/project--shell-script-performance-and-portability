@@ -164,18 +164,16 @@ tests manually:
 # t-file-copy-check-exist.sh
 
 **Q: Should you test existense before copying?**<br/>
-*A: It is about 50x faster is you test existense before copying.*<br/>
+*A: It is about 40x faster is you test existense before copying.*<br/>
 _priority: 1_
 
-    t1 real 0m0.013s <file test> cp
-    t2 real 0m0.009s <file test> cp (hardlink)
-    t3 real 0m1.812s cp A B
+    t1 real 0m0.007s <file test> cp
+    t2 real 0m1.270s cp A B
 
 ## Code
 
     t1 [ A -nt B ] || cp --preserve=timestamps ...
-    t2 [ A -ef B ] || cp --preserve=timestamps --link ...
-    t3 cp --preserve=timestamps A B
+    t2 cp --preserve=timestamps A B
 
 
 # t-file-for-loop-vs-awk.sh
@@ -385,11 +383,11 @@ _priority: 8_
 # t-file-read-with-size-check.sh
 
 **Q: Is empty file check useful before reading file's content?**<br/>
-*A: It is about 10x faster to use `[ -s file ]` before reading*<br/>
-_priority: 8_
+*A: No need to check. Reading even empty file is fast.*<br/>
+_priority: 0_
 
-    t1 real 0m0.105s $(< file)
-    t2 real 0m0.006s [ -s file] && $(< file)
+    t1 real 0m0.166s $(< file)
+    t2 real 0m0.168s [ -s file] && $(< file)
 
 
 # t-file-size-info.sh
@@ -416,14 +414,14 @@ system to another.
 *A: It is about 8x faster to use nameref to return value from a function*<br/>
 _priority: 10_
 
-    t1 real 0m0.055s t1 $(funcall)
-    t2 real 0m0.006s t2 funcall POSIX nameref
+    t1 real 0m0.006s t2 funcall POSIX nameref
+    t2 real 0m0.055s t1 $(funcall)
     t3 real 0m0.005s t2 funcall Bash nameref
 
 ## Code
 
-    t1 fn(): ... echo "<value>"
-    t2 fn(): ret=$1; ... eval "$ret=\$value"
+    t1 fn(): ret=$1; ... eval "$ret=\$value"
+    t2 fn(): ... echo "<value>"
     t3 fn(): local -n ret=$1; ... ret=$value
 
 ## Notes
@@ -445,6 +443,8 @@ nameref must have a unique variable name.
     fn2: nameref2
       ...
 
+
+# t-libx.sh
 
 # t-statement-arithmetic-for-loop.sh
 

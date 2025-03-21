@@ -28,7 +28,7 @@ FILE: t-dir-entries.sh
 
 FILE: t-file-copy-check-exist.sh
 # Q: Should you test existense before copying?
-# A: It is about 50x faster is you test existense before copying.
+# A: It is about 40x faster is you test existense before copying.
 
 FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?
@@ -68,7 +68,7 @@ FILE: t-file-read-shell-result.sh
 
 FILE: t-file-read-with-size-check.sh
 # Q: Is empty file check useful before reading file's content?
-# A: It is about 10x faster to use `[ -s file ]` before reading
+# A: No need to check. Reading even empty file is fast.
 
 FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
@@ -78,6 +78,7 @@ FILE: t-function-return-value.sh
 # Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 8x faster to use nameref to return value from a function
 
+FILE: t-libx.sh
 FILE: t-statement-arithmetic-for-loop.sh
 # Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
 # A: The `{1..N}` and `$(seq N)` are very fast

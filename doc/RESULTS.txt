@@ -1,5 +1,5 @@
 FILE: t-command-echo-vs-printf.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: The classic: `echo` vs `printf`
 # A: No notable difference
@@ -9,7 +9,7 @@ FILE: t-command-echo-vs-printf.sh
 #     t2 real 0m0.278s printf
 
 FILE: t-command-grep-parallel.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Is `grep' faster with `parallel`?
 # A: In typical files, grep is much faster. Use `parallel`only with huge files.
@@ -32,7 +32,7 @@ FILE: t-command-grep-parallel.sh
 # relatively small (test file: ~600 lines).
 
 FILE: t-command-grep.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: In grep, is option --fixed-strings faster?
 # A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
@@ -61,7 +61,7 @@ FILE: t-command-grep.sh
 # `--ignore-case`.
 
 FILE: t-command-output-vs-process-substitution.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: `cmd | while` vs `while ... done < <(process substitution)`
 # A: No notable difference. Process substitution preserves variables in loop.
@@ -94,7 +94,7 @@ FILE: t-command-output-vs-process-substitution.sh
 # gains.
 
 FILE: t-command-pwd-vs-variable-pwd.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: How much is POSIX `$PWD` and `$OLDPWD` faster than `pwd`?
 # A: It is about 7x faster to `pwd`
@@ -112,7 +112,7 @@ FILE: t-command-pwd-vs-variable-pwd.sh
 # substitution `$(command)`.
 
 FILE: t-dir-empty.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: What is the fastest way to check empty directory?
 # A: array+glob is faster than built-in `compgen`
@@ -130,7 +130,7 @@ FILE: t-dir-empty.sh
 #     ...
 
 FILE: t-dir-entries.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Fastest to get list of dirs: loop vs `compgen` vs `ls -d`
 # A: No notable differences.`ls` is good enough.
@@ -161,24 +161,22 @@ FILE: t-dir-entries.sh
 #     max_dirs=20 ./t-dir-entries.sh t4
 
 FILE: t-file-copy-check-exist.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Should you test existense before copying?
-# A: It is about 50x faster is you test existense before copying.
+# A: It is about 40x faster is you test existense before copying.
 # priority: 1
 #
-#     t1 real 0m0.013s <file test> cp
-#     t2 real 0m0.009s <file test> cp (hardlink)
-#     t3 real 0m1.812s cp A B
+#     t1 real 0m0.007s <file test> cp
+#     t2 real 0m1.270s cp A B
 #
 # Code:
 #
 #     t1 [ A -nt B ] || cp --preserve=timestamps ...
-#     t2 [ A -ef B ] || cp --preserve=timestamps --link ...
-#     t3 cp --preserve=timestamps A B
+#     t2 cp --preserve=timestamps A B
 
 FILE: t-file-for-loop-vs-awk.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: for-loop file-by-file to awk vs awk handling all the files?
 # A: It is about 2-3x faster to do it all in awk
@@ -188,7 +186,7 @@ FILE: t-file-for-loop-vs-awk.sh
 #     t1 real 0m0.584s for <files> do ... awk <file> ... done
 
 FILE: t-file-glob-bash-compgen-vs-stat.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: How to check if GLOB matches any files: arrays vs `compgen` vs `stat`
 # A: `compgen` and array+glob are slightly faster than `stat`
@@ -209,7 +207,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 # Command `stat` does more work by opening each found file.
 
 FILE: t-file-grep-vs-match-in-memory.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: To search file for matches: in memory searh vs `grep`
 # A: It is about 8-10x faster to read file into memory and then do matching
@@ -238,7 +236,7 @@ FILE: t-file-grep-vs-match-in-memory.sh
 # to read file once and then apply matching.
 
 FILE: t-file-newest-in-dir.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: What is the fastest way to get newest file in a directory
 # A: Use find + filters. find + awk would be tad faster but more complex.
@@ -271,7 +269,7 @@ FILE: t-file-newest-in-dir.sh
 # directory contains both.
 
 FILE: t-file-pipe-vs-process-substitution.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Would pipe be slower than using process substitution?
 # A: No notable difference. Pipes are efficient.
@@ -286,7 +284,7 @@ FILE: t-file-pipe-vs-process-substitution.sh
 #     < <( < <(cmd) cmd) cmd    # t2
 
 FILE: t-file-read-cat-vs-bash.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Howabout `$(< FILE)` vs `$(cat FILE)`
 # A: It is about 2x faster to use `$(< FILE)` for small files
@@ -308,7 +306,7 @@ FILE: t-file-read-cat-vs-bash.sh
 #     real 0m0.056s
 
 FILE: t-file-read-content-loop.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: To process lines: `readarray` vs `while read < file`
 # A: It is about 2x faster to use `readarray`
@@ -332,7 +330,7 @@ FILE: t-file-read-content-loop.sh
 # so they should behave equally.
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Howabout using `grep` to prefilter before loop?
 # A: It is about 2x faster to use `grep` than doing all in a loop
@@ -372,7 +370,7 @@ FILE: t-file-read-match-lines-loop-vs-grep.sh
 # the Kernel's file cache.
 
 FILE: t-file-read-shell-result.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Capturing command's output: `var=$()` vs reading from a temporary file?
 # A: It is about 2x faster to use `var=$()`
@@ -382,17 +380,17 @@ FILE: t-file-read-shell-result.sh
 #     t2 real 0m0.899s cmd > file; val=$(< file)
 
 FILE: t-file-read-with-size-check.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Is empty file check useful before reading file's content?
-# A: It is about 10x faster to use `[ -s file ]` before reading
-# priority: 8
+# A: No need to check. Reading even empty file is fast.
+# priority: 0
 #
-#     t1 real 0m0.105s $(< file)
-#     t2 real 0m0.006s [ -s file] && $(< file)
+#     t1 real 0m0.166s $(< file)
+#     t2 real 0m0.168s [ -s file] && $(< file)
 
 FILE: t-file-size-info.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: What is the fastest way to read a file's size?
 # A: Use `stat` or portable GNU `wc -c`.
@@ -410,20 +408,20 @@ FILE: t-file-size-info.sh
 # system to another.
 
 FILE: t-function-return-value.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 8x faster to use nameref to return value from a function
 # priority: 10
 #
-#     t1 real 0m0.055s t1 $(funcall)
-#     t2 real 0m0.006s t2 funcall POSIX nameref
+#     t1 real 0m0.006s t2 funcall POSIX nameref
+#     t2 real 0m0.055s t1 $(funcall)
 #     t3 real 0m0.005s t2 funcall Bash nameref
 #
 # Code:
 #
-#     t1 fn(): ... echo "<value>"
-#     t2 fn(): ret=$1; ... eval "$ret=\$value"
+#     t1 fn(): ret=$1; ... eval "$ret=\$value"
+#     t2 fn(): ... echo "<value>"
 #     t3 fn(): local -n ret=$1; ... ret=$value
 #
 # Notes:
@@ -445,8 +443,9 @@ FILE: t-function-return-value.sh
 #     fn2: nameref2
 #       ...
 
+FILE: t-libx.sh
 FILE: t-statement-arithmetic-for-loop.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
 # A: The `{1..N}` and `$(seq N)` are very fast
@@ -472,7 +471,7 @@ FILE: t-statement-arithmetic-for-loop.sh
 # tests.
 
 FILE: t-statement-arithmetic-increment.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
 # A: No noticeable difference, POSIX `i=$((i + 1))` will do fine
@@ -492,7 +491,7 @@ FILE: t-statement-arithmetic-increment.sh
 # `i=$((i + 1))`.
 
 FILE: t-statement-if-test-posix-vs-bash.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: No notable difference.
@@ -520,7 +519,7 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 #     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 FILE: t-string-file-path-components-and-parameter-expansion.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
 # A: It is 20-40x faster to use in memory parameter expansion where possible
@@ -584,7 +583,7 @@ FILE: t-string-file-path-components-and-parameter-expansion.sh
 #     /path/project.git/README.txt
 
 FILE: t-string-trim-whitespace.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Trim whitepace using Bash RE vs `sed`
 # A: It is 8x faster to use Bash, especially with fn() nameref
@@ -601,7 +600,7 @@ FILE: t-string-trim-whitespace.sh
 #     t3 var=$(echo "$str" | sed <trim>) # subshell call
 
 FILE: t-variable-array-split-string.sh
-#! /bin/bash
+#! /usr/bin/env bash
 #
 # Q: Split string into an array by IFS?
 # A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING
