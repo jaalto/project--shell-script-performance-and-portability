@@ -981,23 +981,28 @@ discussions about the topic, see
 ```
     # In Linux
     # GNU sed(1)
-    # Replace 'this' with 'that' in file.
+    # Replace 'this' with 'that'
 
     sed -i 's/this/that/g' file
 
     # In macOS
     # The same does not work.
-    # The '-i' option has different syntax
-    # and semantics. There is not workaround
-    # to make the '-i' option work accross
-    # all operating systems.
+    # The '-i' option has different
+
+    # syntax and semantics. There
+    # is not workaround to make
+    # the '-i' option work accross
+    # all Operating Systems.
 
     sed -i 's/this/that/g' file
 
     # Portable
-    # The most portable is to rewrite calls
-    # in Perl. Perl is almost always installed
-    # although not part of the POSIX utilities.
+    #
+    # The most portable is to rewrite
+    # calls in Perl. Perl is
+    # 99 % of the cases installed
+    # although it is not part of the
+    # POSIX utilities.
 
     perl -i -pe 's/this/that/g' file
 
