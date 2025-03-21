@@ -4,14 +4,14 @@
 # A: It is about 8x faster to use nameref to return value from a function
 # priority: 10
 #
-#     t1 real 0m0.055s t1 $(funcall)
-#     t2 real 0m0.006s t2 funcall POSIX nameref
+#     t1 real 0m0.006s t2 funcall POSIX nameref
+#     t2 real 0m0.055s t1 $(funcall)
 #     t3 real 0m0.005s t2 funcall Bash nameref
 #
 # Code:
 #
-#     t1 fn(): ... echo "<value>"
-#     t2 fn(): ret=$1; ... eval "$ret=\$value"
+#     t1 fn(): ret=$1; ... eval "$ret=\$value"
+#     t2 fn(): ... echo "<value>"
 #     t3 fn(): local -n ret=$1; ... ret=$value
 #
 # Notes:
@@ -35,13 +35,13 @@
 
 . ./t-lib.sh ; f=$random_file
 
-f1 ()
+Funcall ()
 {
     result="return value"
     echo "$result"
 }
 
-f2 () # POSIX
+NamerefPosix () # POSIX
 {
     retval=$1  # nameref attribute, a reference to variable
 
@@ -50,7 +50,7 @@ f2 () # POSIX
     eval "$retval=\$result"
 }
 
-f3 () # Bash
+NamerefBash () # Bash
 {
     local -n retval=$1  # nameref attribute, a reference to variable
 
@@ -64,7 +64,7 @@ t1 ()
 
     for i in $(seq $loop_max)
     do
-        val=$(f1)
+        NamerefPosix val
     done
 }
 
@@ -74,7 +74,7 @@ t2 ()
 
     for i in $(seq $loop_max)
     do
-        f2 val
+        val=$(Funcall)
     done
 }
 
@@ -84,12 +84,27 @@ t3 ()
 
     for i in $(seq $loop_max)
     do
-        f3 val
+        NamerefBash val
     done
 }
 
-t t1
-t t2
-t t3 IsShellBash
+Run ()
+{
+    if [ "$1" ]; then
+        "$@"
+    else
+        t t1
+        t t2
+        t t3 IsShellBash
+    fi
+}
+
+t="\
+:t t1
+:t t2
+:t t3 IsShellBash
+"
+
+RunTests "$t" "$@"
 
 # End of file
