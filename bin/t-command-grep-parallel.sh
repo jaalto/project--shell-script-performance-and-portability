@@ -71,10 +71,14 @@ Setup
 echo "test file: $(ls -l $f)"
 echo "test file: lines $(wc -l $f)"
 
-t t0
-t t1a IsOsCygwin
-t t1b IsOsCygwin
-t t2
-t t3
+t="\
+:t t0
+:t t1a IsOsCygwin
+:t t1b IsOsCygwin
+:t t2
+:t t3
+"
+
+RunTests "$t" "$@"
 
 # End of file
