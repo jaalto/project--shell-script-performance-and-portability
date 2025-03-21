@@ -45,8 +45,12 @@ t3 ()
     done
 }
 
-t t1
-t t2
-t t3
+t="\
+:t t1
+:t t2
+:t t3
+"
+
+RunTests "$t" "$@"
 
 # End of file
