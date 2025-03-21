@@ -1,36 +1,28 @@
 <!--
 Github Markdown Guide: https://is.gd/nqSonp
+VSCode: preview markdown C-S-v
 -->
 
-# SHELL SCRIPT PERFORMANCE
+# SHELL SCRIPT PERFORMANCE AND PORTABILITY
 
-How can you make shell scripts run faster?
-That's the question these test cases aim to answer.
+How can you make shell scripts portable and run faster?
+That are the questions these test cases aim to answer.
 
 The tests reflect results under Linux.
-The main focus is on the features found in
+For performance the main focus is on the
+features found in
 [Bash](https://www.gnu.org/software/bash)
-rather than minimalistic `sh`
+rather than `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
 shells;
 see also POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
-> modern, mostly POSIX-compatible, shells like
+> modern, best-of-effort POSIX-compatible,
+> minimal shells like
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
-> The legacy `sh`
-> ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
-> is not a relevant
-> target for shell scripting, and old scripting
-> practices are best left to archaeologists and
-> historians. Even UNIX operating systems,
-> e.g. HP-UX, Solaris, and AIX, have had
-> for 20 years an `sh` that is POSIX-capable.
-> Note that on many Operating Systems, `sh` is
-> a symbolic link to `dash` (on Linux), `ksh`
-> (on others), or it may even point to `bash`.
 > See section
 > [ABOUT POSIX, SHELLS AND PORTABILITY](#about-posix-shells-and-portability).
 
@@ -242,22 +234,22 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
-- In Bash, the using `ret=$(fn)` to call functions
+- In Bash, using `ret=$(fn)` to call functions
   is very slow. On the other hand, in Ksh shells
-  that would be fast. Therefore in Bash scrips, it is
-  better, about 8 times faster, to use
+  that would be fast. Therefore in Bash scrips,
+  it is about 8 times faster, to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
-  to return a values.
+  to return a value.
   See [code](./bin/t-function-return-value.sh).
 
 ```
-    fnPosix()
+    fnPosix() # dash
     {
         # Use nameref for the
         # return value
-        retref=$1
+        local retref=$1
         shift
-        arg=$1
+        local arg=$1
 
         eval "$retref=\$arg"
     }
@@ -273,7 +265,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         retref=$arg
     }
 
-    # Fast way to return value in 'ret'
+    # Return value in 'ret'
     fnPosix ret "arg"
     fnBash ret "arg"
 ```
@@ -291,7 +283,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # 100 KiB buffer. Stored in $REPLY.
+   # Read max 100 KiB to $REPLY
    read -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
@@ -313,6 +305,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```
+    # Bash
     readarray -t array < file
 
     for line in "${array[@]}"
@@ -320,7 +313,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         ...
     done
 
-    # Slower
+    # POSIX. Slower
     while read -r line
     do
         ...
@@ -339,20 +332,33 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```
+    # Bash
     while read -r ...
     do
         ...
-    done < <(grep --extended-regexp "$re" file)
+    done < <(grep "$re" file)
 
+    # POSIX
     # Problem: while runs in
     # a separate environment
-    grep --extended-regexp "$re" file) |
+    grep "$re" file) |
     while read -r ...
     do
         ...
     done
 
-    # Slowest, in-loop prefilter
+    # POSIX
+    # Problem: Slow, extra call
+    # required to delete tmpfile
+    grep "$re" file) > tmpfile
+    while read -r ...
+    do
+        ...
+    done < tmpfile
+    rm tmpfile
+
+    # Bash, Slowest,
+    # in-loop prefilter
     while read -r line
     do
        [[ $line =~ $re ]] || continue
@@ -382,14 +388,14 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
-    string="1:2:3"
+    str="1:2:3"
 
     # Bash, Ksh. Fastest.
-    IFS=":" eval 'array=($string)'
+    IFS=":" eval 'array=($str)'
 
     fn() # Bash
     {
-        local string=$1
+        local str=$1
 
         # Make 'set' local
         local -
@@ -400,14 +406,14 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
         local -a array
 
-        IFS=":" eval 'array=($string)'
+        IFS=":" eval 'array=($str)'
         ...
     }
 
-    # Bash. Much slower than 'eval'.
-    IFS=":" read -ra array <<< "$string"
+    # Bash. Slower than 'eval'.
+    IFS=":" read -ra array <<< "$str"
 
-    # In Linux, to see what Bash uses
+    # In Linux, see what Bash uses
     # for HERE STRING: pipe or
     # temporary file
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
@@ -445,7 +451,7 @@ for details and further commentary.
         ...
     done
 
-    # POSIX, seq binary, still fast
+    # POSIX, fast
     for i in $(seq $N $M)
     do
         ...
@@ -554,18 +560,18 @@ None of these offer any advantages to speed up shell scripts.
 
     # POSIX (1)
     # Same, but with
-	# temporary file
+    # temporary file
     command > file
     while read -r ...
     do
         ...
     done < file
-	rm file
+    rm file
 
     # POSIX (2)
     # while is being run in
     # separate environment
-	# due to pipe(|)
+    # due to pipe(|)
     command |
     while read -r ...
     do
@@ -577,34 +583,442 @@ None of these offer any advantages to speed up shell scripts.
   [GNU parallel](https://www.gnu.org/software/parallel/),
   a `perl` program,
   makes things notably slower for typical file
-  sizes. Otherwise, GNU `parallel` is
-  excellent for making full use of multiple
-  cores. The idea of splitting a file into
+  sizes. The idea of splitting a file into
   chunks of lines and running the search in
   parallel is intriguing, but the overhead of
   starting perl with `parallel` is orders of
   magnitude more expensive compared to running
   already optimized `grep` only once.
-  Based on StackOverflow discussions,
+  Otherwise, GNU `parallel` is
+  excellent for making full use of multiple
+  cores. Based on StackOverflow discussions,
   if file sizes are in the tens of megabytes,
-  GNU `parallel` can help speed things up.
+  GNU
+  [`parallel`](https://www.gnu.org/software/parallel/)
+  can help speed things up.
   See [code](./bin/t-command-grep-parallel.sh).
 
 ```
-    parallel --pipepart grep "$re" < "$megafile"
+    parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
 # ABOUT POSIX, SHELLS AND PORTABILITY
 
-TODO: upcoming.
+## About Legacy Bourne Shell scripting practises
+
+In typical cases, the legacy `sh`
+([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
+is not a relevant target for shell scripting.
+These practices are best left to
+archaeologists and historians to study;
+time has long eroded their relevance. All
+Linux and and relevant UNIX operating systems
+have long provided an
+`sh` that is POSIX-compliant enough. Note that
+nowadays `sh` is
+usually a symbolic link to
+[dash](https://tracker.debian.org/pkg/dash)
+(on Linux),
+[ksh](https://tracker.debian.org/pkg/ksh93u+m)
+(on others), or it may point to
+[Bash](https://www.gnu.org/software/bash)
+(on macOS).
+
+Examples or archaic coding practises:
+
+```
+    if [ x"$a" = "y" ]; then ...
+
+    # Variable lenght is non-zero
+    if [ -n "$a" ] ...
+
+    # Variable lenght is zero
+    if [ -z "$a" ] ...
+
+    # Deprecated. POSIX will
+    # remove logical -o (OR)
+    # and -a (AND)
+    if [ "$a" = "y" -o "$b" = "y" ] ...
+
+```
+Modern equivalents:
+```
+
+    # Equality
+    if [ "$a" = "y" ] ..
+
+    # Variable has something
+    if [ "$a" ] ...
+
+    # Variable is empty
+    if [ ! "$a" ] ...
+
+    if [ "$a" = "y" ] || [ "$b" = "y" ]; then ...
+
+```
+
+
+## Requirements and shell scripts
+
+Writing shell scripts inherently involves considering several factors.
+
+- *Personal scripts.* When writing scripts for
+  personal use, choose whichever shell best suits
+  your environment. On Linux, the obvious choice
+  is Bash. On BSD systems, it would be Ksh. On
+  macOS, Zsh is the default and preferred option.
+
+- *Portable scripts.* If you intend to use the
+  scripts across some operating systems — from
+  Linux to Windows
+  ([Git Bash](https://gitforwindows.org/),
+  [Cygwin](https://cygwin.com),
+  [MSYS2](https://www.msys2.org) [\*][\*\*]) —
+  the obvious choice would be Bash. Between macOS and
+  Linux, writing scripts in Bash is generally
+  more portable than writing them in
+  Zsh because Linux doesn't have Zsh installed
+  by default. With macOS however, the choice
+  of Bash is a bit more involved (see next).
+
+- *POSIX-compliant scripts*. If you intend to
+  use the scripts across a variety of operating
+  systems — from Linux, BSD, and macOS to various
+  Windows Linux-like environments — the issues
+  become quite complex.
+  You are probably better off writing `sh`
+  POSIX-compliant scripts and testing them with
+  [dash](https://tracker.debian.org/pkg/dash),
+  since relying on Bash can lead to
+  unexpected issues — different systems have
+  different Bash versions, and there’s no
+  guarantee that a script written on Linux will
+  run without problems on older Bash versions,
+  such as the outdated 3.2 version in `/bin/bash`
+  on macOS. Requiring users to install a newer
+  version on macOS is not trivial because
+  `/bin/bash` is not replaceable.
+
+[\*] "Git Bash" is available with the popular
+native Windows installation of Git. Under the
+hood, it is based on MSYS, which in turn is
+based on Cygwin... so the common denominator of
+all native Windows Linux-like environments is the
+Cygwin base. In all practical terms, it
+provides the same Linux-like command-line
+utilities, including Bash. For curious readers,
+Windows
+[MobaXterm](https://mobaxterm.mobatek.net/),
+a Swiss-army knife for terminals and connectivity,
+includes a Cygwin-based Bash shell with its own `apt`-style
+Debian-like package manager to install additional
+Linux software.
+
+[\*\*] In Windows, there is also the Windows
+Subsystem for Linux
+([WSL](https://learn.microsoft.com/en-us/windows/wsl/)),
+where you can install Linux distributions like
+Debian and Ubuntu. Bash is the obvious choice
+for shell scripts in this environment.
+
+## Writing POSIX compliant shell scrips
+
+**Shells and POSIX compliant scripts**
+
+For all practical purposes, there is no need to
+overthink or attempt to write *pure* POSIX shell
+scripts. Let's consider shells in order
+of their strictness to POSIX:
+
+
+- [posh](https://tracker.debian.org/pkg/posh).
+  Minimal `sh`, Policy-compliant Ordinary SHell.
+  Very close to POSIX. Stricter than
+  `dash`. Supports for defining
+  `local` variables in functions. The
+  keyword is not defined in POSIX.
+- [dash](https://tracker.debian.org/pkg/dash).
+  Minimal `sh`, Debian Almquish Shell.
+  Close to POSIX. Supports for example
+  `local` keyword.
+  The shell aims to meet the
+  requirements of Debian Linux distribution.
+- [Busybox ash](https://www.busybox.net) is based
+  on `dash` but some more features added.
+  See ServerFault
+  ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
+
+Let's also consider `/bin/sh` in
+different Operating Systems. For more about the history of the `sh` shell,
+see the well-rounded discussion on StackExchange.
+ [What does it mean to be "sh compatible"?](https://unix.stackexchange.com/q/145522)
+
+<!-- <contactme2016@tangentsoft.com> -->
+[Picture](https://tangentsoft.com/misc/unix-shells.svg)
+"Bourne Family Shells" by
+[tangentsoft.com](tangentsoft.com)
+<picture>
+    <source srcset="https://tangentsoft.com/misc/unix-shells-large.png">
+    <img src="pic/unix-shells.svg" alt="Bourne Family Shells" style="width:auto;">
+</picture>
+
+- On Linux, most distributions already use, or
+  are moving towards using, `sh` as a symlink to
+  [dash](https://tracker.debian.org/pkg/dash).
+- On the most conservative NetBSD, it is `ash`,
+  the old Almquist shell.
+  On FreeBSD, `sh` is based on `dash`.
+  On
+  [OpenBSD, sh](https://man.netbsd.org/sh.1) is
+  [ksh93](https://tracker.debian.org/pkg/ksh93u+m)
+  from the
+  [Ksh family](https://en.wikipedia.org/wiki/KornShell).
+- On many commercial, conservative UNIX systems
+  `sh` is nowadays quite capable
+  [ksh93](https://tracker.debian.org/pkg/ksh93u+m).
+- On macOS, `sh` points to `bash --posix`, where
+  the Bash version is indefinitely stuck at
+  version 3.2.x due to Apple avoiding the GPL-3
+  license in later Bash versions. If you write
+  `/bin/sh` scripts in macOS, it is best to check
+  them explicitly for portability with:
+```
+    # Check /bin/sh compliance
+    dash -nx script.sh
+```
+
+In practical terms, if you plan to aim
+for POSIX-compliant shell scripts, the best
+shells for testing are `posh` and `dash`. You can
+also extend testing with BSD Ksh shells and
+other shells. See
+[FURTHER READING](#further-reading) for external
+utilities to check and improve shell
+scripts even more.
+
+    # Save in shell startup file
+    # like ~/.bashrc
+
+    shelltest()
+    {
+        for script in "$@"
+        do
+            for shell in \
+                posh \
+                dash \
+                "busybox ash" \
+                mksh \
+                ksh \
+                bash
+            do
+                echo "-- shell: $shell"
+                $shell -nx "$script"
+            done
+        done
+
+        unset shell script
+    }
+
+    # Use is like:
+    shelltest script.sh
+
+    # External utility to check code
+    shellcheck script.sh
+
+    # External utility to check code
+    checkbashisms script.sh
+
+**Shebang line in shell scripts**
+
+Note that POSIX does not defined the
+[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
+See
+[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html#tag_16_111_08)
+
+> (...) Another way that some historical
+> implementations handle shell scripts is by
+> recognizing the first two bytes of the file as
+> the character string "#!" and using the
+> remainder of the first line of the file as the
+> name of the command interpreter to execute.
+
+The first bytes of a script typically contain
+two special ASCII codes, a special comment if
+you wish, which is read by the kernel. Note
+that this is a de facto convention, universally
+supported even though it is not defined by
+POSIX.
+
+    #! /bin/sh
+    #
+    # 1. Space is allowed after "#!"
+    #    for readability.
+    #
+    # 2. The <interpreter> must be full
+    #     path name. Not like:
+    #
+    #    #! sh
+    #
+    # 3. ONE option word can be added
+    #    after the <interpreter>. Any
+    #    more than that is not portable
+    #    accross other than Linux
+    #    Kernels.
+    #
+    #    #! /bin/sh -eu
+    #    #! /bin/bash -eu
+    #    #! /usr/bin/awk -f
+
+Note that on macOS, `/bin/bash` is hard-coded
+to Bash version 3.2.57 where in 2025 lastest Bash is
+[5.2](https://tracker.debian.org/pkg/bash).
+You cannot uninstall
+it, even with root access, without disabling
+System Integrity Protection. If you install a
+newer Bash version with `brew install bash`, it
+will be located in `/usr/local/bin/bash`. Due
+to this limitation, for Bash, the shebang line
+— from a portability point of view — is best
+written in the following format:
+
+    #! /usr/bin/env bash
+
+**Portability of utilities**
+
+The utilities that you use in scripts, those of
+`echo`, `cut`, `tail` make big part of of the
+scripts. If you want to ensure portability,
+check options defined in
+[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/).
+See top left menu "Shell & Utilities"
+followed by bottom left menu
+["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html)
+
+Notable observations:
+
+- [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html).
+  Use
+  [`printf`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html)
+  when more is needed.
+
+```
+  # Not POSIX
+  echo -e "line\nline"
+  echo -n "without newline"
+```
+
+- [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
+  No `-N` option to read
+  file into memory for fast
+  in-memory pattern matching
+  later.
+
+```
+   # Not POSIX
+   # Read max 100 KiB to $REPLY
+   read -N$((100 * 1024)) < file
+
+   case $REPLY in
+        *pattern*)
+            # match
+            ;;
+   esac
+```
+
+- [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html).
+  To check if a command exists, use `command -v
+  <command>` and not `which <command>`. "which"
+  is not part of POSIX and is not a portable
+  solution. Note that POSIX also defines
+  [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  as in `type <command>`, but in practice, the
+  semantics, return codes, and output are not as
+  uniform compared to `command -v`. POSIX also
+  has
+  [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  as in `hash <command>`, but it is less
+  consistently supported across shells. Neither
+  `type` nor `hash` is supported by `posh`.
+
+```
+    REQUIRE="sqlite curl"
+
+    RequireFeatures ()
+    {
+        for cmd in $REQUIRE
+        do
+            if ! command -v "$cmd" > /dev/null; then
+                echo "ERROR: missing required command: $cmd" >&2
+                exit 1
+            fi
+        done
+
+        unset cmd
+    }
+
+    # Before program starts
+    RequireFeatures
+    ...
+```
+
+**Case Study: sed**
+
+It's not just about
+choosing to write in `sh` shell; the utilities called from
+the script also pose problems. For example, the
+Linux GNU `sed(1)` and its options differ or
+are incompatible. The Linux GNU
+[`sed`](https://www.gnu.org/software/sed/)
+`--in-place` option for replacing file content
+cannot be used in macOS and BSD. Additionally,
+in macOS and BSD, you will find GNU programs
+under a `g`-prefix, such as `gsed(1)`, etc.
+See StackOverflow discussion
+["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068). For more
+discussions about the topic, see
+[1](https://stackoverflow.com/q/48712373),
+[2](https://stackoverflow.com/q/16745988),
+[3](https://stackoverflow.com/q/7573368).
+
+    # Linux
+    #
+    # GNU sed(1). Replace 'this' with
+    # 'that'
+
+    sed -i 's/this/that/g' file
+
+    # macOS
+    #
+    # This does not work. The '-i'
+    # option has different syntax and
+    # semantics. There is no workaround
+    # to make the '-i' option work
+    # across all operating systems.
+
+    sed -i 's/this/that/g' file
+
+    # Portable
+    #
+    # The most portable is to use
+    # Perl which is almost always
+    # available although it
+    # is not part of the POSIX
+    # utilities. Let's disregard
+    # special cases like busybox
+    # etc.
+
+    perl -i -pe 's/this/that/g' file
 
 # RANDOM NOTES
 
-See the
-[Bash](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
-manual page how to use `time`
-command to display results in different
-formats:
+See the Bash manual how to use
+[`time`](https://www.gnu.org/software/bash/manual/bash.html#Pipeline)
+reserved word with
+[TIMEFORMAT](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
+variable to display results in different
+formats. The use of time as a reserved word
+permits the timing of shell builtins, shell
+functions, and pipelines.
 
     TIMEFORMAT='real: %R'  # '%R %U %S'
 
@@ -620,22 +1034,35 @@ testing:
 - List of which features were added to specific
   releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
-- See BashFAQ why
-  [POSIX \$(cmd)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
-  is preferrable over archaic backtics as in \`cmd\`.
+- Use
+  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
+  `$(cmd)`
+  command substituion instead of
+  archaic backtics as in \`cmd\`. For more
+  information, see
   https://mywiki.wooledge.org/BashFAQ/082
-  **Note**: for 20 years even all the `sh` shells
-  have supported the readable `$()`command
-  substitution syntax. This includes very
-  conservarive HP-UX and Solaris 10 from 2005 whose
-  support ended in
-  [2021](https://www.liquisearch.com/solaris_operating_system/version_history).
-- Lint scripts for potential mistakes with
+  **Note**: For the past 20 years, all
+  modern `sh` shells have supported the readable
+  `$()` substitution syntax. This includes, for
+  example, UNIX operating systems like HP-UX and
+  Oracle Solaris 10 from 2005. Oracle Solaris 10
+  support ends in
+[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
+  (see
+  [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
+- Use `shellcheck` (Haskell) to
+  to help to
+  improve and write portable POSIX scripts.
+  It can statically Lint scripts for potential
+  mistakes. There is also a web interface where
+  you can upload the script at
   https://www.shellcheck.net. In Debian,
-  install package "shellcheck" and see
+  see package "shellcheck". See manual page at
   https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
-- In Debian, to help to write portable POSIX
-  scripts, install package "devscripts" and see
+- Use `checkbashisms` command to help to
+  improve and write portable POSIX scripts.
+  In Debian, the command is available
+  in package "devscripts". See
   https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
 
 For the curious readers:
@@ -670,4 +1097,4 @@ along with these programs. If not, see <http://www.gnu.org/licenses/>.
 License: GPL-2-or-later - https://spdx.org/licenses
 
 Keywords: shell, sh, POSIX, bash, programming,
-optimize, performance, profiling
+optimize, performance, profiling, portability
