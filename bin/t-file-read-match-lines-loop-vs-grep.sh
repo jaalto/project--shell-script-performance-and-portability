@@ -90,9 +90,13 @@ t2b ()
     done
 }
 
-t t1a
-t t1b
-t t2a
-t t2b
+t="\
+:t t1a
+:t t1b
+:t t2a
+:t t2b
+"
+
+RunTests "$t" "$@"
 
 # End of file
