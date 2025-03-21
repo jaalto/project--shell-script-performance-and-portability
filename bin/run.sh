@@ -255,7 +255,7 @@ Main ()
         esac
     done
 
-    if [ ! "$1" ]; then
+    if [ ! "${1:-}" ]; then
         Die "ERROR: missing file <test case>. See --help."
     fi
 
