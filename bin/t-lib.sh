@@ -59,7 +59,7 @@ DICTIONARY=${DICTIONARY:-$DICTIONARY_DEFAULT}
 random_file_count=${random_file_count:-10000}
 RUNNER=t.run
 
-[ "$KSH_VERSION" ] && alias local=typeset
+[ "${KSH_VERSION:-}" ] && alias local=typeset
 
 AtExit ()
 {
@@ -168,6 +168,8 @@ IsCommandPushd ()
 
 IsCommandGnuVersion ()
 {
+    [ "${1:-}" ] || return 1
+
     case "$("$1" --version 2> /dev/null)" in
         *GNU*)
             return 0
@@ -196,31 +198,31 @@ IsCommandParallel ()
 RequireParallel ()
 {
     IsCommandParallel && return 0
-    Die "$1: ERROR: no requirement: parallel(1) not in PATH"
+    Die "${1:-}: ERROR: no requirement: parallel(1) not in PATH"
 }
 
 RequireDictionary ()
 {
     IsFeatureDictionary && return 0
-    Die "$1: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY"
+    Die "${1:-}: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY"
 }
 
 RequireBash ()
 {
     IsShellBash && return 0
-    Die "$1: ERROR: no requirement: Bash"
+    Die "${1:-}: ERROR: no requirement: Bash"
 }
 
 RequireGnuStat ()
 {
     IsCommandGnuStat && return 0
-    Die "$1: ERROR: no requirement: GNU stat(1), or set envvar STAT"
+    Die "${1:-}: ERROR: no requirement: GNU stat(1), or set envvar STAT"
 }
 
 RequireGnuAwk ()
 {
     IsCommandGnuAwk && return 0
-    Die "$1: ERROR: no requirement: GNU awk(1), or set envvar AWK"
+    Die "${1:-}: ERROR: no requirement: GNU awk(1), or set envvar AWK"
 }
 
 Runner ()
@@ -285,6 +287,8 @@ RandomWordsDictionary ()
 
 RandomNumbersAwk ()
 {
+    [ "${1:-}" ] || return 1
+
     RequireGnuAwk "t-lib.sh"
 
     $AWK -v n="$1" \
@@ -299,16 +303,22 @@ RandomNumbersAwk ()
 
 RandomNumbersPerl ()
 {
+    [ "${1:-}" ] || return 1
+
     perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
 }
 
 RandomNumbersPython ()
 {
+    [ "${1:-}" ] || return 1
+
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
 RunTestCase () # Run a test case
 {
+    [ "${1:-}" ] || return 1
+
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
 
@@ -393,6 +403,8 @@ RunTestCase () # Run a test case
 
 TestData ()
 {
+    [ "${1:-}" ] || return 1
+
     # Create test data to use with all test cases.
     #
     # AWK is the fastest
@@ -414,7 +426,7 @@ t ()
 {
     dummy="t()"
 
-    test=$1
+    test=${1:-}
 
     if [ ! "$test" ]; then
         Warn "WARN: t() called without a test case"
@@ -431,7 +443,7 @@ t ()
     # for <args>, run those as "$@" to determine
     # if <test case> should be being run.
 
-    if [ "$1" ]; then
+    if [ "${1:-}" ]; then
         if "$@"; then
             RunTestCase $test
         else
@@ -447,7 +459,7 @@ t ()
 RunTestSet ()
 {
     dummy="RunTestSet()"
-    testset=$1
+    testset=${1:-}
     shift
 
     saved=$IFS
@@ -479,17 +491,18 @@ RunTests ()
     # and all argumens from ARG 2 are
     # considered <test cases> to run,
 
-    tests=${1#:}      # Delete leading ":"
+    test=${1:-}
+    tests=${tests#:}  # Delete leading ":"
     tests=${tests%:}  # Delete trailing ":"
     shift
 
-    if [ "$1" ]; then
+    if [ "${1:-}" ]; then
         arg=$1
         shift
 
         dummy="check:condition"
 
-        if [ "$1" ]; then # Condition
+        if [ "${1:-}" ]; then # Condition
             printf "%-28s " "$arg $*"
             if "$@" ; then
                 $arg
