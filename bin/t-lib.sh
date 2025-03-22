@@ -103,9 +103,14 @@ Die ()
     exit 1
 }
 
+IsVerbose ()
+{
+    [ "$VERBOSE" ]
+}
+
 Verbose ()
 {
-    [ "$VERBOSE" ] || return 0
+    IsVerbose || return 0
     "$@"
 }
 
