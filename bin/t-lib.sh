@@ -167,6 +167,11 @@ IsFeatureArrays ()
     IsShellModern
 }
 
+IsFeatureProcessSubstitution ()
+{
+    IsShellModern
+}
+
 IsFeatureReadOptionN ()
 {
     # read -N<size>
