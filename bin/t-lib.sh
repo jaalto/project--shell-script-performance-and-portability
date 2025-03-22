@@ -180,7 +180,13 @@ IsFeatureReadOptionN ()
 
 IsFeatureMatchRegexp ()
 {
-    # [[ $string =~ $re ]]
+    # [[ string =~ ^abc ]]
+    IsShellModern
+}
+
+IsFeatureMatchGlob ()
+{
+    # [[ string = *glob* ]]
     IsShellModern
 }
 
