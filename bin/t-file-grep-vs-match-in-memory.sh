@@ -53,7 +53,7 @@ Read ()
     REPLY=$(cat "$1")
 }
 
-MathFileContentPattern ()  # POSIX
+MatchFileContentPattern ()  # POSIX
 {
     Read "$1"
 
@@ -67,20 +67,17 @@ MathFileContentPattern ()  # POSIX
     esac
 }
 
-# Hide test case from other shells
-MathFileContentRegexp () { : ; } # stub
+# Hide from other shells
+MatchFileContentRegexp () { : ; } # stub
+t1a () { : ; } # stub
 
 cat << 'EOF' > t.bash
-MathFileContentRegexp () # Bash regexp
+MatchFileContentRegexp () # Bash regexp
 {
     Read "$1"
 
     [[ "$REPLY" =~ $re ]]
 }
-EOF
-
-IsFeatureMatchRegexp && . ./t.bash
-rm --force t.bash
 
 t1a ()
 {
@@ -92,6 +89,10 @@ t1a ()
         [[ $REPLY =~ $re ]]
     done
 }
+EOF
+
+IsFeatureMatchRegexp && . ./t.bash
+rm --force t.bash
 
 t1b ()
 {
@@ -109,7 +110,7 @@ t2 ()
 {
     for i in $(seq $loop_max)
     do
-        MathFileContentPattern $f
+        MatchFileContentPattern $f
     done
 }
 
@@ -117,7 +118,7 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        MathFileContentRegexp $f
+        MatchFileContentRegexp $f
     done
 }
 
@@ -131,10 +132,10 @@ t4 ()
 }
 
 t="\
-:t t1a
+:t t1a IsFeatureMatchRegexp
 :t t1b
 :t t2
-:t t3 MathFileContentRegexp
+:t t3 IsFeatureMatchRegexp
 :t t4
 "
 
