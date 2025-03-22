@@ -38,7 +38,12 @@ f=$TMPBASE.random.dictionary.$size
 
 Setup ()
 {
-    RandomWordsDictionary $size > $dict
+    RandomWordsDictionary $size > $f
+}
+
+Info ()
+{
+    echo "test file: $(ls -l $f)"
 }
 
 t1pure ()
@@ -98,11 +103,6 @@ t2icasee ()
     done
 }
 
-EnableDefaultTrap
-Setup
-
-echo "test file: $(ls -l $f)"
-
 t="
 :t t1pure
 :t t1utf8
@@ -112,6 +112,9 @@ t="
 :t t2icasee
 "
 
-RunTests "$t" "$@"
+Setup
+EnableDefaultTrap
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file
