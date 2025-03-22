@@ -96,9 +96,19 @@ Die ()
     exit 1
 }
 
+IsCommand ()
+{
+    command -v "${1:-}" > /dev/null
+}
+
+InfoDisplay ()
+{
+    IsCommand Info && Info
+}
+
 IsShellBashAvailable ()
 {
-    command -v bash > /dev/null
+    IsCommand bash
 }
 
 FileInfo ()
@@ -141,6 +151,9 @@ Tests ()
 
 RunBash ()
 {
+    # Run with Bash when shell does not
+    # support proper time keyword
+
     # ignore set -e
     # shellcheck disable=SC2310
 
@@ -148,8 +161,8 @@ RunBash ()
         Die "bash not in PATH. Required for timing."
     fi
 
-    # Use Bash. Shell does not support proper
-    #time keyword
+    source="source-as-library" . "$testfile"
+    InfoDisplay
 
     Tests "$1" |
     while read -r test
