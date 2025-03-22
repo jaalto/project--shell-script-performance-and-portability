@@ -28,36 +28,56 @@
 # Description
 #
 #       This is a library. Common utilities. When sourced, it will
-#       create the following test files to be used by <test cases>:
+#       create the following test file to be used by <test cases>:
 #
 #           t.random.numbers.tmp
 #
 #       Global variables used:
 #
-#           $verbose         in Verbose()
+#           $VERBOSE         in Verbose()
 #
 #       Exported variables:
 #
-#           $random_file
+#           $PROGRAM
+#           $TMPBASE
+#           $DICTIONARY_FILE
+#           $SED
+#           $AWK
+#           $STAT
+#
 #           $loop_max
+#           $random_file
+#           $random_file_count
 
-# Exported variables
+# -- -------------------------------------------------------
+# -- Exported variables
+# -- -------------------------------------------------------
+
+VERBOSE=""
 PROGRAM=$0
 
 TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test
 
+# -- -------------------------------------------------------
+# -- User settable variables in environment
+# -- -------------------------------------------------------
+
 # create random number test file
 random_file=${random_file:-t.random.numbers.tmp}
+random_file_count=${random_file_count:-10000}
 loop_max=${loop_max:-100}
 
+SED=${SED:-"sed"}    # preferrably GNU version
+AWK=${AWK:-"awk"}    # preferrably GNU version
 STAT=${STAT:-"stat"} # must be GNU version
-AWK=${AWK:-"AWK"}    # preferrably GNU version
 
 DICTIONARY_DEFAULT="/usr/share/dict/words"
-DICTIONARY=${DICTIONARY:-$DICTIONARY_DEFAULT}
+DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 
-# Private variables. Will be unset after end of the file.
-random_file_count=${random_file_count:-10000}
+# -- -------------------------------------------------------
+# -- Private variables
+# -- -------------------------------------------------------
+
 RUNNER=t.run
 
 [ "${KSH_VERSION:-}" ] && alias local=typeset
@@ -85,7 +105,7 @@ Die ()
 
 Verbose ()
 {
-    [ "$verbose" ] || return 0
+    [ "$VERBOSE" ] || return 0
     echo "$*"
 }
 
@@ -134,7 +154,7 @@ IsShellModern ()
 
 IsFeatureDictionary ()
 {
-    [ -e "$DICTIONARY" ]
+    [ -e "$DICTIONARY_FILE" ]
 }
 
 IsFeatureArrays ()
@@ -226,7 +246,7 @@ RequireParallel ()
 RequireDictionary ()
 {
     IsFeatureDictionary && return 0
-    Die "${1:-}: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY"
+    Die "${1:-}: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY_FILE"
 }
 
 RequireBash ()
@@ -275,7 +295,7 @@ RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
-    shuf --head-count=200000 "$DICTIONARY" |
+    shuf --head-count=200000 "$DICTIONARY_FILE" |
     $AWK '
         BEGIN {
             total_size = 0;
@@ -545,6 +565,5 @@ RunTests ()
 # Create file
 
 TestData $random_file_count
-unset random_file_count
 
 # End of file
