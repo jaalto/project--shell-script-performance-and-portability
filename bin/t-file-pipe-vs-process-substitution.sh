@@ -38,6 +38,6 @@ t="\
 :t t2
 "
 
-RunTests "$t" "$@"
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

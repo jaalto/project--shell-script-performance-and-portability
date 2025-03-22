@@ -63,15 +63,15 @@ t3 ()
     done
 }
 
-EnableDefaultTrap
-Setup
-
 t="\
 :t t1 IsShellBash
 :t t2 IsFeatureArray
 :t t3 IsCommandGnuStat
 "
 
-RunTests "$t" "$@"
+EnableDefaultTrap
+Setup
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

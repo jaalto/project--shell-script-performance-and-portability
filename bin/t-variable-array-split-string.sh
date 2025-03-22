@@ -114,8 +114,7 @@ t3 ()
 EOF
 
 IsFeatureArrays && . ./t.bash
-
-Setup
+rm --force t.bash
 
 t="\
 :t t1 IsShellBash
@@ -123,8 +122,8 @@ t="\
 :t t3 IsFeatureArrays
 "
 
-RunTests "$t" "$@"
+Setup
 
-rm --force t.bash
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

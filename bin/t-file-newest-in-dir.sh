@@ -119,17 +119,17 @@ t5 ()
     done
 }
 
+t="\
+:t t1
+:t t2
+:t t3
+:t t4
+:t t5
+"
+
 trap AtExit EXIT HUP INT QUIT TERM
 Setup
 
-t="\
-:t t1
-t"
-
-RunTests "$t" "$@"
- t2
-t t3
-t t4
-t t5
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

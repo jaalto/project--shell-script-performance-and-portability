@@ -80,15 +80,15 @@ t3 () # POSIX
     done
 }
 
-EnableDefaultTrap
-Setup
-
 t="\
 :t t1
 :t t2 IsShellBash
 :t t3
-#
+"
 
-RunTests "$t" "$@"
+EnableDefaultTrap
+Setup
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

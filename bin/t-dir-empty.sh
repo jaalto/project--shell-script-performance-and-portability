@@ -84,9 +84,6 @@ t4 ()
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
-Setup
-
 t="\
 :t t1 IsFeatureArray
 :t t2
@@ -94,6 +91,9 @@ t="\
 :t t4
 "
 
-RunTests "$t" "$@"
+trap AtExit EXIT HUP INT QUIT TERM
+Setup
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

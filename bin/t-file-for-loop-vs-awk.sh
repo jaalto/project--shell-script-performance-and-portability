@@ -53,15 +53,14 @@ t2 ()
     done
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
-
-Setup
-
 t="\
 :t t1 IsCommandGnuAwk
 :t t2
 "
 
-RunTests "$t" "$@"
+trap AtExit EXIT HUP INT QUIT TERM
+Setup
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

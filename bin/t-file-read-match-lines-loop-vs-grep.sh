@@ -97,6 +97,6 @@ t="\
 :t t2b
 "
 
-RunTests "$t" "$@"
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

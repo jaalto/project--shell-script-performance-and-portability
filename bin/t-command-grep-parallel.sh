@@ -39,6 +39,12 @@ Setup ()
     RandomWordsDictionary $size > $f
 }
 
+Info ()
+{
+    echo "test file: $(ls -l $f)"
+    echo "test file: lines $(wc -l $f)"
+}
+
 t0 ()  # Baseline
 {
     grep --quiet --fixed-strings "$re" $f
@@ -65,12 +71,6 @@ t3 ()
     parallel --pipe --block-size 16k grep --quiet --fixed-strings "$re" < $f
 }
 
-EnableDefaultTrap
-Setup
-
-echo "test file: $(ls -l $f)"
-echo "test file: lines $(wc -l $f)"
-
 t="\
 :t t0
 :t t1a IsOsCygwin
@@ -79,6 +79,12 @@ t="\
 :t t3
 "
 
-RunTests "$t" "$@"
+EnableDefaultTrap
+Setup
+
+if [ ! "$source" ]; then
+    Info
+    RunTests "$t" "$@"
+fi
 
 # End of file

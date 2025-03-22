@@ -83,9 +83,6 @@ t4 ()
 
 trap AtExit EXIT HUP INT QUIT TERM
 
-Setup
-cd $tmpdir
-
 t="\
 :t t1
 :t t2
@@ -93,6 +90,9 @@ t="\
 :t t4
 "
 
-RunTests "$t" "$@"
+Setup
+cd $tmpdir
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

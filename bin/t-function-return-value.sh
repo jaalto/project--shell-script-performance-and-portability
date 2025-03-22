@@ -105,6 +105,6 @@ t="\
 :t t3 IsShellBash
 "
 
-RunTests "$t" "$@"
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

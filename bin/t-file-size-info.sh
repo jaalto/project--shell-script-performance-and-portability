@@ -51,6 +51,6 @@ t="\
 :t t3
 "
 
-RunTests "$t" "$@"
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

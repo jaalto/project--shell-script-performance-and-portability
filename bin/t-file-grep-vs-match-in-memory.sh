@@ -35,12 +35,22 @@ re="$string.*$string"
 
 Setup ()
 {
-    { echo "$STRING $STRING" ; cat $rand; } > $f
+    { cat $rand; echo "$string $string" ; } > $f
+}
+
+Info ()
+{
+    ls -la $f
 }
 
 Read ()
 {
-    read -N100000 < "$1"
+    # not supported by all shells.
+    # Results stored in REPLY
+    #   read -N100000 < "$1"
+    #
+    # Use POSIX
+    REPLY=$(cat "$1")
 }
 
 MathFileContentPattern ()  # POSIX
@@ -57,12 +67,20 @@ MathFileContentPattern ()  # POSIX
     esac
 }
 
+# Hide test case from other shells
+MathFileContentRegexp () { : ; } # stub
+
+cat << 'EOF' > t.bash
 MathFileContentRegexp () # Bash regexp
 {
     Read "$1"
 
     [[ "$REPLY" =~ $re ]]
 }
+EOF
+
+IsFeatureMatchRegexp && . ./t.bash
+rm --force t.bash
 
 t1a ()
 {
@@ -112,17 +130,20 @@ t4 ()
     done
 }
 
-EnableDefaultTrap
-Setup
-
 t="\
 :t t1a
 :t t1b
 :t t2
-:t t3
+:t t3 MathFileContentRegexp
 :t t4
 "
 
-RunTests "$t" "$@"
+EnableDefaultTrap
+Setup
+
+if [ ! "$source" ]; then
+    Info
+    RunTests "$t" "$@"
+fi
 
 # End of file

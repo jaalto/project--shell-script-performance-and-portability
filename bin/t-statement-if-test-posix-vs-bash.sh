@@ -80,6 +80,6 @@ t="\
 :t t3empty
 "
 
-RunTests "$t" "$@"
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

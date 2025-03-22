@@ -119,6 +119,7 @@ t3bExt ()
 EOF
 
 IsShellBash && . ./t.bash
+rm --force t.bash
 
 t3cExt ()
 {
@@ -156,8 +157,6 @@ t="\
 :t t3eExt
 "
 
-RunTests "$t" "$@"
-
-rm --force t.bash
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

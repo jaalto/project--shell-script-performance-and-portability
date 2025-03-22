@@ -28,13 +28,13 @@ t2 ()
     done
 }
 
-EnableDefaultTrap
-
 t="\
 :t t1
 :t t2
 "
 
-RunTests "$t" "$@"
+EnableDefaultTrap
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file
