@@ -109,22 +109,27 @@ IsOsDebian ()
 
 IsShellPosh ()
 {
-    [ "$POSH_VERSINFO" ]   # Pdkd derivate
+    [ "${POSH_VERSINFO:-}" ]   # Pdkd derivate
 }
 
 IsShellBash ()
 {
-    [ "$BASH_VERSINFO" ]
+    [ "${BASH_VERSINFO:-}" ]
 }
 
 IsShellKsh ()
 {
-    [ "$KSH_VERSION" ]
+    [ "${KSH_VERSION:-}" ]
 }
 
 IsShellZsh ()
 {
-    [ "$ZSH_VERSION" ]
+    [ "${ZSH_VERSION:-}" ]
+}
+
+IsShellModern ()
+{
+    IsShellBash || IsShellKsh || IsShellZsh
 }
 
 IsFeatureDictionary ()
@@ -134,23 +139,28 @@ IsFeatureDictionary ()
 
 IsFeatureArrays ()
 {
-    IsShellBash || IsShellKsh || IsShellZsh
+    IsShellModern
+}
+
+IsFeatureReadOptionN ()
+{
+    # read -N<size>
+    IsShellModern
 }
 
 IsFeatureMatchRegexp ()
 {
     # [[ $string =~ $re ]]
-    IsShellBash || IsShellKsh || IsShellZsh
+    IsShellModern
 }
 
 IsFeatureHereString ()
 {
     # Check HERE STRING support like this:
-    # cmd <<< "str
+    # cmd <<< "str"
     # Ref: https://mywiki.wooledge.org/BashFAQ/061
 
-    # Any version of Bash or Zsh
-    IsShellBash || IsShellZsh
+    IsShellModern
 }
 
 IsFeatureArray ()
@@ -424,7 +434,7 @@ TestData ()
     # time RandomNumbersPerl "$1" > /dev/null
     # time RandomNumbersPython "$1" > /dev/null
 
-    if [ ! -f "$random_file" ]; then
+    if [ ! -s "$random_file" ]; then
         RandomNumbersAwk "$1" > "$random_file"
     fi
 }
