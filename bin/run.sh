@@ -217,7 +217,7 @@ Main ()
         # shellcheck disable=SC2034
         dummy="OPT: ${1:-}"
 
-        case "$1" in
+        case "${1:-}" in
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"
