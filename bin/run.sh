@@ -34,7 +34,6 @@ LINE=$(printf '%*s' "55" '' | tr ' ' '-')
 TIMEFORMAT="real %3R  user %3U  sys %3S"
 
 RUN_SHELL=""
-VERBOSE=""
 
 # ignore follow
 # shellcheck disable=SC1091
@@ -85,25 +84,9 @@ EXAMPLES
     exit 0
 }
 
-Warn ()
-{
-    echo "$*" >&2
-}
-
-Die ()
-{
-    Warn "$PROGRAM: $*"
-    exit 1
-}
-
-IsCommand ()
-{
-    command -v "${1:-}" > /dev/null
-}
-
 InfoDisplay ()
 {
-    IsCommand Info && Info
+    IsCommandTest Info && Info
 }
 
 IsShellBashAvailable ()
@@ -274,7 +257,11 @@ Main ()
 
     for file in "$@"
     do
-        [ -f "$file" ] || continue
+        if [ ! -f "$file" ]; then
+            IsVerbose && Warn "WARN: ignore, no file: $file"
+            continue
+        fi
+
         Run "$file" "$usebash"
     done
 }
