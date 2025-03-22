@@ -56,9 +56,75 @@ follows regarding the impact on performance:
                   variable-hash-*
 ```
 
+# TEST CASE FILE FORMAT
+
+- Variables. Use short variable names. From
+  [t-lib.sh](./bin/t-lib.sh) use global `TMPBASE` to
+  create temporary files.
+
+	f="$TMPBASE.this-test-file-name.tmp"
+
+- Clean Temporary files. You can cleann
+  alll `TMPBASE` derived temporary files by
+  defining default
+  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/trap.html)
+  with call:
+```
+	EnableDefaultTrap
+```
+
 - Name the test case functions using `t<number>[something]()`, like
-  t1, t2 or t3a, t3b. Order the test cases (if posisble) by fastest
-  solution first and slowest last.
+  t1, t2 or t3a, t3b. Order the test cases by fastest
+  solution first and slowest last. Every test case must be
+  independent.
+```
+	t1 ()
+	{
+		: test case
+	]
+```
+
+- To display information one, for example, about test file used,
+  its size, or lines, define function `Info`
+```
+	Info ()
+	{
+		ls -la $f  # Test files use short variable names
+	}
+```
+
+- Define test cases to be run in a string, where test cases
+  are separated by colons. If test case requires
+  pre-condition, for example shell or feature,
+  use `Is<test>` function from
+  [t-lib.sh](./bin/t-lib.sh)
+```
+    # Define lists of test cases,
+	# leading colon(:) at
+	# the beginning of string
+	# is ignored.
+	#
+	# Test cases t1 and t2 can be run
+	# only under shells that meet the
+	# criteria.
+	#
+	# Test case t3 can be run under any
+	# POSIX shell.
+
+	t="\
+	:t1 IsFeatureArrays
+	:t2 IsShellBash
+	:t3
+	"
+
+	# Run test cases. The "source" variable
+	# use defined when called using
+	#
+	#   run.sh --shell dash <test case>.sh
+
+    [ "$source" ] || RunTests "$t" "$@"
+
+```
 
 # GENERAL CODING STYLE CONSIDERATIONS
 
