@@ -168,19 +168,24 @@ IsFeatureArray ()
     IsShellBash || IsShellZsh || IsShellKsh
 }
 
+IsCommandTest ()
+{
+    command -v "${1:?ERROR: missing ARG"} > /dev/null
+}
+
 IsCommandParallel ()
 {
-    command -v parallel > /dev/null
+    IsCommandTest parallel
 }
 
 IsCommandStat ()
 {
-    command -v stat > /dev/null
+    IsCommandTest stat
 }
 
 IsCommandPushd ()
 {
-    command -v pushd > /dev/null
+    IsCommandTest pushd
 }
 
 IsCommandGnuVersion ()
