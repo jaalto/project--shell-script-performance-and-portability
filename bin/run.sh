@@ -215,7 +215,7 @@ Main ()
     do
         # Unused, but useful during debug
         # shellcheck disable=SC2034
-        dummy="OPT: $1"
+        dummy="OPT: ${1:-}"
 
         case "$1" in
             -s | --shell)
