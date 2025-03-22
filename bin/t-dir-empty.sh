@@ -31,10 +31,15 @@ AtExit ()
     rm --force "$dir"
 }
 
+# Hide from other shells
+# shopt is Bash only
+t1 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t1 ()
 {
     shopt -s nullglob  # Avoids literal * if directory is empty
-    local -a files
+    files=()
 
     for i in $(seq $loop_max)
     do
@@ -47,6 +52,10 @@ t1 ()
 
     shopt -u nullglob
 }
+EOF
+
+IsShellBash && . ./t.bash
+rm --force t.bash
 
 t2 ()
 {
@@ -85,7 +94,7 @@ t4 ()
 }
 
 t="\
-:t t1 IsFeatureArray
+:t t1 IsShellBash
 :t t2
 :t t3
 :t t4
