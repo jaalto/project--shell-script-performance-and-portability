@@ -106,7 +106,7 @@ Die ()
 Verbose ()
 {
     [ "$VERBOSE" ] || return 0
-    echo "$*"
+    "$@"
 }
 
 IsOsCygwin ()
