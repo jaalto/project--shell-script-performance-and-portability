@@ -46,7 +46,8 @@ PROGRAM=$0
 
 TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test
 
-random_file=${random_file:-t.random.numbers.tmp}  # create random number test file
+# create random number test file
+random_file=${random_file:-t.random.numbers.tmp}
 loop_max=${loop_max:-100}
 
 STAT=${STAT:-"stat"} # must be GNU version
@@ -133,6 +134,12 @@ IsFeatureDictionary ()
 
 IsFeatureArrays ()
 {
+    IsShellBash || IsShellKsh || IsShellZsh
+}
+
+IsFeatureMatchRegexp ()
+{
+    # [[ $string =~ $re ]]
     IsShellBash || IsShellKsh || IsShellZsh
 }
 
