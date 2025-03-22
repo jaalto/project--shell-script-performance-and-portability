@@ -505,7 +505,7 @@ for details and further commentary.
 
 None of these offer any advantages to speed up shell scripts.
 
-- The Bash-specific
+- The Bash-specific expression
   [`[[ ]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   might offer a
   minuscule advantage but only in loops of
