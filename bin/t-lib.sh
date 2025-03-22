@@ -170,7 +170,7 @@ IsFeatureArray ()
 
 IsCommandTest ()
 {
-    command -v "${1:?ERROR: missing ARG"} > /dev/null
+    command -v "${1:?ERROR: missing ARG}" > /dev/null
 }
 
 IsCommandParallel ()
