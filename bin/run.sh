@@ -91,7 +91,7 @@ InfoDisplay ()
 
 IsShellBashAvailable ()
 {
-    IsCommand bash
+    IsCommandTest bash
 }
 
 FileInfo ()
