@@ -86,12 +86,14 @@ EXAMPLES
 
 InfoDisplay ()
 {
-    IsCommandTest Info && Info
+    if IsCommandTest Info ; then
+        Info
+    fi
 }
 
 IsShellBashAvailable ()
 {
-    IsCommandTest bash
+    IsCommandTest bash || return 1
 }
 
 FileInfo ()
@@ -224,7 +226,7 @@ Main ()
                 # shellcheck disable=SC2310
 
                 if ! ValidateTime "$1" ; then
-                    usebash="time-with-bash"
+                    usebash="use-bash-for-timing"
                 fi
                 RUN_SHELL=$1
                 shift
