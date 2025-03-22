@@ -38,6 +38,7 @@ max_dirs=${max_dirs:-20}
 
 Setup ()
 {
+    # GLOBAL: tmpdir
     tmpdir=$(mktemp --directory --tmpdir="$pwd")
 
     for i in $(seq $max_dirs)
@@ -54,44 +55,59 @@ AtExit ()
     rm --recursive --force "$tmpdir"
 }
 
+# Hide from other shells
+t1 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t1 ()
 {
+    cd $tmpdir
     compgen -A directory > /dev/null
+    cd $OLDDIR
 }
+EOF
 
+IsShellBash && . ./t.bash
+rm --force t.bash
 
 t2 ()
 {
+    cd $tmpdir
     list=""
 
     for dir in $tmpdir/*/
     do
         list="$list $dir"
     done
+
+    cd $OLDDIR
 }
 
 
 t3 ()
 {
+    cd $tmpdir
     ls -d -- $tmpdir/*/ > /dev/null
+    cd $OLDDIR
 }
 
 t4 ()
 {
+    cd $tmpdir
     find . -maxdepth 1 -type d > /dev/null
+    cd $OLDDIR
 }
 
 trap AtExit EXIT HUP INT QUIT TERM
 
 t="\
-:t t1
+:t t1 IsShellBash
 :t t2
 :t t3
 :t t4
 "
 
 Setup
-cd $tmpdir
 
 [ "$source" ] || RunTests "$t" "$@"
 
