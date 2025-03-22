@@ -23,8 +23,12 @@
 
 . ./t-lib.sh ; f=$random_file
 
-RequireBash "t-file-read-content-loop.sh"
+# Hide from other shells
+t1 () { : ; } # stub
+t2a () { : ; } # stub
+t2b () { : ; } # stub
 
+cat << 'EOF' > t.bash
 t1 ()
 {
     array=()
@@ -60,6 +64,10 @@ t2b ()
         item=${array[i]}
     done
 }
+EOF
+
+IsShellBash && . ./t.bash
+rm --force t.bash
 
 t3 ()
 {
@@ -70,9 +78,9 @@ t3 ()
 }
 
 t="\
-:t t1
-:t t2a
-:t t2b
+:t t1  IsShellBash
+:t t2a IsShellBash
+:t t2b IsShellBash
 :t t3
 "
 
