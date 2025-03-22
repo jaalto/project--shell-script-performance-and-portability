@@ -40,7 +40,7 @@ f=$TMPBASE.random.dictionary.$size
 
 Setup ()
 {
-    RandomWordsDictionary $size > $dict
+    RandomWordsDictionary $size > $f
 }
 
 t1 () # POSIX
@@ -57,6 +57,10 @@ t1 () # POSIX
     done
 }
 
+# Hide test case from other shells
+t2 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t2 ()
 {
     for i in $(seq $loop_max)
@@ -67,6 +71,10 @@ t2 ()
         done < <(cut --delimiter=" " --fields=1 $f)
     done
 }
+EOF
+
+IsFeatureProcessSubstitution && . ./t.bash
+rm --force t.bash
 
 t3 () # POSIX
 {
@@ -82,7 +90,7 @@ t3 () # POSIX
 
 t="\
 :t t1
-:t t2 IsShellBash
+:t t2 IsFeatureProcessSubstitution
 :t t3
 "
 
