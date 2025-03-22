@@ -37,10 +37,12 @@ follows regarding the impact on performance:
     0-2  negligible – Consider unimportant
 ```
 
-# GENERAL TEST CASE FILE CONVENTIONS
+# GENERAL TEST CASE FILE NAMING
 
-- Name test files as "t-<category>-*.sh",
+- Name <test case> files
+  as `t-<category>-*.sh`,
   where category is one of:
+
 
 ```
     command     - external commands
@@ -56,19 +58,42 @@ follows regarding the impact on performance:
                   variable-hash-*
 ```
 
+- Name portability <test case> files as
+  `x-portability-*.sh`. If testing utilities
+  (cut, read, etc.) defined in POSIX, name the
+  file `x-portability-posix-*.sh`. Each file
+  contains a simple shell feature test. The
+  return code indicates whether the feature is
+  supported.
+
+
+```
+   # FILE: x-portability-array.sh
+   # Q: Test array support
+   a=(1 2 3)
+
+   # To test feature from command line
+   bash x-portability-array.sh ; echo $?
+   dash x-portability-array.sh ; echo $?
+   ...
+
+```
+
 # TEST CASE FILE FORMAT
 
 - Variables. Use short variable names. From
   [t-lib.sh](./bin/t-lib.sh) use global `TMPBASE` to
   create temporary files.
 
+```
 	f="$TMPBASE.this-test-file-name.tmp"
+```
 
-- Clean Temporary files. You can cleann
-  alll `TMPBASE` derived temporary files by
-  defining default
-  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/trap.html)
-  with call:
+- Clean temporary files. To clean
+  alll `TMPBASE` derived files using
+  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/trap.html),
+  Add call to:
+
 ```
 	EnableDefaultTrap
 ```
@@ -77,11 +102,12 @@ follows regarding the impact on performance:
   t1, t2 or t3a, t3b. Order the test cases by fastest
   solution first and slowest last. Every test case must be
   independent.
+
 ```
 	t1 ()
 	{
-		: test case
-	]
+		# test case
+	}
 ```
 
 - To display information one, for example, about test file used,
@@ -136,11 +162,12 @@ as possible and not Production Code.
 No need to lint using `shellcheck` etc.
 Ref: <https://www.shellcheck.net>.
 
-- For readability, use space in shebang line:
+- Write for target shell Bash. For macOS portability
+  use `/usr/bin/env'. Use space in shebang line
+  to help readability.
 
 ```
-  #! /bin/bash
-  ... code
+  #! /usr/bin/env bash
 ```
 
 - Use 4 spaces for indentation.
@@ -151,6 +178,10 @@ Ref: <https://www.shellcheck.net>.
 - Do not `"$quote"` variables unless needed.
 
 - No `local` variables unless needed.
+
+- Define function names in
+  [camelCase[(https://en.wikipedia.org/wiki/Camel_case)
+  style.
 
 - Use Allman style for these:
 
