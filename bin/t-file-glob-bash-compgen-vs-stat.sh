@@ -77,8 +77,8 @@ t="\
 :t t3 IsCommandGnuStat
 "
 
-EnableDefaultTrap
 Setup
+SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 
