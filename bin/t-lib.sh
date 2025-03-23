@@ -82,14 +82,20 @@ RUNNER=t.run
 
 [ "${KSH_VERSION:-}" ] && alias local=typeset
 
-AtExit ()
+AtExitDefault ()
 {
     rm --force "$TMPBASE"*
 }
 
-EnableDefaultTrap ()
+SetupAtExit ()
 {
-    trap AtExit EXIT HUP INT QUIT TERM
+    # Define "do nothing" command if not args
+
+    if [ ! "${1:-}" ]; then
+        set -- :
+    fi
+
+    trap "AtExitDefault; AtExit 2> /dev/null; "$@";" EXIT HUP INT QUIT TERM
 }
 
 Warn ()
