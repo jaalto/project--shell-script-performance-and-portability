@@ -94,8 +94,8 @@ t="\
 :t t3
 "
 
-EnableDefaultTrap
 Setup
+SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 
