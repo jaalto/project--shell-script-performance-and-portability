@@ -84,10 +84,17 @@ EXAMPLES
     exit 0
 }
 
-InfoDisplay ()
+RunInfo ()
 {
     if IsCommandTest Info ; then
         Info
+    fi
+}
+
+RunAtExit ()
+{
+    if IsCommandTest AtExit ; then
+        AtExit
     fi
 }
 
@@ -147,7 +154,7 @@ RunBash ()
     fi
 
     source="source-as-library" . "$testfile"
-    InfoDisplay
+    RunInfo
 
     Tests "$1" |
     while read -r test
@@ -155,6 +162,8 @@ RunBash ()
         env TIMEFORMAT="$TIMEFORMAT" \
         bash -c "time $RUN_SHELL $1 $test"
     done
+
+    RunAtExit
 }
 
 Run ()
