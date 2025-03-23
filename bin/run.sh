@@ -83,18 +83,14 @@ EXAMPLES
 
     exit 0
 }
-
-RunInfo ()
+RunMaybe ()
 {
-    if IsCommandTest Info ; then
-        Info
-    fi
-}
+    cmd=${1:-}
 
-RunAtExit ()
-{
-    if IsCommandTest AtExit ; then
-        AtExit
+    [ "$cmd" ] || return 0
+
+    if IsCommandTest "$cmd" ; then
+        $cmd
     fi
 }
 
@@ -153,8 +149,11 @@ RunBash ()
         Die "bash not in PATH. Required for timing."
     fi
 
+    # ignore follow
+    # shellcheck disable=SC1090
     source="source-as-library" . "$testfile"
-    RunInfo
+
+    RunMaybe Info
 
     Tests "$1" |
     while read -r test
@@ -163,7 +162,7 @@ RunBash ()
         bash -c "time $RUN_SHELL $1 $test"
     done
 
-    RunAtExit
+    RunMaybe AtExit
 }
 
 Run ()
