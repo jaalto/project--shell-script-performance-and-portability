@@ -89,13 +89,17 @@ follows regarding the impact on performance:
 	f="$TMPBASE.this-test-file-name.tmp"
 ```
 
-- Clean temporary files. To clean
-  alll `TMPBASE` derived files using
-  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/trap.html),
-  Add call to:
+- To clean  `TMPBASE` derived temporary
+  files using
+  Special Built-In Utility
+  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_28),
+  use argument "default". For custom use cleanup,
+  define function `AtExit` and add it to `trap`.
 
 ```
-	EnableDefaultTrap
+	SetupTrapAtExit default   # runs AtExitDefault to clean TMPBASE* files
+	SetupTrapAtExit AtExit    # runs AtExit to clean custom files
+	SetupTrapAtExit default AtExit # runs both
 ```
 
 - Name the test case functions using `t<number>[something]()`, like
@@ -110,12 +114,13 @@ follows regarding the impact on performance:
 	}
 ```
 
-- To display information one, for example, about test file used,
-  its size, or lines, define function `Info`
+- Define function `Info` to display information once
+  before test cases are being run.
+
 ```
 	Info ()
 	{
-		ls -la $f  # Test files use short variable names
+		ls -l $f  # Test file information
 	}
 ```
 
