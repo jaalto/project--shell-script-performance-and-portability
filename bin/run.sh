@@ -148,8 +148,9 @@ RunBash ()
     Tests "$1" |
     while read -r test
     do
-        env TIMEFORMAT="$TIMEFORMAT" \
-        bash -c "time $RUN_SHELL $1 $test"
+        env source="source-as-library" \
+            TIMEFORMAT="$TIMEFORMAT" \
+            bash -c "time $RUN_SHELL $1 $test"
     done
 
     RunMaybe AtExit
