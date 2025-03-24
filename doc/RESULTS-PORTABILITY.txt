@@ -3,9 +3,7 @@
 arrays                                   -  -  -  +  +  +  +
 <<<                                      -  -  -  +  +  +  +
 POSIX command -v                         +  +  +  +  +  +  +
-POSIX hash                               -  +  +  +  +  +  +
 POSIX read (-N)                          +  +  +  +  +  +  +
-POSIX type                               -  +  +  +  +  +  +
 [[ ... ]]                                -  -  +  +  +  +  +
 [[ STRING = PATTERN ]]                   -  -  -  +  +  +  +
 [[ STRING =~ REGEXP ]]                   -  -  +  -  +  +  +
