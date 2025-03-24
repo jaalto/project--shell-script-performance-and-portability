@@ -41,8 +41,8 @@ Setup ()
 
 Info ()
 {
-    echo "test file: $(ls -l $f)"
-    echo "test file: lines $(wc -l $f)"
+    echo "INFO: test file: $(ls -l $f)"
+    echo "INFO: test file: lines $(wc -l $f)"
 }
 
 t0 ()  # Baseline
