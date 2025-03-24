@@ -443,7 +443,6 @@ FILE: t-function-return-value.sh
 #     fn2: nameref2
 #       ...
 
-FILE: t-libx.sh
 FILE: t-statement-arithmetic-for-loop.sh
 #! /usr/bin/env bash
 #

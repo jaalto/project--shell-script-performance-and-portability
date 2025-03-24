@@ -78,7 +78,6 @@ FILE: t-function-return-value.sh
 # Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 8x faster to use nameref to return value from a function
 
-FILE: t-libx.sh
 FILE: t-statement-arithmetic-for-loop.sh
 # Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
 # A: The `{1..N}` and `$(seq N)` are very fast
