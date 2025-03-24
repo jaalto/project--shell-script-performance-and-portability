@@ -1,4 +1,4 @@
 #! /bin/sh
-# Q: Test support for pattern binary op STRING = GLOB
+# Q: Test support for expression: [[ STRING = GLOB ]]
 
 [[ string = *glob* ]]
