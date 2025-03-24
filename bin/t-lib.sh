@@ -161,6 +161,28 @@ IsShellBash ()
     [ "${BASH_VERSINFO:-}" ]
 }
 
+IsShellKsh93 ()
+{
+    case "${KSH_VERSION:-}" in
+        *93*)
+            return 0
+            ;;
+    esac
+
+    return 1
+}
+
+IsShellMksh ()
+{
+    case "${KSH_VERSION:-}" in
+        *MIRBSD*)
+            return 0
+            ;;
+    esac
+
+    return 1
+}
+
 IsShellKsh ()
 {
     [ "${KSH_VERSION:-}" ]
@@ -173,7 +195,7 @@ IsShellZsh ()
 
 IsShellModern ()
 {
-    IsShellBash || IsShellKsh || IsShellZsh
+    IsShellBash || IsShellKsh93 || IsShellZsh
 }
 
 IsFeatureDictionary ()
@@ -183,7 +205,7 @@ IsFeatureDictionary ()
 
 IsFeatureArrays ()
 {
-    IsShellModern
+    IsShellModern || IsShellMksh
 }
 
 IsFeatureProcessSubstitution ()
@@ -205,8 +227,8 @@ IsFeatureMatchRegexp ()
 
 IsFeatureMatchGlob ()
 {
-    # [[ string = *glob* ]]
-    IsShellModern
+    # [[ string = *str* ]]
+    IsShellModern || IsShellMksh
 }
 
 IsFeatureHereString ()
@@ -215,12 +237,12 @@ IsFeatureHereString ()
     # cmd <<< "str"
     # Ref: https://mywiki.wooledge.org/BashFAQ/061
 
-    IsShellModern
+    IsShellModern || IsShellMksh
 }
 
 IsFeatureArray ()
 {
-    IsShellBash || IsShellZsh || IsShellKsh
+    IsShellModern
 }
 
 IsCommandParallel ()
