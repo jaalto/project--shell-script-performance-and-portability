@@ -8,10 +8,11 @@ DOCDIR   = doc
 MAKEFILE = Makefile
 DOC      = RESULTS
 BRIEF    = RESULTS-BRIEF.txt
-BIN_RUN  = run.sh
-BIN_DOC  = results.sh
 GREP     = grep --extended-regexp
 RM	 = rm --force
+BIN_RUN  = run.sh
+BIN_DOC  = results.sh
+BIN_PORTABILITY = portability.sh
 
 .DEFAULT_GOAL := all
 
@@ -38,11 +39,17 @@ show:
 	@cd bin && \
 	./$(BIN_DOC) t-*
 
-# run - Run tests
+# run - Run performance tests
 .PHONY: run
 run:
 	cd bin && \
 	./$(BIN_RUN) t-*
+
+# portability - Run portability tests
+.PHONY: run
+run:
+	cd bin && \
+	./$(BIN_PORTABILITY) x-*
 
 # doc - Generate documentation
 .PHONY: doc
