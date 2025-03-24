@@ -1,5 +1,5 @@
 #! /bin/sh
-# Short: [[ STRING = GLOB ]]
-# Desc: Test support for expression: [[ STRING = GLOB ]]
+# Short: [[ STRING = PATTERN ]]
+# Desc: Test support for expression: [[ STRING = PATTERN ]]
 
-[[ string = *glob* ]]
+[[ string = *str* ]]
