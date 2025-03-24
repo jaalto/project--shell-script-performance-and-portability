@@ -83,20 +83,10 @@ EXAMPLES
 
     exit 0
 }
-RunMaybe ()
-{
-    cmd=${1:-}
-
-    [ "$cmd" ] || return 0
-
-    if IsCommandTest "$cmd" ; then
-        $cmd
-    fi
-}
 
 IsShellBashAvailable ()
 {
-    IsCommandTest bash || return 1
+    IsCommandExist bash || return 1
 }
 
 FileInfo ()
