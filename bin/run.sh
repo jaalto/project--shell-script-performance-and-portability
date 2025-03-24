@@ -115,6 +115,8 @@ ${PREFIX}$LINE"
 
 Tests ()
 {
+    dummy="Tests()"
+
     # Extract test cases in format:
     #
     #    :t <test case> <condition>
@@ -129,6 +131,8 @@ Tests ()
 
 RunBash ()
 {
+    dummy="RunBash()"
+
     # Run with Bash when shell does not
     # support proper time keyword
 
@@ -141,22 +145,38 @@ RunBash ()
 
     # ignore follow
     # shellcheck disable=SC1090
+
     source="source-as-library" . "$testfile"
 
     RunMaybe Info
 
     Tests "$1" |
-    while read -r test
+    while read -r test precondition
     do
-        env TIMEFORMAT="$TIMEFORMAT" \
-        bash -c "time $RUN_SHELL $1 $test"
+        if [ "$precondition" ]; then
+            if ! $precondition ; then
+                printf "# %-24s<skip>\n" "$test $precondition"
+                continue
+            fi
+        fi
+
+        printf "# %-24s" "$test"
+
+        env source="source-as-library" \
+            TIMEFORMAT="$TIMEFORMAT" \
+            bash -c "time $RUN_SHELL $1 $test"
     done
 
     RunMaybe AtExit
+
+    # Clear
+    unset -f Info AtExit
+    TrapReset
 }
 
-Run ()
+RunFile ()
 {
+    dummy="RunFile()"
     testfile=$1
     timewithbash=$2
 
@@ -168,7 +188,7 @@ Run ()
 
     if [ "$VERBOSE" ]; then
         Header "$testfile"
-        FileInfo "$testfile"
+        FileInfo "$testfile" || :
     else
         Header "$testfile" "short"
     fi
@@ -188,6 +208,8 @@ Run ()
 
 ValidateTime ()
 {
+    dummy="ValidateTime()"
+
     # Check that time keyword can call functions.
 
     case $1 in
@@ -262,7 +284,7 @@ Main ()
             continue
         fi
 
-        Run "$file" "$usebash"
+        RunFile "$file" "$usebash"
     done
 }
 

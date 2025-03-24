@@ -22,15 +22,24 @@ S='[^[:space:]]+'
 
 str="  this string  "
 
-trim_nameref ()
+# Hide from other shells
+TrimReNameref () { : ; } # stub
+cat << 'EOF' > t.bash
+TrimReNameref ()
 {
     local -n _retval=$1
 
     [[ $_retval =~ ^$s(.+)$   ]] && _retval=${BASH_REMATCH[1]}
     [[ $_retval =~ ^(.*$S)$s$ ]] && _retval=${BASH_REMATCH[1]}
 }
+EOF
+IsShellBash && . ./t.bash
+rm --force t.bash
 
-trim ()
+# Hide from other shells
+TrimRe () { : ; } # stub
+cat << 'EOF' > t.bash
+TrimRe ()
 {
     var=$1
 
@@ -39,13 +48,16 @@ trim ()
 
     echo "$var"
 }
+EOF
+IsShellModern && . ./t.bash
+rm --force t.bash
 
 t1 ()
 {
     for i in $(seq $loop_max)
     do
         item=$str
-        trim_nameref item
+        TrimReNameref item
     done
 }
 
@@ -53,7 +65,7 @@ t2 ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(trim "$str")
+        item=$(TrimRe "$str")
     done
 }
 
@@ -66,8 +78,8 @@ t3 ()
 }
 
 t="\
-:t t1
-:t t2
+:t t1 IsShellBash
+:t t2 IsShellModern
 :t t3
 "
 

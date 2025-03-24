@@ -28,7 +28,7 @@ AtExit ()
 {
     [ "$dir" ] || return 0
 
-    rm --force "$dir"
+    rm --recursive --force "$dir"
 }
 
 # Hide from other shells
@@ -100,7 +100,7 @@ t="\
 :t t4
 "
 
-SetupTrapAtExit
+SetupTrapAtExit AtExit
 Setup
 
 [ "$source" ] || RunTests "$t" "$@"
