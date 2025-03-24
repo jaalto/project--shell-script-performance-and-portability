@@ -444,8 +444,6 @@ nameref must have a unique variable name.
       ...
 
 
-# t-libx.sh
-
 # t-statement-arithmetic-for-loop.sh
 
 **Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`**<br/>

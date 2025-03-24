@@ -4,6 +4,7 @@ arrays                                   -  -  -  +  +  +  +
 <<<                                      -  -  -  +  +  +  +
 POSIX command -v                         +  +  +  +  +  +  +
 POSIX read (-N)                          +  +  +  +  +  +  +
+< <(cmd)                                 -  -  +  -  +  +  +
 [[ ... ]]                                -  -  +  +  +  +  +
 [[ STRING = PATTERN ]]                   -  -  -  +  +  +  +
 [[ STRING =~ REGEXP ]]                   -  -  +  -  +  +  +
