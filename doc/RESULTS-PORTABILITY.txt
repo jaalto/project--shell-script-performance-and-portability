@@ -2,6 +2,7 @@
                                         01 02 03 04 05 06 07
 arrays                                   -  -  -  +  +  +  +
 <<<                                      -  -  -  +  +  +  +
+POSIX set -h                             -  -  -  +  +  +  +
 POSIX set -o noglob                      +  +  +  +  +  +  +
 POSIX command -v                         +  +  +  +  +  +  +
 POSIX printf (builtin)                   -  +  +  -  +  +  +
