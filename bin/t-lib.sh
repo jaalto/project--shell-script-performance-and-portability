@@ -87,15 +87,18 @@ AtExitDefault ()
     rm --force "$TMPBASE"*
 }
 
-SetupAtExit ()
+SetupTrapAtExit ()
 {
-    # Define "do nothing" command if not args
-
-    if [ ! "${1:-}" ]; then
-        set -- :
+    if ! IsCommandExist AtExit; then
+        # Define default AtExit
+        AtExit ()
+        {
+            AtExitDefault
+        }
     fi
 
-    trap "AtExitDefault; AtExit 2> /dev/null; "$@";" EXIT HUP INT QUIT TERM
+    trap AtExit EXIT HUP INT QUIT TERM
+    unset trap
 }
 
 Warn ()
@@ -120,6 +123,11 @@ Verbose ()
     "$@"
 }
 
+IsCommandExist ()
+{
+    command -v "${1:?ERROR: missing ARG}" > /dev/null
+}
+
 IsOsCygwin ()
 {
     [ -d /cygdrive/c ]
@@ -132,7 +140,7 @@ IsOsLinux ()
 
 IsOsDebian ()
 {
-    command -v apt-get > /dev/null
+     IsCommandExist apt-get > /dev/null
 }
 
 # TODO: IsShellAsh
@@ -210,24 +218,19 @@ IsFeatureArray ()
     IsShellBash || IsShellZsh || IsShellKsh
 }
 
-IsCommandTest ()
-{
-    command -v "${1:?ERROR: missing ARG}" > /dev/null
-}
-
 IsCommandParallel ()
 {
-    IsCommandTest parallel
+    IsCommandExist parallel
 }
 
 IsCommandStat ()
 {
-    IsCommandTest stat
+    IsCommandExist stat
 }
 
 IsCommandPushd ()
 {
-    IsCommandTest pushd
+    IsCommandExist pushd
 }
 
 IsCommandGnuVersion ()
@@ -252,11 +255,6 @@ IsCommandGnuStat ()
 IsCommandGnuAwk ()
 {
     IsCommandGnuVersion awk
-}
-
-IsCommandParallel ()
-{
-    command -v parallel
 }
 
 RequireParallel ()
@@ -365,6 +363,17 @@ RandomNumbersPython ()
     [ "${1:-}" ] || return 1
 
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
+}
+
+RunMaybe ()
+{
+    cmd=${1:-}
+
+    [ "$cmd" ] || return 0
+
+    if IsCommandExist "$cmd" ; then
+        $cmd
+    fi
 }
 
 RunTestCase ()
@@ -547,6 +556,8 @@ RunTests ()
     tests=${tests#:}  # Delete leading ":"
     tests=${tests%:}  # Delete trailing ":"
     shift
+
+    RunMaybe Info
 
     if [ "${1:-}" ]; then
         arg=$1
