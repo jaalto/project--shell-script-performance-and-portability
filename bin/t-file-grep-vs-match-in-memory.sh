@@ -139,12 +139,10 @@ t="\
 :t t4
 "
 
+SetupTrapAtExit
 Setup
-SetupAtExit
 
-if [ ! "$source" ]; then
-    Info
-    RunTests "$t" "$@"
-fi
+[ "$source" ] || RunTests "$t" "$@"
+
 
 # End of file

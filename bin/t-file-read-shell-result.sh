@@ -33,7 +33,7 @@ t="\
 :t t2
 "
 
-SetupAtExit
+SetupTrapAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 

@@ -94,8 +94,8 @@ t="\
 :t t3
 "
 
+SetupTrapAtExit
 Setup
-SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 

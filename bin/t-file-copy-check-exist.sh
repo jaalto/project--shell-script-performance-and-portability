@@ -38,13 +38,13 @@ t2 ()
     done
 }
 
-SetupAtExit
-
 t="\
 :t t1
 :t t2
 "
 
-RunTests "$t" "$@"
+SetupTrapAtExit
+
+[ "$source" ] || RunTests "$t" "$@"
 
 # End of file

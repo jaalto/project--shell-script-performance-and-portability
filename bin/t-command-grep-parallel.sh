@@ -79,8 +79,8 @@ t="\
 :t t3
 "
 
+SetupTrapAtExit
 Setup
-SetupAtExit
 
 if [ ! "$source" ]; then
     Info

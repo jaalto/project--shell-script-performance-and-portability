@@ -100,7 +100,7 @@ t="\
 :t t4
 "
 
-trap AtExit EXIT HUP INT QUIT TERM
+SetupTrapAtExit
 Setup
 
 [ "$source" ] || RunTests "$t" "$@"

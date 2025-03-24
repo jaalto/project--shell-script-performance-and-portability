@@ -98,7 +98,7 @@ t4 ()
     cd $OLDDIR
 }
 
-trap AtExit EXIT HUP INT QUIT TERM
+
 
 t="\
 :t t1 IsShellBash
@@ -107,6 +107,7 @@ t="\
 :t t4
 "
 
+SetupTrapAtExit AtExit
 Setup
 
 [ "$source" ] || RunTests "$t" "$@"

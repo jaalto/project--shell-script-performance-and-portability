@@ -77,8 +77,8 @@ t="\
 :t t3 IsCommandGnuStat
 "
 
+SetupTrapAtExit
 Setup
-SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 

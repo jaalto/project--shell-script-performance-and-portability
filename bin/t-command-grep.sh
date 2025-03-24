@@ -112,8 +112,8 @@ t="
 :t t2icasee
 "
 
+SetupTrapAtExit
 Setup
-SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 
