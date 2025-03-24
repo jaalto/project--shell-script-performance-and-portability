@@ -69,7 +69,7 @@ doc-all:
 
 define doc-portability-function
 	cd bin && \
-	./$(BIN_PORTABILITY) x-* > ../$(DOCDIR)/$(DOC_PORTABILITY).txt
+	./$(BIN_PORTABILITY) x-* > ../$(DOCDIR)/$(DOC_PORTABILITY)
 endef
 
 .PHONY: doc-portability
