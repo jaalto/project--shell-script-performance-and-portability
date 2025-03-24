@@ -1,4 +1,5 @@
 #! /bin/sh
-# Q: Test array support
+# Short: arrays
+# Desc: Test array support
 
 a=(1 2 3)

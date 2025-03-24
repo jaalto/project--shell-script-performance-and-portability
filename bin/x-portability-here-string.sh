@@ -1,4 +1,5 @@
 #! /bin/sh
-# Q: Test for HERE STRING <<< support
+# Short: <<<
+# Desc: Test for HERE STRING <<< support
 
 : <<< "string"

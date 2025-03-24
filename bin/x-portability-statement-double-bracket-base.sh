@@ -1,4 +1,5 @@
 #! /bin/sh
-# Q: Test support for expression [[ .. ]]
+# Short: [[ ... ]]
+# Desc: Test support for expression [[ .. ]]
 
 [[ "1" = "1" ]]

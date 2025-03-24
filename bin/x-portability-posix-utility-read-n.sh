@@ -1,5 +1,6 @@
 #! /bin/sh
-# Q: Test POSIX support: read with non-standard option -N<size>
+# Short: POSIX read (-N)
+# Desc: Test POSIX support: read with non-standard option -N<size>
 #
 # Notes:
 #

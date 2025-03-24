@@ -1,4 +1,5 @@
 #! /bin/sh
-# Q: Test POSIX support: command -v
+# Short: POSIX command -v
+# Desc: Test POSIX support: command -v
 
 command -v ls
