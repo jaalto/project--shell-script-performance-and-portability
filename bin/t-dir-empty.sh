@@ -28,7 +28,7 @@ AtExit ()
 {
     [ "$dir" ] || return 0
 
-    rm --force "$dir"
+    rm --recursive --force "$dir"
 }
 
 # Hide from other shells
