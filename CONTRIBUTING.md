@@ -81,6 +81,9 @@ follows regarding the impact on performance:
 
 # TEST CASE FILE FORMAT
 
+- The <test case> file must return to the same
+   directory on exit (if it uses `cd`).
+
 - Variables. Use short variable names. From
   [t-lib.sh](./bin/t-lib.sh) use global `TMPBASE` to
   create temporary files.
@@ -93,15 +96,22 @@ follows regarding the impact on performance:
   files using
   Special Built-In Utility
   [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_28),
-  use argument "default". For custom use cleanup,
-  define function `AtExit` and add it to `trap`.
+  see examples below: For custom cleanup,
+  define function `AtExit` and call `AtExitDefault`to manually
+  clean `TMPBASE` files.
 
 ```
-	SetupTrapAtExit default   # runs AtExitDefault to clean TMPBASE* files
-	SetupTrapAtExit AtExit    # runs AtExit to clean custom files
-	SetupTrapAtExit default AtExit # runs both
-```
+	SetupTrapAtExit # defines AtExit to clean TMPBASE* files
 
+    AtExit ()
+	{
+	    AtExitDefault # Clean TMPBASE* files
+		rm --recursive --force $tmpdir  # my custom cleanup
+	}
+
+    SetupTrapAtExit AtExit    # Use your custom AtExit
+```
+z
 - Name the test case functions using `t<number>[something]()`, like
   t1, t2 or t3a, t3b. Order the test cases by fastest
   solution first and slowest last. Every test case must be
