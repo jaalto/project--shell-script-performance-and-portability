@@ -29,16 +29,6 @@ set -o nounset # Treat unused variables as errors
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
 
-SHELL_LIST="\
-posh,\
-dash,\
-busybox ash,\
-mksh,\
-ksh,\
-bash,\
-zsh\
-"
-
 # Forward decalarations for shellcheck(1)
 # Defined in t-lib.sh
 TMPBASE=""
@@ -48,6 +38,38 @@ VERBOSE=""
 # shellcheck disable=SC1091
 
 . "$pwd/t-lib.sh"   # Common library
+
+SHELL_LIST_DEFAULT="\
+sh,\
+dash,\
+posh,\
+busybox ash,\
+mksh,\
+ksh,\
+bash,\
+zsh\
+"
+
+SHELL_LIST_DEFAULT_DASH="\
+dash,\
+posh,\
+busybox ash,\
+mksh,\
+ksh,\
+bash,\
+zsh\
+"
+
+SHELL_LIST=$SHELL_LIST_DEFAULT
+
+if IsCommandExist readlink ; then
+    # In Linux, sh may be symlink to dash
+    # No need to test sh
+
+    if [ "$(readlink /bin/sh)" = "dash" ]; then
+        SHELL_LIST=$SHELL_LIST_DEFAULT_DASH
+    fi
+fi
 
 Help ()
 {
@@ -87,7 +109,64 @@ EXAMPLES
     exit 0
 }
 
-Results ()
+ShellVersion ()
+{
+    sh=$1
+
+    # dash: unfortunately the version number is not compiled in
+
+    case $sh in
+        *busybox*)
+            # BusyBox v1.37.0 (Debian 1:1.37.0-4) multi-call binary.
+            busybox --help 2>&1 | ${AWK:-awk} '
+            /^BusyBox v[0-9]+\./ {
+                sub("^BusyBox +v?", "")
+                print $1
+                exit
+            }'
+            ;;
+        *posh*)
+            $sh -c 'echo $POSH_VERSION'
+            ;;
+        *mksh*)
+            # @(#)MIRBSD KSH R59 2024/07/26 +Debian
+            $sh -c 'echo $KSH_VERSION' | ${AWK:-awk} '
+            /2[0-2][0-9][0-9]/ {
+                gsub("/", "-")
+                print $3 " " $4
+                exit
+            }'
+            ;;
+        ksh | ksh93*)
+            # ... (AT&T Research) 93u+m/1.0.10 2024-08-01
+            $sh --version 2>&1 | ${AWK:-awk} '
+            /AT.T Research. +[0-9]+/ {
+                print $(NF -1) " " $(NF)
+                exit
+            }'
+            ;;
+        *bash*)
+            # GNU bash, version 5.2.37(1)-release ...
+            $sh --version 2>&1 | ${AWK:-awk} '
+            /^GNU bash.* +[0-9]/ {
+                $0 = $4
+                sub("[(].+$", "")
+                print
+                exit
+            }'
+            ;;
+        *zsh*)
+            # zsh 5.9 (x86_64-debian-linux-gnu)
+            $sh --version 2>&1 | ${AWK:-awk} '
+            /^zsh +[0-9]/ {
+                print $2
+                exit
+            }'
+            ;;
+    esac
+}
+
+ResultsData ()
 {
     separator=$1
     list=$2
@@ -102,20 +181,6 @@ Results ()
 
     ${AWK:-awk} -F"$separator" \
     '
-    function Line (count)
-    {
-        for (i = 0; i < count; i++)
-        {
-            printf("-")
-        }
-        printf("\n")
-    }
-
-    function Separator ()
-    {
-        Line(70)
-    }
-
     function Header (fmt)
     {
         printf(fmt, "")
@@ -151,24 +216,53 @@ Results ()
                 printf("%2s\n", $(i))
         }
     }
-
-    END {
-        Separator()
-
-        count = split(list, array, sep)
-
-        for (i = 1; i <= count; i++)
-        {
-            printf("%02d %s\n", i, array[i])
-        }
-
-        Separator()
-    }
-
     ' \
     list="$list" \
     sep="$lsep" \
     "${1:-}"
+}
+
+Line ()
+{
+    max=$1
+    i=0
+
+    while [ "$i" -lt "$max" ]
+    do
+        printf "-"
+        i=$((i + 1))
+    done
+
+    printf "\n"
+}
+
+ResultsShellInfo ()
+{
+    list=$1
+    sep=$2
+
+    Line 60
+
+    saved=$IFS
+    IFS="$sep"
+    i=1
+
+    for sh in $list
+    do
+        version="$(ShellVersion $sh)"
+
+        if [ "$version" ]; then
+            printf "%02d %s %s\n" "$i" "$sh" "$version"
+        else
+            printf "%02d %s\n" "$i" "$sh"
+        fi
+
+        i=$((i + 1))
+    done
+
+    IFS=$saved
+
+    Line 60
 }
 
 Description ()
@@ -220,7 +314,8 @@ RunCheck ()
 
     IFS=$saved
 
-    Results "$sep" "$SHELL_LIST" "," "$results"
+    ResultsData "$sep" "$SHELL_LIST" "," "$results"
+    ResultsShellInfo "$SHELL_LIST" ","
 }
 
 Main ()
