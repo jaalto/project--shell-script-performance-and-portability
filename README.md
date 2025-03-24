@@ -390,8 +390,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   so globbing characters
   like `*`, `?`, etc. in string would be a problem.
   The pathname expansion
-  can be disabled with
-  `set -f; ...code...; set +f`.
+  can be disabled.
   See [code](./bin/t-variable-array-split-string.sh).
 
 ```
@@ -409,7 +408,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
         # Disable pathname
         # expansion
-        set -f
+        set -o noglob
 
         local -a array
 
