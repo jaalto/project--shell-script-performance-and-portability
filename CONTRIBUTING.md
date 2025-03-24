@@ -91,14 +91,15 @@ follows regarding the impact on performance:
 
 - To clean  `TMPBASE` derived temporary
   files using
-  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/trap.html),
-  use "default" argument. For custom use define function `AtExit`
-  and add it to `trap`
+  Special Built-In Utility
+  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_28),
+  use argument "default". For custom use cleanup,
+  define function `AtExit` and add it to `trap`.
 
 ```
-	SetupTrapAtExit default   # Clean TMPBASE* files
-	SetupTrapAtExit AtExit    # run AtExit to clean custom files
-	SetupTrapAtExit default AtExit # run both
+	SetupTrapAtExit default   # runs AtExitDefault to clean TMPBASE* files
+	SetupTrapAtExit AtExit    # runs AtExit to clean custom files
+	SetupTrapAtExit default AtExit # runs both
 ```
 
 - Name the test case functions using `t<number>[something]()`, like
