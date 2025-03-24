@@ -101,6 +101,11 @@ SetupTrapAtExit ()
     unset trap
 }
 
+TrapReset ()
+{
+    trap - EXIT HUP INT QUIT TERM
+}
+
 Warn ()
 {
     echo "$*" >&2
