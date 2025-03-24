@@ -3,8 +3,10 @@
 arrays                                   -  -  -  +  +  +  +
 <<<                                      -  -  -  +  +  +  +
 POSIX command -v                         +  +  +  +  +  +  +
+POSIX printf (builtin)                   -  +  +  -  +  +  +
 POSIX read (-N)                          +  +  +  +  +  +  +
 < <(cmd)                                 -  -  +  -  +  +  +
+$((i = i + 1))                           +  +  +  +  +  +  +
 [[ ... ]]                                -  -  +  +  +  +  +
 [[ STRING = PATTERN ]]                   -  -  -  +  +  +  +
 [[ STRING =~ REGEXP ]]                   -  -  +  -  +  +  +
