@@ -151,15 +151,27 @@ RunBash ()
     RunMaybe Info
 
     Tests "$1" |
-    while read -r test
+    while read -r test precondition
     do
+        if [ "$precondition" ]; then
+            if ! $precondition ; then
+                printf "# %-24s<skip>\n" "$test $precondition"
+                continue
+            fi
+        fi
+
+        printf "# %-24s" "$test"
+
         env source="source-as-library" \
             TIMEFORMAT="$TIMEFORMAT" \
             bash -c "time $RUN_SHELL $1 $test"
     done
 
     RunMaybe AtExit
+
+    # Clear
     unset -f Info AtExit
+    TrapReset
 }
 
 RunFile ()
