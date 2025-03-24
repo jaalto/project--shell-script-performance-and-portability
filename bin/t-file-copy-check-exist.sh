@@ -38,7 +38,7 @@ t2 ()
     done
 }
 
-EnableDefaultTrap
+SetupAtExit
 
 t="\
 :t t1

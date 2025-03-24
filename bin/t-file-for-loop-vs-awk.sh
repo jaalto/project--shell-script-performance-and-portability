@@ -15,7 +15,7 @@ TMP=$(mktemp -d -t test-XXXX)
 
 Setup ()
 {
-    for i in $(setq 100)
+    for i in $(seq 100)
     do
         cp "$f" "$TMP/$f.$i"
     done

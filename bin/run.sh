@@ -83,11 +83,14 @@ EXAMPLES
 
     exit 0
 }
-
-InfoDisplay ()
+RunMaybe ()
 {
-    if IsCommandTest Info ; then
-        Info
+    cmd=${1:-}
+
+    [ "$cmd" ] || return 0
+
+    if IsCommandTest "$cmd" ; then
+        $cmd
     fi
 }
 
@@ -146,8 +149,11 @@ RunBash ()
         Die "bash not in PATH. Required for timing."
     fi
 
+    # ignore follow
+    # shellcheck disable=SC1090
     source="source-as-library" . "$testfile"
-    InfoDisplay
+
+    RunMaybe Info
 
     Tests "$1" |
     while read -r test
@@ -155,6 +161,8 @@ RunBash ()
         env TIMEFORMAT="$TIMEFORMAT" \
         bash -c "time $RUN_SHELL $1 $test"
     done
+
+    RunMaybe AtExit
 }
 
 Run ()
@@ -215,9 +223,9 @@ Main ()
     do
         # Unused, but useful during debug
         # shellcheck disable=SC2034
-        dummy="OPT: $1"
+        dummy="OPT: ${1:-}"
 
-        case "$1" in
+        case "${1:-}" in
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"

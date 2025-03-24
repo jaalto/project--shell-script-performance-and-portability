@@ -41,17 +41,25 @@ t1 ()
         fi
     done
 }
+# Hide from other shells
+t2 () { : ; } # stub
 
+cat << 'EOF' > t.bash
 t2 ()
 {
     for i in $(seq $loop_max)
     do
         arr=("$TMPBASE"*)
+
         if [ ${#arr[*]} -gt 0 ]; then
             dummy="glob match"
         fi
     done
 }
+EOF
+
+IsFeatureArrays && . ./t.bash
+rm --force t.bash
 
 t3 ()
 {
@@ -69,8 +77,8 @@ t="\
 :t t3 IsCommandGnuStat
 "
 
-EnableDefaultTrap
 Setup
+SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 

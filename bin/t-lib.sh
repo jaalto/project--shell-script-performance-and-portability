@@ -82,14 +82,20 @@ RUNNER=t.run
 
 [ "${KSH_VERSION:-}" ] && alias local=typeset
 
-AtExit ()
+AtExitDefault ()
 {
     rm --force "$TMPBASE"*
 }
 
-EnableDefaultTrap ()
+SetupAtExit ()
 {
-    trap AtExit EXIT HUP INT QUIT TERM
+    # Define "do nothing" command if not args
+
+    if [ ! "${1:-}" ]; then
+        set -- :
+    fi
+
+    trap "AtExitDefault; AtExit 2> /dev/null; "$@";" EXIT HUP INT QUIT TERM
 }
 
 Warn ()
@@ -180,7 +186,13 @@ IsFeatureReadOptionN ()
 
 IsFeatureMatchRegexp ()
 {
-    # [[ $string =~ $re ]]
+    # [[ string =~ ^abc ]]
+    IsShellModern
+}
+
+IsFeatureMatchGlob ()
+{
+    # [[ string = *glob* ]]
     IsShellModern
 }
 
@@ -277,18 +289,6 @@ RequireGnuAwk ()
     Die "${1:-}: ERROR: no requirement: GNU awk(1), or set envvar AWK"
 }
 
-Runner ()
-{
-    runit="$RUNNER.$$"
-
-    echo "$*" > "$runit"
-
-    sh ./"$runit"
-
-    rm --force "$runit"
-    unset runit
-}
-
 RandomWordsGibberish ()
 {
     # - Create file with SIZE containing random words.
@@ -367,7 +367,7 @@ RandomNumbersPython ()
     python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
-RunTestCase () # Run a test case
+RunTestCase ()
 {
     [ "${1:-}" ] || return 1
 

@@ -43,7 +43,7 @@ Setup ()
 
 Info ()
 {
-    echo "test file: $(ls -l $f)"
+    echo "INFO: test file: $(ls -l $f)"
 }
 
 t1pure ()
@@ -113,7 +113,7 @@ t="
 "
 
 Setup
-EnableDefaultTrap
+SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 

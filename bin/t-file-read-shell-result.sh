@@ -33,7 +33,7 @@ t="\
 :t t2
 "
 
-EnableDefaultTrap
+SetupAtExit
 
 [ "$source" ] || RunTests "$t" "$@"
 

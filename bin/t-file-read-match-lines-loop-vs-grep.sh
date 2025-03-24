@@ -4,10 +4,10 @@
 # A: It is about 2x faster to use `grep` than doing all in a loop
 # priority: 7
 #
-#     t1a real 0m0.436s grep prefilter before loop
-#     t1b real 0m0.469s grep prefilter before loop (proc)
-#     t2a real 0m1.105s loop: POSIX glob match with case...esac
-#     t2b real 0m1.127s loop: Bash glob match using [[ ]]
+#     t1a real 0m4.420s  grep prefilter before loop
+#     t1b real 0m5.050s  grep prefilter before loop (process substitution)
+#     t2a real 0m11.330s loop: POSIX glob match with case...esac
+#     t2b real 0m11.300s loop: Bash glob match using [[ ]]
 #
 # Code:
 #
@@ -45,13 +45,18 @@ t1a ()
 {
     for i in $(seq $loop_max)
     do
-        grep "0" $f | while read -r line
+        grep "0" $f |
+        while read -r line
         do
             found=$line
         done
     done
 }
 
+# Hide from other shells
+t1b () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t1b ()
 {
     for i in $(seq $loop_max)
@@ -62,6 +67,10 @@ t1b ()
         done < <(grep "0" $f)
     done
 }
+EOF
+
+IsFeatureProcessSubstitution && . ./t.bash
+rm --force t.bash
 
 t2a ()
 {
@@ -77,6 +86,10 @@ t2a ()
     done
 }
 
+# Hide from other shells
+t2b () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t2b ()
 {
     for i in $(seq $loop_max)
@@ -89,12 +102,15 @@ t2b ()
         done < $f
     done
 }
+EOF
+IsFeatureMatchGlob && . ./t.bash
+rm --force t.bash
 
 t="\
 :t t1a
-:t t1b
+:t t1b IsFeatureProcessSubstitution
 :t t2a
-:t t2b
+:t t2b IsFeatureMatchGlob
 "
 
 [ "$source" ] || RunTests "$t" "$@"

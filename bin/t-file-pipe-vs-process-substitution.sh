@@ -25,6 +25,10 @@ t1 ()
     done
 }
 
+# Hide from other shells
+t2 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t2 ()
 {
     for i in $(seq $loop_max)
@@ -32,10 +36,13 @@ t2 ()
         < <( < <(cat $f) cut -f1) $AWK '/./ {}'
     done
 }
+EOF
+
+IsFeatureProcessSubstitution && . ./t.bash
 
 t="\
 :t t1
-:t t2
+:t t2 IsFeatureProcessSubstitution
 "
 
 [ "$source" ] || RunTests "$t" "$@"
