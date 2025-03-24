@@ -1,4 +1,4 @@
 #! /bin/sh
-# Q: Test support for binary op STRING =~ REGEXP
+# Q: Test support for expression [[ STRING =~ REGEXP ]]
 
 [[ abc =~ ^a ]]
