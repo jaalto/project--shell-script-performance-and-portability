@@ -40,7 +40,7 @@ Setup ()
 
 Info ()
 {
-    ls -la $f
+    echo "INFO: test file: $(ls -l $f)"
 }
 
 Read ()
