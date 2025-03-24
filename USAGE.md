@@ -8,6 +8,10 @@ To re-run all tests:
 
     make run
 
+Run portability tests:
+
+    make portability
+
 To run test case and display commentary:
 
     cd bin/
