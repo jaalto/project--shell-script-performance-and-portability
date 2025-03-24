@@ -41,8 +41,8 @@ VERBOSE=""
 
 SHELL_LIST_DEFAULT="\
 sh,\
-dash,\
 posh,\
+dash,\
 busybox ash,\
 mksh,\
 ksh,\
@@ -51,8 +51,8 @@ zsh\
 "
 
 SHELL_LIST_DEFAULT_DASH="\
-dash,\
 posh,\
+dash,\
 busybox ash,\
 mksh,\
 ksh,\
