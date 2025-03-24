@@ -77,9 +77,9 @@ the system used at the time of testing.
 Instead, compare the relative order in which
 each test case produced the fastest results.
 
-
 - [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
+- [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt)
 - The test cases and code in [bin/](./bin/)
 - [USAGE](./USAGE.md)
 - [CONTRIBUTING](./CONTRIBUTING.md)
