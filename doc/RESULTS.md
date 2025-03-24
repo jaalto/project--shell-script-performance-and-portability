@@ -336,10 +336,10 @@ so they should behave equally.
 *A: It is about 2x faster to use `grep` than doing all in a loop*<br/>
 _priority: 7_
 
-    t1a real 0m0.436s grep prefilter before loop
-    t1b real 0m0.469s grep prefilter before loop (proc)
-    t2a real 0m1.105s loop: POSIX glob match with case...esac
-    t2b real 0m1.127s loop: Bash glob match using [[ ]]
+    t1a real 0m4.420s  grep prefilter before loop
+    t1b real 0m5.050s  grep prefilter before loop (process substitution)
+    t2a real 0m11.330s loop: POSIX glob match with case...esac
+    t2b real 0m11.300s loop: Bash glob match using [[ ]]
 
 ## Code
 
