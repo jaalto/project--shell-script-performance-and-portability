@@ -225,15 +225,21 @@ ResultsData ()
 Line ()
 {
     max=$1
+    ch=${2:-"-"}
     i=0
 
     while [ "$i" -lt "$max" ]
     do
-        printf "-"
+        printf "$ch"
         i=$((i + 1))
     done
 
     printf "\n"
+}
+
+LineStraight ()
+{
+    Line 60
 }
 
 ResultsShellInfo ()
@@ -241,7 +247,7 @@ ResultsShellInfo ()
     list=$1
     sep=$2
 
-    Line 60
+    LineStraight
 
     saved=$IFS
     IFS="$sep"
@@ -262,7 +268,7 @@ ResultsShellInfo ()
 
     IFS=$saved
 
-    Line 60
+    LineStraight
 }
 
 Description ()
@@ -325,6 +331,8 @@ RunCheck ()
     done
 
     IFS=$saved
+
+    LineStraight
 
     ResultsData "$sep" "$SHELL_LIST" "," "$results"
     ResultsShellInfo "$SHELL_LIST" ","
