@@ -8,6 +8,8 @@ DOCDIR   = doc
 MAKEFILE = Makefile
 DOC      = RESULTS
 BRIEF    = RESULTS-BRIEF.txt
+DOC_PORTABILITY = RESULTS-PORTABILITY.txt
+
 GREP     = grep --extended-regexp
 RM	 = rm --force
 BIN_RUN  = run.sh
@@ -53,7 +55,7 @@ run:
 
 # doc - Generate documentation
 .PHONY: doc
-doc: doc-all doc-brief
+doc: doc-all doc-brief doc-portability
 
 define doc-function
 	cd bin && \
@@ -64,6 +66,15 @@ endef
 .PHONY: doc-all
 doc-all:
 	$(call doc-function)
+
+define doc-portability-function
+	cd bin && \
+	./$(BIN_PORTABILITY) x-* > ../$(DOCDIR)/$(DOC_PORTABILITY).txt
+endef
+
+.PHONY: doc-portability
+doc-portability:
+	$(call doc-portability-function)
 
 $(DOCDIR)/$(DOC):
 	$(call doc-function)
