@@ -278,6 +278,36 @@ Description ()
     ' "${@:-/dev/null}"
 }
 
+RunShells ()
+{
+    saved=$IFS
+    IFS=","
+    shresult=""
+
+    for shell in $shlist
+    do
+        result="-"
+
+        # eval is needed because shell would be
+        # "busybox ash", which must be broken apart
+        # to separate words.
+
+        if eval $shell "$file" > /dev/null 2>&1; then
+            result="+"
+        fi
+
+        if [ "$shresult" ]; then
+            shresult="$shresult$sep$result"
+        else
+            shresult=$result
+        fi
+    done
+
+    IFS="$saved"
+
+    echo "$shresult"
+}
+
 RunCheck ()
 {
     shlist=$1
@@ -285,29 +315,11 @@ RunCheck ()
 
     sep="@"
     results="$TMPBASE.results"
-    saved=$IFS
-    IFS=", "
 
     for file in "$@"
     do
-
         desc=$(Description "$file")
-        shresult=""
-
-        for shell in $shlist
-        do
-            result="-"
-
-            if $shell "$file" > /dev/null 2>&1; then
-                result="+"
-            fi
-
-            if [ "$shresult" ]; then
-                shresult="$shresult$sep$result"
-            else
-                shresult=$result
-            fi
-        done
+        shresult=$(RunShells "$shlist")
 
         echo "$desc$sep$shresult" >> "$results"
     done
@@ -380,7 +392,7 @@ Main ()
 
     shlist=""
     saved=$IFS
-    IFS=", "
+    IFS=","
 
     for shell in $SHELL_LIST
     do
