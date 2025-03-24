@@ -153,9 +153,7 @@ RunBash ()
             bash -c "time $RUN_SHELL $1 $test"
     done
 
-
     RunMaybe AtExit
-
     unset -f Info AtExit
 }
 
