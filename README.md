@@ -1046,6 +1046,8 @@ Notable observations:
   as in `hash <command>`, but it is less
   consistently supported across shells. Neither
   `type` nor `hash` is supported by `posh`.
+  See table
+  [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
 
 ```
     REQUIRE="sqlite curl"
