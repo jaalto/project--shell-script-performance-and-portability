@@ -260,7 +260,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-function-return-value.sh).
 
 ```
-    fnPosix() # dash
+    fnNamerefPosix() # dash
     {
         # Use nameref for the
         # return value
@@ -271,7 +271,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         eval "$retref=\$arg"
     }
 
-    fnBash()
+    fnNamerefBash()
     {
         # Use nameref for the
         # return value
@@ -283,8 +283,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     }
 
     # Return value in 'ret'
-    fnPosix ret "arg"
-    fnBash ret "arg"
+    fnNamerefPosix ret "arg"
+    fnNamerefBash ret "arg"
 ```
 
 - It is about 10 times faster to read a file
