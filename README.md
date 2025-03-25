@@ -1112,7 +1112,7 @@ discussions about the topic, see
     perl -i -pe 's/this/that/g' file
 
     # Portable
-    # Avoiding the `-i` option.
+    # Avoiding -i option.
 
     tmp=$(tempfile)
     sed 's/this/that/g' file > "$tmp"
