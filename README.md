@@ -978,8 +978,8 @@ The fine print here is that
 [`env`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html)
 is a standard POSIX utility, but its path
 is not mandated by POSIX. However,
-in 99.9% of cases, the de facto location
-is `/usr/bin/env`.
+in 99.9% of cases, the de facto portable
+location is `/usr/bin/env`.
 
 ## PORTABILITY OF UTILITIES
 
