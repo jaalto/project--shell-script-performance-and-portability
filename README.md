@@ -652,7 +652,8 @@ Examples or archaic coding practises:
     # Variable lenght is zero
     if [ -z "$a" ] ...
 
-    # Deprecated in later POSIX
+    # Deprecated in next POSIX version.
+    # Operands are also not portable.
     # -o (OR)
     # -a (AND)
     if [ "$a" = "y" -o "$b" = "y" ] ...
@@ -1011,18 +1012,23 @@ Notable observations:
 ```
 
 - [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
-  No `-N` option to read
-  file into memory for fast
-  in-memory pattern matching
-  later.
+  POSIX does not define `REPLY` variable, so
+  always supply one. POSIX only defines options `-r`
+  which you should always use. Remember that
+  `-N` option to read file into memory
+  is only available in modern shells (Bash, Ksh).
+  See shellcheck
+  [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
+  BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001)
+  and BashWiki [IFS](https://mywiki.wooledge.org/IFS).
 
 ```
    # POSIX
    REPLY=$(cat file)
 
-   # Not POSIX
+   # Not POSIX (Bash, Ksh)
    # Read max 100 KiB to $REPLY
-   read -N$((100 * 1024)) < file
+   read -N$((100 * 1024)) REPLY < file
 
    case $REPLY in
         *pattern*)
@@ -1031,24 +1037,33 @@ Notable observations:
    esac
 ```
 
-- [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html).
-  To check if a command exists, use `command -v
-  <command>` and not `which <command>`. "which"
-  is not part of POSIX and is not a portable
-  solution. Note that POSIX also defines
+- Use POSIX
+  [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html)
+  to check if command exists.
+  Note that POSIX also defines
   [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
   as in `type <command>`
-  only without options.
-  However, in practice, the
-  semantics, return codes, and output are not as
-  uniform compared to `command -v`. POSIX also
-  has utility
+  without any options. POSIX also
+  defines utility
   [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
-  as in `hash <command>`, but it is less
-  consistently supported across shells. Neither
-  `type` nor `hash` is supported by `posh`.
-  See table
+  as in `hash <command>`.
+  Problem with `type` is that the
+  semantics, return codes, support or
+  output are not necessarily uniform.
+  Problem with `hash` are similar.
+  Neither `type` nor `hash` is supported
+  by `posh`; see table
   [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
+  NOTE: The `which <command>`
+  is neither in POSIX nor portable. For more
+  information about `which`, see shellcheck
+  [SC2230](https://github.com/koalaman/shellcheck/wiki/SC2230),
+  BashFAQ [081](https://mywiki.wooledge.org/BashFAQ/081),
+  StackOverflow discussion
+  ["How can I check if a program exists from a Bash script?"](https://stackoverflow.com/q/592620),
+  and Debian project plan about deprecating
+  the command in LWN article
+  ["Debian's which hunt"](https://lwn.net/Articles/874049/).
 
 ```
     REQUIRE="sqlite curl"
