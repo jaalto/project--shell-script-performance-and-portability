@@ -898,8 +898,9 @@ following format:
 
     #! /usr/bin/env bash
 
-    ... and not
-    #! /bin/bash
+    ... more problematic on macOS
+
+#! /bin/bash
 
 <ins>About Python and shebang</ins>
 
@@ -909,16 +910,18 @@ programs did not run without changes with the
 new version. In Python programs, the shebang
 should specify the Python version explicitly,
 either with `python` (2.x) or `python3`.
-These are the only portable choices.
+
+    ... The de facto interpreters
 
     #! /usr/bin/python
     #! /usr/bin/python3
 
-    .... Not portable
+    .... not supported
 
     #! /usr/bin/python2
     #! /usr/bin/python3.13.2
 
+But this is not all.
 Python is also one of those languages which might
 require multiple virtual environments based on
 projects. It is typical to manage these
@@ -930,6 +933,8 @@ or older
 etc. For even better portability,
 the following would allow
 user to use his active Python environment:
+
+    ... even better portability
 
     #! /usr/bin/env python3
 
