@@ -840,10 +840,10 @@ scripts even more.
 
 **Shebang line in scripts**
 
-Note that POSIX does not defined the
-[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)),
-the traditional first line that hints
-interpreter to use. See
+Note that POSIX does not define the
+[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+— the traditional first line that indicates
+which interpreter to use. See
 [exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html#tag_16_111_08)
 
 > (...) Another way that some historical
