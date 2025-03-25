@@ -109,21 +109,28 @@ EXAMPLES
     exit 0
 }
 
-ShellVersion ()
+ShellVersionDash ()
 {
-    sh=$1
+    # Unfortunately the version number is
+    # not compiled in. Revert to package
+    # manager.
 
-    # dash: unfortunately the version number is not compiled in
+    # Output:
+    # ii  dash  0.5.12-12  amd64  POSIX-compliant shell
+
+    IsCommandExist dpkg &&
+        DPKG_COLORS=never PAGER=cat \
+        dpkg -l dash |
+        awk '/dash/ {print $3}'
+}
+
+ShellVersionMain ()
+{
+    local sh=$1
 
     case $sh in
-        *busybox*)
-            # BusyBox v1.37.0 (Debian 1:1.37.0-4) multi-call binary.
-            busybox --help 2>&1 | ${AWK:-awk} '
-            /^BusyBox v[0-9]+\./ {
-                sub("^BusyBox +v?", "")
-                print $1
-                exit
-            }'
+        *dash*)
+            ShellVersionDash
             ;;
         *posh*)
             $sh -c 'echo $POSH_VERSION'
@@ -163,18 +170,25 @@ ShellVersion ()
                 exit
             }'
             ;;
+        *busybox*)
+            # BusyBox v1.37.0 (Debian 1:1.37.0-4) multi-call binary.
+            busybox --help 2>&1 | ${AWK:-awk} '
+            /^BusyBox v[0-9]+\./ {
+                sub("^BusyBox +v?", "")
+                print $1
+                exit
+            }'
+            ;;
     esac
 }
 
 ResultsData ()
 {
-    separator=$1
-    list=$2
-    lsep=$3
+    local separator=$1
+    local list=$2
+    local lsep=$3
 
-    shift
-    shift
-    shift
+    shift ; shift ; shift
 
     # ignore expand... single quotes
     # shellcheck disable=SC2016
@@ -224,9 +238,9 @@ ResultsData ()
 
 Line ()
 {
-    max=$1
-    ch=${2:-"-"}
-    i=0
+    local max=$1
+    local ch=${2:-"-"}
+    local i=0
 
     while [ "$i" -lt "$max" ]
     do
@@ -244,18 +258,19 @@ LineStraight ()
 
 ResultsShellInfo ()
 {
-    list=$1
-    sep=$2
+    local list=$1
+    local sep=$2
 
     LineStraight
 
-    saved=$IFS
+    local sh
+    local i=1
+    local saved=$IFS
     IFS="$sep"
-    i=1
 
     for sh in $list
     do
-        version="$(ShellVersion $sh)"
+        version="$(ShellVersionMain $sh)"
 
         if [ "$version" ]; then
             printf "%02d %s %s\n" "$i" "$sh" "$version"
@@ -286,9 +301,10 @@ Description ()
 
 RunShells ()
 {
-    saved=$IFS
-    IFS=","
-    shresult=""
+    local shell
+    local shresult=""
+    local saved=$IFS
+    local IFS=","
 
     for shell in $shlist
     do
@@ -316,13 +332,14 @@ RunShells ()
 
 RunCheck ()
 {
-    shlist=$1
+    local shlist=$1
     shift
 
-    sep="@"
-    results="$TMPBASE.results"
+    local sep="@"
+    local results="$TMPBASE.results"
+    local file
 
-    for file in "$@"
+    for file
     do
         desc=$(Description "$file")
         shresult=$(RunShells "$shlist")
@@ -346,7 +363,7 @@ Main ()
     do
         # Unused, but useful during debug
         # shellcheck disable=SC2034
-        dummy="OPT: ${1:-}"
+        local dummy="OPT: ${1:-}"
 
         case "${1:-}" in
             -s | --shell)
@@ -386,9 +403,9 @@ Main ()
         Die "ERROR: missing file <portability test case>. See --help."
     fi
 
-    filelist=""
+    local filelist=""
 
-    for file in "$@"
+    for file
     do
         if [ ! -f "$file" ]; then
             IsVerbose && Warn "WARN: ignore, no file: $file"
@@ -398,8 +415,9 @@ Main ()
         filelist="$filelist $file"
     done
 
-    shlist=""
-    saved=$IFS
+    local shell
+    local shlist=""
+    local saved=$IFS
     IFS=","
 
     for shell in $SHELL_LIST
