@@ -7,8 +7,8 @@ fn ()
     local a=0
 }
 
-a=1
+i=1
 fn
-ret=${a:-0}
+var=${i:-0}
 
-[ "$ret" = 1 ]
+[ "$var" = 1 ]
