@@ -4,11 +4,11 @@
 # A: It is about 8-10x faster to read file into memory and then do matching
 # priority: 10
 #
-#     t1a real 0m0.049s read + bash regexp (read file once + use loop)
-#     t1b real 0m0.117s read + case..MATCH..esac (read file once + use loop)
-#     t2  real 0m0.482s read + case..MATCH..esac (separate file calls)
-#     t3  real 0m0.448s read + bash regexp (separate file calls)
-#     t4  real 0m0.404s external grep
+#     t1a real 0m0.049s read once + bash regexp (read file once + use loop)
+#     t1b real 0m0.054s read once + case..MATCH..esac (read file once + use loop)
+#     t4  real 0m0.283s grep
+#     t2  real 0m0.407s read + case..MATCH..esac (separate file calls)
+#     t3  real 0m0.440s read + bash regexp (separate file calls)
 #
 # Code:
 #
@@ -16,15 +16,21 @@
 #
 #     t1a read once and loop [[ str =~~ RE ]]
 #     t1b read once and loop case..MATCH..end
-#     t2  read -N<max> < file. case..MATCH..end
-#     t3  read -N<max> < file. [[ str =~~ RE ]]
-#     t4  grep RE file
+#     t4  grep RE file in loop
+#     t2  read every time in loop. case..MATCH..end
+#     t3  read every time in loop. [[ str =~~ RE ]]
 #
 # Notes:
 #
-# Repeated reads of the same file probably utilizes
-# Kernel cache to some extent. But it is still much faster
-# to read file once and then apply matching.
+# Repeated reads of the same file
+# probably utilizes Kernel cache to some
+# extent. But it is still much faster to
+# read file once into memory and then
+# apply matching multiple times.
+#
+# The `grep` command is leaps ahead of
+# re-reading the file in a loop and using
+# the shell’s own matching capabilities.
 
 . ./t-lib.sh ; rand=$random_file
 
@@ -35,7 +41,7 @@ re="$string.*$string"
 
 Setup ()
 {
-    { cat $rand; echo "$string $string" ; } > $f
+    { echo "$string $string"; cat $rand; } > $f
 }
 
 Info ()
@@ -45,10 +51,9 @@ Info ()
 
 Read ()
 {
-    # not supported by all shells.
-    # Results stored in REPLY
-    #   read -N100000 < "$1"
-    #
+    # Not supported by all shells:
+    #   read -N$((100 * 1024)) REPLY < "$1"
+
     # Use POSIX
     REPLY=$(cat "$1")
 }
@@ -79,7 +84,7 @@ MatchFileContentRegexp () # Bash regexp
     [[ "$REPLY" =~ $re ]]
 }
 
-t1a ()
+t1a () # read once
 {
     Read "$f"
     re=$string
@@ -94,7 +99,7 @@ EOF
 IsFeatureMatchRegexp && . ./t.bash
 rm --force t.bash
 
-t1b ()
+t1b () # read once
 {
     Read "$f"
 
@@ -106,23 +111,7 @@ t1b ()
     done
 }
 
-t2 ()
-{
-    for i in $(seq $loop_max)
-    do
-        MatchFileContentPattern $f
-    done
-}
-
-t3 ()
-{
-    for i in $(seq $loop_max)
-    do
-        MatchFileContentRegexp $f
-    done
-}
-
-t4 ()
+t2 () # read every time
 {
     for i in $(seq $loop_max)
     do
@@ -131,12 +120,28 @@ t4 ()
     done
 }
 
+t3 () # read every time
+{
+    for i in $(seq $loop_max)
+    do
+        MatchFileContentPattern $f
+    done
+}
+
+t4 () # read every time
+{
+    for i in $(seq $loop_max)
+    do
+        MatchFileContentRegexp $f
+    done
+}
+
 t="\
 :t t1a IsFeatureMatchRegexp
 :t t1b
 :t t2
-:t t3 IsFeatureMatchRegexp
-:t t4
+:t t3
+:t t4 IsFeatureMatchRegexp
 "
 
 SetupTrapAtExit

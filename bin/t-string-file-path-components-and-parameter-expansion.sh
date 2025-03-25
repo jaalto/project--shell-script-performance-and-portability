@@ -141,7 +141,7 @@ t3eExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
+        item=$(echo "$str" | ${SED:-sed} --regexp-extended 's/^[^.]+//')
     done
 }
 
