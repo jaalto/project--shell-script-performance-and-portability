@@ -143,9 +143,31 @@ IsOsLinux ()
     [ "$(uname)" = "Linux" ]
 }
 
+IsUnameMatch ()
+{
+    case $(uname -a) in
+        ${1:-})
+            :  # true
+            ;;
+        *)  false
+            ;;
+    esac
+}
+
 IsOsDebian ()
 {
-     IsCommandExist apt-get > /dev/null
+    # http://linuxmafia.com/faq/Admin/release-files.html
+    [ -f /etc/debian_version ] || IsUnameMatch "*Debian*"
+}
+
+IsOsUbuntu ()
+{
+    IsUnameMatch "*Ubuntu*"
+}
+
+IsOsDebianLike ()
+{
+    IsOsDebian || IsOsUbuntu
 }
 
 # TODO: IsShellAsh
