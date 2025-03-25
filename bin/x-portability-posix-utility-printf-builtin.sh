@@ -4,7 +4,7 @@
 
 test ()
 {
-    case "$(command -v printf)" in
+    case $(command -v printf) in
         */*) return 1
         ;;
     esac
