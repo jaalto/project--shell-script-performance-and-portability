@@ -1,5 +1,6 @@
-#! /bin/sh
+#! /bin/bash
 # Short: [[ ... ]]
 # Desc: Test support for expression [[ .. ]]
 
-[[ "1" = "1" ]]
+a=1
+[[ "$a" = "1" ]]

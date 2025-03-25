@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # Short: POSIX read (-N)
 # Desc: Test POSIX utlitity support: read with non-standard option -N<size>
 #
@@ -9,9 +9,9 @@
 # and whether a file can be read into memory
 # using the variable `$REPLY`.
 
-f=t.tmp
-: > $f
+f="t.tmp"
+: > "$f"
 
-read -N10 < "$f"
+read -r -N10 REPLY < "$f"
 
-rm --force $f
+rm --force "$f"

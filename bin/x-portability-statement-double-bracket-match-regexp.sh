@@ -1,5 +1,6 @@
-#! /bin/sh
+#! /bin/bash
 # Short: [[ STRING =~ REGEXP ]]
 # Desc: Test support for expression [[ STRING =~ REGEXP ]]
 
-[[ abc =~ ^a ]]
+str=abc
+[[ $str =~ ^a ]]

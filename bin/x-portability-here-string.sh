@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # Short: <<<
 # Desc: Test for HERE STRING <<< support
 
