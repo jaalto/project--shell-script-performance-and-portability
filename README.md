@@ -964,8 +964,9 @@ followed by bottom left menu
 
 Notable observations:
 
-- [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html).
-  Use
+- Use plain
+  [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html)
+  without any options. Use
   [`printf`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html)
   when more is needed.
 
