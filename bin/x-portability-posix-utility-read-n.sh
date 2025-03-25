@@ -1,6 +1,6 @@
 #! /bin/sh
 # Short: POSIX read (-N)
-# Desc: Test POSIX support: read with non-standard option -N<size>
+# Desc: Test POSIX utlitity support: read with non-standard option -N<size>
 #
 # Notes:
 #

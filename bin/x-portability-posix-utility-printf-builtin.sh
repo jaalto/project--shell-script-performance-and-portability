@@ -1,6 +1,6 @@
 #! /bin/sh
 # Short: POSIX printf (builtin)
-# Desc: Test POSIX support: printf is builtin and not /usr/bin/printf
+# Desc: Test POSIX utlitity support: printf is builtin and not /usr/bin/printf
 
 test ()
 {
