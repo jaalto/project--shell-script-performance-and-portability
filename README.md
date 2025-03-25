@@ -8,14 +8,15 @@ VSCode: preview markdown C-S-v
 How can you make shell scripts portable and run faster?
 That are the questions these test cases aim to answer.
 
-The tests reflect results under Linux.
-For performance the main focus is on the
-features found in
+The tests reflect results under Linux
+using GNU utilities. For performance the
+main focus is on the features found in
 [Bash](https://www.gnu.org/software/bash)
-rather than `sh`
+more than `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
-shells;
-see also POSIX in
+shells. The POSIX is useful
+if you are looking into for more
+portable scrips. See POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
@@ -262,8 +263,11 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
     fnNamerefPosix() # dash
     {
-        # Use nameref for the
-        # return value
+        # NOTE: uses non-POSIX 'local'
+        # but it is widely supported in
+        # POSIX-like shells:
+        # dash, posh, mksh, ksh93...
+
         local retref=$1
         shift
         local arg=$1
@@ -273,8 +277,6 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
     fnNamerefBash()
     {
-        # Use nameref for the
-        # return value
         local -n retref=$1
         shift
         local arg=$1
@@ -282,7 +284,9 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         retref=$arg
     }
 
-    # Return value in 'ret'
+    # Return value returned to
+    # variable 'ret'
+
     fnNamerefPosix ret "arg"
     fnNamerefBash ret "arg"
 ```
