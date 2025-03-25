@@ -1027,6 +1027,8 @@ Notable observations:
 
     RequireFeatures ()
     {
+        local cmd
+
         for cmd # implicit "$@" loop
         do
             if ! command -v "$cmd" > /dev/null; then
@@ -1034,8 +1036,6 @@ Notable observations:
                 return 1
             fi
         done
-
-        unset cmd
     }
 
     # Before program starts
