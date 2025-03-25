@@ -927,20 +927,16 @@ newer Bash version with `brew install
 bash`, it will be located in
 `/usr/local/bin/bash`. To use the
 latest Bash, the user must arrange
-`/usr/local/bin` first in `PATH`. Due
-to this limitation, for Bash, the
-shebang line — from a portability point
-of view — is best written in the
-following format:
-
-    ... more portable
-
-    #! /usr/bin/env bash
+`/usr/local/bin` first in `PATH`.
 
     ... traditional but
     ... problematic on macOS
 
     #! /bin/bash
+
+    ... more portable
+
+    #! /usr/bin/env bash
 
 ### About Python and Shebang
 
