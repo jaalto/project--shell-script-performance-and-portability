@@ -57,7 +57,7 @@ MatchFileContentPattern ()  # POSIX
 {
     Read "$1"
 
-    case "$REPLY" in
+    case ${REPLY:-} in
         $pattern)
             return 0
             ;;
@@ -100,7 +100,7 @@ t1b ()
 
     for i in $(seq $loop_max)
     do
-        case "$REPLY" in
+        case ${REPLY:-} in
             *$pattern*) ;;
         esac
     done
