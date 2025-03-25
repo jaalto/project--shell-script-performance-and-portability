@@ -503,7 +503,8 @@ RunTestCase ()
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
-            sed --regexp-extended \
+            ${SED:-sed} \
+                --regexp-extended \
                 --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
                 --expression 's,   +,  ,g' \
                 --expression 's,\t,  ,g' |
