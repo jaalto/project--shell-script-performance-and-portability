@@ -897,9 +897,12 @@ shebang line — from a portability point
 of view — is best written in the
 following format:
 
+    ... more portable
+
     #! /usr/bin/env bash
 
-    ... more problematic on macOS
+    ... traditional but
+    ... problematic on macOS
 
     #! /bin/bash
 
