@@ -901,7 +901,7 @@ following format:
 
     ... more problematic on macOS
 
-#! /bin/bash
+    #! /bin/bash
 
 <ins>About Python and shebang</ins>
 
