@@ -73,7 +73,7 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(echo "$str" | sed --regexp-extended "s,^$s*(.*$S)\s*$,\1,")
+        item=$(echo "$str" | ${SED:-sed} --regexp-extended "s,^$s*(.*$S)\s*$,\1,")
     done
 }
 
