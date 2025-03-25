@@ -95,7 +95,7 @@ t3 ()
     do
         find $DIR -maxdepth 1 -type f -printf "%T@ %p\n" |
             sort --reverse |
-            sed --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
+            ${SED:-sed} --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
             > /dev/null
     done
 }
@@ -106,7 +106,7 @@ t4 ()
     do
         $STAT --format="%Y %n" * |
             sort --reverse |
-            sed --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
+            ${SED:-sed} --regexp-extended --quiet 's,^.+ ,,; 1p; q' \
             > /dev/null
     done
 }
