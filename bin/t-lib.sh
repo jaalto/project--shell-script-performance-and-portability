@@ -185,7 +185,7 @@ IsShellBash ()
 
 IsShellKsh93 ()
 {
-    case "${KSH_VERSION:-}" in
+    case ${KSH_VERSION:-} in
         *93*)
             return 0
             ;;
@@ -196,7 +196,7 @@ IsShellKsh93 ()
 
 IsShellMksh ()
 {
-    case "${KSH_VERSION:-}" in
+    case ${KSH_VERSION:-} in
         *MIRBSD*)
             return 0
             ;;
@@ -286,7 +286,7 @@ IsCommandGnuVersion ()
 {
     [ "${1:-}" ] || return 1
 
-    case "$("$1" --version 2> /dev/null)" in
+    case $("$1" --version 2> /dev/null) in
         *GNU*)
             return 0
             ;;
@@ -446,14 +446,14 @@ RunTestCase ()
         # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
         hasformat="TIMEFORMAT"
     elif [ "$KSH_VERSION" ]; then
-        case "$KSH_VERSION" in
+        case ${KSH_VERSION:-} in
             *MIRBSD*) # No format choice in mksh(1)
                 ;;
             *)  hasformat="TIMEFORMAT"
                 ;;
         esac
     else
-        case "$0" in
+        case ${0:-} in
             ksh | */ksh | */ksh93*)
                 hasformat="TIMEFORMAT"
                 ;;
@@ -466,7 +466,7 @@ RunTestCase ()
 
     timecmd=""
 
-    case "$(command -v time 2>&1)" in
+    case $(command -v time 2>&1) in
         /*) # /usr/bin/time - cannot be used to run functions
             ;;
         time)
