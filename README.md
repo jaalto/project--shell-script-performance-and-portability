@@ -1031,7 +1031,7 @@ Notable observations:
         do
             if ! command -v "$cmd" > /dev/null; then
                 echo "ERROR: missing required command: $cmd" >&2
-                exit 1
+                return 1
             fi
         done
 
@@ -1039,7 +1039,7 @@ Notable observations:
     }
 
     # Before program starts
-    RequireFeatures $REQUIRE
+    RequireFeatures $REQUIRE || exit $?
     ...
 ```
 
