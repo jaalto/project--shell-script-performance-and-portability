@@ -44,7 +44,7 @@ Help ()
 {
     program=$PROGRAM
 
-    case "$program" in
+    case $program in
         */*) ;;
           *) program="./$program"
              ;;
@@ -180,7 +180,7 @@ RunFile ()
     testfile=$1
     timewithbash=$2
 
-    case "$testfile" in
+    case $testfile in
         */*) ;;
           *) testfile="./$testfile"
              ;;
@@ -237,7 +237,7 @@ Main ()
         # shellcheck disable=SC2034
         dummy="OPT: ${1:-}"
 
-        case "${1:-}" in
+        case ${1:-} in
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"
@@ -277,7 +277,7 @@ Main ()
         Die "ERROR: missing file <test case>. See --help."
     fi
 
-    for file in "$@"
+    for file
     do
         if [ ! -f "$file" ]; then
             IsVerbose && Warn "WARN: ignore, no file: $file"
