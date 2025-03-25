@@ -792,6 +792,7 @@ see the well-rounded discussion on StackExchange.
 ```
     # Check better /bin/sh compliance
     dash -nx script.sh
+    posh -nx script.sh
 ```
 
 In practical terms, if you plan to aim
