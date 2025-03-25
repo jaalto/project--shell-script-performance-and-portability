@@ -808,6 +808,8 @@ scripts even more.
 
     shelltest()
     {
+        local script shell
+
         for script in "$@"
         do
             for shell in \
@@ -825,8 +827,6 @@ scripts even more.
                 fi
             done
         done
-
-        unset shell script
     }
 
     # Use is like:
