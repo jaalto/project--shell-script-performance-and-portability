@@ -684,7 +684,8 @@ involves considering several factors.
   personal use, choose whichever shell best suits
   your environment. On Linux, the obvious choice
   is Bash. On BSD systems, it would be Ksh. On
-  macOS, Zsh is the default and preferred option.
+  macOS, Zsh might be okay but it would
+  not be the best investment in the long run.
 
 - *Portable scripts.* If you intend to use the
   scripts across some operating systems — from
@@ -797,6 +798,8 @@ see the well-rounded discussion on StackExchange.
 - On Linux, most distributions already use, or
   are moving towards using, `sh` as a symlink to
   [dash](https://tracker.debian.org/pkg/dash).
+  Older Linux versions (Red Hat, Fedora, CentOS)
+  used to have `sh` to be a symlink to `bash`.
 - On the most conservative NetBSD, it is `ash`,
   the old
   [Almquist shell](https://en.wikipedia.org/wiki/Almquist_shell).
@@ -979,6 +982,11 @@ in 99.9% of cases, the de facto location in operating
 systems is `/usr/bin/env`.
 
 ## PORTABILITY OF UTILITIES
+
+In the end, the actual implementation
+of the shell you use (dash, bash, ksh...)
+is less important than what utilities
+you use and how you use them.
 
 It's not just about choosing to write in
 POSIX-like `sh`; the utilities called from
