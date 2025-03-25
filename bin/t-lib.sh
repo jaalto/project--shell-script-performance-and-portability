@@ -43,6 +43,7 @@
 #           $DICTIONARY_FILE
 #           $SED
 #           $AWK
+#           $PERL
 #           $STAT
 #
 #           $loop_max
@@ -70,6 +71,8 @@ loop_max=${loop_max:-100}
 SED=${SED:-"sed"}    # preferrably GNU version
 AWK=${AWK:-"awk"}    # preferrably GNU version
 STAT=${STAT:-"stat"} # must be GNU version
+PERL=${PERL:-"perl"}
+PYTHON=${PYTHON:-"python3"}
 
 DICTIONARY_DEFAULT="/usr/share/dict/words"
 DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
@@ -390,28 +393,30 @@ RandomNumbersAwk ()
 
     RequireGnuAwk "t-lib.sh"
 
-    $AWK -v n="$1" \
+    $AWK \
     '
     BEGIN {
         srand();
 
         for (i = 1; i <= n; i++)
             print int(rand() * (2**14 - 1))
-    }'
+    }' \
+    n="$1" \
+    < /dev/null
 }
 
 RandomNumbersPerl ()
 {
     [ "${1:-}" ] || return 1
 
-    perl -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
+    $PERL -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
 }
 
 RandomNumbersPython ()
 {
     [ "${1:-}" ] || return 1
 
-    python3 -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
+    $PYTHON -c "import random; print('\n'.join(str(random.randint(0, 2**14-1)) for _ in range($1)))"
 }
 
 RunMaybe ()
