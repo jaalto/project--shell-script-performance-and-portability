@@ -78,7 +78,7 @@ t2a ()
     do
         while read -r line
         do
-            case "$i" in
+            case $i in
                 *0*) found=$line
                      ;;
             esac
