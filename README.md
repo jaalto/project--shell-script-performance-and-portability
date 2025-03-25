@@ -953,10 +953,12 @@ systems is `/usr/bin/env`.
 
 **Portability of utilities**
 
-The utilities that you use in scripts, those of
-`echo`, `cut`, `tail` make big part of of the
-scripts. If you want to ensure portability,
-check options defined in
+It's not just about choosing to write in
+POSIX-like `sh`; the utilities called from
+the script also has to be considered. Those
+of `echo`, `cut`, `tail` make big part
+of of the scripts. If you want to
+ensure portability, check options defined in
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/).
 See top left menu "Shell & Utilities"
 followed by bottom left menu
@@ -1025,7 +1027,7 @@ Notable observations:
 
     RequireFeatures ()
     {
-        for cmd   # implicit "$@" loop
+        for cmd # implicit "$@" loop
         do
             if ! command -v "$cmd" > /dev/null; then
                 echo "ERROR: missing required command: $cmd" >&2
@@ -1043,10 +1045,8 @@ Notable observations:
 
 **Case Study: sed**
 
-It's not just about
-choosing to write in `sh` shell; the utilities called from
-the script also pose problems. For example, the
-Linux GNU `sed(1)` and its options differ or
+As a case study, the Linux GNU `sed(1)` and
+its options differ or
 are incompatible. The Linux GNU
 [`sed`](https://www.gnu.org/software/sed/)
 `--in-place` option for replacing file content
@@ -1060,14 +1060,14 @@ discussions about the topic, see
 [2](https://stackoverflow.com/q/16745988),
 [3](https://stackoverflow.com/q/7573368).
 
-    # Linux
+    # Linux (works)
     #
     # GNU sed(1). Replace 'this' with
     # 'that'
 
     sed -i 's/this/that/g' file
 
-    # macOS
+    # macOS (does not work)
     #
     # This does not work. The '-i'
     # option has different syntax and
@@ -1077,17 +1077,22 @@ discussions about the topic, see
 
     sed -i 's/this/that/g' file
 
-    # Portable
+    # Maybe portable
     #
-    # The most portable is to use
-    # Perl which is almost always
-    # available although it
+    # In many cases Perl
+    # might be available although it
     # is not part of the POSIX
-    # utilities. Let's disregard
-    # special cases like busybox
-    # etc.
+    # utilities.
 
     perl -i -pe 's/this/that/g' file
+
+    # Portable
+    # Avoiding the `-i` option.
+
+    tmp=$(tempfile)
+    sed 's/this/that/g' file > "$tmp"
+    mv "$tmp" file
+    rm -f "$tmp"
 
 # SHELLS AND PERFORMANCE
 
