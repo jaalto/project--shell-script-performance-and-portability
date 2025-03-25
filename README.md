@@ -763,7 +763,7 @@ the GNU autoconf project; see
 For more discussion see
 [MORE PORTABILITY TIPS](#more-portability-tips).
 
-Let's first consider the "typical" `sh`
+Let's first consider the typical `sh`
 shells in order of their
 strictness to POSIX:
 
