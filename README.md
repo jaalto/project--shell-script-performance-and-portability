@@ -881,6 +881,8 @@ POSIX.
     #    #! /usr/bin/env bash
     #    #! /usr/bin/env python3
 
+<ins>About Bash and shebang</ins>
+
 Note that on macOS, `/bin/bash` is hard-coded
 to Bash version 3.2.57 where in 2025 lastest Bash is
 [5.2](https://tracker.debian.org/pkg/bash).
