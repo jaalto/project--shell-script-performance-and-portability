@@ -760,7 +760,7 @@ in deep waters, and your best guide is
 the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
-for more discussion see
+For more discussion see
 [MORE PORTABILITY TIPS](#more-portability-tips).
 
 Let's first consider the "typical" `sh`
