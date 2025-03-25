@@ -854,8 +854,8 @@ which interpreter to use. See
 > name of the command interpreter to execute.
 
 The first bytes of a script typically contain
-two special ASCII codes, a special comment if
-you wish, which is read by the kernel. Note
+two special ASCII codes, a special comment `#!`
+if you wish, which is read by the kernel. Note
 that this is a de facto convention, universally
 supported even though it is not defined by
 POSIX.
