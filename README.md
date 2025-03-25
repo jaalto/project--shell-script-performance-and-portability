@@ -1009,10 +1009,12 @@ Notable observations:
   is not part of POSIX and is not a portable
   solution. Note that POSIX also defines
   [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
-  as in `type <command>`, but in practice, the
+  as in `type <command>`
+  only without options.
+  However, in practice, the
   semantics, return codes, and output are not as
   uniform compared to `command -v`. POSIX also
-  has
+  has utility
   [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
   as in `hash <command>`, but it is less
   consistently supported across shells. Neither
