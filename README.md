@@ -1025,7 +1025,7 @@ Notable observations:
 
     RequireFeatures ()
     {
-        for cmd in $REQUIRE
+        for cmd   # implicit "$@" loop
         do
             if ! command -v "$cmd" > /dev/null; then
                 echo "ERROR: missing required command: $cmd" >&2
@@ -1037,7 +1037,7 @@ Notable observations:
     }
 
     # Before program starts
-    RequireFeatures
+    RequireFeatures $REQUIRE
     ...
 ```
 
