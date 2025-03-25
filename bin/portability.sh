@@ -22,6 +22,24 @@
 # Usage
 #
 #       See the --help option.
+#
+# Notes
+#
+#       From schilitools you can find pbosh shell.
+#       To install locally as root, see documention below.
+
+: << SCHILITOOLS
+# Copy paste these commands
+git clone https://codeberg.org/schilytools/schilytools.gti
+
+for dir in libshedit libgetopt libxtermcap libschily pbosh
+do
+    (cd $dir && gmake DEFLINKMODE=static GMAKE_NOWARN=true)
+done
+
+install -D -m 644 OBJ/x86_64-linux-gcc/man/pbosh.1 /usr/local/man/man1/pbosh.1
+install -m 755 OBJ/x86_64-linux-gcc/pbosh /usr/local/bin/
+SCHILITOOLS
 
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
@@ -43,6 +61,7 @@ SHELL_LIST_DEFAULT="\
 sh,\
 posh,\
 dash,\
+pbosh,\
 busybox ash,\
 mksh,\
 ksh,\
@@ -53,6 +72,7 @@ zsh\
 SHELL_LIST_DEFAULT_DASH="\
 posh,\
 dash,\
+pbosh,\
 busybox ash,\
 mksh,\
 ksh,\
@@ -131,6 +151,15 @@ ShellVersionMain ()
     case $sh in
         *dash*)
             ShellVersionDash
+            ;;
+        *pbosh*)
+            # sh (Schily Bourne Shell) version pbosh 2023/01/12 a+ (--)
+            $sh --version 2>&1 | ${AWK:-awk} '
+            /2[0-2][0-9][0-9]/ {
+                gsub("^.*pbosh +", "")
+                print
+                exit
+            }'
             ;;
         *posh*)
             $sh -c 'echo $POSH_VERSION'
