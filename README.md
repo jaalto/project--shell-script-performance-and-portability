@@ -971,9 +971,15 @@ Notable observations:
   when more is needed.
 
 ```
-  # Not POSIX
-  echo -e "line\nline"
-  echo -n "without newline"
+    # POSIX
+    echo "line"                # (1)
+    echo "line"
+    printf "no newline"        # (2)
+
+    # Not POSIX
+    echo -e "line\nline"       # (1)
+    echo -n "no newline"       # (2)
+
 ```
 
 - [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
