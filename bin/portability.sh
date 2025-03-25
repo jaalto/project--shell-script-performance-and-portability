@@ -75,7 +75,7 @@ Help ()
 {
     program=$PROGRAM
 
-    case "$program" in
+    case ${program:-} in
         */*) ;;
           *) program="./$program"
              ;;
@@ -365,7 +365,7 @@ Main ()
         # shellcheck disable=SC2034
         local dummy="OPT: ${1:-}"
 
-        case "${1:-}" in
+        case ${1:-} in
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"
