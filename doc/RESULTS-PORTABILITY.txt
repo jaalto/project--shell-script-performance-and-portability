@@ -3,10 +3,12 @@
 arrays                                   -  -  -  +  +  +  +
 <<<                                      -  -  -  +  +  +  +
 POSIX set -h                             -  -  -  +  +  +  +
-POSIX set -o noglob                      +  +  +  +  +  +  +
+POSIX set -f (-o noglob)                 +  +  +  +  +  +  +
 POSIX command -v                         +  +  +  +  +  +  +
+POSIX hash                               -  +  +  +  +  +  +
 POSIX printf (builtin)                   -  +  +  -  +  +  +
 POSIX read (-N)                          +  +  +  +  +  +  +
+POSIX type                               -  +  +  +  +  +  +
 < <(cmd)                                 -  -  +  -  +  +  +
 $((i = i + 1))                           +  +  +  +  +  +  +
 [[ ... ]]                                -  -  +  +  +  +  +
