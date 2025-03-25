@@ -24,7 +24,7 @@ see also POSIX in
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
 > See section
-> [POSIX, SHELLS AND PORTABILITY](#posix-shells-and-portability).
+> [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
@@ -87,12 +87,19 @@ each test case produced the fastest results.
 Table of Contents
 
 - [GENERAL ADVICE](#general-advice)
-- [MAJOR PERFORMANCE GAINS](#major-performance-gains)
-- [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
-- [MINOR PERFORMANCE GAINS](#minor-performance-gains)
-- [NO PERFORMANCE GAINS](#no-performance-gains)
-- [POSIX, SHELLS AND PORTABILITY](#posix-shells-and-portability)
-- [SHELLS AND PERFORMANCE](#shells-and-performance).
+- [PERFORMANCE TESTS](#performance-test)
+  - [MAJOR PERFORMANCE GAINS](#major-performance-gains)
+  - [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
+  - [MINOR PERFORMANCE GAINS](#minor-performance-gains)
+  - [NO PERFORMANCE GAINS](#no-performance-gains)
+  - [SHELLS AND PERFORMANCE](#shells-and-performance).
+- [PORTABILITY](#portability)
+  - [LEGACY SHELL SCRIPTING PRACTISES](#legacy-shell-scripting-practises)
+  - [REQUIREMENTS AND SHELL SCRIPTS](#requirements-and-shell-scripts)
+  - [WRITING POSIX COMPLIANT SHELL SCRIPS](#writing-posix-compliant-shell-scrips)
+  - [SHEBANG LINE IN SCRIPTS](#shebang-line-in-scripts)
+  - [PORTABILITY OF UTILITIES](#portability-of-utilities)
+  - [MORE PORTABILITY TIPS](#more-portability-tips)
 - [RANDOM NOTES](#random-notes)
 - [FURTHER READING](#further-reading)
 - [COPYRIGHT](#copyright)
@@ -214,7 +221,9 @@ consider these factors.
     [ ... ]  # not /usr/bin/test
 ```
 
-# MAJOR PERFORMANCE GAINS
+# PERFORMANCE TESTS
+
+## MAJOR PERFORMANCE GAINS
 
 - It is about 10-40 times (dash 10x, bash 40x)
   faster to do string
@@ -374,7 +383,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 ```
 
-# MODERATE PERFORMANCE GAINS
+## MODERATE PERFORMANCE GAINS
 
 - It is about 5 times faster to split a string
   into an array using list rather than
@@ -425,7 +434,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
 ```
 
-# MINOR PERFORMANCE GAINS
+## MINOR PERFORMANCE GAINS
 
 According to the results, none of
 these offer practical benefits. See the
@@ -500,7 +509,7 @@ for details and further commentary.
     LANG=C grep <any of above> --ignore-case ...
 ```
 
-# NO PERFORMANCE GAINS
+## NO PERFORMANCE GAINS
 
 None of these offer any advantages to speed up shell scripts.
 
@@ -608,17 +617,18 @@ None of these offer any advantages to speed up shell scripts.
     parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
-# POSIX, SHELLS AND PORTABILITY
+# SHELLS AND PERFORMANCE
 
-## About Legacy Bourne Shell scripting practises
+TODO
+
+# PORTABILITY
+
+## LEGACY SHELL SCRIPTING PRACTISES
 
 In typical cases, the legacy `sh`
 ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
 is not a relevant target for shell scripting.
-These practices are best left to
-archaeologists and historians to study;
-time has long eroded their relevance. All
-Linux and and relevant UNIX operating systems
+All Linux and and relevant UNIX operating systems
 have long provided an
 `sh` that is POSIX-compliant enough. Note that
 nowadays `sh` is
@@ -641,9 +651,9 @@ Examples or archaic coding practises:
     # Variable lenght is zero
     if [ -z "$a" ] ...
 
-    # Deprecated. POSIX will
-    # remove logical -o (OR)
-    # and -a (AND)
+    # Deprecated in later POSIX
+    # -o (OR)
+    # -a (AND)
     if [ "$a" = "y" -o "$b" = "y" ] ...
 
 ```
@@ -663,10 +673,10 @@ Modern equivalents:
 
 ```
 
+## REQUIREMENTS AND SHELL SCRIPTS
 
-## Requirements and shell scripts
-
-Writing shell scripts inherently involves considering several factors.
+Writing shell scripts inherently
+involves considering several factors.
 
 - *Personal scripts.* When writing scripts for
   personal use, choose whichever shell best suits
@@ -727,15 +737,28 @@ where you can install Linux distributions like
 Debian and Ubuntu. Bash is the obvious choice
 for shell scripts in this environment.
 
-## Writing POSIX compliant shell scrips
+## WRITING POSIX COMPLIANT SHELL SCRIPS
 
-**Shells and POSIX compliant scripts**
+As this document is more focused on
+Linux, macOS, and BSD compatibility,
+and less on legacy UNIX operating
+systems, for all practical purposes,
+there is no need to attempt to write
+*pure* POSIX shell scripts. Stricter
+measures are required only if you also
+target legacy UNIX operating systems
+whose `sh` may not have changed in 30
+years. If that's the case, then you're
+in deep waters, and your best guide is
+the wealth of knowledge collected by
+the GNU autoconf project; see
+["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
+for more discussion see
+[MORE PORTABILITY TIPS](#more-portability-tips).
 
-For all practical purposes, there is no need to
-overthink or attempt to write *pure* POSIX shell
-scripts. Let's consider shells in order
-of their strictness to POSIX:
-
+Let's first consider the "typical" `sh`
+shells in order of their
+strictness to POSIX:
 
 - [posh](https://tracker.debian.org/pkg/posh).
   Minimal `sh`, Policy-compliant Ordinary SHell.
@@ -754,10 +777,11 @@ of their strictness to POSIX:
   See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
 
-Let's also consider `/bin/sh` in
-different Operating Systems. For more about the history of the `sh` shell,
+Let's also consider what the `/bin/sh` might
+be in different Operating Systems.
+For more about the history of the `sh` shell,
 see the well-rounded discussion on StackExchange.
- [What does it mean to be "sh compatible"?](https://unix.stackexchange.com/q/145522)
+[What does it mean to be "sh compatible"?](https://unix.stackexchange.com/q/145522)
 
 <!-- <contactme2016@tangentsoft.com> -->
 [Picture](https://tangentsoft.com/misc/unix-shells.svg)
@@ -839,7 +863,7 @@ scripts even more.
     # External utility to check code
     checkbashisms script.sh
 
-**Shebang line in scripts**
+## SHEBANG LINE IN SCRIPTS
 
 Note that POSIX does not define the
 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
@@ -882,7 +906,7 @@ POSIX.
     #    #! /usr/bin/env bash
     #    #! /usr/bin/env python3
 
-<ins>About Bash and shebang</ins>
+### About Bash and Shebang
 
 Note that on macOS, `/bin/bash` is hard-coded
 to Bash version 3.2.57 where in 2025 lastest Bash is
@@ -909,7 +933,7 @@ following format:
 
     #! /bin/bash
 
-<ins>About Python and shebang</ins>
+### About Python and Shebang
 
 There was a disruptive change from
 Python 2.x to Python 3.x in 2008. The older
@@ -952,7 +976,7 @@ is not mandated by POSIX. However,
 in 99.9% of cases, the de facto location in operating
 systems is `/usr/bin/env`.
 
-**Portability of utilities**
+## PORTABILITY OF UTILITIES
 
 It's not just about choosing to write in
 POSIX-like `sh`; the utilities called from
@@ -1044,7 +1068,7 @@ Notable observations:
     ...
 ```
 
-**Case Study: sed**
+### Case Study: sed
 
 As a case study, the Linux GNU `sed(1)` and
 its options differ or
@@ -1095,7 +1119,7 @@ discussions about the topic, see
     mv "$tmp" file
     rm -f "$tmp"
 
-# SHELLS AND PERFORMANCE
+# MORE PORTABILITY TIPS
 
 TODO
 
