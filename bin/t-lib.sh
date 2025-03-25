@@ -147,9 +147,9 @@ IsUnameMatch ()
 {
     case $(uname -a) in
         ${1:-})
-            :  # true
+            return 0
             ;;
-        *)  false
+        *)  return 1
             ;;
     esac
 }
