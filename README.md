@@ -820,8 +820,8 @@ see the well-rounded discussion on StackExchange.
   the Bash version is indefinitely stuck at
   version 3.2.x due to Apple avoiding the GPL-3
   license in later Bash versions. If you write
-  `/bin/sh` scripts in macOS, it is best to check
-  them explicitly for portability with:
+  `/bin/sh` scripts in macOS, it is good idead
+  to check them for portability with:
 ```
     # Check better /bin/sh compliance
     dash -nx script.sh
@@ -904,7 +904,7 @@ POSIX.
     #
     #    #! sh
     #
-    # 3. ONE option word can be added
+    # 3. ONE word can be added
     #    after the <interpreter>. Any
     #    more than that is not portable
     #    accross other than Linux
