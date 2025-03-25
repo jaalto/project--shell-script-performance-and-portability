@@ -989,6 +989,9 @@ Notable observations:
   later.
 
 ```
+   # POSIX
+   REPLY=$(cat file)
+
    # Not POSIX
    # Read max 100 KiB to $REPLY
    read -N$((100 * 1024)) < file
