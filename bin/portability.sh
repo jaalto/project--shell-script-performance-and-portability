@@ -22,24 +22,6 @@
 # Usage
 #
 #       See the --help option.
-#
-# Notes
-#
-#       From schilitools you can find pbosh shell.
-#       To install locally as root, see documention below.
-
-: << SCHILITOOLS
-# Copy paste these commands
-git clone https://codeberg.org/schilytools/schilytools.gti
-
-for dir in libshedit libgetopt libxtermcap libschily pbosh
-do
-    (cd $dir && gmake DEFLINKMODE=static GMAKE_NOWARN=true)
-done
-
-install -D -m 644 OBJ/x86_64-linux-gcc/man/pbosh.1 /usr/local/man/man1/pbosh.1
-install -m 755 OBJ/x86_64-linux-gcc/pbosh /usr/local/bin/
-SCHILITOOLS
 
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
@@ -113,6 +95,9 @@ OPTIONS
     -v, --verbose
         Display verbose messages.
 
+    --help-pbosh
+        Display pbosh shell install help.
+
     -h, --help
         Display help.
 
@@ -125,6 +110,28 @@ DESCRIPTION
 EXAMPLES
     $program x-*
     $program --shell dash,mksh x-*"
+
+    exit 0
+}
+
+HelpBposh ()
+{
+    echo 'THE PBOSH SHELL
+
+    From schilitools, you can find the pbosh shell.
+    To install locally as root:
+
+    git clone https://codeberg.org/schilytools/schilytools.git
+
+    cd schilytools
+
+    for dir in libshedit libgetopt libxtermcap libschily pbosh
+    do
+        (cd $dir && gmake DEFLINKMODE=static GMAKE_NOWARN=true)
+    done
+
+    install -D -m 644 OBJ/x86_64-linux-gcc/man/pbosh.1 /usr/local/man/man1/pbosh.1
+    install -m 755 OBJ/x86_64-linux-gcc/pbosh /usr/local/bin/'
 
     exit 0
 }
@@ -409,6 +416,10 @@ Main ()
 
                 VERBOSE="verbose"
                 shift
+                ;;
+            --help-pbosh)
+                shift
+                HelpBposh
                 ;;
             -h | --help)
                 shift
