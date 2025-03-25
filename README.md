@@ -29,8 +29,9 @@ see also POSIX in
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
 the sensible choice for efficient data
-manipulation in memory with arrays,
-associattive arrays aka hashes, and strings
+manipulation in memory with
+[arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html),
+associative arrays, and strings
 with an extended set of parameter
 expansions, regular expressions, including
 extracting regex matches and utilizing fast
