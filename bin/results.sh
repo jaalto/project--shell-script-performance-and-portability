@@ -87,13 +87,12 @@ Result ()
                 print arr[i]
         }
 
-
     ' "$@"
 }
 
 Require ()
 {
-    case "$($AWK --version)" in
+    case $($AWK --version) in
         *GNU*)
             return 0
             ;;
@@ -112,7 +111,7 @@ Main ()
         # shellcheck disable=SC2034
         dummy="OPT: $1"
 
-        case "$1" in
+        case ${1:-} in
             -h | --help)
                 shift
                 Help
