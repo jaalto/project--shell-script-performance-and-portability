@@ -262,6 +262,11 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 ```
     fnNamerefPosix() # dash
     {
+        # NOTE: 'local' is not POSIX,
+        # but widely supported in
+        # POSIX-like shells:
+        # dash, posh, mksh, ksh93...
+
         # Use nameref for the
         # return value
         local retref=$1
@@ -282,7 +287,9 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
         retref=$arg
     }
 
-    # Return value in 'ret'
+    # Return value returned to
+    # variable 'ret'
+
     fnNamerefPosix ret "arg"
     fnNamerefBash ret "arg"
 ```
