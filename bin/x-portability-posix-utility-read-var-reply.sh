@@ -18,5 +18,4 @@ read -r < "$f"
 code=$?
 
 rm -f "$f"
-
 exit $code
