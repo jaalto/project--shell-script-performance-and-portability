@@ -34,7 +34,7 @@ RequireDictionary "t-command-grep.sh"
 re=${re:-'ad'}
 size=${size:-10k}
 
-f=$TMPBASE.random.dictionary.$size
+f=$(mktemp -t $TMPBASE.random.dictionary.$size.XXX)
 
 Setup ()
 {
