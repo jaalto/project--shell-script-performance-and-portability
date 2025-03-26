@@ -1,6 +1,7 @@
 #! /bin/bash
 # Short: POSIX read (-N)
 # Desc: Test POSIX utlitity support: read with non-standard option -N<size>
+# Url: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html
 #
 # Notes:
 #
@@ -13,5 +14,7 @@ f="t.tmp"
 : > "$f"
 
 read -r -N10 REPLY < "$f"
+code=$?
 
-rm --force "$f"
+rm -f "$f"
+exit $code
