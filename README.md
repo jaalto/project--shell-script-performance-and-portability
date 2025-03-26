@@ -1176,7 +1176,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
   [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   `$(cmd)`
   command substitution instead of
-  leagacy backtics as in \`cmd\`. For more
+  leagacy POSIX backtics as in \`cmd\`. For more
   information, see
   BashFaq [098](https://mywiki.wooledge.org/BashFAQ/082)
   and shellcheck
