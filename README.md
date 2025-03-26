@@ -1,6 +1,11 @@
 <!--
+INFORMATION FOR WRITERS
+
 Github Markdown Guide: https://is.gd/nqSonp
 VSCode: preview markdown C-S-v
+
+URL text fragments:
+https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
 -->
 
 # 1.0 SHELL SCRIPT PERFORMANCE AND PORTABILITY
@@ -931,16 +936,25 @@ access, without disabling System
 Integrity Protection. If you install a
 newer Bash version with `brew install
 bash`, it will be located in
-`/usr/local/bin/bash`. To use the
-latest Bash, the user must arrange
-`/usr/local/bin` first in `PATH`.
+`/usr/local/bin/bash`.
 
-    ... traditional but possibly
-    ... problematic on macOS
+On macOS, to use the latest Bash, the
+user must arrange `/usr/local/bin`
+first in
+[PATH](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes).
+If the script starts
+with `#! /bin/bash`, the user cannot
+arrange it to run under different Bash
+version without modifying the 
+script itself, or after modifying `PATH`,
+run it inconveniently with
+`bash <script>`.
+
+    ... traditional
 
     #! /bin/bash
 
-    ... more portable
+    ... more portable (macOS)
 
     #! /usr/bin/env bash
 
