@@ -1044,6 +1044,55 @@ followed by bottom left menu
 
 Notable observations:
 
+- Use POSIX
+  [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html)
+  to check if command exists.
+  Note that POSIX also defines
+  [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  as in `type <command>`
+  without any options. POSIX also
+  defines utility
+  [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  as in `hash <command>`.
+  Problem with `type` is that the
+  semantics, return codes, support or
+  output are not necessarily uniform.
+  Problem with `hash` are similar.
+  Neither `type` nor `hash` is supported
+  by `posh`; see table
+  [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
+  NOTE: The `which <command>`
+  is neither in POSIX nor portable. For more
+  information about `which`, see shellcheck
+  [SC2230](https://github.com/koalaman/shellcheck/wiki/SC2230),
+  BashFAQ [081](https://mywiki.wooledge.org/BashFAQ/081),
+  StackOverflow discussion
+  ["How can I check if a program exists from a Bash script?"](https://stackoverflow.com/q/592620),
+  and Debian project plan about deprecating
+  the command in LWN article
+  ["Debian's which hunt"](https://lwn.net/Articles/874049/).
+
+```
+    REQUIRE="sqlite curl"
+
+    RequireFeatures ()
+    {
+        local cmd
+
+        for cmd # implicit "$@" loop
+        do
+            if ! command -v "$cmd" > /dev/null; then
+                echo "ERROR: missing required command: $cmd" >&2
+                return 1
+            fi
+        done
+    }
+
+    # Before program starts
+    RequireFeatures $REQUIRE || exit $?
+    ...
+```
+
 - Use plain
   [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html)
   without any options. Use
@@ -1104,55 +1153,6 @@ Notable observations:
             # match
             ;;
    esac
-```
-
-- Use POSIX
-  [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html)
-  to check if command exists.
-  Note that POSIX also defines
-  [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
-  as in `type <command>`
-  without any options. POSIX also
-  defines utility
-  [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
-  as in `hash <command>`.
-  Problem with `type` is that the
-  semantics, return codes, support or
-  output are not necessarily uniform.
-  Problem with `hash` are similar.
-  Neither `type` nor `hash` is supported
-  by `posh`; see table
-  [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
-  NOTE: The `which <command>`
-  is neither in POSIX nor portable. For more
-  information about `which`, see shellcheck
-  [SC2230](https://github.com/koalaman/shellcheck/wiki/SC2230),
-  BashFAQ [081](https://mywiki.wooledge.org/BashFAQ/081),
-  StackOverflow discussion
-  ["How can I check if a program exists from a Bash script?"](https://stackoverflow.com/q/592620),
-  and Debian project plan about deprecating
-  the command in LWN article
-  ["Debian's which hunt"](https://lwn.net/Articles/874049/).
-
-```
-    REQUIRE="sqlite curl"
-
-    RequireFeatures ()
-    {
-        local cmd
-
-        for cmd # implicit "$@" loop
-        do
-            if ! command -v "$cmd" > /dev/null; then
-                echo "ERROR: missing required command: $cmd" >&2
-                return 1
-            fi
-        done
-    }
-
-    # Before program starts
-    RequireFeatures $REQUIRE || exit $?
-    ...
 ```
 
 ### 4.5.1 Case Study: sed
