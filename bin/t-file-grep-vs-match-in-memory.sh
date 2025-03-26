@@ -34,7 +34,8 @@
 
 . ./t-lib.sh ; rand=$random_file
 
-f=$TMPBASE.random.file
+f=$(mktemp -t $TMPBASE.random.file.XXX)
+
 string=abc
 pattern="$string*$string"
 re="$string.*$string"
