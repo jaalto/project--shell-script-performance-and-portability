@@ -34,7 +34,7 @@ Table of Contents
     - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
-  - [4.6 MORE ABOUT PORTABILITY](#46-more-about-portability)
+  - [4.6 MISCELLANEUS SUGGESTION](#46-miscellaneus-suggestion)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
 - [COPYRIGHT](#copyright)
@@ -780,7 +780,7 @@ the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
 For more discussion see
-[MORE ABOUT PORTABILITY](#more-portability-tips).
+[4.6 MISCELLANEUS SUGGESTION](#46-miscellaneus-suggestion).
 
 Let's first consider the typical `sh`
 shells in order of their
@@ -1170,9 +1170,9 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     mv "$tmp" file
     rm -f "$tmp"
 
-## 4.6 MORE ABOUT PORTABILITY
+## 4.6 MISCELLANEOUS SUGGESTIONS
 
-- Prefer readable
+- Prefer
   [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   `$(cmd)`
   command substitution instead of
