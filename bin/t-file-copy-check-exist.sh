@@ -14,8 +14,8 @@
 
 . ./t-lib.sh ; f=$random_file
 
-f=$TMPBASE.file
-copy=$f.copy
+f=$(mktemp -t $TMPBASE.file.XXX)
+copy=$(mktemp -t $TMPBASE.copy.XXX)
 : > $f
 
 t1 ()
