@@ -1172,7 +1172,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
 
 ## 4.6 MISCELLANEOUS SUGGESTIONS
 
-- Prefer
+- Prefer modern
   [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   `$(cmd)`
   command substitution instead of
