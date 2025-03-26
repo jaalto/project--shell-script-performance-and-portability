@@ -2,5 +2,5 @@
 # Short: arrays
 # Desc: Test array support
 
-a=(1 2 3)
-: "${a[1]}"
+array=(1 2 3)
+: "${array[1]}"
