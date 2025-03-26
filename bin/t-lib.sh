@@ -178,12 +178,12 @@ IsOsDebianLike ()
 
 IsShellPosh ()
 {
-    [ "${POSH_VERSINFO:-}" ]   # Pdkd derivate
+    [ "${POSH_VERSION:-}" ]   # Pdkd derivate
 }
 
 IsShellBash ()
 {
-    [ "${BASH_VERSINFO:-}" ]
+    [ "${BASH_VERSION:-}" ]
 }
 
 IsShellKsh93 ()
