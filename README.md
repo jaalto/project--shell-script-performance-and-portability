@@ -34,7 +34,8 @@ Table of Contents
     - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
-  - [4.6 MORE ABOUT PORTABILITY](#46-more-about-portability)
+    - [4.5.2 Case Study: awk](#451-case-study-awk)
+  - [4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
 - [COPYRIGHT](#copyright)
@@ -771,16 +772,15 @@ and less on legacy UNIX operating
 systems, for all practical purposes,
 there is no need to attempt to write
 *pure* POSIX shell scripts. Stricter
-measures are required only if you also
+measures are required only if you
 target legacy UNIX operating systems
 whose `sh` may not have changed in 30
-years. If that's the case, then you're
-in deep waters, and your best guide is
+years. your best guide probably is
 the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
 For more discussion see
-[MORE ABOUT PORTABILITY](#more-portability-tips).
+[4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions).
 
 Let's first consider the typical `sh`
 shells in order of their
@@ -952,7 +952,7 @@ first in
 If the script starts
 with `#! /bin/bash`, the user cannot
 arrange it to run under different Bash
-version without modifying the 
+version without modifying the
 script itself, or after modifying `PATH`,
 run it inconveniently with
 `bash <script>`.
@@ -1170,9 +1170,66 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     mv "$tmp" file
     rm -f "$tmp"
 
-## 4.6 MORE ABOUT PORTABILITY
+### 4.5.2 Case Study: awk
 
-TODO
+POSIX
+[`awk`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/awk.html),
+does not support the `-v`
+option to define variables.
+You can use assignments after
+the program instead.
+
+    # POSIX
+    awk '{print var}' var=1 file
+
+    # GNU awk
+    awk -v var=1 '{print var}' file
+
+However, don't forget that
+such assignments are not evaluated
+until they are encountered, that is,
+after any `BEGIN` action. To use
+awk for operands without any files:
+
+    # POSIX
+    var=1 awk 'BEGIN {print ENVIRON["var"] + 1}' < /dev/null
+
+    # GNU awk
+    awk -v var=1 'BEGIN {print var + 1; exit}'
+
+
+## 4.6 MISCELLANEOUS SUGGESTIONS
+
+- Prefer
+  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
+  `$(cmd)`
+  command substitution instead of
+  leagacy POSIX backtics as in \`cmd\`. For more
+  information, see
+  BashFaq [098](https://mywiki.wooledge.org/BashFAQ/082)
+  and shellcheck
+  [SC2006](https://github.com/koalaman/shellcheck/wiki/SC2006).
+  For 20 years all the modern `sh` shells have supported
+  `$()`. Including UNIX like AIX,
+  HP-UX and conservative
+  Oracle Solaris 10 (2005) whose
+  support ends in
+[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
+  (see Solaris
+  [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
+
+```
+        # Easily nested
+        lastdir=$(basename $(pwd))
+
+        # Readabilty problems
+        lastdir=`basename \`pwd\``
+```
+
+<!--
+TODO:
+https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Shellology
+-->
 
 # 5.0 RANDOM NOTES
 
@@ -1199,22 +1256,6 @@ testing:
 - List of which features were added to specific
   releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
-- Use
-  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
-  `$(cmd)`
-  command substituion instead of
-  archaic backtics as in \`cmd\`. For more
-  information, see
-  https://mywiki.wooledge.org/BashFAQ/082
-  **Note**: For the past 20 years, all
-  modern `sh` shells have supported the readable
-  `$()` substitution syntax. This includes, for
-  example, UNIX operating systems like HP-UX and
-  Oracle Solaris 10 from 2005. Oracle Solaris 10
-  support ends in
-[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
-  (see
-  [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 - Use `shellcheck` (Haskell) to
   to help to
   improve and write portable POSIX scripts.
