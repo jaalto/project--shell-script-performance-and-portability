@@ -760,10 +760,10 @@ in deep waters, and your best guide is
 the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
-for more discussion see
+For more discussion see
 [MORE PORTABILITY TIPS](#more-portability-tips).
 
-Let's first consider the "typical" `sh`
+Let's first consider the typical `sh`
 shells in order of their
 strictness to POSIX:
 
@@ -820,8 +820,8 @@ see the well-rounded discussion on StackExchange.
   the Bash version is indefinitely stuck at
   version 3.2.x due to Apple avoiding the GPL-3
   license in later Bash versions. If you write
-  `/bin/sh` scripts in macOS, it is best to check
-  them explicitly for portability with:
+  `/bin/sh` scripts in macOS, it is good idead
+  to check them for portability with:
 ```
     # Check better /bin/sh compliance
     dash -nx script.sh
@@ -904,7 +904,7 @@ POSIX.
     #
     #    #! sh
     #
-    # 3. ONE option word can be added
+    # 3. ONE word can be added
     #    after the <interpreter>. Any
     #    more than that is not portable
     #    accross other than Linux
@@ -927,20 +927,16 @@ newer Bash version with `brew install
 bash`, it will be located in
 `/usr/local/bin/bash`. To use the
 latest Bash, the user must arrange
-`/usr/local/bin` first in `PATH`. Due
-to this limitation, for Bash, the
-shebang line — from a portability point
-of view — is best written in the
-following format:
-
-    ... more portable
-
-    #! /usr/bin/env bash
+`/usr/local/bin` first in `PATH`.
 
     ... traditional but
     ... problematic on macOS
 
     #! /bin/bash
+
+    ... more portable
+
+    #! /usr/bin/env bash
 
 ### About Python and Shebang
 
@@ -982,8 +978,8 @@ The fine print here is that
 [`env`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html)
 is a standard POSIX utility, but its path
 is not mandated by POSIX. However,
-in 99.9% of cases, the de facto location in operating
-systems is `/usr/bin/env`.
+in 99.9% of cases, the de facto portable
+location is `/usr/bin/env`.
 
 ## PORTABILITY OF UTILITIES
 
