@@ -47,7 +47,7 @@ pbosh,\
 busybox ash,\
 mksh,\
 ksh,\
-bash --posix,\
+bash --posix 3.2,\
 bash,\
 zsh\
 "
@@ -59,7 +59,7 @@ pbosh,\
 busybox ash,\
 mksh,\
 ksh,\
-bash --posix,\
+bash --posix 3.2,\
 bash,\
 zsh\
 "
@@ -358,6 +358,20 @@ RunShells ()
         case $shell in
             bash*--posix*)
                 env="BASH_COMPAT=3.2"  # macOS
+
+                local ifs=$IFS
+                IFS=$saved
+
+                set -- $shell
+
+                case ${3:-} in
+                    [2-9]*)
+                        env="BASH_COMPAT=$3"
+                        shell="$1 $2"
+                        ;;
+                esac
+
+                IFS=$ifs
                 ;;
         esac
 
