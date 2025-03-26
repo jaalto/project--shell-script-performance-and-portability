@@ -902,7 +902,7 @@ POSIX.
 
     #! <interpreter> [word]
     #
-    # 1. Space is allowed after "#!"
+    # 1. whitespace is allowed after "#!"
     #    for readability.
     #
     # 2. The <interpreter> must be full
