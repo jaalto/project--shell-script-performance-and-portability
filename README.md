@@ -13,20 +13,20 @@ Table of Contents
 - [1.0 SHELL SCRIPT PERFORMANCE AND PORTABILITY](#10-shell-script-performance-and-portability)
   - [1.1 THE PROJECT STRUCTURE](#11-the-project-structure)
   - [1.2 THE PROJECT DETAILS](#12-the-project-details)
-- [2.0 GENERAL PERFORMANCE ADVICE](#20-general-performance-advice)
-- [3.0 PERFORMANCE TESTS](#30-performance-test)
-  - [3.1 MAJOR PERFORMANCE GAINS](#31-major-performance-gains)
-  - [3.2 MODERATE PERFORMANCE GAINS](#32-moderate-performance-gains)
-  - [3.3 MINOR PERFORMANCE GAINS](#33-minor-performance-gains)
-  - [3.4 NO PERFORMANCE GAINS](#34-no-performance-gains)
-  - [3.5 SHELLS AND PERFORMANCE](#35-shells-and-performance).
+- [3.0 ABOUT PERFORMANCE](#30-about-performance)
+  - [3.1 GENERAL PERFORMANCE ADVICE](#20-general-performance-advice)
+  - [3.2 SHELLS AND PERFORMANCE](#35-shells-and-performance).
+  - [3.3 MAJOR PERFORMANCE GAINS](#31-major-performance-gains)
+  - [3.4 MODERATE PERFORMANCE GAINS](#32-moderate-performance-gains)
+  - [3.5 MINOR PERFORMANCE GAINS](#33-minor-performance-gains)
+  - [3.6 NO PERFORMANCE GAINS](#34-no-performance-gains)
 - [4.0 PORTABILITY](#40-portability)
-  - [4.1 LEGACY SHELL SCRIPTING PRACTISES](#41-legacy-shell-scripting-practises)
+  - [4.1 LEGACY SHELL SCRIPTING](#41-legacy-shell-scripting)
   - [4.2 REQUIREMENTS AND SHELL SCRIPTS](#42-requirements-and-shell-scripts)
   - [4.3 WRITING POSIX COMPLIANT SHELL SCRIPS](#43-writing-posix-compliant-shell-scrips)
   - [4.4 SHEBANG LINE IN SCRIPTS](#44-shebang-line-in-scripts)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
-  - [4.6 MORE PORTABILITY TIPS](#46-more-portability-tips)
+  - [4.6 MORE ABOUT PORTABILITY](#46-more-about-portability)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
 - [COPYRIGHT](#copyright)
@@ -69,7 +69,7 @@ would probably be enough, or even
 faster. But things are not that
 straightforward. More about this in
 section
-[SHELLS AND PERFORMANCE](#shells-and-performance).
+[SHELLS AND PERFORMANCE](#32-shells-and-performance).
 
 In other operating systems, for example BSD,
 the obvious choice for shell scripting would be
@@ -109,7 +109,7 @@ each test case produced the fastest results.
 - [USAGE](./USAGE.md)
 - [CONTRIBUTING](./CONTRIBUTING.md)
 
-## 1.2 THE PROJECT STRUCTURE
+## 1.1 THE PROJECT STRUCTURE
 
     bin/            The tests
     doc/            Results by "make doc"
@@ -138,7 +138,9 @@ each test case produced the fastest results.
   GNU make for Makefile.
   For some tests: GNU parallel.
 
-2.0 GENERAL PERFORMANCE ADVICE
+# 3.0 ABOUT PERFORMANCE
+
+## 3.1 GENERAL PERFORMANCE ADVICE
 
 Regardless of the shell you use for scripting
 ([sh](https://tracker.debian.org/pkg/dash),
@@ -227,9 +229,11 @@ consider these factors.
     [ ... ]  # not /usr/bin/test
 ```
 
-# 3.0 PERFORMANCE TESTS
+## 3.2 SHELLS AND PERFORMANCE
 
-## 3.1 MAJOR PERFORMANCE GAINS
+TODO
+
+## 3.3 MAJOR PERFORMANCE GAINS
 
 - It is about 10-40 times (dash 10x, bash 40x)
   faster to do string
@@ -392,7 +396,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 ```
 
-## 3.2 MODERATE PERFORMANCE GAINS
+## 3.4 MODERATE PERFORMANCE GAINS
 
 - It is about 5 times faster to split a string
   into an array using list rather than
@@ -443,7 +447,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
 ```
 
-## 3.3 MINOR PERFORMANCE GAINS
+## 3.5 MINOR PERFORMANCE GAINS
 
 According to the results, none of
 these offer practical benefits.
@@ -518,7 +522,7 @@ for details and further commentary.
     LANG=C grep <any of above> --ignore-case ...
 ```
 
-## 3.4 NO PERFORMANCE GAINS
+## 3.6 NO PERFORMANCE GAINS
 
 None of these offer any advantages to speed up shell scripts.
 
@@ -626,30 +630,25 @@ None of these offer any advantages to speed up shell scripts.
     parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
-## 3.5 SHELLS AND PERFORMANCE
-
-TODO
-
 # 4.0 PORTABILITY
 
-## 4.1 LEGACY SHELL SCRIPTING PRACTISES
+## 4.1 LEGACY SHELL SCRIPTING
 
 In typical cases, the legacy `sh`
 ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
 is not a relevant target for shell scripting.
-All Linux and and relevant UNIX operating systems
+The Linux and and modern UNIX operating systems
 have long provided an
-`sh` that is POSIX-compliant enough. Note that
-nowadays `sh` is
-usually a symbolic link to
+`sh` that is POSIX-compliant enough. Nowadays
+`sh` is usually a symbolic link to
 [dash](https://tracker.debian.org/pkg/dash)
-(on Linux),
+(on Linux since 2006),
 [ksh](https://tracker.debian.org/pkg/ksh93u+m)
-(on others), or it may point to
+(on some BSDs), or it may point to
 [Bash](https://www.gnu.org/software/bash)
 (on macOS).
 
-Examples or archaic coding practises:
+Examples or pre-2000 shell scripting:
 
 ```
     if [ x"$a" = "y" ]; then ...
@@ -688,12 +687,13 @@ Modern equivalents:
 Writing shell scripts inherently
 involves considering several factors.
 
-- *Personal scripts.* When writing scripts for
-  personal use, choose whichever shell best suits
-  your environment. On Linux, the obvious choice
-  is Bash. On BSD systems, it would be Ksh. On
-  macOS, Zsh might be okay but it would
-  not be the best investment in the long run.
+- *Personal scripts.* When writing
+  scripts for personal or
+  administrative tasks, the choice of
+  shell is unimportant. On Linux, the
+  obvious choice is Bash. On BSD systems,
+  it would be Ksh. On macOS, Zsh might be
+  handy.
 
 - *Portable scripts.* If you intend to use the
   scripts across some operating systems — from
@@ -765,7 +765,7 @@ the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
 For more discussion see
-[MORE PORTABILITY TIPS](#more-portability-tips).
+[MORE ABOUT PORTABILITY](#more-portability-tips).
 
 Let's first consider the typical `sh`
 shells in order of their
