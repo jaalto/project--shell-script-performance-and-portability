@@ -110,9 +110,9 @@ DESCRIPTION
     If no --shell options is used, try testing known shells.
 
 NOTES
-    the 'bash --posix' runs in BASH_COMPAT=3.2 in effect
-    to test macOS compatibility.
-    See https://www.gnu.org/software/bash/manual/html_node/Shell-Compatibility-Mode.html
+    The `bash --posix 3.2` runs with `BASH_COMPAT=3.2` in effect to
+    test macOS compatibility.
+    https://www.gnu.org/software/bash/manual/bash.html#Shell-Compatibility-Mode
 
 EXAMPLES
     $program x-*
