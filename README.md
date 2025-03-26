@@ -1194,7 +1194,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
         # Easily nested
         lastdir=$(basename $(pwd))
 
-        # ... readabilty problems
+        # Readabilty problems
         lastdir=`basename \`pwd\``
 ```
 
