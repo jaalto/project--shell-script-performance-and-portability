@@ -25,7 +25,10 @@ Table of Contents
   - [4.2 REQUIREMENTS AND SHELL SCRIPTS](#42-requirements-and-shell-scripts)
   - [4.3 WRITING POSIX COMPLIANT SHELL SCRIPS](#43-writing-posix-compliant-shell-scrips)
   - [4.4 SHEBANG LINE IN SCRIPTS](#44-shebang-line-in-scripts)
+    - [4.4.1 About Bash and Shebang](#441-about-bash-and-shebang)
+    - [4.4.2 About Python and Shebang](#441-about-python-and-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
+    - [4.5.1 Case Study: sed](#451-case-study-sed)
   - [4.6 MORE ABOUT PORTABILITY](#46-more-about-portability)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
@@ -1146,7 +1149,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     mv "$tmp" file
     rm -f "$tmp"
 
-## 4.6 MORE PORTABILITY TIPS
+## 4.6 MORE ABOUT PORTABILITY
 
 TODO
 
