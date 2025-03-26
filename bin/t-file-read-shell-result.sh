@@ -9,7 +9,7 @@
 
 . ./t-lib.sh ; f=$random_file
 
-f=$TMPBASE.tmp
+f=$(mktemp -t $TMPBASE.tmp.XXX)
 
 t1 ()
 {
