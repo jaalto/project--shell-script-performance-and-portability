@@ -402,7 +402,7 @@ RunCheck ()
     shift
 
     local sep="@"
-    local results="$TMPBASE.results"
+    local results=$(mktemp -t $TMPBASE.results.XXX)
     local file
 
     for file
