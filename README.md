@@ -1140,7 +1140,7 @@ discussions about the topic, see
     # Portable
     # Avoiding -i option.
 
-    tmp=$(tempfile)
+    tmp=$(mktemp)
     sed 's/this/that/g' file > "$tmp"
     mv "$tmp" file
     rm -f "$tmp"
