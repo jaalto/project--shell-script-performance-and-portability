@@ -14,12 +14,12 @@ Table of Contents
   - [1.1 THE PROJECT STRUCTURE](#11-the-project-structure)
   - [1.2 THE PROJECT DETAILS](#12-the-project-details)
 - [3.0 ABOUT PERFORMANCE](#30-about-performance)
-  - [3.1 GENERAL PERFORMANCE ADVICE](#20-general-performance-advice)
-  - [3.2 SHELLS AND PERFORMANCE](#35-shells-and-performance).
-  - [3.3 MAJOR PERFORMANCE GAINS](#31-major-performance-gains)
-  - [3.4 MODERATE PERFORMANCE GAINS](#32-moderate-performance-gains)
-  - [3.5 MINOR PERFORMANCE GAINS](#33-minor-performance-gains)
-  - [3.6 NO PERFORMANCE GAINS](#34-no-performance-gains)
+  - [3.1 GENERAL PERFORMANCE ADVICE](#31-general-performance-advice)
+  - [3.2 SHELLS AND PERFORMANCE](#32-shells-and-performance).
+  - [3.3 MAJOR PERFORMANCE GAINS](#33-major-performance-gains)
+  - [3.4 MODERATE PERFORMANCE GAINS](#34-moderate-performance-gains)
+  - [3.5 MINOR PERFORMANCE GAINS](#35-minor-performance-gains)
+  - [3.6 NO PERFORMANCE GAINS](#36-no-performance-gains)
 - [4.0 PORTABILITY](#40-portability)
   - [4.1 LEGACY SHELL SCRIPTING](#41-legacy-shell-scripting)
   - [4.2 REQUIREMENTS AND SHELL SCRIPTS](#42-requirements-and-shell-scripts)
