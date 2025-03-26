@@ -1191,7 +1191,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
 ```
-        # Easy nesting
+        # Easily nested
         lastdir=$(basename $(pwd))
 
         # ... readabilty problems
