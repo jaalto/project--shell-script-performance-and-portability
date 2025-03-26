@@ -5,17 +5,8 @@
 #
 # Notes:
 #
-# The POSIX `read` command does not define
-# REPLY variable. For portability supply
-# it in script.
+# The POSIX `read` command requires VARIABLE.
+# It does not default to variable REPLY variable.
+# For portability supply always REPLY.
 
-f="t.tmp"
-echo 1 > "$f"
-
-read -r < "$f"
-
-[ "${REPLY:-}" ]
-code=$?
-
-rm -f "$f"
-exit $code
+echo 1 | read -r
