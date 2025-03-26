@@ -900,7 +900,7 @@ that this is a de facto convention, universally
 supported even though it is not defined by
 POSIX.
 
-    #! /bin/sh
+    #! <interpreter> [word]
     #
     # 1. Space is allowed after "#!"
     #    for readability.
