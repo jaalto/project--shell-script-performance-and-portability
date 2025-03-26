@@ -1232,6 +1232,9 @@ testing:
 
 For the curious readers:
 
+- A comprehensive history of `ash`.
+  "Ash (Almquist Shell) Variants" by Sven Mascheck
+  https://www.in-ulm.de/~mascheck/various/ash/
 - Details how the
   [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
   command works
