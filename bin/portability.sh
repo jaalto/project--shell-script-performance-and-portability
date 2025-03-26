@@ -47,6 +47,7 @@ pbosh,\
 busybox ash,\
 mksh,\
 ksh,\
+bash --posix,\
 bash,\
 zsh\
 "
@@ -58,6 +59,7 @@ pbosh,\
 busybox ash,\
 mksh,\
 ksh,\
+bash --posix,\
 bash,\
 zsh\
 "
@@ -106,6 +108,10 @@ DESCRIPTION
     in --shell options.
 
     If no --shell options is used, try testing known shells.
+
+NOTES
+    the 'bash --posix' runs in BASH_COMPAT=3.2 in effect
+    to test macOS compatibility.
 
 EXAMPLES
     $program x-*
@@ -344,13 +350,22 @@ RunShells ()
 
     for shell in $shlist
     do
+        shell=$shell   # for debug
         result="-"
+
+        local env=""
+
+        case $shell in
+            bash*--posix*)
+                env="BASH_COMPAT=3.2"  # macOS
+                ;;
+        esac
 
         # eval is needed because shell would be
         # "busybox ash", which must be broken apart
         # to separate words.
 
-        if eval $shell "$file" > /dev/null 2>&1; then
+        if eval $env $shell "$file" > /dev/null 2>&1; then
             result="+"
         fi
 
