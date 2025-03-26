@@ -663,7 +663,7 @@ have long provided an
 [Bash](https://www.gnu.org/software/bash)
 (on macOS).
 
-Examples or pre-2000 shell scripting:
+Examples of pre-2000 shell scripting:
 
 ```
     if [ x"$a" = "y" ]; then ...
