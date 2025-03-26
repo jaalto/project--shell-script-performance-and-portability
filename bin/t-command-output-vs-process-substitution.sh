@@ -45,7 +45,7 @@ Setup ()
 
 t1 () # POSIX
 {
-    tmp=$TMPBASE.cut
+    tmp=$(mktemp -t $TMPBASE.cut.XXX)
 
     for i in $(seq $loop_max)
     do
