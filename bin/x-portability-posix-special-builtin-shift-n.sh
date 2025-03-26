@@ -6,25 +6,30 @@
 # Notes:
 #
 # POSIX: "(...) If the n operand is invalid
-# or is greater than "$#", this may be
-# considered a syntax"
+# or is greater than `$#`, this may be
+# considered a syntax error and a non-interactive
+# shell may exit"
 #
-# Compatibility issues with `shift N`
-# if there was not enough args to shift.
+# Issues with `shift N` if there was not
+# enough args to shift.
 #
-# Behaviour is not uniform accross shells:
+# Behaviour is not uniform accross shells.
+# run this file under debug to see behavior.
 #
-# posh       : error and exit with code 1
-# dash       : error and exit with code 2
-# mksh       : error and exit with code 1
-# ksh93      : error and exit with code 1
-# busybox ash: no error message and $? is set to 1
-# bash       : no error message and $? is set to 1
-# zsh        : error messahe and $? is set to 1
+#     $sh -x <file>
+#
+#     posh       : error and exit with code 1
+#     dash       : error and exit with code 2
+#     mksh       : error and exit with code 1
+#     ksh93      : error and exit with code 1
+#     busybox ash: no error message and $? is set to 1
+#     bash       : no error message and $? is set to 1
+#     zsh        : error messahe and $? is set to 1
 
 test ()
 (
     # Run test in subshell compound-list
+    # to prevent premature exit call
     set -- 1
     shift 2
     echo "x$?"
