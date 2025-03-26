@@ -1124,7 +1124,7 @@ Notable observations:
 
     # With any greater number,
     # terminates the whole program.
-    # in dash, posh, ksh...
+    # in dash, posh, mksh, ksh93...
     shift 2
 ```
 
