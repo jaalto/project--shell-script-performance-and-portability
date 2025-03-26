@@ -1172,7 +1172,23 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
 
 ## 4.6 MORE ABOUT PORTABILITY
 
-TODO
+- Prefer readable
+  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
+  `$(cmd)`
+  command substitution instead of
+  leagacy backtics as in \`cmd\`. For more
+  information, see
+  BashFaq [098](https://mywiki.wooledge.org/BashFAQ/082)
+  and shellcheck
+  [SC2006](https://github.com/koalaman/shellcheck/wiki/SC2006).
+  For 20 years all the modern `sh` shells have supported
+  `$()`. Including UNIX like AIX,
+  HP-UX and conservative
+  Oracle Solaris 10 (2005) whose
+  support ends in
+[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
+  (see Solaris
+  [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
 # 5.0 RANDOM NOTES
 
@@ -1199,22 +1215,6 @@ testing:
 - List of which features were added to specific
   releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
-- Use
-  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
-  `$(cmd)`
-  command substituion instead of
-  archaic backtics as in \`cmd\`. For more
-  information, see
-  https://mywiki.wooledge.org/BashFAQ/082
-  **Note**: For the past 20 years, all
-  modern `sh` shells have supported the readable
-  `$()` substitution syntax. This includes, for
-  example, UNIX operating systems like HP-UX and
-  Oracle Solaris 10 from 2005. Oracle Solaris 10
-  support ends in
-[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
-  (see
-  [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 - Use `shellcheck` (Haskell) to
   to help to
   improve and write portable POSIX scripts.
