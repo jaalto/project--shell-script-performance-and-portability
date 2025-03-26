@@ -1,22 +1,58 @@
 <!--
+INFORMATION FOR WRITERS
+
 Github Markdown Guide: https://is.gd/nqSonp
 VSCode: preview markdown C-S-v
+
+URL text fragments:
+https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
 -->
 
-# SHELL SCRIPT PERFORMANCE AND PORTABILITY
+# 1.0 SHELL SCRIPT PERFORMANCE AND PORTABILITY
 
 How can you make shell scripts portable and run faster?
 That are the questions these test cases aim to answer.
 
+Table of Contents
+
+- [1.0 SHELL SCRIPT PERFORMANCE AND PORTABILITY](#10-shell-script-performance-and-portability)
+  - [1.1 THE PROJECT STRUCTURE](#11-the-project-structure)
+  - [1.2 THE PROJECT DETAILS](#12-the-project-details)
+- [3.0 ABOUT PERFORMANCE](#30-about-performance)
+  - [3.1 GENERAL PERFORMANCE ADVICE](#31-general-performance-advice)
+  - [3.2 SHELLS AND PERFORMANCE](#32-shells-and-performance).
+  - [3.3 MAJOR PERFORMANCE GAINS](#33-major-performance-gains)
+  - [3.4 MODERATE PERFORMANCE GAINS](#34-moderate-performance-gains)
+  - [3.5 MINOR PERFORMANCE GAINS](#35-minor-performance-gains)
+  - [3.6 NO PERFORMANCE GAINS](#36-no-performance-gains)
+- [4.0 PORTABILITY](#40-portability)
+  - [4.1 LEGACY SHELL SCRIPTING](#41-legacy-shell-scripting)
+  - [4.2 REQUIREMENTS AND SHELL SCRIPTS](#42-requirements-and-shell-scripts)
+  - [4.3 WRITING POSIX COMPLIANT SHELL SCRIPS](#43-writing-posix-compliant-shell-scrips)
+  - [4.4 SHEBANG LINE IN SCRIPTS](#44-shebang-line-in-scripts)
+    - [4.4.1 About Bash and Shebang](#441-about-bash-and-shebang)
+    - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
+  - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
+    - [4.5.1 Case Study: sed](#451-case-study-sed)
+  - [4.6 MORE ABOUT PORTABILITY](#46-more-about-portability)
+- [5.0 RANDOM NOTES](#50-random-notes)
+- [6.0 FURTHER READING](#60-further-reading)
+- [COPYRIGHT](#copyright)
+- [LICENSE](#license)
+
 The tests reflect results under Linux
-using GNU utilities. For performance the
-main focus is on the features found in
-[Bash](https://www.gnu.org/software/bash)
-more than `sh`
+using GNU utilities. For performance,
+the main focus is on the features found
+in [Bash](https://www.gnu.org/software/bash)
+rather than `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
-shells. The POSIX is useful
-if you are looking into for more
-portable scrips. See POSIX in
+compliant shells. The term "compliant"
+is used here as "most POSIX compliant",
+as there is no, and has never been,
+shell that is
+fully POSIX compliant.
+POSIX is useful if you are looking for
+more portable scripts. See also POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
@@ -24,8 +60,7 @@ portable scrips. See POSIX in
 > minimal shells like
 > [dash](https://tracker.debian.org/pkg/dash) and
 > [posh](https://tracker.debian.org/pkg/posh).
-> See section
-> [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
+> See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
 In Linux like systems, from a performance point
 of view, for serious shell scripting, Bash is
@@ -38,15 +73,16 @@ expansions, regular expressions, including
 extracting regex matches and utilizing fast
 functions with namerefs.
 
-It's a myth that Bash is slow,
+Contrary to popular perception,
+Bash is not particularly slow,
 considering all its features, if used
 correctly. On the other hand, for small
 and quick shell scripts, POSIX `sh`
-would probably be enough, or even
+would probably be enough, and
 faster. But things are not that
 straightforward. More about this in
 section
-[SHELLS AND PERFORMANCE](#shells-and-performance).
+[SHELLS AND PERFORMANCE](#32-shells-and-performance).
 
 In other operating systems, for example BSD,
 the obvious choice for shell scripting would be
@@ -79,6 +115,8 @@ the system used at the time of testing.
 Instead, compare the relative order in which
 each test case produced the fastest results.
 
+## 1.1 THE PROJECT STRUCTURE
+
 - [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
 - [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt)
@@ -86,37 +124,16 @@ each test case produced the fastest results.
 - [USAGE](./USAGE.md)
 - [CONTRIBUTING](./CONTRIBUTING.md)
 
-Table of Contents
-
-- [GENERAL ADVICE](#general-advice)
-- [PERFORMANCE TESTS](#performance-test)
-  - [MAJOR PERFORMANCE GAINS](#major-performance-gains)
-  - [MODERATE PERFORMANCE GAINS](#moderate-performance-gains)
-  - [MINOR PERFORMANCE GAINS](#minor-performance-gains)
-  - [NO PERFORMANCE GAINS](#no-performance-gains)
-  - [SHELLS AND PERFORMANCE](#shells-and-performance).
-- [PORTABILITY](#portability)
-  - [LEGACY SHELL SCRIPTING PRACTISES](#legacy-shell-scripting-practises)
-  - [REQUIREMENTS AND SHELL SCRIPTS](#requirements-and-shell-scripts)
-  - [WRITING POSIX COMPLIANT SHELL SCRIPS](#writing-posix-compliant-shell-scrips)
-  - [SHEBANG LINE IN SCRIPTS](#shebang-line-in-scripts)
-  - [PORTABILITY OF UTILITIES](#portability-of-utilities)
-  - [MORE PORTABILITY TIPS](#more-portability-tips)
-- [RANDOM NOTES](#random-notes)
-- [FURTHER READING](#further-reading)
-- [COPYRIGHT](#copyright)
-- [LICENSE](#license)
-
-## The project structure
-
+```
     bin/            The tests
     doc/            Results by "make doc"
     COPYING         License (GNU GPL)
     INSTALL         Install instructions
     USAGE.md        How to run the tests
     CONTRIBUTING.md Writing test cases
+```
 
-## Project details
+## 1.2 THE PROJECT DETAILS
 
 - Homepage:
   https://github.com/jaalto/project--shell-script-performance
@@ -129,14 +146,16 @@ Table of Contents
 
 - **Depends**:
   Bash, GNU coreutils, file
-  /usr/share/dict/words
+  `/usr/share/dict/words`
   (Debian package: wamerican).
 
 - **Optional depends**:
-  GNU make for Makefile.
+  GNU make.
   For some tests: GNU parallel.
 
-# GENERAL ADVICE
+# 3.0 ABOUT PERFORMANCE
+
+## 3.1 GENERAL PERFORMANCE ADVICE
 
 Regardless of the shell you use for scripting
 ([sh](https://tracker.debian.org/pkg/dash),
@@ -163,7 +182,9 @@ consider these factors.
   use
   [Perl](https://www.perl.org)
   based
-  [GNU parallel](https://www.gnu.org/software/parallel/) for massive gains in performance. See also how to use
+  [GNU parallel](https://www.gnu.org/software/parallel/)
+  for massive gains in performance.
+  See also how to use
   [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
   ([tutorial](https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore))
   to wait for all concurrent tasks to finish
@@ -223,9 +244,11 @@ consider these factors.
     [ ... ]  # not /usr/bin/test
 ```
 
-# PERFORMANCE TESTS
+## 3.2 SHELLS AND PERFORMANCE
 
-## MAJOR PERFORMANCE GAINS
+TODO
+
+## 3.3 MAJOR PERFORMANCE GAINS
 
 - It is about 10-40 times (dash 10x, bash 40x)
   faster to do string
@@ -388,7 +411,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 ```
 
-## MODERATE PERFORMANCE GAINS
+## 3.4 MODERATE PERFORMANCE GAINS
 
 - It is about 5 times faster to split a string
   into an array using list rather than
@@ -439,11 +462,11 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
 ```
 
-## MINOR PERFORMANCE GAINS
+## 3.5 MINOR PERFORMANCE GAINS
 
 According to the results, none of
-these offer practical benefits. See the
-[results](./doc/RESULTS.md)
+these offer practical benefits.
+See the [RESULTS](./doc/RESULTS.md)
 for details and further commentary.
 
 - The Bash
@@ -514,7 +537,7 @@ for details and further commentary.
     LANG=C grep <any of above> --ignore-case ...
 ```
 
-## NO PERFORMANCE GAINS
+## 3.6 NO PERFORMANCE GAINS
 
 None of these offer any advantages to speed up shell scripts.
 
@@ -551,7 +574,7 @@ None of these offer any advantages to speed up shell scripts.
   See [code](./bin/t-statement-arithmetic-increment.sh).
 
 ```
-    i=$((i + 1))     # POSIX (use this)
+    i=$((i + 1))     # POSIX (preferred)
     : $((i++))       # POSIX, Uhm
     : $((i = i + 1)) # POSIX, Uhm!
     ((i++))          # Bash, Ksh
@@ -622,30 +645,25 @@ None of these offer any advantages to speed up shell scripts.
     parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
-# SHELLS AND PERFORMANCE
+# 4.0 PORTABILITY
 
-TODO
-
-# PORTABILITY
-
-## LEGACY SHELL SCRIPTING PRACTISES
+## 4.1 LEGACY SHELL SCRIPTING
 
 In typical cases, the legacy `sh`
 ([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
 is not a relevant target for shell scripting.
-All Linux and and relevant UNIX operating systems
+The Linux and and modern UNIX operating systems
 have long provided an
-`sh` that is POSIX-compliant enough. Note that
-nowadays `sh` is
-usually a symbolic link to
+`sh` that is POSIX-compliant enough. Nowadays
+`sh` is usually a symbolic link to
 [dash](https://tracker.debian.org/pkg/dash)
-(on Linux),
+(on Linux since 2006),
 [ksh](https://tracker.debian.org/pkg/ksh93u+m)
-(on others), or it may point to
+(on some BSDs), or it may point to
 [Bash](https://www.gnu.org/software/bash)
 (on macOS).
 
-Examples or archaic coding practises:
+Examples of pre-2000 shell scripting:
 
 ```
     if [ x"$a" = "y" ]; then ...
@@ -679,17 +697,18 @@ Modern equivalents:
 
 ```
 
-## REQUIREMENTS AND SHELL SCRIPTS
+## 4.2 REQUIREMENTS AND SHELL SCRIPTS
 
 Writing shell scripts inherently
 involves considering several factors.
 
-- *Personal scripts.* When writing scripts for
-  personal use, choose whichever shell best suits
-  your environment. On Linux, the obvious choice
-  is Bash. On BSD systems, it would be Ksh. On
-  macOS, Zsh might be okay but it would
-  not be the best investment in the long run.
+- *Personal scripts.* When writing
+  scripts for personal or
+  administrative tasks, the choice of
+  shell is unimportant. On Linux, the
+  obvious choice is Bash. On BSD systems,
+  it would be Ksh. On macOS, Zsh might be
+  handy.
 
 - *Portable scripts.* If you intend to use the
   scripts across some operating systems — from
@@ -744,7 +763,7 @@ where you can install Linux distributions like
 Debian and Ubuntu. Bash is the obvious choice
 for shell scripts in this environment.
 
-## WRITING POSIX COMPLIANT SHELL SCRIPS
+## 4.3 WRITING POSIX COMPLIANT SHELL SCRIPS
 
 As this document is more focused on
 Linux, macOS, and BSD compatibility,
@@ -761,7 +780,7 @@ the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
 For more discussion see
-[MORE PORTABILITY TIPS](#more-portability-tips).
+[MORE ABOUT PORTABILITY](#more-portability-tips).
 
 Let's first consider the typical `sh`
 shells in order of their
@@ -781,8 +800,7 @@ strictness to POSIX:
 - [Busybox ash](https://www.busybox.net) is based
   on `dash` with some more features added.
   Supports `local` keyword.
-  See ServerFault
-  ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
+  See ServerFault ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
 
 Let's also consider what the `/bin/sh` might
 be in different Operating Systems.
@@ -872,7 +890,7 @@ scripts even more.
     # External utility to check code
     checkbashisms script.sh
 
-## SHEBANG LINE IN SCRIPTS
+## 4.4 SHEBANG LINE IN SCRIPTS
 
 Note that POSIX does not define the
 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
@@ -894,9 +912,9 @@ that this is a de facto convention, universally
 supported even though it is not defined by
 POSIX.
 
-    #! /bin/sh
+    #! <interpreter> [word]
     #
-    # 1. Space is allowed after "#!"
+    # 1. whitespace is allowed after "#!"
     #    for readability.
     #
     # 2. The <interpreter> must be full
@@ -905,17 +923,17 @@ POSIX.
     #    #! sh
     #
     # 3. ONE word can be added
-    #    after the <interpreter>. Any
-    #    more than that is not portable
-    #    accross other than Linux
-    #    Kernels.
+    #    after the <interpreter>.
+    #    Any more than that may not
+    #    be portable accross Linux
+    #    and some BSD Kernels.
     #
     #    #! /bin/sh -eu
     #    #! /usr/bin/awk -f
     #    #! /usr/bin/env bash
     #    #! /usr/bin/env python3
 
-### About Bash and Shebang
+### 4.4.1 About Bash and Shebang
 
 Note that on macOS, `/bin/bash` is hard-coded
 to Bash version 3.2.57 where in 2025 lastest Bash is
@@ -925,20 +943,29 @@ access, without disabling System
 Integrity Protection. If you install a
 newer Bash version with `brew install
 bash`, it will be located in
-`/usr/local/bin/bash`. To use the
-latest Bash, the user must arrange
-`/usr/local/bin` first in `PATH`.
+`/usr/local/bin/bash`.
 
-    ... traditional but
-    ... problematic on macOS
+On macOS, to use the latest Bash, the
+user must arrange `/usr/local/bin`
+first in
+[PATH](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes).
+If the script starts
+with `#! /bin/bash`, the user cannot
+arrange it to run under different Bash
+version without modifying the 
+script itself, or after modifying `PATH`,
+run it inconveniently with
+`bash <script>`.
+
+    ... traditional
 
     #! /bin/bash
 
-    ... more portable
+    ... more portable (macOS)
 
     #! /usr/bin/env bash
 
-### About Python and Shebang
+### 4.4.2 About Python and Shebang
 
 There was a disruptive change from
 Python 2.x to Python 3.x in 2008. The older
@@ -981,7 +1008,7 @@ is not mandated by POSIX. However,
 in 99.9% of cases, the de facto portable
 location is `/usr/bin/env`.
 
-## PORTABILITY OF UTILITIES
+## 4.5 PORTABILITY OF UTILITIES
 
 In the end, the actual implementation
 of the shell you use (dash, bash, ksh...)
@@ -1025,8 +1052,7 @@ Notable observations:
   which you should always use. Remember that
   `-N` option to read file into memory
   is only available in modern shells (Bash, Ksh).
-  See shellcheck
-  [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
+  See shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
   BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001)
   and BashWiki [IFS](https://mywiki.wooledge.org/IFS).
 
@@ -1094,7 +1120,7 @@ Notable observations:
     ...
 ```
 
-### Case Study: sed
+### 4.5.1 Case Study: sed
 
 As a case study, the Linux GNU `sed(1)` and
 its options differ or
@@ -1104,12 +1130,11 @@ are incompatible. The Linux GNU
 cannot be used in macOS and BSD. Additionally,
 in macOS and BSD, you will find GNU programs
 under a `g`-prefix, such as `gsed(1)`, etc.
-See StackOverflow discussion
-["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068). For more
+See StackOverflow ["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068). For more
 discussions about the topic, see
-[1](https://stackoverflow.com/q/48712373),
-[2](https://stackoverflow.com/q/16745988),
-[3](https://stackoverflow.com/q/7573368).
+StackOverflow [1](https://stackoverflow.com/q/48712373),
+StackOverflow [2](https://stackoverflow.com/q/16745988),
+StackOverflow [3](https://stackoverflow.com/q/7573368).
 
     # Linux (works)
     #
@@ -1145,11 +1170,11 @@ discussions about the topic, see
     mv "$tmp" file
     rm -f "$tmp"
 
-# MORE PORTABILITY TIPS
+## 4.6 MORE ABOUT PORTABILITY
 
 TODO
 
-# RANDOM NOTES
+# 5.0 RANDOM NOTES
 
 See the Bash manual how to use
 [`time`](https://www.gnu.org/software/bash/manual/bash.html#Pipeline)
@@ -1167,7 +1192,7 @@ testing:
 
     echo 3 > /proc/sys/vm/drop_caches
 
-# FURTHER READING
+# 6.0 FURTHER READING
 
 - See Greg's Bash Wiki and FAQ
   https://mywiki.wooledge.org/BashGuide
@@ -1207,6 +1232,9 @@ testing:
 
 For the curious readers:
 
+- A comprehensive history of `ash`.
+  "Ash (Almquist Shell) Variants" by Sven Mascheck
+  https://www.in-ulm.de/~mascheck/various/ash/
 - Details how the
   [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
   command works
