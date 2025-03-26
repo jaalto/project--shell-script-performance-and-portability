@@ -9,17 +9,41 @@
 # or is greater than "$#", this may be
 # considered a syntax"
 #
-# Somewhere there was mentioned that there
-# were compatibility issues with `shift N`
+# Compatibility issues with `shift N`
 # if there was not enough args to shift.
 #
-# Probably the status code
-# is not uniform accross shells.
+# Behaviour is not uniform accross shells:
 #
-# TODO: find reference
+# posh       : error and exit with code 1
+# dash       : error and exit with code 2
+# mksh       : error and exit with code 1
+# ksh93      : error and exit with code 1
+# busybox ash: no error message and $? is set to 1
+# bash       : no error message and $? is set to 1
+# zsh        : error messahe and $? is set to 1
 
-set - 1
-shift 2
+test ()
+(
+    # Run test in subshell compound-list
+    set -- 1
+    shift 2
+    echo "x$?"
+)
 
-# Should indicate correct error code
-[ ! $? = 0 ]
+file=t.ret
+
+# ignore file redirection
+# shellcheck disable=SC2065
+
+if test > "$file"; then
+    # Normal program execution
+    code=$(cat "$file")
+    code=${code#x}
+    rm -f "$file"
+    [ ! "$code" = 0 ]
+else
+    code=$?
+    rm -f "$file"
+    echo "FATAL: shift called exit $code"
+    exit "$code"
+fi
