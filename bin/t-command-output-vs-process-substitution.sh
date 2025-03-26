@@ -36,7 +36,7 @@ RequireDictionary "t-command-output-vs-process-substitution.sh"
 
 size=${size:-10k}
 
-f=$TMPBASE.random.dictionary.$size
+f=$(mktemp -t $TMPBASE.random.dictionary.$size.XXX)
 
 Setup ()
 {
