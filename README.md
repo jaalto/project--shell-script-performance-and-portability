@@ -26,7 +26,7 @@ Table of Contents
   - [4.3 WRITING POSIX COMPLIANT SHELL SCRIPS](#43-writing-posix-compliant-shell-scrips)
   - [4.4 SHEBANG LINE IN SCRIPTS](#44-shebang-line-in-scripts)
     - [4.4.1 About Bash and Shebang](#441-about-bash-and-shebang)
-    - [4.4.2 About Python and Shebang](#441-about-python-and-shebang)
+    - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
   - [4.6 MORE ABOUT PORTABILITY](#46-more-about-portability)
