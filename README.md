@@ -34,7 +34,7 @@ Table of Contents
     - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
-  - [4.6 MISCELLANEUS SUGGESTION](#46-miscellaneus-suggestion)
+  - [4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
 - [COPYRIGHT](#copyright)
@@ -771,16 +771,15 @@ and less on legacy UNIX operating
 systems, for all practical purposes,
 there is no need to attempt to write
 *pure* POSIX shell scripts. Stricter
-measures are required only if you also
+measures are required only if you
 target legacy UNIX operating systems
 whose `sh` may not have changed in 30
-years. If that's the case, then you're
-in deep waters, and your best guide is
+years. your best guide probably is
 the wealth of knowledge collected by
 the GNU autoconf project; see
 ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
 For more discussion see
-[4.6 MISCELLANEUS SUGGESTION](#46-miscellaneus-suggestion).
+[4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions).
 
 Let's first consider the typical `sh`
 shells in order of their
@@ -1172,7 +1171,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
 
 ## 4.6 MISCELLANEOUS SUGGESTIONS
 
-- Prefer modern
+- Prefer
   [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   `$(cmd)`
   command substitution instead of
@@ -1197,6 +1196,11 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
         # Readabilty problems
         lastdir=`basename \`pwd\``
 ```
+
+<!--
+TODO:
+https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Shellology
+-->
 
 # 5.0 RANDOM NOTES
 
