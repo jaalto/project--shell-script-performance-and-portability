@@ -32,7 +32,7 @@ LANG=C
 re=${re:-'ad'}
 size=${size:-50k}
 
-f=$TMPBASE.random.dictionary.$size
+f=$(mktemp -t $TMPBASE.random.dictionary.$size.XXX)
 
 Setup ()
 {
