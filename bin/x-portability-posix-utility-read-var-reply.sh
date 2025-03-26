@@ -6,7 +6,9 @@
 # Notes:
 #
 # The POSIX `read` command requires VARIABLE.
-# It does not default to variable REPLY variable.
+# It does not default to variable REPLY..
 # For portability supply always REPLY.
+#
+#     echo 1 | { read -r REPLY ; ... }
 
 echo 1 | read -r
