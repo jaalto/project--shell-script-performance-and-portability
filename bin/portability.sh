@@ -112,6 +112,7 @@ DESCRIPTION
 NOTES
     the 'bash --posix' runs in BASH_COMPAT=3.2 in effect
     to test macOS compatibility.
+    See https://www.gnu.org/software/bash/manual/html_node/Shell-Compatibility-Mode.html
 
 EXAMPLES
     $program x-*
