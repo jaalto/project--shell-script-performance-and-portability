@@ -24,11 +24,13 @@ FILE="t-file-glob-bash-compgen-vs-stat.sh"
 
 file_count=${file_count:-100}
 
+TMP=$(mktemp -t $TMPBASE.file.XXX)
+
 Setup ()
 {
     for i in $(seq $file_count)
     do
-        touch "$TMPBASE.$i"
+        touch "$TMP.$i"
     done
 }
 
@@ -36,7 +38,7 @@ t1 ()
 {
     for i in $(seq $loop_max)
     do
-        if compgen -G "$TMPBASE"* > /dev/null; then
+        if compgen -G "$TMP"* > /dev/null; then
             dummy="glob match"
         fi
     done
@@ -49,7 +51,7 @@ t2 ()
 {
     for i in $(seq $loop_max)
     do
-        arr=("$TMPBASE"*)
+        arr=("$TMP"*)
 
         if [ ${#arr[*]} -gt 0 ]; then
             dummy="glob match"
@@ -65,7 +67,7 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        if $STAT -t "$TMPBASE"* > /dev/null; then
+        if $STAT -t "$TMP"* > /dev/null; then
             dummy="glob match"
         fi
     done
