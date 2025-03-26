@@ -1190,6 +1190,14 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
   (see Solaris
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
+```
+        # For example, nesting is easy
+        lastdir=$(basename $(pwd))
+
+        # ... readabilty problems
+        lastdir=`basename \`pwd\``
+```
+
 # 5.0 RANDOM NOTES
 
 See the Bash manual how to use
