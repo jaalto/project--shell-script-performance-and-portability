@@ -911,10 +911,10 @@ POSIX.
     #    #! sh
     #
     # 3. ONE word can be added
-    #    after the <interpreter>. Any
-    #    more than that is not portable
-    #    accross other than Linux
-    #    Kernels.
+    #    after the <interpreter>.
+    #    Any more than that may not
+    #    be portable accross Linux
+    #    and some BSD Kernels.
     #
     #    #! /bin/sh -eu
     #    #! /usr/bin/awk -f
