@@ -935,7 +935,7 @@ bash`, it will be located in
 latest Bash, the user must arrange
 `/usr/local/bin` first in `PATH`.
 
-    ... traditional but
+    ... traditional but possibly
     ... problematic on macOS
 
     #! /bin/bash
