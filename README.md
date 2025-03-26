@@ -4,7 +4,7 @@ INFORMATION FOR WRITERS
 Github Markdown Guide: https://is.gd/nqSonp
 VSCode: preview markdown C-S-v
 
-URL text fragments:
+URL text fragments: #:~:text=
 https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
 -->
 
@@ -35,7 +35,7 @@ Table of Contents
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
     - [4.5.2 Case Study: awk](#451-case-study-awk)
-  - [4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions)
+  - [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
 - [COPYRIGHT](#copyright)
@@ -681,6 +681,14 @@ Examples of pre-2000 shell scripting:
     # -a (AND)
     if [ "$a" = "y" -o "$b" = "y" ] ...
 
+    # POSIX allows leading opening "(" paren
+    case abc in
+        (a*) true
+             ;;
+        (*)  false
+             ;;
+    esac
+
 ```
 Modern equivalents:
 ```
@@ -695,6 +703,14 @@ Modern equivalents:
     if [ ! "$a" ] ...
 
     if [ "$a" = "y" ] || [ "$b" = "y" ]; then ...
+
+    # Without leading "(" paren
+    case abc in
+         a*) :  # "true" might not be builtin
+             ;;
+         *)  false
+             ;;
+    esac
 
 ```
 
@@ -778,9 +794,9 @@ whose `sh` may not have changed in 30
 years. your best guide probably is
 the wealth of knowledge collected by
 the GNU autoconf project; see
-["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.64/html_node/Portable-Shell.html#Portable-Shell).
+["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell).
 For more discussion see
-[4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions).
+[4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes).
 
 Let's first consider the typical `sh`
 shells in order of their
@@ -1046,6 +1062,23 @@ Notable observations:
 
 ```
 
+- Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/shift.html)
+  always with shell special parameter
+  [`$#`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)
+
+```
+    set -- 1
+
+    # POSIX
+    # shift number of positional args
+    shift $#
+
+    # With any greater number,
+    # terminates the whole program.
+    # in dash, posh, ksh...
+    shift 2
+```
+
 - [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
   POSIX does not define `REPLY` variable, so
   always supply one. POSIX only defines options `-r`
@@ -1053,8 +1086,10 @@ Notable observations:
   `-N` option to read file into memory
   is only available in modern shells (Bash, Ksh).
   See shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
-  BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001)
-  and BashWiki [IFS](https://mywiki.wooledge.org/IFS).
+  BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
+  POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
+  and
+  BashWiki [IFS](https://mywiki.wooledge.org/IFS).
 
 ```
    # POSIX
@@ -1198,11 +1233,31 @@ awk for operands without any files:
     awk -v var=1 'BEGIN {print var + 1; exit}'
 
 
-## 4.6 MISCELLANEOUS SUGGESTIONS
+## 4.6 MISCELLANEOUS NOTES
 
-- Prefer
-  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
-  `$(cmd)`
+- The shell's null command
+  [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
+  might be slightly preferrable than
+  utlity
+  [`true`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/true.html)
+  according to
+  GNU autoconf's manaual
+  ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
+  which states that `:` might not be always builtin.
+
+```
+    while :
+    do
+        break
+    done
+
+    # Create an empty file
+    : > file
+
+```
+
+- Prefer POSIX
+  [`$(cmd)`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
   command substitution instead of
   leagacy POSIX backtics as in \`cmd\`. For more
   information, see
