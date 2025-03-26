@@ -4,8 +4,8 @@
 # Url: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/false.html
 
 case $(command -v false) in
-    */*) exit 0
+    */*) exit 1
          ;;
-    *)   exit 1
+    *)   exit 0
          ;;
 esac
