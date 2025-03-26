@@ -34,6 +34,7 @@ Table of Contents
     - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
+    - [4.5.2 Case Study: awk](#451-case-study-awk)
   - [4.6 MISCELLANEUS SUGGESTIONS](#46-miscellaneus-suggestions)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
@@ -951,7 +952,7 @@ first in
 If the script starts
 with `#! /bin/bash`, the user cannot
 arrange it to run under different Bash
-version without modifying the 
+version without modifying the
 script itself, or after modifying `PATH`,
 run it inconveniently with
 `bash <script>`.
@@ -1168,6 +1169,34 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     sed 's/this/that/g' file > "$tmp"
     mv "$tmp" file
     rm -f "$tmp"
+
+### 4.5.2 Case Study: awk
+
+POSIX
+[`awk`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/awk.html),
+does not support the `-v`
+option to define variables.
+You can use assignments after
+the program instead.
+
+    # POSIX
+    awk '{print var}' var=1 file
+
+    # GNU awk
+    awk -v var=1 '{print var}' file
+
+However, don't forget that
+such assignments are not evaluated
+until they are encountered, that is,
+after any `BEGIN` action. To use
+awk for operands without any files:
+
+    # POSIX
+    var=1 awk 'BEGIN {print ENVIRON["var"] + 1}' < /dev/null
+
+    # GNU awk
+    awk -v var=1 'BEGIN {print var + 1; exit}'
+
 
 ## 4.6 MISCELLANEOUS SUGGESTIONS
 
