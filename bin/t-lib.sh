@@ -57,7 +57,7 @@
 VERBOSE=""
 PROGRAM=$0
 
-TMPBASE=${TMPDIR:-/tmp}/${LOGNAME:-$USER}.$$.test
+TMPBASE=${LOGNAME:-$USER}.$$.test
 
 # -- -------------------------------------------------------
 # -- User settable variables in environment
@@ -178,13 +178,28 @@ IsOsDebianLike ()
 
 IsShellPosh ()
 {
-    [ "${POSH_VERSINFO:-}" ]   # Pdkd derivate
+    [ "${POSH_VERSION:-}" ]   # Pdkd derivate
 }
 
 IsShellBash ()
 {
-    [ "${BASH_VERSINFO:-}" ]
+    [ "${BASH_VERSION:-}" ]
 }
+
+IsShellBashFeatureCompat ()
+{
+    # https://www.gnu.org/software/bash/manual/bash.html#Shell-Compatibility-Mode
+    # Bash-4.3 introduced a new shell variable: BASH_COMPAT
+
+    case ${BASH_VERSION:-} in
+        4.[4-9]* | [5-9]*)
+            return 0
+            ;;
+        *)  return 1
+            ;;
+    esac
+}
+
 
 IsShellKsh93 ()
 {

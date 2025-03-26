@@ -29,6 +29,8 @@ set -o nounset # Treat unused variables as errors
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
 
+BASH_VERSION=${BASH_VERSION:-$(bash -c 'echo $BASH_VERSION' 2> /dev/null)}
+
 # Forward decalarations for shellcheck(1)
 # Defined in t-lib.sh
 TMPBASE=""
@@ -110,9 +112,9 @@ DESCRIPTION
     If no --shell options is used, try testing known shells.
 
 NOTES
-    the 'bash --posix' runs in BASH_COMPAT=3.2 in effect
-    to test macOS compatibility.
-    See https://www.gnu.org/software/bash/manual/html_node/Shell-Compatibility-Mode.html
+    The `bash --posix 3.2` runs with `BASH_COMPAT=3.2` in effect to
+    test macOS compatibility.
+    https://www.gnu.org/software/bash/manual/bash.html#Shell-Compatibility-Mode
 
 EXAMPLES
     $program x-*
@@ -344,35 +346,44 @@ Description ()
 
 RunShells ()
 {
-    local shell
+    local compat="BASH_COMPAT=3.2" # default
+    local usecompat=""
+
+    if IsShellBashFeatureCompat; then
+        usecompat="use-bash-compat"
+    fi
+
     local shresult=""
+    local shell
+
     local saved=$IFS
     local IFS=","
 
     for shell in $shlist
     do
         shell=$shell   # for debug
-        result="-"
-
+        local result="-"
         local env=""
 
         case $shell in
             bash*--posix*)
-                env="BASH_COMPAT=3.2"  # macOS
+                if [ "$usecompat" ] ; then
+                    env=$compat
 
-                local ifs=$IFS
-                IFS=$saved
+                    local ifs=$IFS
+                    IFS=$saved
 
-                set -- $shell
+                    set -- $shell
 
-                case ${3:-} in
-                    [2-9]*)
-                        env="BASH_COMPAT=$3"
-                        shell="$1 $2"
-                        ;;
-                esac
+                    case ${3:-} in
+                        [2-9]*)
+                            env="BASH_COMPAT=$3"
+                            shell="$1 $2"
+                            ;;
+                    esac
 
-                IFS=$ifs
+                    IFS=$ifs
+                fi
                 ;;
         esac
 
