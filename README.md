@@ -41,14 +41,18 @@ Table of Contents
 - [LICENSE](#license)
 
 The tests reflect results under Linux
-using GNU utilities. For performance the
-main focus is on the features found in
-[Bash](https://www.gnu.org/software/bash)
-more than `sh`
+using GNU utilities. For performance,
+the main focus is on the features found
+in [Bash](https://www.gnu.org/software/bash)
+rather than `sh`
 [POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
-shells. The POSIX is useful
-if you are looking into for more
-portable scrips. See POSIX in
+compliant shells. The term "compliant"
+is used here as "most POSIX compliant",
+as there is no, and has never been,
+shell that is
+fully POSIX compliant.
+POSIX is useful if you are looking for
+more portable scripts. See also POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
@@ -69,11 +73,12 @@ expansions, regular expressions, including
 extracting regex matches and utilizing fast
 functions with namerefs.
 
-It's a myth that Bash is slow,
+Contrary to popular perception,
+Bash is not particularly slow,
 considering all its features, if used
 correctly. On the other hand, for small
 and quick shell scripts, POSIX `sh`
-would probably be enough, or even
+would probably be enough, and
 faster. But things are not that
 straightforward. More about this in
 section
@@ -110,6 +115,8 @@ the system used at the time of testing.
 Instead, compare the relative order in which
 each test case produced the fastest results.
 
+## 1.1 THE PROJECT STRUCTURE
+
 - [RESULTS](./doc/RESULTS.md)
 - [RESULTS-BRIEF](./doc/RESULTS-BRIEF.txt)
 - [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt)
@@ -117,14 +124,14 @@ each test case produced the fastest results.
 - [USAGE](./USAGE.md)
 - [CONTRIBUTING](./CONTRIBUTING.md)
 
-## 1.1 THE PROJECT STRUCTURE
-
+```
     bin/            The tests
     doc/            Results by "make doc"
     COPYING         License (GNU GPL)
     INSTALL         Install instructions
     USAGE.md        How to run the tests
     CONTRIBUTING.md Writing test cases
+```
 
 ## 1.2 THE PROJECT DETAILS
 
@@ -139,11 +146,11 @@ each test case produced the fastest results.
 
 - **Depends**:
   Bash, GNU coreutils, file
-  /usr/share/dict/words
+  `/usr/share/dict/words`
   (Debian package: wamerican).
 
 - **Optional depends**:
-  GNU make for Makefile.
+  GNU make.
   For some tests: GNU parallel.
 
 # 3.0 ABOUT PERFORMANCE
@@ -567,7 +574,7 @@ None of these offer any advantages to speed up shell scripts.
   See [code](./bin/t-statement-arithmetic-increment.sh).
 
 ```
-    i=$((i + 1))     # POSIX (use this)
+    i=$((i + 1))     # POSIX (preferred)
     : $((i++))       # POSIX, Uhm
     : $((i = i + 1)) # POSIX, Uhm!
     ((i++))          # Bash, Ksh
