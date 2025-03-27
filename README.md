@@ -194,6 +194,21 @@ consider these factors.
   work with GNU
 [`xargs --max-procs=0`](https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html) can help.
 
+- Use GNU utilities. According to
+  benchmarks, like
+  [StackOverflow](https://stackoverflow.com/a/22661643),
+  the GNU `grep` is way, way faster and more
+  optimized than the operating system's
+  default. To increase performance in
+  shell scripts, consider installing GNU
+  [coreutils](https://tracker.debian.org/pkg/coreutils),
+  GNU
+  [grep](https://tracker.debian.org/pkg/grep),
+  GNU
+  [awk](https://tracker.debian.org/pkg/gawk),
+  and if needed, arrange `PATH` to prefer
+  GNU utilities (for example, on macOS).
+
 - Minimize extra processes as much as possible.
   In most cases, a single
   [awk](https://www.gnu.org/software/gawk/)
@@ -714,16 +729,20 @@ None of these offer any advantages to speed up shell scripts.
   starting perl with `parallel` is orders of
   magnitude more expensive compared to running
   already optimized `grep` only once.
+  Usually the limiting factor when grepping a
+  file is the disk's I/O speed.
   Otherwise, GNU `parallel` is
   excellent for making full use of multiple
   cores. Based on StackOverflow discussions,
-  if file sizes are in the tens of megabytes,
+  if file sizes are in the several
+  hundreds of megabytes,
   GNU
   [`parallel`](https://www.gnu.org/software/parallel/)
   can help speed things up.
   See [code](./bin/t-command-grep-parallel.sh).
 
 ```
+    # possibly add: --block -1
     parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
