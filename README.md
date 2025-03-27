@@ -336,6 +336,9 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```
+    # Not needed in POSIX sh
+    # shells as ret=$(fn) is already fast.
+
     fnNamerefPosix() # dash
     {
         # NOTE: uses non-POSIX 'local'
