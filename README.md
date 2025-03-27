@@ -197,7 +197,7 @@ consider these factors.
 - Use GNU utilities. According to
   benchmarks, like
   [StackOverflow](https://stackoverflow.com/a/22661643),
-  the GNU `grep` is way, way faster and more
+  the GNU `grep` is considerably faster and more
   optimized than the operating system's
   default. To increase performance in
   shell scripts, consider installing GNU
