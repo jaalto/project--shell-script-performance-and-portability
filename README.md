@@ -1115,6 +1115,9 @@ Notable observations:
 
 ```
 
+- Use [`grep -E`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html)
+  In 2001 POSIX dropped support for `egrep`.
+
 - Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/shift.html)
   always with shell special parameter
   [`$#`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)
