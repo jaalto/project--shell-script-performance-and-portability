@@ -252,8 +252,8 @@ TODO
 ## 3.3 MAJOR PERFORMANCE GAINS
 
 - It is about 100 times faster to perform
-  string matching using Bash than to call
-  POSIX utilities.
+  regular expression string matching
+  using Bash than to call POSIX utilities.
   [`expr`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expr.html)
   or
   [`grep`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
