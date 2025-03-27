@@ -263,7 +263,7 @@ TODO
 
 ```
     string="abcdef"
-    re="
+    re="b.*e"
 
     # Bash
     [[ $string =~ $re ]]
