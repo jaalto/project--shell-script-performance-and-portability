@@ -259,6 +259,13 @@ IsFeatureReadOptionN ()
     IsShellModern
 }
 
+IsFeatureReadCommandSubstitution ()
+{
+    # $(< file)
+    # https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
+    IsShellModern
+}
+
 IsFeatureMatchRegexp ()
 {
     # [[ string =~ ^abc ]]
