@@ -328,8 +328,9 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```
-   # Read max 100 KiB to $REPLY
-   read -r -N$((100 * 1024)) < file
+   # Bash, Ksh
+   # Read max 100 KiB to default $REPLY
+   read -r -N $((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
        ...
@@ -473,7 +474,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     string=$(< file)
 
     # Bash, Ksh, 1.8x slower
-    read -r -N$((100 * 1024)) string < file
+    # Read max 100 KiB
+    read -r -N $((100 * 1024)) string < file
 
     # POSIX, 2.3x slower
     string=$(cat file)
@@ -1170,8 +1172,8 @@ Notable observations:
    REPLY=$(cat file)
 
    # Bash, Ksh
-   # Read max 100 KiB file to $REPLY
-   read -N$((100 * 1024)) REPLY < file
+   # Read max 100 KiB to $REPLY
+   read -N $((100 * 1024)) REPLY < file
 
    case $REPLY in
         *pattern*)
