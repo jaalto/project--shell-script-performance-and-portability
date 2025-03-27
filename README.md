@@ -1136,12 +1136,12 @@ Notable observations:
 ```
 
 - [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
-  POSIX requires a VARIABLE. It does
-  not default to `REPLY`if omitted, so
-  always supply one. The only option
-  supported is `-r` which you should always
-  use. The handy option
-  `-N` to read file into memory
+  POSIX requires a VARIABLE, so
+  always supply one. The command does
+  not default to `REPLY`if omitted, The command
+  onbly support `-r` which you should also always
+  use. The `-N` option
+  to read file into memory
   is only available in modern shells (Bash, Ksh).
   See shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
   BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
