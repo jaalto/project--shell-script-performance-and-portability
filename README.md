@@ -255,6 +255,7 @@ TODO
   string maching using Bash, than calling
   POSIX utilities like
   [`expr`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expr.html)
+  or
   [`grep`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
   For POSIX shell scripts, the `expr`
   is preferred.
