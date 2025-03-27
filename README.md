@@ -632,6 +632,39 @@ None of these offer any advantages to speed up shell scripts.
 
 - There is no performance
   difference between a
+  Bash-specific expression
+  [`[[ ]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  for pattern matching compared
+  to POSIX `case..esac`.
+  Interestingly pattern matching
+  is 4x slower under `dash` compared
+  to Bash. However, that means nothing
+  because the time differences
+  are measured in minuscule
+  milliseconds (0.002s).
+  See [code](./bin/t-string-match-pattern.sh).
+
+```
+    string="abcdef"
+    pattern="*cd*"
+
+    # Bash
+    [[ $string == $pattern ]]
+
+    # POSIX
+    case $string in
+        $pattern)
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+
+```
+
+- There is no performance
+  difference between a
   regular while loop and a
   [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
   loop. However, the latter is more general,
