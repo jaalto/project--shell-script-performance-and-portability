@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #
 # Q: Match string by pattern: Bash vs case..esac
-# A: No noticeable difference. POSIX case..esac is will do fine.
+# A: No noticeable difference, both are extremely fast
 # priority: 0
 #
 #     t1 real 0m0.002s Bash
@@ -14,9 +14,7 @@
 #
 # Notes:
 #
-#   Bash doing it all in memory, is very very
-#   fast. For POSIX `sh` shells, the `expr`
-#   is much faster than `grep.
+#   Bash's version is much more compact.
 
 . ./t-lib.sh ; f=$random_file
 
