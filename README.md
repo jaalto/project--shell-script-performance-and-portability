@@ -329,7 +329,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 ```
    # Read max 100 KiB to $REPLY
-   read -N$((100 * 1024)) < file
+   read -r -N$((100 * 1024)) < file
 
    if [[ $REPLY =~ $regexp1 ]]; then
        ...
@@ -462,6 +462,20 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # temporary file
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
 ```
+
+- It is about 2 times faster to read file
+  into a string using Bash command substitution
+  [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
+  See [code](./bin/t-file-read-into-string.sh).
+
+    # Bash
+    string=$(< file)
+
+    # Bash, Ksh, 1.8x slower
+    read -r -N$((100 * 1024)) string < file
+
+    # POSIX, 2.3x slower
+    string=$(cat file)
 
 ## 3.5 MINOR PERFORMANCE GAINS
 
