@@ -1153,7 +1153,7 @@ Notable observations:
    # POSIX
    REPLY=$(cat file)
 
-   # Not POSIX (Bash, Ksh)
+   # Bash, Ksh
    # Read max 100 KiB file to $REPLY
    read -N$((100 * 1024)) REPLY < file
 
