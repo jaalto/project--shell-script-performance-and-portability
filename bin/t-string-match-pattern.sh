@@ -41,7 +41,7 @@ t2 () # POSIX
 {
     for i in $(seq $loop_max)
     do
-        case $string in
+        case $str in
             $pattern)
                 true
                 ;;
