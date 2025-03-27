@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 #
 # Q: Match string by pattern: Bash vs case..esac
-# A: No difference. POSIX case..esac is will do fine.
+# A: No noticeable difference. POSIX case..esac is will do fine.
 # priority: 0
 #
 #     t1 real 0m0.002s Bash
-#     t2 real 0m0.002s case..esac
+#     t2 real 0m0.003s case..esac
 #
 # Code:
 #
