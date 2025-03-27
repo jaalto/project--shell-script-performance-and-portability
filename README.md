@@ -332,7 +332,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   is very slow. On the other hand, in Ksh shells
   that would be fast. Therefore in Bash scrips,
   prefer namerefs.
-  See [code](./bin/t-function-return-value.sh).
+  See [code](./bin/t-function-return-value-nameref.sh).
 
 ```
     fnNamerefPosix() # dash
