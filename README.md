@@ -468,6 +468,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
   See [code](./bin/t-file-read-into-string.sh).
 
+```
     # Bash
     string=$(< file)
 
@@ -476,6 +477,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
     # POSIX, 2.3x slower
     string=$(cat file)
+```
 
 ## 3.5 MINOR PERFORMANCE GAINS
 
