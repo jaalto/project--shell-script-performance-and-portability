@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 #
-# Q: In grep, is option --fixed-strings faster?
+# Q: In GNU grep, is option --fixed-strings faster?
 # A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
@@ -104,12 +104,12 @@ t2icasee ()
 }
 
 t="
-:t t1pure
-:t t1utf8
-:t t1extended
-:t t1perl
-:t t2icasef
-:t t2icasee
+:t t1pure       IsCommandGnuGrep
+:t t1utf8       IsCommandGnuGrep
+:t t1extended   IsCommandGnuGrep
+:t t1perl       IsCommandGnuGrep
+:t t2icasef     IsCommandGnuGrep
+:t t2icasee     IsCommandGnuGrep
 "
 
 SetupTrapAtExit

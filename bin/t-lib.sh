@@ -331,6 +331,16 @@ IsCommandGnuAwk ()
     IsCommandGnuVersion awk
 }
 
+IsCommandGnuGrep ()
+{
+    IsCommandGnuVersion grep
+}
+
+IsCommandGnuFind ()
+{
+    IsCommandGnuVersion find
+}
+
 RequireParallel ()
 {
     IsCommandParallel && return 0
