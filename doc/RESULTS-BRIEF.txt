@@ -58,6 +58,10 @@ FILE: t-file-read-content-loop.sh
 # Q: To process lines: `readarray` vs `while read < file`
 # A: It is about 2x faster to use `readarray`
 
+FILE: t-file-read-into-string.sh
+# Q: To read file into string: $(< file) vs read -N vs str=$(cat file)
+# A: It is about 2x faster to use $(< file)
+
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 # Q: Howabout using `grep` to prefilter before loop?
 # A: It is about 2x faster to use `grep` than doing all in a loop

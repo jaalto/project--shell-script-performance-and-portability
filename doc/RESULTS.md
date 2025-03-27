@@ -336,6 +336,17 @@ In Bash, the `readarray` built-in is a synonym for `mapfile`,
 so they should behave equally.
 
 
+# t-file-read-into-string.sh
+
+**Q: To read file into string: $(< file) vs read -N vs str=$(cat file)**<br/>
+*A: It is about 2x faster to use $(< file)*<br/>
+_priority: 5_
+
+    t1  real 0m0.170s $(< file)    Bash
+    t2  real 0m0.320s read -N      non-POSIX shells
+    t1  real 0m0.390s cat          POSIX
+
+
 # t-file-read-match-lines-loop-vs-grep.sh
 
 **Q: Howabout using `grep` to prefilter before loop?**<br/>

@@ -335,6 +335,17 @@ FILE: t-file-read-content-loop.sh
 # In Bash, the `readarray` built-in is a synonym for `mapfile`,
 # so they should behave equally.
 
+FILE: t-file-read-into-string.sh
+#! /usr/bin/env bash
+#
+# Q: To read file into string: $(< file) vs read -N vs str=$(cat file)
+# A: It is about 2x faster to use $(< file)
+# priority: 5
+#
+#     t1  real 0m0.170s $(< file)    Bash
+#     t2  real 0m0.320s read -N      non-POSIX shells
+#     t1  real 0m0.390s cat          POSIX
+
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /usr/bin/env bash
 #

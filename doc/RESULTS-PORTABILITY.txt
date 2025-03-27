@@ -4,11 +4,17 @@ arrays                                   -  -  -  -  +  +  +  +  +
 <<<                                      -  -  -  -  +  +  +  +  +
 POSIX set -h                             -  -  +  -  +  +  +  +  +
 POSIX set -f (-o noglob)                 +  +  +  +  +  +  +  +  +
+POSIX shift N and $?                     -  -  -  +  -  -  +  +  +
+POSIX trap -SIG                          -  -  -  +  -  +  +  +  -
 POSIX command -v                         +  +  +  +  +  +  +  +  +
+POSIX false (builtin)                    +  +  +  +  +  +  +  +  +
 POSIX hash                               -  +  +  +  +  +  +  +  +
 POSIX printf (builtin)                   -  +  +  +  -  +  +  +  +
-POSIX read (-N)                          +  +  +  +  +  +  +  +  +
+POSIX read (-N)                          -  -  -  -  -  -  -  -  -
+POSIX read (REPLY)                       -  -  -  +  +  +  +  +  +
+POSIX true (builtin)                     +  +  +  +  +  +  +  +  +
 POSIX type                               -  +  +  +  +  +  +  +  +
+$(< file)                                -  -  -  -  +  +  +  +  +
 < <(cmd)                                 -  -  -  +  -  +  +  +  +
 $((i = i + 1))                           +  +  +  +  +  +  +  +  +
 [[ ... ]]                                -  -  -  +  +  +  +  +  +
@@ -16,6 +22,7 @@ $((i = i + 1))                           +  +  +  +  +  +  +  +  +
 [[ STRING =~ REGEXP ]]                   -  -  -  +  -  +  +  +  +
 (( ... ))                                -  -  -  -  +  +  +  +  +
 local                                    +  +  +  +  +  +  +  +  +
+local IFS                                +  +  +  +  +  +  +  +  +
 ------------------------------------------------------------
 01 posh 0.14.1
 02 dash 0.5.12-12
