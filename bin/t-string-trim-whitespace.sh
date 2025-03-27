@@ -4,7 +4,7 @@
 # A: It is 8x faster to use Bash, especially with fn() nameref
 # priority: 10
 #
-#     t2 real 0m0.025s Bash fn() RE, using nameref for return value
+#     t1 real 0m0.025s Bash fn() RE, using nameref for return value
 #     t2 real 0m0.107s Bash fn() RE
 #     t1 real 0m0.440s echo | sed RE
 #
