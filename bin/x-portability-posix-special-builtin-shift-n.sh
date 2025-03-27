@@ -14,7 +14,7 @@
 # enough args to shift.
 #
 # Behaviour is not uniform accross shells.
-# run this file under debug to see behavior.
+# Run this file under debug to see behavior.
 #
 #     $sh -x <file>
 #
@@ -24,7 +24,7 @@
 #     ksh93      : error and exit with code 1
 #     busybox ash: no error message and $? is set to 1
 #     bash       : no error message and $? is set to 1
-#     zsh        : error messahe and $? is set to 1
+#     zsh        : error message and $? is set to 1
 
 test ()
 (
