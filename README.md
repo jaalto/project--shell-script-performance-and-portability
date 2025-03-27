@@ -301,6 +301,30 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
 ```
 
+- It is about 10 times faster to read a file
+  into memory as a string and use
+  [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
+  or Bash regular expressions
+  binary operator
+  [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  on string. In-memory handling is much more
+  efficient than calling the `grep` command on a
+  file, especially if multiple matches are
+  needed.
+  See [code](./bin/t-file-grep-vs-match-in-memory.sh).
+
+```
+   # Bash, Ksh
+   # Read max 100 KiB to default $REPLY
+   read -r -N $((100 * 1024)) < file
+
+   if [[ $REPLY =~ $regexp1 ]]; then
+       ...
+   elif [[ $REPLY =~ $regexp2 ]]; then
+       ...
+   fi
+```
+
 - In Bash, using `ret=$(fn)` to call functions
   is very slow. On the other hand, in Ksh shells
   that would be fast. Therefore in Bash scrips,
@@ -338,30 +362,6 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
     fnNamerefPosix ret "arg"
     fnNamerefBash ret "arg"
-```
-
-- It is about 10 times faster to read a file
-  into memory as a string and use
-  [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
-  or Bash regular expressions
-  binary operator
-  [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
-  on string. In-memory handling is much more
-  efficient than calling the `grep` command on a
-  file, especially if multiple matches are
-  needed.
-  See [code](./bin/t-file-grep-vs-match-in-memory.sh).
-
-```
-   # Bash, Ksh
-   # Read max 100 KiB to default $REPLY
-   read -r -N $((100 * 1024)) < file
-
-   if [[ $REPLY =~ $regexp1 ]]; then
-       ...
-   elif [[ $REPLY =~ $regexp2 ]]; then
-       ...
-   fi
 ```
 
 - It is about 2 times faster to for
