@@ -329,9 +329,10 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value.
   In Bash, using `ret=$(fn)` to call functions
-  is very slow. On the other hand, in Ksh shells
-  that would be fast. Therefore in Bash scrips,
-  prefer namerefs.
+  is very slow. On the other hand, in Ash (dash) and
+  Ksh shells, there is practically no overhead in
+  using `$(fn)` vs. the nameref approach.
+  In Bash scripts, namerefs are preferred.
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```
