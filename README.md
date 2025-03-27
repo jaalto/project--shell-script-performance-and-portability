@@ -635,8 +635,13 @@ None of these offer any advantages to speed up shell scripts.
   Bash-specific expression
   [`[[ ]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   for pattern matching compared
-  to POSIX `case..esac`. Both are
-  extremely fast. 
+  to POSIX `case..esac`.
+  Interestingly pattern matching
+  is 4x slower under `dash` compared
+  to Bash. However, that means nothing
+  because the time differences
+  are measured in minuscule
+  milliseconds (0.002s).
   See [code](./bin/t-string-match-pattern.sh).
 
 ```
@@ -644,7 +649,7 @@ None of these offer any advantages to speed up shell scripts.
     pattern="*cd*"
 
     # Bash
-    [[ $str == $pattern ]]
+    [[ $string == $pattern ]]
 
     # POSIX
     case $string in
