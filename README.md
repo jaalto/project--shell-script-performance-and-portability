@@ -251,6 +251,30 @@ TODO
 
 ## 3.3 MAJOR PERFORMANCE GAINS
 
+- It is about 100 times faster to use do
+  string maching using Bash, than calling
+  POSIX utilities like
+  [`expr`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expr.html)
+  [`grep`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
+  For POSIX shell scripts, the `expr`
+  is preferred.
+  See [code](./bin/t-string-match-regexp.sh)
+
+```
+    string="abcdef"
+    re="
+
+    # Bash
+    [[ $string =~ $re ]]
+
+    # POSIX, 100x slower
+    expr match "$string" ".*$re"
+
+    # POSIX, 140x slower
+    echo "$string" | grep -E "$re"
+
+```
+
 - It is about 10-40 times (dash 10x, bash 40x)
   faster to do string
   manipulation in memory, than calling external
