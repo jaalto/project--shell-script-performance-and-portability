@@ -1098,6 +1098,10 @@ Notable observations:
   without any options. Use
   [`printf`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html)
   when more is needed.
+  In POSIX `sh` shells,
+  the `printf` command may not be a built-in,
+  so using it can have performance considerations.
+
 
 ```
     # POSIX
@@ -1110,6 +1114,9 @@ Notable observations:
     echo -n "no newline"       # (2)
 
 ```
+
+- Use [`grep -E`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
+  In 2001 POSIX dropped `egrep`.
 
 - Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/shift.html)
   always with shell special parameter
@@ -1129,10 +1136,12 @@ Notable observations:
 ```
 
 - [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
-  POSIX does not define `REPLY` variable, so
-  always supply one. POSIX only defines options `-r`
-  which you should always use. Remember that
-  `-N` option to read file into memory
+  POSIX requires a VARIABLE, so
+  always supply one. The command does
+  not default to `REPLY`if omitted, The only option
+  supported is `-r` which you should also always
+  use. The `-N` option
+  to read file into memory
   is only available in modern shells (Bash, Ksh).
   See shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
   BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
@@ -1144,8 +1153,8 @@ Notable observations:
    # POSIX
    REPLY=$(cat file)
 
-   # Not POSIX (Bash, Ksh)
-   # Read max 100 KiB to $REPLY
+   # Bash, Ksh
+   # Read max 100 KiB file to $REPLY
    read -N$((100 * 1024)) REPLY < file
 
    case $REPLY in
