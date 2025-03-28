@@ -359,7 +359,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   to read a file
   into memory as a string and use
   [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
-  or Bash regular expressions
+  or regular expressions
   binary operator
   [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   on string. In-memory handling is much more
