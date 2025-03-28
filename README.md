@@ -611,11 +611,11 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Bash
     string=$(< file)
 
-    # Bash, Ksh, 1.8x slower
+    # In Bash: Bash, Ksh, 1.8x slower
     # Read max 100 KiB
     read -r -N $((100 * 1024)) string < file
 
-    # POSIX, 2.3x slower
+    # In Bash: POSIX, 2.3x slower
     string=$(cat file)
 ```
 
