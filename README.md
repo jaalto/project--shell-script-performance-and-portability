@@ -304,18 +304,17 @@ TODO
     ./run.sh -s dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1 IsFeatureMatchRegexp real 0.010
-    # t2                      real 0.010
-    # t3                      real 0.010
+    # t1 IsFeatureMatchRegexp <skip>
+    # t2                      real 0.010s
+    # t3                      real 0.010s
     Run shell: ksh93
-    # t1                      real 0.002
-    # t2                      real 0.132
-    # t3                      real 0.275
+    # t1                      real 0.001s
+    # t2                      real 0.139s
+    # t3                      real 0.262s
     Run shell: bash
-    # t1                      real 0.004
-    # t2                      real 0.221
-    # t3                      real 0.305
-
+    # t1                      real 0.003s
+    # t2                      real 0.200s
+    # t3                      real 0.348s
 ```
 
 - It is about 10-40 times (dash 10x, bash 40x)
