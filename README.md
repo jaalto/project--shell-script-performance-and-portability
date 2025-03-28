@@ -200,8 +200,7 @@ consider these factors.
   [grep](https://tracker.debian.org/pkg/grep) and
   [awk](https://tracker.debian.org/pkg/gawk).
   If needed, arrange `PATH` to prefer
-  GNU utilities instead of system defaults
-  (for example, on macOS).
+  GNU utilities (for example, on macOS).
 
 - Minimize extra processes as much as possible.
   In most cases, a single
