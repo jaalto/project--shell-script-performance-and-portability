@@ -264,7 +264,9 @@ TODO
 
 - In Bash, It is about 100 times faster to perform
   regular expression string matching using the
-  binary op rather than to calling external
+  binary operator
+  [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)  
+  rather than to calling external
   POSIX utilities
   [`expr`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html)
   or
