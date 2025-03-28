@@ -553,7 +553,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 ## 3.4 MODERATE PERFORMANCE GAINS
 
-- It is about 5 times faster to split a string
+- It is about 10 times faster to split a string
   into an array using list rather than
   using Bash here-string. This is because
   [HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
