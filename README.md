@@ -281,17 +281,17 @@ TODO
   milliseconds.
 
 ```bash
-    string="abcdef"
+    str="abcdef"
     re="b.*e"
 
     # Bash, Ksh
-    [[ $string =~ $re ]]
+    [[ $str =~ $re ]]
 
     # In Bash, 100x slower
-    expr match "$string" ".*$re"
+    expr match "$str" ".*$re"
 
     # In Bash, 140x slower
-    echo "$string" | grep -E "$re"
+    echo "$str" | grep -E "$re"
 
     # --------------------------------
     # Different shells compared.
@@ -308,9 +308,9 @@ TODO
     # t2                      real 0.139s
     # t3                      real 0.262s
     Run shell: bash
-    # t1                      real 0.003s
-    # t2                      real 0.200s
-    # t3                      real 0.348s
+    # t1                      real 0.003s  [[ $str =~ $re ]]
+    # t2                      real 0.200s  expr
+    # t3                      real 0.348s  grep
 ```
 
 - In Bash, it is about more than 50 times
