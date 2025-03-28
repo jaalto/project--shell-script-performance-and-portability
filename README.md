@@ -300,17 +300,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1 IsFeatureMatchRegexp <skip>
-    # t2                      real 0.010s
-    # t3                      real 0.010s
+    # t1 IsFeatureMatchRegexp <skip>       [[ $str =~ $re ]]
+    # t2                      real 0.010s  expr
+    # t3                      real 0.010s  grep
     Run shell: ksh93
     # t1                      real 0.001s
     # t2                      real 0.139s
     # t3                      real 0.262s
     Run shell: bash
-    # t1                      real 0.003s  [[ $str =~ $re ]]
-    # t2                      real 0.200s  expr
-    # t3                      real 0.348s  grep
+    # t1                      real 0.003s
+    # t2                      real 0.200s
+    # t3                      real 0.348s
 ```
 
 - In Bash, it is about more than 50 times
