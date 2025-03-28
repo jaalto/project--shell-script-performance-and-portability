@@ -33,8 +33,6 @@ PREFIX="-- "
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
 TIMEFORMAT="real %3R  user %3U  sys %3S"
 
-RUN_SHELL=""
-
 # ignore follow
 # shellcheck disable=SC1091
 
@@ -55,9 +53,10 @@ SYNOPSIS
     $program [options] <test case> [<test case> ...]
 
 OPTIONS
-    -s, --shell SHELL
-        Run <test case> file using SHELL. This can
-        be 'dash', 'posh', 'ksh', 'mksh', 'zsh'
+    -s, --shell SHELL-LIST
+        Run <test case> file using SHELL-LIST.
+        The list is separated by commas. This could
+        include 'dash', 'posh', 'ksh', 'mksh', 'zsh'
         'busybox ash' etc.
 
     -v, --verbose
@@ -71,10 +70,15 @@ DESCRIPTION
     Run <test case> file(s) using bash or other shell.
 
 EXAMPLES
+
+    # Riming results only
     $program t-test-case.sh
+
+    # Show header + timingg
     $program --verbose t-test-case.sh
-    $program --shell ksh t-test-case.sh
-    $program --shell ksh --verbose t-test-case.sh
+
+    # Check a test case with shells
+    $program --shell posh,dash,ksh,bash t-test-case.sh
 
     # The default repeat count in <test cases>
     # can be modified by setting \$loop_max
@@ -131,7 +135,11 @@ Tests ()
 
 RunBash ()
 {
-    dummy="RunBash()"
+    local dummy="RunBash()"
+    local shell="${1:-}"
+    local file="${2:-}"
+
+    [ "$shell" ] || return 1
 
     # Run with Bash when shell does not
     # support proper time keyword
@@ -146,11 +154,11 @@ RunBash ()
     # ignore follow
     # shellcheck disable=SC1090
 
-    source="source-as-library" . "$testfile"
+    source="source-as-library" . "$file"
 
     RunMaybe Info
 
-    Tests "$1" |
+    Tests "$file" |
     while read -r test precondition
     do
         if [ "$precondition" ]; then
@@ -164,7 +172,7 @@ RunBash ()
 
         env source="source-as-library" \
             TIMEFORMAT="$TIMEFORMAT" \
-            bash -c "time $RUN_SHELL $1 $test"
+            bash -c "time $shell $file $test"
     done
 
     RunMaybe AtExit
@@ -176,9 +184,9 @@ RunBash ()
 
 RunFile ()
 {
-    dummy="RunFile()"
-    testfile=$1
-    timewithbash=$2
+    local dummy="RunFile()"
+    local testfile="${1:-}"
+    local shlist="${2:-}"
 
     case $testfile in
         */*) ;;
@@ -188,22 +196,48 @@ RunFile ()
 
     if [ "$VERBOSE" ]; then
         Header "$testfile"
+
+        # ignore set -e
+        # shellcheck disable=SC2310
         FileInfo "$testfile" || :
     else
         Header "$testfile" "short"
     fi
 
-    if [ "$RUN_SHELL" ]; then
-        echo "Run shell: $RUN_SHELL"
+    if [ ! "$shlist" ]; then
+        "$testfile"  # Run <test case> as is
+        return $?
+    fi
+
+    local sh=""
+    local IFS=","
+
+    for sh in $shlist
+    do
+        local timewithbash=""
+        local bin="$sh"
+        bin="${bin%% *}"  # "busybox ash" => "busybox"
+
+        if ! IsCommandExist "$bin"; then
+            IsVerbose && Warn "WARN: not in PATH: $sh"
+            continue
+        fi
+
+        # ignore set -e
+        # shellcheck disable=SC2310
+
+        if ! ValidateTime "$sh" ; then
+            timewithbash="use-bash-for-timing"
+        fi
+
+        echo "Run shell: $sh"
 
         if [ "$timewithbash" ]; then
-            RunBash "$testfile"
+            RunBash "$sh" "$testfile"
         else
-            $RUN_SHELL "$testfile"
+            $sh "$testfile"
         fi
-    else
-        "$testfile"
-    fi
+    done
 }
 
 ValidateTime ()
@@ -229,7 +263,7 @@ ValidateTime ()
 
 Main ()
 {
-    usebash=""
+    local shlist=""
 
     while :
     do
@@ -241,14 +275,7 @@ Main ()
             -s | --shell)
                 shift
                 [ "$1" ] || Die "ERROR: missing --shell ARG"
-
-                # ignore set -e
-                # shellcheck disable=SC2310
-
-                if ! ValidateTime "$1" ; then
-                    usebash="use-bash-for-timing"
-                fi
-                RUN_SHELL=$1
+                shlist=$1
                 shift
                 ;;
             -v | --verbose)
@@ -284,7 +311,7 @@ Main ()
             continue
         fi
 
-        RunFile "$file" "$usebash"
+        RunFile "$file" "$shlist"
     done
 }
 
