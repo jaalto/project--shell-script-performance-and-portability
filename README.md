@@ -272,7 +272,7 @@ TODO
 
   **But**: In POSIX `sh`, like
   `dash`, calling utilities is
-  *extremely* fast. Compared to Bash,
+  *extremely* fast. Compared to Bash's
   `[[]]`, the Dash's  `expr` is only 5x
   slower, which is negligible because the
   time differences are measured in mere few
