@@ -74,17 +74,6 @@ expansions, regular expressions, including
 extracting regex matches and utilizing fast
 functions with namerefs.
 
-Contrary to popular perception,
-Bash is not particularly slow,
-considering all its features, if used
-correctly. On the other hand, for small
-and quick shell scripts, POSIX `sh`
-would probably be enough, and
-faster. But things are not that
-straightforward. More about this in
-section
-[SHELLS AND PERFORMANCE](#32-shells-and-performance).
-
 In other operating systems, for example BSD,
 the obvious choice for shell scripting would be
 fast
@@ -106,6 +95,15 @@ or
 excel in their
 respective fields, where the requirements differ
 from those of the shell.
+
+Certain features in Bash are slow, but
+knowing the cold spots and using
+alternatives helps. On the other hand,
+small POSIX `sh`, for example dash, scrips
+are much faster at calling
+external processes and functions. More
+about this in section
+[SHELLS AND PERFORMANCE](#32-shells-and-performance).
 
 The results presented in this README provide
 only some highlighs from the test cases
@@ -298,7 +296,6 @@ TODO
 
     # --------------------------------
     # Different shells compared.
-    # see the relative differences.
     # --------------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
@@ -343,7 +340,6 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
     # --------------------------------
     # Different shells compared.
-    # see the relative differences.
     # --------------------------------
 
     ./run.sh -s dash,ksh93,bash t-string-file-path-components.sh
@@ -362,7 +358,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
 ```
 
-- It is about 10 times faster to read a file
+- In Bash, it is about 10 times faster
+  to read a file
   into memory as a string and use
   [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
   or Bash regular expressions
@@ -375,25 +372,41 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```bash
-   # Bash, Ksh
-   # Read max 100 KiB to default $REPLY
-   read -r -N $((100 * 1024)) < file
+    # Bash, Ksh
+    str=$(< file)
 
-   if [[ $REPLY =~ $regexp1 ]]; then
-       ...
-   elif [[ $REPLY =~ $regexp2 ]]; then
-       ...
-   fi
+    if [[ $str =~ $regexp1 ]]; then
+        ...
+    elif [[ $str =~ $regexp2 ]]; then
+        ...
+    fi
+
+    # --------------------------------
+    # Different shells compared.
+    # --------------------------------
+
+    ./run.sh -s dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
+    Run shell: dash
+    # t1b                     real 0.023s read once + case..end
+    # t2                      real 0.018s loop do.. grep file ..done
+    # t3                      real 0.021s loop do.. case..end ..done
+    Run shell: ksh93
+    # t1b                     real 0.333s
+    # t2                      real 0.208s
+    # t3                      real 0.453s
+    Run shell: bash
+    # t1b                     real 0.048s
+    # t2                      real 0.277s
+    # t3                      real 0.415s
 ```
 
-- It is about 8 times faster, to use
+- In Bash, it is about 8 times faster, to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value.
-  In Bash, using `ret=$(fn)` to call functions
-  is very slow. On the other hand, in Ash (dash) and
-  Ksh shells, there is practically no overhead in
-  using `$(fn)` vs. the nameref approach.
-  In Bash scripts, namerefs are preferred.
+  The `ret=$(fn)` is inefficient to call functions.
+  On the other hand, in POSIX-like `sh` shells
+  there is practically no overhead in
+  using `$(fn)`.
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
@@ -428,6 +441,26 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
     fnNamerefPosix ret "arg"
     fnNamerefBash ret "arg"
+
+    # --------------------------------
+    # Different shells compared.
+    # --------------------------------
+
+    ./run.sh -s dash,ksh93,bash t-function-return-value-nameref.sh
+    Run shell: dash
+    # t1 IsShellBash          <skip>      fnNamerefBash
+    # t2                      real 0.006s fnNamerefPosix
+    # t3                      real 0.005s ret=$(fn)
+
+    Run shell: ksh93
+    # t1 IsShellBash          <skip>      fnNamerefBash
+    # t2                      real 0.004s
+    # t3                      real 0.005s
+
+    Run shell: bash
+    # t1                      real 0.006s
+    # t2                      real 0.006s
+    # t3                      real 0.094s ret=$(fn)
 ```
 
 - It is about 2 times faster to for
