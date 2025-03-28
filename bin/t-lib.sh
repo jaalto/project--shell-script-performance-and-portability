@@ -513,7 +513,7 @@ RunTestCase ()
 
     if [ "$hasformat" ]; then
         eval "timeformat=\$$hasformat" # save
-        printf "# %-15s" "$1"
+        printf "# %-24s" "$1"
 
         eval "$hasformat='$format'"    # set
 
