@@ -281,7 +281,7 @@ TODO
     string="abcdef"
     re="b.*e"
 
-    # Bash
+    # Bash, Ksh
     [[ $string =~ $re ]]
 
     # POSIX, 100x slower
