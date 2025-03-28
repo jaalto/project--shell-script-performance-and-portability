@@ -194,15 +194,14 @@ consider these factors.
   [StackOverflow](https://stackoverflow.com/a/22661643),
   the GNU `grep` is considerably faster and more
   optimized than the operating system's
-  default. To increase performance in
-  shell scripts, consider installing GNU
+  default. For shells, the GNU utilities consist
+  mainly of
   [coreutils](https://tracker.debian.org/pkg/coreutils),
-  GNU
-  [grep](https://tracker.debian.org/pkg/grep),
-  GNU
-  [awk](https://tracker.debian.org/pkg/gawk),
-  and if needed, arrange `PATH` to prefer
-  GNU utilities (for example, on macOS).
+  [grep](https://tracker.debian.org/pkg/grep) and
+  [awk](https://tracker.debian.org/pkg/gawk).
+  If needed, arrange `PATH` to prefer
+  GNU utilities instead of system defaults
+  (for example, on macOS).
 
 - Minimize extra processes as much as possible.
   In most cases, a single
