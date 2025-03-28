@@ -62,16 +62,15 @@ more portable scripts. See also POSIX in
 > [posh](https://tracker.debian.org/pkg/posh).
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
-In Linux like systems, from a performance point
-of view, for serious shell scripting, Bash is
-the sensible choice for efficient data
+In Linux like systems, for serious shell scripting,
+Bash is the sensible choice for data
 manipulation in memory with
 [arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html),
 associative arrays, and strings
 with an extended set of parameter
 expansions, regular expressions, including
-extracting regex matches and utilizing fast
-functions with namerefs.
+extracting regex matches and utilizing
+functions.
 
 In other operating systems, for example BSD,
 the obvious choice for shell scripting would be
