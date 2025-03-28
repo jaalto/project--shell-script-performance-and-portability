@@ -25,6 +25,11 @@
 str="abcdef"
 re="b.*e"
 
+# Hide from other shells
+# shopt is Bash only
+t1 () { : ; } # stub
+
+cat << 'EOF' > t.bash
 t1 () # Bash, Ksh
 {
     for i in $(seq $loop_max)
@@ -32,6 +37,10 @@ t1 () # Bash, Ksh
         [[ $str =~ $re ]]
     done
 }
+EOF
+
+IsFeatureMatchRegexp && . ./t.bash
+rm --force t.bash
 
 t2 () # POSIX
 {
@@ -54,7 +63,7 @@ t3 () # POSIX
 }
 
 t="\
-:t t1
+:t t1 IsFeatureMatchRegexp
 :t t2
 :t t3
 "
