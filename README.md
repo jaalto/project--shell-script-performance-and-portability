@@ -605,6 +605,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 - It is about 2 times faster to read file
   into a string using Bash command substitution
   [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
+  The dash `$(cat file)` is about 20 times faster than Bash.
   See [code](./bin/t-file-read-into-string.sh).
 
 ```bash
@@ -617,6 +618,25 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 
     # In Bash: POSIX, 2.3x slower
     string=$(cat file)
+
+    # --------------------------------
+    # Different shells compared.
+    # --------------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
+
+    Run shell: dash
+    # t1 IsFeatureCommandSubstitutionReadFile<skip>
+    # t2 IsFeatureReadOptionN <skip>
+    # t3                      real 0.013s $(cat file)
+    Run shell: ksh93
+    # t1                      real 0.088s
+    # t2                      real 0.095s
+    # t3                      real 0.267s
+    Run shell: bash
+    # t1                      real 0.139s
+    # t2                      real 0.254s
+    # t3                      real 0.312s
 ```
 
 ## 3.5 MINOR PERFORMANCE GAINS
