@@ -34,7 +34,7 @@ relatively small (test file: ~600 lines).
 
 # t-command-grep.sh
 
-**Q: In grep, is option --fixed-strings faster?**<br/>
+**Q: In GNU grep, is option --fixed-strings faster?**<br/>
 *A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case*<br/>
 _priority: 2_
 
@@ -215,9 +215,9 @@ _priority: 10_
 
     t1a real 0m0.049s read once + bash regexp (read file once + use loop)
     t1b real 0m0.054s read once + case..MATCH..esac (read file once + use loop)
-    t4  real 0m0.283s grep
-    t2  real 0m0.407s read + case..MATCH..esac (separate file calls)
-    t3  real 0m0.440s read + bash regexp (separate file calls)
+    t2  real 0m0.283s grep
+    t3  real 0m0.407s read + case..MATCH..esac (separate file calls)
+    t4  real 0m0.440s read + bash regexp (separate file calls)
 
 ## Code
 
@@ -225,9 +225,9 @@ See the test code for more information. Overview:
 
     t1a read once and loop [[ str =~~ RE ]]
     t1b read once and loop case..MATCH..end
-    t4  grep RE file in loop
-    t2  read every time in loop. case..MATCH..end
-    t3  read every time in loop. [[ str =~~ RE ]]
+    t2  grep RE file in loop
+    t3  read every time in loop. case..MATCH..end
+    t4  read every time in loop. [[ str =~~ RE ]]
 
 ## Notes
 
@@ -367,9 +367,10 @@ _priority: 7_
 
 ## Notes
 
-The practical winner in scripts is the
+In Bash, the preferred one is the
 `while read do .. done < <(proc)` due to
 variables being visible in the same scope.
+
 The `grep | while` would create a subshell
 and release the variables after the
 for-loop.
@@ -425,40 +426,15 @@ POSIX, and the options differ from one operating
 system to another.
 
 
-# t-function-return-value.sh
+# t-function-return-value-nameref.sh
 
 **Q: To return value from function: nameref vs `val=$(funcall)`**<br/>
 *A: It is about 8x faster to use nameref to return value from a function*<br/>
 _priority: 10_
 
-    t1 real 0m0.006s t2 funcall POSIX nameref
-    t2 real 0m0.055s t1 $(funcall)
-    t3 real 0m0.005s t2 funcall Bash nameref
-
-## Code
-
-    t1 fn(): ret=$1; ... eval "$ret=\$value"
-    t2 fn(): ... echo "<value>"
-    t3 fn(): local -n ret=$1; ... ret=$value
-
-## Notes
-
-In Bash, calling functions using
-`$()` is expensive.
-
-In Ksh, `$()` does not slow down the
-code, and the times for t1 and t2 are
-the same.
-
-It is possible to use `eval` to emulate
-Bash's nameref `local -n var=...` syntax.
-However, the POSIX approach is problematic
-with nested function call chains, where each
-nameref must have a unique variable name.
-
-  fn11: nameref1
-    fn2: nameref2
-      ...
+    t1 real 0m0.005s t2 funcall Bash nameref
+    t2 real 0m0.006s t2 funcall POSIX nameref
+    t3 real 0m0.055s t1 $(funcall)
 
 
 # t-statement-arithmetic-for-loop.sh
@@ -535,7 +511,7 @@ slight differences in favor of Bash `[[ ]]`.
     t3empty        real 0.032  user 0.026  sys 0.007  [[ ]]
 
 
-# t-string-file-path-components-and-parameter-expansion.sh
+# t-string-file-path-components.sh
 
 **Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.**<br/>
 *A: It is 10-40x faster to use in memory parameter expansion where possible*<br/>
@@ -599,13 +575,55 @@ solutions to expand all paths like:
     /path/project.git/README.txt
 
 
+# t-string-match-pattern.sh
+
+**Q: Match string by pattern: Bash vs case..esac**<br/>
+*A: No noticeable difference, both are extremely fast*<br/>
+_priority: 0_
+
+    t1 real 0m0.002s Bash
+    t2 real 0m0.003s case..esac
+
+## Code
+
+    t1 [[ $str == $pattern ]]
+    t2 case... $pattern) ... esac
+
+## Notes
+
+  Bash's version is much more compact.
+
+
+# t-string-match-regexp.sh
+
+**Q: Match string by regexp: Bash vs expr vs grep**<br/>
+*A: It is 100x faster to use Bash. Expr is 1.3x faster than grep*<br/>
+_priority: 10_
+
+    t1 real 0m0.002s Bash
+    t2 real 0m0.220s expr match RE STRING
+    t1 real 0m0.290s echo | grep -E
+
+## Code
+
+    t1 [[ $str =~ $re ]]
+    t2 expr match ".*$str" "$re"
+    t3 echo "$str" | grep "$re"
+
+## Notes
+
+  Bash doing it all in memory, is very very
+  fast. For POSIX `sh` shells, the `expr`
+  is much faster than `grep.
+
+
 # t-string-trim-whitespace.sh
 
 **Q: Trim whitepace using Bash RE vs `sed`**<br/>
 *A: It is 8x faster to use Bash, especially with fn() nameref*<br/>
 _priority: 10_
 
-    t2 real 0m0.025s Bash fn() RE, using nameref for return value
+    t1 real 0m0.025s Bash fn() RE, using nameref for return value
     t2 real 0m0.107s Bash fn() RE
     t1 real 0m0.440s echo | sed RE
 
@@ -619,12 +637,12 @@ _priority: 10_
 # t-variable-array-split-string.sh
 
 **Q: Split string into an array by IFS?**<br/>
-*A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING*<br/>
+*A: It is about 10 times faster to use local IFS than use Bash array `<<<` HERE STRING*<br/>
 _priority: 8_
 
-    t2 real  0.011 IFS= eval ...
-    t1 real  0.021 (array)
-    t3 real  0.098 read -ra
+    t1 real  0.011 eval array=(string)
+    t2 real  0.021 arr=(string)
+    t3 real  0.098 read -ra arr <<< string
 
 ## Code
 
