@@ -342,7 +342,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-string-file-path-components.sh
+    ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
     Run shell: dash
     # t3aExt                  real 0.009s (1)
     # t3cExt                  real 0.008s (2)
@@ -385,7 +385,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
+    ./run.sh --shell dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
     Run shell: dash
     # t1b                     real 0.023s read once + case..end
     # t2                      real 0.018s loop do.. grep file ..done
@@ -446,7 +446,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-function-return-value-nameref.sh
+    ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
     Run shell: dash
     # t1 IsShellBash          <skip>      fnNamerefBash
     # t2                      real 0.006s fnNamerefPosix
@@ -463,7 +463,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # t3                      real 0.094s ret=$(fn)
 ```
 
-- It is about 2 times faster to for
+- In Bash, it is about 2 times faster to for
   line-by-line handling to read the file into
   an array and then loop through the array.
   If you're wondering about
@@ -496,9 +496,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   into a loop and then selecting lines. Bash
   loops are generally slow. The
   [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
-  is more general because variables persist after the loop,
-  whereas the `<loop>` in the `while | <loop>` runs in
-  a separate shell due to the pipe.
+  is more general because variables persist after the loop.
+  The `dash` is very fast compared to Bash.
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
@@ -518,8 +517,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     done
 
     # POSIX
-    # Problem: Slow, extra call
-    # required to delete tmpfile
+    # Note: extra calls
+    # required for tmpfile
     grep "$re" file) > tmpfile
     while read -r ...
     do
@@ -534,6 +533,21 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
        [[ $line =~ $re ]] || continue
        ...
     done < file
+
+    # --------------------------------
+    # Different shells compared.
+    # --------------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
+    Run shell: dash
+    # t1a                     real 0.015s grep prefilter before loop
+    # t2a                     real 0.012s loop: case...esac
+    Run shell: ksh93
+    # t1a                     real 2.940s
+    # t2a                     real 1.504s
+    Run shell: bash
+    # t1a                     real 4.567s
+    # t2a                     real 10.88s
 
 ```
 
