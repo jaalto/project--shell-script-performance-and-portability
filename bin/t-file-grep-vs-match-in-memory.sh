@@ -6,9 +6,9 @@
 #
 #     t1a real 0m0.049s read once + bash regexp (read file once + use loop)
 #     t1b real 0m0.054s read once + case..MATCH..esac (read file once + use loop)
-#     t4  real 0m0.283s grep
-#     t2  real 0m0.407s read + case..MATCH..esac (separate file calls)
-#     t3  real 0m0.440s read + bash regexp (separate file calls)
+#     t2  real 0m0.283s grep
+#     t3  real 0m0.407s read + case..MATCH..esac (separate file calls)
+#     t4  real 0m0.440s read + bash regexp (separate file calls)
 #
 # Code:
 #
@@ -16,9 +16,9 @@
 #
 #     t1a read once and loop [[ str =~~ RE ]]
 #     t1b read once and loop case..MATCH..end
-#     t4  grep RE file in loop
-#     t2  read every time in loop. case..MATCH..end
-#     t3  read every time in loop. [[ str =~~ RE ]]
+#     t2  grep RE file in loop
+#     t3  read every time in loop. case..MATCH..end
+#     t4  read every time in loop. [[ str =~~ RE ]]
 #
 # Notes:
 #
