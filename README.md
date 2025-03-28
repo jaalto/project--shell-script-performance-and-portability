@@ -317,29 +317,49 @@ TODO
     # t3                      real 0.348s
 ```
 
-- It is about 10-40 times (dash 10x, bash 40x)
-  faster to do string
-  manipulation in memory, than calling external
-  utilities. Seeing the measurements just how
+- In Bash, it is about more than 50 times
+  faster to do string manipulation in memory,
+  than calling external utilities.
+  Seeing the measurements just how
   expensive it is, reminds us to utilize the
   possibilities of basic `#` `##` `%` `%%`
 [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02)
 and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
   to their fullest.
-  See [code](./bin/t-string-file-path-components-and-parameter-expansion.sh).
+  See [code](./bin/t-string-file-path-components.sh).
 
 ```bash
     str="/tmp/filename.txt.gz"
 
-    # Almost instantaneous
+    # (1) Almost instantaneous
     # Delete up till first "."
     ext=${str#*.}
 
-    # Over 50x slower
+    # (2) In Bash, over 50x slower
     ext=$(echo "$str" | cut --delimiter="." --fields=2,3)
 
-    # Over 70x slower
+    # (2) In Bash, over 70x slower
     ext=$(echo "$str" | sed --regexp-extended 's/^[^.]+//')
+
+    # --------------------------------
+    # Different shells compared.
+    # see the relative differences.
+    # --------------------------------
+
+    ./run.sh -s dash,ksh93,bash t-string-file-path-components.sh
+    Run shell: dash
+    # t3aExt                  real 0.009s (1)
+    # t3cExt                  real 0.008s (2)
+    # t3eExt                  real 0.009s (3)
+    Run shell: ksh93
+    # t3aExt                  real 0.001s
+    # t3cExt                  real 0.193s
+    # t3eExt                  real 0.288s
+    Run shell: bash
+    # t3aExt                  real 0.004s
+    # t3cExt                  real 0.358s
+    # t3eExt                  real 0.431s
+
 ```
 
 - It is about 10 times faster to read a file
