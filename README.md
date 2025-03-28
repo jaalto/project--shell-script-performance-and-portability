@@ -301,7 +301,7 @@ TODO
     # see the relative differences.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-string-match-regexp.sh
+    ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
     # t1 IsFeatureMatchRegexp <skip>
