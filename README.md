@@ -62,7 +62,8 @@ more portable scripts. See also POSIX in
 > [posh](https://tracker.debian.org/pkg/posh).
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
-In Linux like systems, for serious shell scripting,
+In Linux like systems, for all rounded
+shell scripting,
 Bash is the sensible choice for data
 manipulation in memory with
 [arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html),
