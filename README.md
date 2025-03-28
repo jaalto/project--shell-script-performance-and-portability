@@ -79,9 +79,7 @@ fast
 [Ksh](https://en.wikipedia.org/wiki/KornShell)
 ([ksh93](https://tracker.debian.org/pkg/ksh93u+m),
 [mksh](https://tracker.debian.org/pkg/mksh),
-etc.), unless an
-extended set of features only found in Bash are
-needed.
+etc.).
 
 Shell scripting is about combining redirections,
 pipes, calling external utilities, and gluing them
