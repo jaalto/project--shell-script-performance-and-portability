@@ -259,7 +259,7 @@ IsFeatureReadOptionN ()
     IsShellModern
 }
 
-IsFeatureReadCommandSubstitution ()
+IsFeatureCommandSubstitutionReadFile ()
 {
     # $(< file)
     # https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
@@ -655,13 +655,13 @@ RunTests ()
         if [ "${1:-}" ]; then # Condition
             printf "%-28s " "$arg $*"
             if "$@" ; then
-                $arg
+                "$arg"
             else
                 printf "<skip> "
             fi
         else
             printf "%-28s " "$arg"
-            $arg
+            "$arg"
         fi
     else
         RunTestSet "$tests"
@@ -670,8 +670,8 @@ RunTests ()
     unset dummy arg tests
 }
 
-# Create file
+# By default; create test file
 
-TestData $random_file_count
+[ "${source:-}" ] || TestData "$random_file_count"
 
 # End of file
