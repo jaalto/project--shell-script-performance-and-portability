@@ -267,15 +267,21 @@ TODO
 
 ## 3.3 MAJOR PERFORMANCE GAINS
 
-- It is about 100 times faster to perform
-  regular expression string matching
-  using Bash than to call POSIX utilities.
+- In Bash, It is about 100 times faster to perform
+  regular expression string matching using the
+  binary op rather than to calling external
+  POSIX utilities
   [`expr`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expr.html)
   or
   [`grep`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
-  For POSIX shell scripts, the `expr`
-  is preferred.
-  See [code](./bin/t-string-match-regexp.sh)
+
+  **But**: In POSIX shell scripts, like
+  `dash`, calling utilities is
+  *extremely* fast. Compared to Bash,
+  `[[]]`, the Dash's  `expr` is only 5x
+  slower, which is negligible because the
+  time differences are measured in mere few
+  milliseconds.
 
 ```bash
     string="abcdef"
@@ -284,11 +290,32 @@ TODO
     # Bash, Ksh
     [[ $string =~ $re ]]
 
-    # POSIX, 100x slower
+    # In Bash, 100x slower
     expr match "$string" ".*$re"
 
-    # POSIX, 140x slower
+    # In Bash, 140x slower
     echo "$string" | grep -E "$re"
+
+    # --------------------------------
+    # Different shells compared
+    # The absolute times are unimport,
+    # see the relative differences.
+    # --------------------------------
+
+    ./run.sh -s dash,ksh93,bash t-string-match-regexp.sh
+
+    Run shell: dash
+    # t1 IsFeatureMatchRegexp real 0.010
+    # t2                      real 0.010
+    # t3                      real 0.010
+    Run shell: ksh93
+    # t1                      real 0.002
+    # t2                      real 0.132
+    # t3                      real 0.275
+    Run shell: bash
+    # t1                      real 0.004
+    # t2                      real 0.221
+    # t3                      real 0.305
 
 ```
 
