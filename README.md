@@ -297,8 +297,7 @@ TODO
     echo "$string" | grep -E "$re"
 
     # --------------------------------
-    # Different shells compared
-    # The absolute times are unimport,
+    # Different shells compared.
     # see the relative differences.
     # --------------------------------
 
