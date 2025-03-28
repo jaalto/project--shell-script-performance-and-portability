@@ -18,9 +18,10 @@
 #
 # Notes:
 #
-# The practical winner in scripts is the
+# In Bash, the preferred one is the
 # `while read do .. done < <(proc)` due to
 # variables being visible in the same scope.
+#
 # The `grep | while` would create a subshell
 # and release the variables after the
 # for-loop.
