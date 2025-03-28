@@ -41,7 +41,7 @@ ReadBash () # Bash
 }
 EOF
 
-IsFeatureReadCommandSubstitution && . ./t.bash
+IsFeatureCommandSubstitutionReadFile && . ./t.bash
 rm --force t.bash
 
 t1 () # read every time
@@ -70,7 +70,7 @@ t3 () # read once
 
 
 t="\
-:t t1 IsFeatureReadCommandSubstitution
+:t t1 IsFeatureCommandSubstitutionReadFile
 :t t2 IsFeatureReadOptionN
 :t t3
 "
