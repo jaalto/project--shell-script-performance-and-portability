@@ -363,7 +363,8 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   binary operator
   [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   on string. In-memory handling is much more
-  efficient than calling the `grep` command on a
+  efficient than calling the `grep` command
+  in Bash on a
   file, especially if multiple matches are
   needed.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
