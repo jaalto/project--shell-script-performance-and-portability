@@ -270,7 +270,7 @@ TODO
   or
   [`grep`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
 
-  **But**: In POSIX `sh` scripts, like
+  **But**: In POSIX `sh`, like
   `dash`, calling utilities is
   *extremely* fast. Compared to Bash,
   `[[]]`, the Dash's  `expr` is only 5x
