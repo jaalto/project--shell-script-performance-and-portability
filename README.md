@@ -311,7 +311,7 @@ TODO
     # t3                      real 0.348s
 ```
 
-- In Bash, it is about more than 50 times
+- In Bash, it is about 50 times
   faster to do string manipulation in memory,
   than calling external utilities.
   Seeing the measurements just how
