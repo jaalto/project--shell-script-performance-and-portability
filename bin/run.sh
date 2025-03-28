@@ -33,10 +33,11 @@ PREFIX="-- "
 LINE=$(printf '%*s' "55" '' | tr ' ' '-')
 TIMEFORMAT="real %3R  user %3U  sys %3S"
 
-# ignore follow
-# shellcheck disable=SC1091
+LIB="$pwd/t-lib.sh"
 
-. "$pwd/t-lib.sh"   # Common library
+# ignore follow
+# shellcheck disable=SC1090
+source="source-only" . "$LIB"
 
 Help ()
 {
@@ -159,10 +160,19 @@ RunBash ()
     RunMaybe Info
 
     Tests "$file" |
-    while read -r test precondition
+    while IFS=' ' read -r test precondition
     do
+        # For debug
+        test="$test"
+        precondition="$precondition"
+
         if [ "$precondition" ]; then
-            if ! $precondition ; then
+
+            # ignore quotes
+            # shellcheck disable=SC2086
+
+            if ! $shell -c "source=1 . \"$LIB\" ; $precondition"
+            then
                 printf "# %-24s<skip>\n" "$test $precondition"
                 continue
             fi
