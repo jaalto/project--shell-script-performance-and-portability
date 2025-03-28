@@ -595,7 +595,7 @@ t ()
         if "$@"; then
             RunTestCase $test
         else
-            printf "# %s ... skip, no pre-condition: %s\n" $test "$*" >&2
+            printf "# %-24s<skip>\n" "$test $*"
         fi
     else
         RunTestCase $test
