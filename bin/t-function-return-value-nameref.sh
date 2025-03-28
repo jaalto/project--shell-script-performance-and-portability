@@ -4,15 +4,16 @@
 # A: It is about 8x faster to use nameref to return value from a function
 # priority: 10
 #
-#     t1 real 0m0.006s t2 funcall POSIX nameref
-#     t2 real 0m0.055s t1 $(funcall)
-#     t3 real 0m0.005s t2 funcall Bash nameref
+#     t1 real 0m0.005s t2 funcall Bash nameref
+#     t2 real 0m0.006s t2 funcall POSIX nameref
+#     t3 real 0m0.055s t1 $(funcall)
+
 #
 # Code:
 #
-#     t1 fn(): ret=$1; ... eval "$ret=\$value"
-#     t2 fn(): ... echo "<value>"
-#     t3 fn(): local -n ret=$1; ... ret=$value
+#     t1 fn(): local -n ret=$1; ... ret=$value
+#     t2 fn(): ret=$1; ... eval "$ret=\$value"
+#     t3 fn(): ... echo "<value>"
 #
 # Notes:
 #
@@ -64,7 +65,7 @@ t1 ()
 
     for i in $(seq $loop_max)
     do
-        NamerefPosix val
+        NamerefBash val
     done
 }
 
@@ -74,7 +75,7 @@ t2 ()
 
     for i in $(seq $loop_max)
     do
-        val=$(Funcall)
+        NamerefPosix val
     done
 }
 
@@ -84,25 +85,15 @@ t3 ()
 
     for i in $(seq $loop_max)
     do
-        NamerefBash val
+        val=$(Funcall)
     done
 }
 
-Run ()
-{
-    if [ "$1" ]; then
-        "$@"
-    else
-        t t1
-        t t2
-        t t3 IsShellBash
-    fi
-}
 
 t="\
-:t t1
+:t t1 IsShellBash
 :t t2
-:t t3 IsShellBash
+:t t3
 "
 
 [ "$source" ] || RunTests "$t" "$@"
