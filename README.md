@@ -342,7 +342,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-string-file-path-components.sh
+    ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
     Run shell: dash
     # t3aExt                  real 0.009s (1)
     # t3cExt                  real 0.008s (2)
@@ -385,7 +385,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
+    ./run.sh --shell dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
     Run shell: dash
     # t1b                     real 0.023s read once + case..end
     # t2                      real 0.018s loop do.. grep file ..done
@@ -446,7 +446,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-function-return-value-nameref.sh
+    ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
     Run shell: dash
     # t1 IsShellBash          <skip>      fnNamerefBash
     # t2                      real 0.006s fnNamerefPosix
@@ -538,7 +538,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
     # Different shells compared.
     # --------------------------------
 
-    ./run.sh -s dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
+    ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
     Run shell: dash
     # t1a                     real 0.015s grep prefilter before loop
     # t2a                     real 0.012s loop: case...esac
