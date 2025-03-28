@@ -1,12 +1,12 @@
 #! /usr/bin/env bash
 #
 # Q: Split string into an array by IFS?
-# A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING
+# A: It is about 10 times faster to use local IFS than use Bash array `<<<` HERE STRING
 # priority: 8
 #
-#     t2 real  0.011 IFS= eval ...
-#     t1 real  0.021 (array)
-#     t3 real  0.098 read -ra
+#     t1 real  0.011 eval array=(string)
+#     t2 real  0.021 arr=(string)
+#     t3 real  0.098 read -ra arr <<< string
 #
 # Code:
 #
