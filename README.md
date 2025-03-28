@@ -401,9 +401,10 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
 - In Bash, it is about 8 times faster, to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value.
-  The `ret=$(fn)` is inefficient to call functions.
-  On the other hand, in POSIX-like `sh` shells
-  there is practically no overhead in
+  In Bash, the `ret=$(fn)` is inefficient to
+  call functions.
+  On the other hand, in POSIX `sh` shells,
+  like `dash`, there is practically no overhead in
   using `$(fn)`.
   See [code](./bin/t-function-return-value-nameref.sh).
 
