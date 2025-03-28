@@ -42,11 +42,10 @@ Table of Contents
 - [LICENSE](#license)
 
 The tests reflect results under Linux
-using GNU utilities. For performance,
-the main focus is on the features found
-in [Bash](https://www.gnu.org/software/bash)
+using GNU utilities. The focus is on the
+features found in [Bash](https://www.gnu.org/software/bash)
 rather than `sh`
-[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/)
+[POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/)
 compliant shells. The term "compliant"
 is used here as "most POSIX compliant",
 as there is no, and has never been,
@@ -269,9 +268,9 @@ TODO
   regular expression string matching using the
   binary op rather than to calling external
   POSIX utilities
-  [`expr`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expr.html)
+  [`expr`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html)
   or
-  [`grep`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
+  [`grep`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
 
   **But**: In POSIX shell scripts, like
   `dash`, calling utilities is
@@ -1128,7 +1127,7 @@ Note that POSIX does not define the
 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
 — the traditional first line that indicates
 which interpreter to use. See
-[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html#tag_16_111_08)
+[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#tag_16_111_08)
 
 > (...) Another way that some historical
 > implementations handle shell scripts is by
@@ -1180,7 +1179,7 @@ bash`, it will be located in
 On macOS, to use the latest Bash, the
 user must arrange `/usr/local/bin`
 first in
-[PATH](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes).
+[PATH](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes).
 If the script starts
 with `#! /bin/bash`, the user cannot
 arrange it to run under different Bash
@@ -1234,7 +1233,7 @@ user to use his active Python environment:
     #! /usr/bin/env python3
 
 The fine print here is that
-[`env`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html)
+[`env`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html)
 is a standard POSIX utility, but its path
 is not mandated by POSIX. However,
 in 99.9% of cases, the de facto portable
@@ -1253,22 +1252,22 @@ the script also has to be considered. Those
 of `echo`, `cut`, `tail` make big part
 of of the scripts. If you want to
 ensure portability, check options defined in
-[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9699919799/).
+[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9799919799/).
 See top left menu "Shell & Utilities"
 followed by bottom left menu
-["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html)
+["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9799919799/idx/utilities.html)
 
 Notable observations:
 
 - Use POSIX
-  [`command -v`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html)
+  [`command -v`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/command.html)
   to check if command exists.
   Note that POSIX also defines
-  [`type`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  [`type`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html),
   as in `type <command>`
   without any options. POSIX also
   defines utility
-  [`hash`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html),
+  [`hash`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html),
   as in `hash <command>`.
   Problem with `type` is that the
   semantics, return codes, support or
@@ -1310,9 +1309,9 @@ Notable observations:
 ```
 
 - Use plain
-  [`echo`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html)
+  [`echo`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html)
   without any options. Use
-  [`printf`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html)
+  [`printf`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html)
   when more is needed.
   In POSIX `sh` shells,
   the `printf` command may not be a built-in,
@@ -1331,12 +1330,12 @@ Notable observations:
 
 ```
 
-- Use [`grep -E`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html).
+- Use [`grep -E`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
   In 2001 POSIX dropped `egrep`.
 
-- Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/shift.html)
+- Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html)
   always with shell special parameter
-  [`$#`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)
+  [`$#`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_05_02)
 
 ```bash
     set -- 1
@@ -1351,17 +1350,15 @@ Notable observations:
     shift 2
 ```
 
-- [`read`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html).
+- [`read`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html).
   POSIX requires a VARIABLE, so
   always supply one. The command does
-  not default to `REPLY`if omitted, The only option
-  supported is `-r` which you should also always
-  use. The `-N` option
-  to read file into memory
-  is only available in modern shells (Bash, Ksh).
-  See shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
+  not default to `REPLY`if omitted, You should
+  also always use option `-r`. For more information
+  about `-r`, see
+  shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
   BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
-  POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
+  POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
   and
   BashWiki [IFS](https://mywiki.wooledge.org/IFS).
 
@@ -1433,7 +1430,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
 ### 4.5.2 Case Study: awk
 
 POSIX
-[`awk`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/awk.html),
+[`awk`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html),
 does not support the `-v`
 option to define variables.
 You can use assignments after
@@ -1464,7 +1461,7 @@ awk for operands without any files:
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   might be slightly preferrable than
   utlity
-  [`true`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/true.html)
+  [`true`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html)
   according to
   GNU autoconf's manaual
   ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
@@ -1482,7 +1479,7 @@ awk for operands without any files:
 ```
 
 - Prefer POSIX
-  [`$(cmd)`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_03)
+  [`$(cmd)`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_06_03)
   command substitution instead of
   leagacy POSIX backtics as in \`cmd\`. For more
   information, see
