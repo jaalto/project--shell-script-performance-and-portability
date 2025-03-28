@@ -232,11 +232,12 @@ consider these factors.
   `C`. But then again, we assume that you know
   how to choose your tools in those cases.
 
-```
+```bash
     cmd | awk '{...}'
 
     # ... could probably
     # replace all of these
+
     cmd | head ... | cut ...
     cmd | grep ... | sed ...
     cmd | grep ... | grep -v ... | cut ...
@@ -254,7 +255,7 @@ consider these factors.
   (see [Bash](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html))
   and not binaries:
 
-```
+```bash
     echo     # not /usr/bin/echo
     printf   # not /usr/bin/printf
     [ ... ]  # not /usr/bin/test
@@ -276,11 +277,11 @@ TODO
   is preferred.
   See [code](./bin/t-string-match-regexp.sh)
 
-```
+```bash
     string="abcdef"
     re="b.*e"
 
-    # Bash
+    # Bash, Ksh
     [[ $string =~ $re ]]
 
     # POSIX, 100x slower
@@ -302,7 +303,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   to their fullest.
   See [code](./bin/t-string-file-path-components-and-parameter-expansion.sh).
 
-```
+```bash
     str="/tmp/filename.txt.gz"
 
     # Almost instantaneous
@@ -328,7 +329,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   needed.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
-```
+```bash
    # Bash, Ksh
    # Read max 100 KiB to default $REPLY
    read -r -N $((100 * 1024)) < file
@@ -350,7 +351,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   In Bash scripts, namerefs are preferred.
   See [code](./bin/t-function-return-value-nameref.sh).
 
-```
+```bash
     # Not needed in POSIX sh
     # shells as ret=$(fn) is already fast.
 
@@ -395,7 +396,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   Built-in `readarray`is a synonym for `mapfile`.
   See [code](./bin/t-file-read-content-loop.sh).
 
-```
+```bash
     # Bash
     readarray -t array < file
 
@@ -422,7 +423,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   a separate shell due to the pipe.
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
-```
+```bash
     # Bash
     while read -r ...
     do
@@ -477,7 +478,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   can be disabled.
   See [code](./bin/t-variable-array-split-string.sh).
 
-```
+```bash
     str="1:2:3"
 
     # Bash, Ksh. Fastest.
@@ -514,7 +515,7 @@ and more in [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Para
   [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
   See [code](./bin/t-file-read-into-string.sh).
 
-```
+```bash
     # Bash
     string=$(< file)
 
@@ -547,7 +548,7 @@ for details and further commentary.
   subsequent tests.
   See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
-```
+```bash
 
     N=1
     M=100
@@ -592,9 +593,10 @@ for details and further commentary.
   discussions with large files.
   See [code](./bin/t-command-grep.sh).
 
-```
+```bash
     # The same performance. Regexp engine
     # does not seem to be the bottleneck
+
     LANG=C grep --fixed-strings ...
     LANG=C grep --extended-regexp ...
     LANG=C grep --perl-regexp ...
@@ -614,7 +616,7 @@ None of these offer any advantages to speed up shell scripts.
   POSIX tests will do fine.
   See [code](./bin/t-statement-if-test-posix-vs-bash.sh).
 
-```
+```bash
     [ "$var" = "1" ] # POSIX
     [[ $var = 1 ]]   # Bash
 
@@ -637,7 +639,7 @@ None of these offer any advantages to speed up shell scripts.
   readable option.
   See [code](./bin/t-statement-arithmetic-increment.sh).
 
-```
+```bash
     i=$((i + 1))     # POSIX (preferred)
     : $((i++))       # POSIX, Uhm
     : $((i = i + 1)) # POSIX, Uhm!
@@ -659,7 +661,7 @@ None of these offer any advantages to speed up shell scripts.
   milliseconds (0.002s).
   See [code](./bin/t-string-match-pattern.sh).
 
-```
+```bash
     string="abcdef"
     pattern="*cd*"
 
@@ -690,8 +692,7 @@ None of these offer any advantages to speed up shell scripts.
   the speed gain is lost by the extra `rm` command.
   See [code](./bin/t-command-output-vs-process-substitution.sh).
 
-```
-
+```bash
     # Bash, Ksh
     while read -r ...
     do
@@ -741,8 +742,8 @@ None of these offer any advantages to speed up shell scripts.
   can help speed things up.
   See [code](./bin/t-command-grep-parallel.sh).
 
-```
-    # possibly add: --block -1
+```bash
+    # Possibly add: --block -1
     parallel --pipepart --arg-file "$largefile" grep "$re"
 ```
 
@@ -766,7 +767,7 @@ have long provided an
 
 Examples of pre-2000 shell scripting:
 
-```
+```bash
     if [ x"$a" = "y" ]; then ...
 
     # Variable lenght is non-zero
@@ -790,8 +791,10 @@ Examples of pre-2000 shell scripting:
     esac
 
 ```
+
 Modern equivalents:
-```
+
+```bash
 
     # Equality
     if [ "$a" = "y" ] ..
@@ -956,7 +959,8 @@ see the well-rounded discussion on StackExchange.
   license in later Bash versions. If you write
   `/bin/sh` scripts in macOS, it is good idead
   to check them for portability with:
-```
+
+```bash
     # Check better /bin/sh compliance
     dash -nx script.sh
     posh -nx script.sh
@@ -1172,7 +1176,7 @@ Notable observations:
   the command in LWN article
   ["Debian's which hunt"](https://lwn.net/Articles/874049/).
 
-```
+```bash
     REQUIRE="sqlite curl"
 
     RequireFeatures ()
@@ -1203,7 +1207,7 @@ Notable observations:
   so using it can have performance considerations.
 
 
-```
+```bash
     # POSIX
     echo "line"                # (1)
     echo "line"
@@ -1222,7 +1226,7 @@ Notable observations:
   always with shell special parameter
   [`$#`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)
 
-```
+```bash
     set -- 1
 
     # POSIX
@@ -1249,7 +1253,7 @@ Notable observations:
   and
   BashWiki [IFS](https://mywiki.wooledge.org/IFS).
 
-```
+```bash
    # POSIX
    REPLY=$(cat file)
 
@@ -1354,7 +1358,7 @@ awk for operands without any files:
   ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
   which states that `:` might not be always builtin.
 
-```
+```bash
     while :
     do
         break
@@ -1382,7 +1386,7 @@ awk for operands without any files:
   (see Solaris
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
-```
+```bash
         # Easily nested
         lastdir=$(basename $(pwd))
 
