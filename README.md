@@ -132,7 +132,7 @@ each test case produced the fastest results.
 ## 1.2 THE PROJECT DETAILS
 
 - Homepage:
-  https://github.com/jaalto/project--shell-script-performance
+  https://github.com/jaalto/project--shell-script-performance-and-portability
 
 - To report bugs:
   see homepage.
