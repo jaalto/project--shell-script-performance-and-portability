@@ -1,7 +1,7 @@
 #! /bin/bash
 # Short: POSIX read (REPLY)
 # Desc: Test POSIX utlitity support: read with non-standard variable REPLY
-# Url: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html
+# Url: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html
 #
 # Notes:
 #
