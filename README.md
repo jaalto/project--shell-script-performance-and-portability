@@ -367,7 +367,7 @@ TODO
     # (2) In Bash, over 50x slower
     ext=$(echo "$str" | cut -d "." -f 2,3)
 
-    # (2) In Bash, over 70x slower
+    # (3) In Bash, over 70x slower
     ext=$(echo "$str" | sed 's/^[^.]\+//')
 
     # --------------------------------
