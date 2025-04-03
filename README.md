@@ -303,7 +303,7 @@ TODO
   or
   [`grep`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
 
-  **But**: In POSIX `sh`, like
+  **NOTE**: In POSIX `sh`, like
   `dash`, calling utilities is
   *extremely* fast. Compared to Bash's
   [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
@@ -590,7 +590,7 @@ TODO
     done
 
     # POSIX
-    # Note: extra calls
+    # NOTE: extra calls
     # required for tmpfile
     grep "$re" file) > tmpfile
     while read -r ...
@@ -681,8 +681,9 @@ TODO
   file into a string using Bash command
   substitution
   [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
-  The dash `$(cat file)` is about 20
-  times faster than Bash.
+  **NOTE**: In POSIX `sh`, like
+  `dash`, the `$(cat file)` is
+  extremely fast.
   See [code](./bin/t-file-read-into-string.sh).
 
 ```bash
@@ -1390,7 +1391,7 @@ Notable observations:
   nor `hash` is supported by `posh`;
   see table
   [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
-  NOTE: The `which <command>` is
+  Note: The `which <command>` is
   neither in POSIX nor portable. For
   more information about `which`, see
   shellcheck
