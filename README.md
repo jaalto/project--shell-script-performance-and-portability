@@ -350,12 +350,11 @@ TODO
   memory, than calling external
   utilities. Seeing the measurements
   just how expensive it is, reminds us
-  to utilize the possibilities of basic
-  `#` `##` `%` `%%`
-  [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02)
-  and more in
-  [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
-  to their fullest.
+  to utilize the possibilities of POSIX
+  `#`, `##`, `%` and `%%`
+  [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02).
+  See more in
+  [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion).
   See [code](./bin/t-string-file-path-components.sh).
 
 ```bash
@@ -368,7 +367,7 @@ TODO
     # (2) In Bash, over 50x slower
     ext=$(echo "$str" | cut -d "." -f 2,3)
 
-    # (2) In Bash, over 70x slower
+    # (3) In Bash, over 70x slower
     ext=$(echo "$str" | sed 's/^[^.]\+//')
 
     # --------------------------------
