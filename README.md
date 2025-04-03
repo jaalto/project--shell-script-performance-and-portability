@@ -352,10 +352,9 @@ TODO
   just how expensive it is, reminds us
   to utilize the possibilities of POSIX
   `#`, `##`, `%` and `%%`
-  [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02)
+  [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02).
   See more in
-  [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
-  to their fullest.
+  [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion).
   See [code](./bin/t-string-file-path-components.sh).
 
 ```bash
