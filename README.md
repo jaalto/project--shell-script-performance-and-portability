@@ -332,7 +332,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1 IsFeatureMatchRegexp <skip>
+    # t1     <skip>
     # t2     real 0.010s  expr
     # t3     real 0.010s  grep
     Run shell: ksh93
@@ -382,6 +382,7 @@ TODO
     # --------------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
+
     Run shell: dash
     # t3aExt real 0.009s (1)
     # t3cExt real 0.008s (2)
@@ -430,6 +431,7 @@ TODO
     (3) loop do.. case..end ..done
 
     ./run.sh --shell dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
+
     Run shell: dash
     # t1b    real 0.023s (1) once
     # t2     real 0.018s (2) grep
@@ -495,13 +497,14 @@ TODO
     # --------------------------------
 
     ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
+
     Run shell: dash
-    # t1 IsShellBash <skip> fnNamerefBash
+    # t1     <skip>
     # t2     real 0.006s fnNamerefPosix
     # t3     real 0.005s ret=$(fn)
 
     Run shell: ksh93
-    # t1 IsShellBash <skip> fnNamerefBash
+    # t1     <skip>
     # t2     real 0.004s fnNamerefPosix
     # t3     real 0.005s ret=$(fn)
 
@@ -526,7 +529,7 @@ TODO
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```bash
-    # Bash
+    # (1) Bash
     readarray -t array < file
 
     for line in "${array[@]}"
@@ -534,11 +537,28 @@ TODO
         ...
     done
 
-    # POSIX. Slower
+    # (2) POSIX. In bash, slower
     while read -r line
     do
         ...
     done < file
+
+    # --------------------------------
+    # Different shells compared.
+    # --------------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-file-read-content-loop.sh
+
+    Run shell: dash
+    # t1     <skip>
+    # t2     real 0.085
+    Run shell: ksh93
+    # t1     <skip>
+    # t2     real 0.021
+    Run shell: bash
+    # t1     real 0.045
+    # t2     real 0.108
+
 ```
 
 - It is about 2 times faster to
@@ -592,6 +612,7 @@ TODO
     # --------------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
+
     Run shell: dash
     # t1a    real 0.015s grep prefilter
     # t2a    real 0.012s loop: case...esac
@@ -682,8 +703,8 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
 
     Run shell: dash
-    # t1 IsFeatureCommandSubstitutionReadFile<skip>
-    # t2 IsFeatureReadOptionN <skip>
+    # t1     <skip>
+    # t2     <skip>
     # t3     real 0.013s $(cat ...)
     Run shell: ksh93
     # t1     real 0.088s $(< ...)
