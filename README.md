@@ -362,12 +362,19 @@ TODO
 
     # (1) Almost instantaneous
     # Delete up till first "."
+
     ext=${str#*.}
 
     # (2) In Bash, over 50x slower
+    #
+    # NOTE: identical in speed
+    # and execution to:
+    # cut -d "." -f 2,3 <<< "$str"
+
     ext=$(echo "$str" | cut -d "." -f 2,3)
 
     # (3) In Bash, over 70x slower
+
     ext=$(echo "$str" | sed 's/^[^.]\+//')
 
     # --------------------------------
