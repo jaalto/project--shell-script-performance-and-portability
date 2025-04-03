@@ -41,7 +41,7 @@
 #
 # It's not surprising that `echo "$str" | cut`
 # perform practically the same as Bash HERE
-# STRINGS in `sut <<< "$str"` use pipes under
+# STRINGS in `cut <<< "$str"` use pipes under
 # the hood in lastest Bash versions. See
 # version 5.1 and section "c" in
 # https://github.com/bminor/bash/blob/master/CHANGES
@@ -113,19 +113,19 @@ t3bExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(cut --delimiter="." --fields=2,3 <<< "$str")
+        item=$(cut -d "." -f 2,3 <<< "$str")
     done
 }
 EOF
 
-IsShellBash && . ./t.bash
+IsFeatureHereString && . ./t.bash
 rm --force t.bash
 
 t3cExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(echo "$str" | cut --delimiter="." --fields=2,3)
+        item=$(echo "$str" | cut -d "." -f 2,3)
     done
 }
 

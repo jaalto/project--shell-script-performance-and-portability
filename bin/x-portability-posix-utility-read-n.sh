@@ -1,7 +1,7 @@
 #! /bin/bash
 # Short: POSIX read (-N)
 # Desc: Test POSIX utlitity support: read with non-standard option -N<size>
-# Url: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html
+# Url: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html
 #
 # Notes:
 #

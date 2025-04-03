@@ -1,7 +1,7 @@
 #! /bin/sh
 # Short: POSIX shift N and $?
 # Desc: Test POSIX Special Built-in support: shift N, when not enough args
-# Url: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_26_01
+# Url: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_26_01
 #
 # Notes:
 #

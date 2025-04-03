@@ -1,7 +1,7 @@
 #! /bin/sh
 # Short: POSIX trap -SIG
 # Desc: Test POSIX Special Built-in support: trap with symbolic signal name
-# Url: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_28_01
+# Url: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_28_01
 
 trap 'echo' INT
 

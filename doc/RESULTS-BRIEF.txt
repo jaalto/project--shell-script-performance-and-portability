@@ -7,7 +7,7 @@ FILE: t-command-grep-parallel.sh
 # A: In typical files, grep is much faster. Use `parallel`only with huge files.
 
 FILE: t-command-grep.sh
-# Q: In grep, is option --fixed-strings faster?
+# Q: In GNU grep, is option --fixed-strings faster?
 # A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
 
 FILE: t-command-output-vs-process-substitution.sh
@@ -78,7 +78,7 @@ FILE: t-file-size-info.sh
 # Q: What is the fastest way to read a file's size?
 # A: Use `stat` or portable GNU `wc -c`.
 
-FILE: t-function-return-value.sh
+FILE: t-function-return-value-nameref.sh
 # Q: To return value from function: nameref vs `val=$(funcall)`
 # A: It is about 8x faster to use nameref to return value from a function
 
@@ -94,9 +94,17 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 # Q: POSIX `[ $var = 1 ]` vs Bash `[[ $var = 1 ]]` etc
 # A: No notable difference.
 
-FILE: t-string-file-path-components-and-parameter-expansion.sh
+FILE: t-string-file-path-components.sh
 # Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
 # A: It is 10-40x faster to use in memory parameter expansion where possible
+
+FILE: t-string-match-pattern.sh
+# Q: Match string by pattern: Bash vs case..esac
+# A: No noticeable difference, both are extremely fast
+
+FILE: t-string-match-regexp.sh
+# Q: Match string by regexp: Bash vs expr vs grep
+# A: It is 100x faster to use Bash. Expr is 1.3x faster than grep
 
 FILE: t-string-trim-whitespace.sh
 # Q: Trim whitepace using Bash RE vs `sed`
@@ -104,5 +112,5 @@ FILE: t-string-trim-whitespace.sh
 
 FILE: t-variable-array-split-string.sh
 # Q: Split string into an array by IFS?
-# A: It is about 5 times faster to use local IFS than use Bash array `<<<` HERE STRING
+# A: It is about 10 times faster to use local IFS than use Bash array `<<<` HERE STRING
 
