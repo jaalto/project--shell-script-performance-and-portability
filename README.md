@@ -841,7 +841,7 @@ None of these offer any advantages to speed up shell scripts.
 - There is no performance
   difference between a
   Bash-specific expression
-  [`[[ ]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   for pattern matching compared to
   POSIX `case..esac`. Interestingly
   pattern matching is 4x slower under
