@@ -513,7 +513,7 @@ TODO
 
 
 - In Bash, it is about 2 times faster
-  to for line-by-line handling to read
+  for line-by-line handling to read
   the file into an array and then loop
   through the array. If you're
   wondering about
