@@ -350,10 +350,10 @@ TODO
   memory, than calling external
   utilities. Seeing the measurements
   just how expensive it is, reminds us
-  to utilize the possibilities of basic
-  `#` `##` `%` `%%`
+  to utilize the possibilities of POSIX
+  `#`, `##`, `%` and `%%`
   [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02)
-  and more in
+  See more in
   [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
   to their fullest.
   See [code](./bin/t-string-file-path-components.sh).
