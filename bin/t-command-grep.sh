@@ -14,8 +14,8 @@
 #
 # Notes:
 #
-# The tests suggest that with typical file sizes
-# (100 kB), the choice between the "C" locale and
+# The tests suggest that with 10 KiB file sizes,
+# the choice between the "C" locale and
 # UTF-8 is not significant. Similarly, the type of
 # regular expression or case sensitivity does not
 # seem to be a major factor.
