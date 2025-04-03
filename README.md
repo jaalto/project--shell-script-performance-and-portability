@@ -785,8 +785,9 @@ for details and further commentary.
   See [code](./bin/t-command-grep.sh).
 
 ```bash
-    # The same performance. Regexp engine
-    # does not seem to be the bottleneck
+    # The same performance. Regexp
+    # engine does not seem to be
+    # the bottleneck
 
     LANG=C grep --fixed-strings ...
     LANG=C grep --extended-regexp ...
