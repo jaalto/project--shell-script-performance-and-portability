@@ -958,7 +958,8 @@ is usually a symbolic link to
 [Bash](https://www.gnu.org/software/bash)
 (on macOS).
 
-Examples of pre-2000 shell scripting:
+Examples of pre-2000 shell scripting
+practises:
 
 ```bash
     if [ x$a = y ]; then ...
