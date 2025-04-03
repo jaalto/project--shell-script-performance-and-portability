@@ -725,9 +725,9 @@ See the [RESULTS](./doc/RESULTS.md)
 for details and further commentary.
 
 - The Bash
-  [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion) `{N..M}` might offer a
-
-  minuscule advantage, but it may be
+  [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion)
+  `{N..M}` might offer a
+  neglible advantage. However it may be
   impractical because `N..M` cannot be
   parameterized. Surprisingly, the
   simple and elegant `$(seq N M)` is
