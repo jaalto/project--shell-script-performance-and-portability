@@ -54,10 +54,11 @@
 # -- Exported variables
 # -- -------------------------------------------------------
 
-VERBOSE=""
 PROGRAM=$0
-
 TMPBASE=${LOGNAME:-$USER}.$$.test
+
+VERBOSE=""
+T_LIB_CACHE_GNU=""
 
 # -- -------------------------------------------------------
 # -- User settable variables in environment
@@ -307,12 +308,41 @@ IsCommandPushd ()
     IsCommandExist pushd
 }
 
+IsCacheGnu ()
+{
+    local cmd=${1:?ERROR: missing arg: cmd}
+
+    case ${T_LIB_CACHE_GNU:-} in
+        *$cmd*)
+            return 0
+            ;;
+        *)
+            return 1
+    esac
+}
+
+CacheGnuSave ()
+{
+    local cmd=${1:?ERROR: missing arg: cmd}
+
+    if ! IsCacheGnu "$cmd"; then
+        T_LIB_CACHE_GNU="$T_LIB_CACHE_GNU $cmd"
+    fi
+
+    return 0
+}
+
 IsCommandGnuVersion ()
 {
-    [ "${1:-}" ] || return 1
+    local cmd=${1:-}
 
-    case $("$1" --version 2> /dev/null) in
+    [ "$cmd" ] || return 1
+
+    IsCacheGnu "$cmd" && return 0
+
+    case $("$cmd" --version 2> /dev/null) in
         *GNU*)
+            CacheGnuSave "$cmd"
             return 0
             ;;
         *)
