@@ -41,7 +41,7 @@
 #
 # It's not surprising that `echo "$str" | cut`
 # perform practically the same as Bash HERE
-# STRINGS in `sut <<< "$str"` use pipes under
+# STRINGS in `cut <<< "$str"` use pipes under
 # the hood in lastest Bash versions. See
 # version 5.1 and section "c" in
 # https://github.com/bminor/bash/blob/master/CHANGES
