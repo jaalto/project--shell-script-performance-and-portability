@@ -113,7 +113,7 @@ t3bExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(cut --delimiter="." --fields=2,3 <<< "$str")
+        item=$(cut -d "." -f 2,3 <<< "$str")
     done
 }
 EOF
@@ -125,7 +125,7 @@ t3cExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$(echo "$str" | cut --delimiter="." --fields=2,3)
+        item=$(echo "$str" | cut -d "." -f 2,3)
     done
 }
 
