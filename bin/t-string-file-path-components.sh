@@ -118,7 +118,7 @@ t3bExt ()
 }
 EOF
 
-IsShellBash && . ./t.bash
+IsFeatureHereString && . ./t.bash
 rm --force t.bash
 
 t3cExt ()
