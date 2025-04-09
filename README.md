@@ -19,7 +19,8 @@ INFORMATION FOR EDITÍNG
   ---------------------------------
   35  code: bullet: ``` ... ``´)
   41  Regular text and paragaphs.
-      Github editing line limit
+      Github line limit to support
+      editing.
   ---------------------------------------
 
   In Emacs:
@@ -60,6 +61,10 @@ Table of Contents
   - [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
+  - [6.1 BASH PROGRMAMING](#bash-progrmaming)
+  - [6.2 PORTABILITY UTILITIES](#portability-utilities)
+  - [6.3 STANDARDS](#standards)
+  - [6.4 MISCELLANEOUS LINKS](#miscellaneous-links)
 - [COPYRIGHT](#copyright)
 - [LICENSE](#license)
 
@@ -1176,7 +1181,7 @@ discussion on StackExchange.
   due to Apple avoiding the GPL-3
   license in later Bash versions. If
   you write `/bin/sh` scripts in macOS,
-  it is good idead to check them for
+  it is good idea to check them for
   portability with:
 
 ```bash
@@ -1369,7 +1374,7 @@ considered. Those of `echo`, `cut`,
 `tail` make big part of of the scripts.
 If you want to ensure portability,
 check options defined in
-[POSIX 2018](https://pubs.opengroup.org/onlinepubs/9799919799/).
+[POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/).
 See top left menu "Shell & Utilities"
 followed by bottom left menu
 ["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9799919799/idx/utilities.html)
@@ -1653,28 +1658,61 @@ testing:
 
 # 6.0 FURTHER READING
 
-- See Greg's Bash Wiki and FAQ
+## 6.1 BASH PROGRMAMING
+
+- Greg's Bash Wiki and FAQ
   https://mywiki.wooledge.org/BashGuide
 - List of which features were added to
   specific releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
-- Use `shellcheck` (Haskell) to
-  to help to improve and write portable
+
+## 6.2 PORTABILITY AND UTILITIES
+
+-  GNU autoconf's manaual section
+  ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.72/html_node/Portable-Shell.html).
+  **Note:** This presents information
+  intended to overcome operating system
+  portability issues dating back to the
+  1970s. Consider the tips with a grain
+  of salt, given the capabilities of more
+  modern POSIX-compliant shells.
+- `shellcheck` (Haskell)
+  can help to improve and write portable
   POSIX scripts. It can statically Lint
   scripts for potential mistakes. There
   is also a web interface where you can
   upload the script at
-  https://www.shellcheck.net. In
-  Debian, see package "shellcheck".
-  The manual page is at
-  https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
-- Use `checkbashisms` command to help
-  to improve and write portable POSIX
-  scripts. In Debian, the command is
-  available in package "devscripts".
-  See https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
+  https://www.shellcheck.net. In Debian,
+  see package "shellcheck". The manual
+  page is at
+https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
+- `checkbashisms` can help to improve and
+  write portable POSIX scripts. In
+  Debian, the command is available in
+  package "devscripts". The manual page
+  is at
+  https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
 
-For the curious readers:
+## 6.3 STANDARDS
+
+Relevant links from 2000 onward:
+
+- https://en.wikipedia.org/wiki/POSIX
+- POSIX.1-2024
+  IEEE Std 1003.1-2024
+  https://pubs.opengroup.org/onlinepubs/9799919799
+- POSIX.1-2018
+  IEEE Std 1003.1-2018
+  https://pubs.opengroup.org/onlinepubs/9699919799
+  https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/
+- POSIX.1-2008
+  IEEE Std 1003.1-2008
+  https://pubs.opengroup.org/onlinepubs/9699919799.2008edition/
+- POSIX.1-2004 (2001-2004)
+  IEEE Std 1003.1-2004
+  https://pubs.opengroup.org/onlinepubs/009695399
+
+## 6.3 MISCELLANEOUS LINKS
 
 - A comprehensive history of `ash`.
   "Ash (Almquist Shell) Variants" by
@@ -1708,8 +1746,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with these programs. If not, see <http://www.gnu.org/licenses/>.
 
-License: GPL-2-or-later - https://spdx.org/licenses
+License-tag: GPL-2.0-or-later<br>
+See https://spdx.org/licenses
 
 Keywords: shell, sh, POSIX, bash,
-programming, optimize, performance,
-profiling, portability
+ksh, ksh93, programming,
+optimizing, performance, profiling,
+portability
