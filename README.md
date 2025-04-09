@@ -1729,6 +1729,13 @@ Relevant links from 2000 onward:
   [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
   command works
   https://unix.stackexchange.com/a/209184
+- Late Jörg Shillings's
+  [schilitools](https://codeberg.org/schilytools/schilytools.git)
+  contains `pbosh` shell that can be used
+  for POSIX-sh-like testing.
+  See discussion of preserving
+  the project and some history at
+  [Reddit](https://www.reddit.com/r/linux/comments/w9vrpx/continued_development_of_j%C3%B6rg_schillings_tools/?rdt=56420).
 - Super simple `s` command interpreter
   to write shell-like scripts (security
   oriented):
