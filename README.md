@@ -303,10 +303,10 @@ TODO
 
 ## 3.3 MAJOR PERFORMANCE GAINS
 
-- In Bash, It is about 100 times faster
+- In Bash, It is at least 60 times faster
   to perform regular expression string
   matching using the binary operator
-[`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   rather than to calling external
   POSIX utilities
   [`expr`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html)
@@ -322,6 +322,7 @@ TODO
   slower, which is negligible because
   the time differences are measured in
   mere few milliseconds.
+  See [code](./bin/t-string-match-regexp.sh)
 
 ```bash
     str="abcdef"
@@ -330,10 +331,10 @@ TODO
     # Bash, Ksh
     [[ $str =~ $re ]]
 
-    # In Bash, 100x slower
+    # In Bash, at least 60x slower
     expr match "$str" ".*$re"
 
-    # In Bash, 140x slower
+    # In Bash, at least 100x slower
     echo "$str" | grep -E "$re"
 
     # --------------------------------
