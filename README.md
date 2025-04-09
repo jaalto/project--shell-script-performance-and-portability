@@ -1673,7 +1673,7 @@ testing:
 ## 6.2 PORTABILITY AND UTILITIES
 
 -  GNU autoconf's manaual section
-  ["11 Portable Shell Programming"](https://www.gnu.org/software/autoconf/manual/autoconf-2.72/html_node/Portable-Shell.html).
+  ["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell)
   **Note:** This presents information
   intended to overcome operating system
   portability issues dating back to the
