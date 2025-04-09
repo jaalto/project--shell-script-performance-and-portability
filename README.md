@@ -127,7 +127,8 @@ shell.
 Certain features in Bash are slow, but
 knowing the cold spots and using
 alternatives helps. On the other hand,
-small POSIX `sh`, for example dash,
+small POSIX `sh`, for example
+[dash](https://tracker.debian.org/pkg/dash),
 scrips are much faster at calling
 external processes and functions. More
 about this in section
