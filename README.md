@@ -1,30 +1,32 @@
 <!--
 INFORMATION FOR EDITÍNG
 
-- Github Markdown Guide: https://is.gd/nqSonp
-  VSCode: preview markdown C-S-v
+- Github Markdown Guide:
+  https://is.gd/nqSonp
+
+- VSCode: preview markdown C-S-v
 
 - URL text fragments: #:~:text=
   https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
 
 - About accessibility
 
-  To support viewing/editing
-  Github pages with phone displays, the
-  maximum column positions describe
-  below. Exception: GNU Licence is
-  at the end is used verbatim.
+  To support viewing and editing GitHub
+  pages on phone displays, the maximum
+  column widths are described below.
+  Exception: The GNU License at the end
+  of file is included verbatim.
 
   col type
   ---------------------------------
-  35  code: bullet: ``` ... ``´)
+  35  Code: bullet: ``` ... ``´)
   41  Regular text and paragaphs.
       Github line limit to support
       editing.
   ---------------------------------------
 
   In Emacs:
-  <go to the end of "-">
+  <go to the end of above "-">
   C-u C-x f (M-x set-fill-column)
   M-x display-fill-column-indicator-mode
 
