@@ -4,7 +4,9 @@ INFORMATION FOR EDITÍNG
 - Github Markdown Guide:
   https://is.gd/nqSonp
 
-- VSCode: preview markdown C-S-v
+- VSCode:
+  Palette: C-p
+  Open preview markdown C-S-v
 
 - URL text fragments: #:~:text=
   https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
