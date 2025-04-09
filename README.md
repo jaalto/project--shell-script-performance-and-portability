@@ -66,7 +66,7 @@ Table of Contents
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
   - [6.1 BASH PROGRMAMING](#bash-progrmaming)
-  - [6.2 PORTABILITY UTILITIES](#portability-utilities)
+  - [6.2 PORTABILITY AND UTILITIES](#portability-and-utilities)
   - [6.3 STANDARDS](#standards)
   - [6.4 MISCELLANEOUS LINKS](#miscellaneous-links)
 - [COPYRIGHT](#copyright)
