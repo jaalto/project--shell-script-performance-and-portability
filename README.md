@@ -1680,6 +1680,9 @@ testing:
   1970s. Consider some tips with a grain
   of salt, given the capabilities of more
   modern POSIX-compliant shells.
+- For cross platform detection, see
+  useful files to check:
+  http://linuxmafia.com/faq/Admin/release-files.html
 - `shellcheck` (Haskell)
   can help to improve and write portable
   POSIX scripts. It can statically Lint
