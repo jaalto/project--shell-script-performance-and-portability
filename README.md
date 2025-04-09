@@ -117,7 +117,7 @@ default, requiring no additional
 installation.
 [Perl](https://www.perl.org)
 or
-[python](https://www.python.org)
+[Python](https://www.python.org)
 excel in their respective fields, where
 the requirements differ from those of the
 shell.
@@ -258,7 +258,8 @@ can help.
   expressions, manipulate or work on
   data extensively, there is probably
   nothing that can replace the speed of
-  `perl` unless you go even lower-level
+  [Perl](https://www.perl.org)
+  unless you go even lower-level
   languages like `C`. But then again,
   we assume that you know how to choose
   your tools in those cases.
@@ -929,7 +930,8 @@ None of these offer any advantages to speed up shell scripts.
   sizes. The idea of splitting a file
   into chunks of lines and running the
   search in parallel is intriguing, but
-  the overhead of starting perl with
+  the overhead of starting Perl
+  interpreter with
   `parallel` is orders of magnitude
   more expensive compared to running
   already optimized `grep` only once.
