@@ -73,13 +73,12 @@ Table of Contents
 The tests reflect results under Linux
 using GNU utilities. The focus is on the
 features found in [Bash](https://www.gnu.org/software/bash)
-rather than `sh`
+and
 [POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/)
-compliant shells. The term "compliant"
+compliant shells. The term compliant
 is used here as "most POSIX compliant",
 as there is no, and has never been,
-shell that is
-fully POSIX compliant.
+shell that is fully POSIX compliant.
 POSIX is useful if you are looking for
 more portable scripts. See also POSIX in
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
