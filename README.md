@@ -310,10 +310,11 @@ TODO
   [`grep`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
 
   **NOTE**: In POSIX `sh`, like
-  `dash`, calling utilities is
+  [dash](https://tracker.debian.org/pkg/dash)
+  , calling utilities is
   *extremely* fast. Compared to Bash's
   [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
-  the Dash's `expr` is only 5x
+  the `expr` in `dash` is only 5x
   slower, which is negligible because
   the time differences are measured in
   mere few milliseconds.
@@ -458,7 +459,9 @@ TODO
   to return a value. In Bash, the
   `ret=$(fn)` is inefficient to call
   functions. On the other hand, in
-  POSIX `sh` shells, like `dash`, there
+  POSIX `sh` shells, like
+  [dash](https://tracker.debian.org/pkg/dash),
+  there
   is practically no overhead in using
   `$(fn)`.
   See [code](./bin/t-function-return-value-nameref.sh).
@@ -575,8 +578,9 @@ TODO
   generally slow. The
   [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
   is more general because variables
-  persist after the loop. The `dash` is
-  very fast compared to Bash.
+  persist after the loop. The
+  [dash](https://tracker.debian.org/pkg/dash)
+  is very fast compared to Bash.
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
@@ -851,7 +855,8 @@ None of these offer any advantages to speed up shell scripts.
   for pattern matching compared to
   POSIX `case..esac`. Interestingly
   pattern matching is 4x slower under
-  `dash` compared to Bash. However,
+  [dash](https://tracker.debian.org/pkg/dash)
+  compared to Bash. However,
   that means nothing because the time
   differences are measured in minuscule
   milliseconds (0.002s).
@@ -1122,7 +1127,9 @@ POSIX:
 - [posh](https://tracker.debian.org/pkg/posh).
   Minimal `sh`, Policy-compliant
   Ordinary SHell. Very close to POSIX.
-  Stricter than `dash`. Supports
+  Stricter than
+  [dash](https://tracker.debian.org/pkg/dash).
+  Supports
   `local` keyword to define local
   variables in functions. The keyword
   is not defined in POSIX.
@@ -1134,7 +1141,9 @@ POSIX:
   requirements of the Debian Linux
   distribution.
 - [Busybox ash](https://www.busybox.net)
-  is based on `dash` with some more
+  is based on
+  [dash](https://tracker.debian.org/pkg/dash)
+  with some more
   features added. Supports `local`
   keyword. See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
@@ -1195,8 +1204,11 @@ discussion on StackExchange.
 
 In practical terms, if you plan to aim
 for POSIX-compliant shell scripts, the
-best shells for testing would be `posh`
-and `dash`. You can also extend testing
+best shells for testing would be
+[posh](https://tracker.debian.org/pkg/posh)
+and
+[dash](https://tracker.debian.org/pkg/dash).
+You can also extend testing
 with BSD Ksh shells and other shells.
 See
 [FURTHER READING](#further-reading)
@@ -1396,7 +1408,8 @@ Notable observations:
   codes, support or output are not
   necessarily uniform. Problem with
   `hash` are similar. Neither `type`
-  nor `hash` is supported by `posh`;
+  nor `hash` is supported by
+  [posh](https://tracker.debian.org/pkg/posh);
   see table
   [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
   Note: The `which <command>` is
