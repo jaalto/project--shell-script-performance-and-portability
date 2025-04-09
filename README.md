@@ -1662,6 +1662,8 @@ testing:
 
 ## 6.1 BASH PROGRMAMING
 
+- Bash
+  [Manual](https://www.gnu.org/software/bash/manual/bash.html)
 - Greg's Bash Wiki and FAQ
   https://mywiki.wooledge.org/BashGuide
 - List of which features were added to
