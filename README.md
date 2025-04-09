@@ -1677,7 +1677,7 @@ testing:
   **Note:** This presents information
   intended to overcome operating system
   portability issues dating back to the
-  1970s. Consider the tips with a grain
+  1970s. Consider some tips with a grain
   of salt, given the capabilities of more
   modern POSIX-compliant shells.
 - `shellcheck` (Haskell)
