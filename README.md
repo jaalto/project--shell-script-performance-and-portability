@@ -1096,28 +1096,36 @@ involves considering several factors.
 
 [\*] "Git Bash" is available with the
 popular native Windows installation of
-Git. Under the hood, it is based on
-MSYS, which in turn is based on
-Cygwin... so the common denominator of
+[Git for Windows](https://git-scm.com/downloads/win).
+Under the hood, the installation is based on
+MSYS2, which in turn is based on
+Cygwin. The common denominator of
 all native Windows Linux-like
-environments is the Cygwin base. In all
-practical terms, it provides the same
-Linux-like command-line utilities,
+environments is the
+[Cygwin](https://cygwin.com)
+base which, in all
+practical terms, provides the usual
+command-line utilities,
 including Bash. For curious readers,
-Windows
+Windows software
 [MobaXterm](https://mobaxterm.mobatek.net),
-offers multitudes of X, temrinals
-and other connectivity features,
-includes a Cygwin-based
-Bash shell with its own `apt`-style
-Debian-style package manager to install
+offers X server, terminals
+and other connectivity features, but also
+somes with Cygwin-based
+Bash shell with its own
+[Debian-style](https://www.debian.org/doc/manuals/debian-faq/pkgtools.en.html)
+`apt` package manager which allows installing
 additional Linux utilities.
 
 [\*\*] In Windows, there is also
 the Windows Subsystem for Linux
 ([WSL](https://learn.microsoft.com/en-us/windows/wsl/)),
 where you can install Linux
-distributions like Debian and Ubuntu.
+distributions like
+[Debian](https://en.wikipedia.org/wiki/Debian),
+[Ubuntu](https://en.wikipedia.org/wiki/Ubuntu),
+[OpenSUSE](https://en.wikipedia.org/wiki/OpenSUSE) and
+[Oracle Linux](https://en.wikipedia.org/wiki/Oracle_Linux).
 Bash is the obvious choice for shell
 scripts in this environment.
 
