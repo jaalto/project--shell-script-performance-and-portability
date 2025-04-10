@@ -32,6 +32,11 @@ INFORMATION FOR EDITÍNG
   C-u C-x f (M-x set-fill-column)
   M-x display-fill-column-indicator-mode
 
+MISCELLANEOUS
+
+- To search POSIX.1-2024 in Google
+  site:pubs.opengroup.org inurl:9799919799 <search>
+
 -->
 
 # 1.0 SHELL SCRIPT PERFORMANCE AND PORTABILITY
@@ -1120,8 +1125,8 @@ additional Linux utilities.
 [\*\*] In Windows, there is also
 the Windows Subsystem for Linux
 ([WSL](https://learn.microsoft.com/en-us/windows/wsl/)),
-where you can install Linux
-distributions like
+where you can install (See `wsl --list --onlline`)
+Linux distributions like
 [Debian](https://en.wikipedia.org/wiki/Debian),
 [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu),
 [OpenSUSE](https://en.wikipedia.org/wiki/OpenSUSE) and
@@ -1282,9 +1287,10 @@ improve shell scripts even more.
 Note that POSIX does not define the
 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
 — the traditional first line that
-indicates which interpreter to use.
-See
-[exec family of functions' RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#tag_16_111_08)
+indicates which interpreter to use. See
+POSIX C language's section "exec family
+of functions" and
+[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)
 
 > (...) Another way that some
 > historical implementations handle
