@@ -1508,7 +1508,41 @@ Notable observations:
 ```
 
 - Use [`grep -E`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
-  In 2001 POSIX dropped `egrep`.
+  In 2001 POSIX removed `egrep`.
+
+- [`read`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html).
+  POSIX requires a VARIABLE, so always
+  supply one. In Bash, the command would
+  default to variable `REPLY` if omitted.
+  You should also always use option `-r`
+  which is eplained in
+  shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
+  BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
+  POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
+  and
+  BashWiki [IFS](https://mywiki.wooledge.org/IFS).
+  See in depth details
+  how the
+  [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
+  command does not reads characters and
+  not lines in StackExchange discussion
+  [Understanding "IFS= read -r line"](https://unix.stackexchange.com/a/209184).
+
+
+```bash
+   # POSIX
+   REPLY=$(cat file)
+
+   # Bash, Ksh
+   # Read max 100 KiB to $REPLY
+   read -N $((100 * 1024)) REPLY < file
+
+   case $REPLY in
+        *pattern*)
+            # match
+            ;;
+   esac
+```
 
 - Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html)
   always with shell special parameter
@@ -1525,33 +1559,6 @@ Notable observations:
     # the whole program in:
     # dash, posh, mksh, ksh93 etc.
     shift 2
-```
-
-- [`read`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html).
-  POSIX requires a VARIABLE, so always
-  supply one. The command does not
-  default to `REPLY`if omitted, You
-  should also always use option `-r`.
-  For more information about `-r`, see
-  shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
-  BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
-  POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
-  and
-  BashWiki [IFS](https://mywiki.wooledge.org/IFS).
-
-```bash
-   # POSIX
-   REPLY=$(cat file)
-
-   # Bash, Ksh
-   # Read max 100 KiB to $REPLY
-   read -N $((100 * 1024)) REPLY < file
-
-   case $REPLY in
-        *pattern*)
-            # match
-            ;;
-   esac
 ```
 
 ### 4.5.1 Case Study: sed
@@ -1776,10 +1783,6 @@ Relevant links from 2000 onward:
   "Ash (Almquist Shell) Variants" by
   Sven Mascheck
   https://www.in-ulm.de/~mascheck/various/ash/
-- Details how the
-  [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
-  command works
-  https://unix.stackexchange.com/a/209184
 - Late Jörg Shillings's
   [schilitools](https://codeberg.org/schilytools/schilytools.git)
   contains `pbosh` shell that can be used
