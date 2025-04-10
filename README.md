@@ -572,12 +572,13 @@ TODO
 
 ```
 
-- It is about 2 times faster to
-  prefilter with `grep` to process only
+- In Bash, it is about 2 times faster to
+  prefilter with
+  [grep](https://tracker.debian.org/pkg/grep)
+  to process only
   certain lines instead of reading the
   whole file into a loop and then
-  selecting lines. Bash loops are
-  generally slow. The
+  selecting lines. The
   [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
   is more general because variables
   persist after the loop. The
