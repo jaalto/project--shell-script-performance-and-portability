@@ -1610,8 +1610,8 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     # Avoid -i option.
 
     tmp=$(mktemp)
-    sed 's/this/that/g' file > "$tmp"
-    mv "$tmp" file
+    sed 's/this/that/g' file > "$tmp" &&
+    mv "$tmp" file &&
     rm -f "$tmp"
 
 ### 4.5.2 Case Study: awk
