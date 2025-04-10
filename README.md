@@ -734,8 +734,6 @@ TODO
 
 According to the results, none of
 these offer practical benefits.
-See the [RESULTS](./doc/RESULTS.md)
-for details and further commentary.
 
 - The Bash
   [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion)
