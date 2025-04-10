@@ -882,7 +882,6 @@ None of these offer any advantages to speed up shell scripts.
             ;;
     esac
 
-
     # --------------------------------
     # Different shells compared.
     # --------------------------------
@@ -993,7 +992,7 @@ Examples of pre-2000 shell scripting
 practises:
 
 ```bash
-    if [ x$a = y ]; then ...
+    if [ x$a = y ] ...
 
     # Variable lenght is non-zero
     if [ -n "$a" ] ...
@@ -1033,7 +1032,7 @@ Modern equivalents:
     # Variable is empty
     if [ ! "$a" ] ...
 
-    if [ "$a" = "y" ] || [ "$b" = "y" ]; then ...
+    if [ "$a" = "y" ] || [ "$b" = "y" ] ...
 
     # Without leading "(" paren
     case abc in
