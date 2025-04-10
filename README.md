@@ -486,7 +486,7 @@ TODO
     {
         # NOTE: uses non-POSIX
         # 'local' but it is widely
-        # supported in POSIX-like
+        # supported in POSIX-compliant
         # shells: dash, posh, mksh,
         # ksh93 etc.
 
@@ -1414,7 +1414,7 @@ ksh...) is less important than what
 utilities you use and how you use them.
 
 It's not just about choosing to write
-in POSIX-like `sh`; the utilities
+in POSIX `sh`; the utilities
 called from the script also has to be
 considered. Those of `echo`, `cut`,
 `tail` make big part of of the scripts.
@@ -1483,11 +1483,17 @@ Notable observations:
   [`echo`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html)
   without any options. Use
   [`printf`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html)
-  when more is needed. In POSIX `sh`
-  shells, the `printf` command may not
-  be a built-in, so using it can have
-  performance considerations.
-
+  when more functionality is needed.
+  Relying solely on `printf` may not be
+  ideal. In POSIX-compliant `sh` shells,
+  `printf` is not always a built-in
+  command (e.g., in
+  [posh](https://tracker.debian.org/pkg/posh)
+  or
+  [mksh](https://tracker.debian.org/pkg/mksh))
+  which can lead to performance overhead
+  due to the need to invoke an external
+  process.
 
 ```bash
     # POSIX
