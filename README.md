@@ -868,7 +868,9 @@ None of these offer any advantages to speed up shell scripts.
     pattern="*cd*"
 
     # Bash
-    [[ $string == $pattern ]]
+    if [[ $string == $pattern ]]; then
+	    ...
+    fi
 
     # POSIX
     case $string in
@@ -880,6 +882,22 @@ None of these offer any advantages to speed up shell scripts.
             ;;
     esac
 
+
+    # --------------------------------
+    # Different shells compared.
+    # --------------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
+
+	Run shell: dash
+	# t1     <skip>
+	# t2      real 0.011 POSIX
+	Run shell: ksh93
+	# t1     real 0.004  [[ == ]]
+	# t2     real 0.002  POSIX
+	Run shell: bash
+	# t1     real 0.003  [[ == ]]
+	# t2     real 0.002  POSIX
 ```
 
 - There is no performance difference
