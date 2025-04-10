@@ -1535,7 +1535,7 @@ Notable observations:
 
    # Bash, Ksh
    # Read max 100 KiB to $REPLY
-   read -N $((100 * 1024)) REPLY < file
+   read -rN $((100 * 1024)) < file
 
    case $REPLY in
         *pattern*)
