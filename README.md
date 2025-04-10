@@ -1648,7 +1648,7 @@ operands without any files:
   utlity
   [`true`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html)
   according to
-  GNU autoconf's manaual
+  GNU autoconf's manual
   ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
   which states that `:` might not be
   always builtin and "(...) the
@@ -1730,7 +1730,7 @@ testing:
 
 ## 6.2 PORTABILITY AND UTILITIES
 
--  GNU autoconf's manaual section
+-  GNU autoconf's manual section
   ["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell)
   **Note:** This presents information
   intended to overcome operating system
