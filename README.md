@@ -1760,7 +1760,7 @@ https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
 
 ## 6.3 STANDARDS
 
-Relevant links from 2000 onward:
+Relevant POSIX links from 2000 onward:
 
 - https://en.wikipedia.org/wiki/POSIX
 - POSIX.1-2024
@@ -1777,7 +1777,24 @@ Relevant links from 2000 onward:
   IEEE Std 1003.1-2004
   https://pubs.opengroup.org/onlinepubs/009695399
 
-## 6.3 MISCELLANEOUS LINKS
+Relevant UNIX standardization links.
+[Single UNIX Specification](https://en.wikipedia.org/wiki/Single_UNIX_Specification)
+(SUSv4) documents are derived from POSIX
+standards. For an operating system to
+become UNIX certified, it must meet all
+specified requirements—a process that is
+both costly and arduous. The only
+"Linux-based" system that has undergone
+full certification is Apple's
+[macOS](https://en.wikipedia.org/wiki/MacOS).
+
+- The Single UNIX Specification,
+  Version 4
+  https://unix.org/version4/
+- See discussion at StackExchnage about
+  ["Difference between POSIX, Single UNIX Specification, and Open Group Base Specifications?"](https://unix.stackexchange.com/q/14368).
+
+## 6.4 MISCELLANEOUS LINKS
 
 - A comprehensive history of `ash`.
   "Ash (Almquist Shell) Variants" by
