@@ -70,7 +70,7 @@ Table of Contents
   - [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
-  - [6.1 BASH PROGRMAMING](#61-bash-progrmaming)
+  - [6.1 BASH PROGRAMMING](#61-bash-programming)
   - [6.2 PORTABILITY AND UTILITIES](#62-portability-and-utilities)
   - [6.3 STANDARDS](#63-standards)
   - [6.4 MISCELLANEOUS LINKS](#64-miscellaneous-links)
@@ -1718,7 +1718,7 @@ testing:
 
 # 6.0 FURTHER READING
 
-## 6.1 BASH PROGRMAMING
+## 6.1 BASH PROGRAMMING
 
 - Bash
   [Manual](https://www.gnu.org/software/bash/manual/bash.html)
