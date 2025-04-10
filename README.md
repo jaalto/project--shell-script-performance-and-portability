@@ -74,10 +74,11 @@ Table of Contents
 
 The tests reflect results under Linux
 using GNU utilities. The focus is on the
-features found in [Bash](https://www.gnu.org/software/bash)
+features found in
+[Bash](https://www.gnu.org/software/bash)
 and
 [POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/)
-compliant shells. The term compliant
+compliant `sh` shells. The term compliant
 is used here as "most POSIX compliant",
 as there is no, and has never been,
 shell that is fully POSIX compliant.
@@ -532,26 +533,22 @@ TODO
 - In Bash, it is about 2 times faster
   for line-by-line handling to read
   the file into an array and then loop
-  through the array. If you're
-  wondering about
-[`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
-  vs
+  through the array. The built-in
+  [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
+  is synonym for
   [`mapfile`](https://www.gnu.org/software/bash/manual/bash.html#index-mapfile),
-  there is no difference.
-  Built-in `readarray`is a synonym
-  for `mapfile`.
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```bash
-    # (1) Bash
-    readarray -t array < file
+    # Bash
+    readarray < file
 
-    for line in "${array[@]}"
+    for line in "${MAPFILE[@]}"
     do
         ...
     done
 
-    # (2) POSIX. In bash, slower
+    # POSIX. In bash, slower
     while read -r line
     do
         ...
@@ -565,13 +562,13 @@ TODO
 
     Run shell: dash
     # t1     <skip>
-    # t2     real 0.085
+    # t2     real 0.085  POSIX
     Run shell: ksh93
     # t1     <skip>
-    # t2     real 0.021
+    # t2     real 0.021  POSIX
     Run shell: bash
-    # t1     real 0.045
-    # t2     real 0.108
+    # t1     real 0.045  readarray
+    # t2     real 0.108  POSIX
 
 ```
 
