@@ -1786,7 +1786,12 @@ specified requirements—a process that is
 both costly and arduous. The only
 "Linux-based" system that has undergone
 full certification is Apple's
-[macOS](https://en.wikipedia.org/wiki/MacOS).
+[macOS](https://en.wikipedia.org/wiki/MacOS)
+10.5 Leopard in 2007. Read the story
+shared by Apple’s project lead,
+Terry Lambert, in a Quora's discussion
+forum
+["What goes into making an OS to be Unix compliant certified?"](https://www.quora.com/What-goes-into-making-an-OS-to-be-Unix-compliant-certified)
 
 - The Single UNIX Specification,
   Version 4
