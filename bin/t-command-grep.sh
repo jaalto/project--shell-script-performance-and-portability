@@ -4,7 +4,7 @@
 # A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case
 # priority: 2
 #
-#     t1pure     real 0m0.382s LANG=C --fixed-strings
+#     t1langc    real 0m0.382s LANG=C --fixed-strings
 #     t1utf8     real 0m0.389s LANG=C.UTF-8 --fixed-strings
 #     t1extended real 0m0.382s LANG=C --extended-regexp
 #     t1perl     real 0m0.381s LANG=C --perl-regexp
@@ -46,7 +46,7 @@ Info ()
     echo "INFO: test file: $(ls -l $f)"
 }
 
-t1pure ()
+t1langc ()
 {
     for i in $(seq $loop_max)
     do
@@ -104,7 +104,7 @@ t2icasee ()
 }
 
 t="
-:t t1pure       IsCommandGnuGrep
+:t t1langc      IsCommandGnuGrep
 :t t1utf8       IsCommandGnuGrep
 :t t1extended   IsCommandGnuGrep
 :t t1perl       IsCommandGnuGrep
