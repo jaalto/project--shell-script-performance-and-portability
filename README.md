@@ -4,7 +4,7 @@ INFORMATION FOR EDITING
 - Github Markdown Guide:
   https://is.gd/nqSonp
 
-- View markdows in VSCode:
+- View markdown in VSCode:
   Command Palette (C-S-p)
   Markdown: Open Preview C-S-v
   Markdown: Open Preview to the side C-k v
