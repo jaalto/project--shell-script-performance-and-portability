@@ -1036,7 +1036,8 @@ Modern equivalents:
     # Variable has something
     if [ "$a" ] ...
 
-    # Variable is empty
+    # Variable does not have something,
+	# that is: variable is empty
     if [ ! "$a" ] ...
 
     # Logical OR between statements
