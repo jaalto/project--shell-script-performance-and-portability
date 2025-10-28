@@ -1001,10 +1001,10 @@ practises:
 ```bash
     if [ x$a = y ] ...
 
-    # Variable lenght is non-zero
+    # test if variable's lenght is non-zero
     if [ -n "$a" ] ...
 
-    # Variable lenght is zero
+    # Vtest of variable's lenght is zero
     if [ -z "$a" ] ...
 
     # Deprecated in next POSIX
