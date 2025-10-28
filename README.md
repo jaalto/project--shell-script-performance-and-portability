@@ -882,10 +882,10 @@ None of these offer any advantages to speed up shell scripts.
     # POSIX
     case $string in
         $pattern)
-            :    # Same as true
+            return 0   # in function, true
             ;;
         *)
-            false
+            return 1   # in function, false
             ;;
     esac
 
