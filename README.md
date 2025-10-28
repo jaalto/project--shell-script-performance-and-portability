@@ -1,12 +1,14 @@
 <!--
-INFORMATION FOR EDITÍNG
+INFORMATION FOR EDITING
 
 - Github Markdown Guide:
   https://is.gd/nqSonp
 
-- VSCode:
-  Palette: C-p
-  Open preview markdown C-S-v
+- View markdows in VSCode:
+  Command Palette (C-S-p)
+  Markdown: Open Preview C-S-v
+  Markdown: Open Preview to the side C-k v
+  [upper right:eye-icon button] Open Preview to the Side
 
 - URL text fragments: #:~:text=
   https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
@@ -1015,7 +1017,7 @@ practises:
 
     # POSIX allows leading
     # opening "(" paren
-    case abc in
+    case $var in
         (a*) true
              ;;
         (*)  false
@@ -1037,11 +1039,12 @@ Modern equivalents:
     # Variable is empty
     if [ ! "$a" ] ...
 
+    # Logical OR between statements
     if [ "$a" = "y" ] || [ "$b" = "y" ] ...
 
     # Without leading "(" paren
-    case abc in
-         a*) :  # "true"
+    case $var in
+         a*) :       # The ":" is same as built-in or external command "true"
              ;;
          *)  false
              ;;
@@ -1220,11 +1223,11 @@ discussion on StackExchange.
 - On macOS, `sh` points to `bash
   --posix`, where the Bash version is
   indefinitely stuck at version 3.2.x
-  due to Apple avoiding the GPL-3
-  license in later Bash versions. If
-  you write `/bin/sh` scripts in macOS,
-  it is good idea to check them for
-  portability with:
+  (GNU Bash from 2006) due to Apple
+  avoiding the GPL-3 license in later
+  Bash versions. If you write `/bin/sh`
+  scripts in macOS, it is good idea to
+  check them for portability with:
 
 ```bash
     # Check better /bin/sh
@@ -1332,10 +1335,10 @@ by POSIX.
 
 ### 4.4.1 About Bash and Shebang
 
-Note that on macOS, `/bin/bash` is
-hard-coded to Bash version 3.2.57 where
-in 2025 lastest Bash is
-[5.2](https://tracker.debian.org/pkg/bash).
+Note that on Apple macOS, `/bin/bash` is
+hard-coded to Bash version 3.2.x (from 2006)
+where lastest Bash is
+[5.x](https://tracker.debian.org/pkg/bash).
 You cannot uninstall it, even with root
 access, without disabling System
 Integrity Protection. If you install a
