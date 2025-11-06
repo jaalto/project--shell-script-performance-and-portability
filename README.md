@@ -478,9 +478,8 @@ TODO
   functions. On the other hand, in
   POSIX `sh` shells, like
   [dash](https://tracker.debian.org/pkg/dash),
-  there
-  is practically no overhead in using
-  `$(cmd)`.
+  there is practically no overhead
+  in using `$(cmd)`.
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
