@@ -470,13 +470,13 @@ TODO
   to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value. In Bash, the
-  `ret=$(fn)` is inefficient to call
+  `ret=$(cmd)` is inefficient to call
   functions. On the other hand, in
   POSIX `sh` shells, like
   [dash](https://tracker.debian.org/pkg/dash),
   there
   is practically no overhead in using
-  `$(fn)`.
+  `$(cmd)`.
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
@@ -508,7 +508,7 @@ TODO
         retref=$arg
     }
 
-    # Return value returned to
+    # Return value set to
     # variable 'ret'
 
     fnNamerefPosix ret "arg"
