@@ -4,7 +4,7 @@ INFORMATION FOR EDITING
 - Github Markdown Guide:
   https://is.gd/nqSonp
 
-- View markdows in VSCode:
+- View markdown in VSCode:
   Command Palette (C-S-p)
   Markdown: Open Preview C-S-v
   Markdown: Open Preview to the side C-k v
@@ -882,10 +882,10 @@ None of these offer any advantages to speed up shell scripts.
     # POSIX
     case $string in
         $pattern)
-            :    # Same as true
+            return 0   # in function, true
             ;;
         *)
-            false
+            return 1   # in function, false
             ;;
     esac
 
@@ -1001,10 +1001,10 @@ practises:
 ```bash
     if [ x$a = y ] ...
 
-    # Variable lenght is non-zero
+    # test if variable's lenght is non-zero
     if [ -n "$a" ] ...
 
-    # Variable lenght is zero
+    # Vtest of variable's lenght is zero
     if [ -z "$a" ] ...
 
     # Deprecated in next POSIX
@@ -1036,7 +1036,8 @@ Modern equivalents:
     # Variable has something
     if [ "$a" ] ...
 
-    # Variable is empty
+    # Variable does not have something,
+	# that is: variable is empty
     if [ ! "$a" ] ...
 
     # Logical OR between statements
