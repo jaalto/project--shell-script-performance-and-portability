@@ -21,18 +21,22 @@ INFORMATION FOR EDITING
   Exception: The GNU License at the end
   of file is included verbatim.
 
+  The maximum column limits are:
+
   col type
-  ---------------------------------
+  ---------------------------------------
   35  Code: bullet: ``` ... ``´)
-  41  Regular text and paragaphs.
+  41  Regular text and paragraphs.
       Github line limit to support
       editing.
   ---------------------------------------
 
-  In Emacs:
-  <go to the end of above "-">
-  C-u C-x f (M-x set-fill-column)
-  M-x display-fill-column-indicator-mode
+  Emacs editor settings:
+
+  ;; eval code with C-x C-e
+  (setq fill-column 41)
+  ;; M-x display-fill-column-indicator-mode
+  (display-fill-column-indicator-mode 1)
 
 MISCELLANEOUS
 
@@ -480,9 +484,9 @@ TODO
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
-    # An exmaple only. Not needed in
-    # POSIX sh shells as ret=$(fn)
-    # is already fast.
+	# This is an example only. It is not needed in
+	# POSIX sh shells, because 'ret=$(cmd)'
+	# is already fast
 
     fnNamerefPosix()
     {
