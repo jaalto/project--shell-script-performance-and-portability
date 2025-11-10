@@ -78,7 +78,7 @@ VERBOSE=""
 T_LIB_CACHE_GNU=""
 
 # -- ------------------------------------
-# -- User settable env variables
+# -- Public. User settable env variables
 # -- ------------------------------------
 
 # create random number test file
@@ -101,7 +101,7 @@ DICTIONARY_DEFAULT="/usr/share/dict/words"
 DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 
 # -- ------------------------------------
-# -- Private variables
+# -- Private
 # -- ------------------------------------
 
 RUNNER=t.run
@@ -499,7 +499,7 @@ RandomNumbersAwk ()
 
         for (i = 1; i <= n; i++)
             print int(rand() * (2**14 - 1))
-    }' \
+    }' \    # ' fix. Ksh parser bug: "quote may be missing"
     n="$1" \
     < /dev/null
 }
@@ -520,7 +520,6 @@ RandomNumbersPython ()
 
 RunMaybe ()
 {
-    local cmd
     cmd=${1:-}
 
     [ "$cmd" ] || return 0
@@ -528,6 +527,8 @@ RunMaybe ()
     if IsCommandExist "$cmd" ; then
         $cmd
     fi
+
+    unset cmd
 }
 
 RunTestCase ()
@@ -609,8 +610,10 @@ RunTestCase ()
                 --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
                 --expression 's,   +,  ,g' \
                 --expression 's,\t,  ,g' |
-            tr -d '\n'
-        echo  # Add newline
+            $TR --delete '\n'
+
+        # Add newline
+        echo
     else
         Die "ERROR: t(): Abort, no suitable built-in time command in Shell"
     fi
@@ -677,22 +680,18 @@ t ()
 
 RunTestSet ()
 {
-    local dummy
     dummy="RunTestSet()"
 
-    local testset
     testset=${1:-}
     shift
 
-    local saved
     saved=$IFS
     IFS=":
 "
 
-    local test
-
     for test in $testset
     do
+        test="$test"   # For debug
         eval $test
     done
 
@@ -703,7 +702,6 @@ RunTestSet ()
 
 RunTests ()
 {
-    local dummy
     dummy="RunTests()"
 
     # ARG 1 is list of tests to run in
@@ -717,7 +715,6 @@ RunTests ()
     # and all argumens from ARG 2 are
     # considered <test cases> to run,
 
-    local tests
     tests=${1:-}
     tests=${tests#:}  # Delete leading ":"
     tests=${tests%:}  # Delete trailing ":"
@@ -726,7 +723,6 @@ RunTests ()
     RunMaybe Info
 
     if [ "${1:-}" ]; then
-        local arg
         arg=$1
         shift
 
@@ -734,7 +730,8 @@ RunTests ()
 
         if [ "${1:-}" ]; then # Condition
             printf "%-28s " "$arg $*"
-            if "$@" ; then
+
+            if $arg "$@" ; then
                 "$arg"
             else
                 printf "<skip> "
