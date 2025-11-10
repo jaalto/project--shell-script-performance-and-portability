@@ -23,7 +23,14 @@
 #
 # Usage
 #
-#       . <file>
+#       Source this file with command:
+#
+#           . <file>
+#
+# Depends
+#
+#       Requires GNU utilities first in PATH. Those
+#       of sed, awk, cut, head, tr etc.
 #
 # Description
 #
@@ -414,7 +421,17 @@ RandomWordsGibberish ()
     # - Limit output to column 80.
     # - Separate words by spaces.
 
-    base64 --decode /dev/urandom |
+    local dev=/dev/urandom
+
+    if [ -e "$dev" ]; then
+        : # ok
+    if [ -e /dev/random ]; then
+        dev=/dev/random
+    else
+        Die "ERROR: no /dev/urandom"
+    fi
+
+    base64 --decode "$dev" |
         tr --complement --delete 'a-zA-Z0-9 ' |
         fold --width=80 |
         head --bytes="${1:-100k}"
