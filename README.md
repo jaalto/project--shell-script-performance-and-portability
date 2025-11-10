@@ -100,9 +100,7 @@ more portable scripts. See also POSIX in
 > Please note that `sh` here refers to
 > modern, best-of-effort POSIX-compatible,
 > minimal shells like
-> [dash](https://tracker.debian.org/pkg/dash)
-> and
-> [posh](https://tracker.debian.org/pkg/posh).
+> [dash] and [posh].
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
 In Linux like systems, for all rounded
@@ -128,20 +126,16 @@ redirections, pipes, calling external
 utilities, and gluing them all together.
 Shell scripts are also quite portable by
 default, requiring no additional
-installation.
-[Perl](https://www.perl.org)
-or
-[Python](https://www.python.org)
+installation. [Perl], [Python] ot [Ruby]
 excel in their respective fields, where
-the requirements differ from those of the
-shell.
+the requirements differ from those of
+the shell.
 
 Certain features in Bash are slow, but
 knowing the cold spots and using
 alternatives helps. On the other hand,
 small POSIX `sh`, for example
-[dash](https://tracker.debian.org/pkg/dash),
-scrips are much faster at calling
+[dash], scrips are much faster at calling
 external processes and functions. More
 about this in section
 [SHELLS AND PERFORMANCE](#32-shells-and-performance).
@@ -201,8 +195,7 @@ the fastest results.
 Regardless of the shell you use for
 scripting
 ([sh](https://tracker.debian.org/pkg/dash),
-[ksh](https://tracker.debian.org/pkg/ksh93u+m),
-[bash](https://www.gnu.org/software/bash)),
+[bash], [ksh])
 consider these factors.
 
 
@@ -349,9 +342,9 @@ TODO
     # In Bash, at least 100x slower
     echo "$str" | grep -E "$re"
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
@@ -401,9 +394,9 @@ TODO
 
     ext=$(echo "$str" | sed 's/^[^.]\+//')
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
 
@@ -437,7 +430,11 @@ TODO
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```bash
-    # Bash, Ksh
+    # POSIX sh
+    # ... str=$(cat file)
+    # is much slower in Bash
+    #
+    # Bash, Ksh syntax
     str=$(< file)
 
     if [[ $str =~ $regexp1 ]]; then
@@ -446,9 +443,9 @@ TODO
         ...
     fi
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     (1) read once + case..end
     (2) loop do.. grep file ..done
@@ -483,17 +480,18 @@ TODO
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
-	# This is an example only. It is not needed in
-	# POSIX sh shells, because 'ret=$(cmd)'
-	# is already fast
+    # This is an example only. It
+    # is not needed in POSIX sh
+    # shells, because 'ret=$(cmd)'
+    # is already fast
 
     fnNamerefPosix()
     {
         # NOTE: uses non-POSIX
         # 'local' but it is widely
-        # supported in POSIX-compliant
-        # shells: dash, posh, mksh,
-        # ksh93 etc.
+        # supported in POSIX
+        # compliant shells: dash,
+        # posh, mksh, ksh93 etc.
 
         local retref=$1
         shift
@@ -517,9 +515,9 @@ TODO
     fnNamerefPosix ret "arg"
     fnNamerefBash ret "arg"
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
 
@@ -539,7 +537,6 @@ TODO
     # t3     real 0.094s ret=$(fn)
 ```
 
-
 - In Bash, it is about 2 times faster
   for line-by-line handling to read
   the file into an array and then loop
@@ -558,15 +555,15 @@ TODO
         ...
     done
 
-    # POSIX. In bash, slower
+    # POSIX. In Bash, slower
     while read -r line
     do
         ...
     done < file
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-content-loop.sh
 
@@ -630,9 +627,9 @@ TODO
        ...
     done < file
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
 
@@ -704,9 +701,9 @@ TODO
   file into a string using Bash command
   substitution
   [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
-  **NOTE**: In POSIX `sh`, like
+  **NOTE**: Note: In POSIX `sh`, like
   `dash`, the `$(cat file)` is
-  extremely fast.
+  also extremely fast.
   See [code](./bin/t-file-read-into-string.sh).
 
 ```bash
@@ -720,9 +717,9 @@ TODO
     # In Bash: POSIX, 2.3x slower
     str=$(cat file)
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
 
@@ -879,34 +876,34 @@ None of these offer any advantages to speed up shell scripts.
 
     # Bash
     if [[ $string == $pattern ]]; then
-	    ...
+        ...
     fi
 
     # POSIX
     case $string in
         $pattern)
-            return 0   # in function, true
+            # true
             ;;
         *)
-            return 1   # in function, false
+            # false
             ;;
     esac
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
-	Run shell: dash
-	# t1     <skip>
-	# t2      real 0.011 POSIX
-	Run shell: ksh93
-	# t1     real 0.004  [[ == ]]
-	# t2     real 0.002  POSIX
-	Run shell: bash
-	# t1     real 0.003  [[ == ]]
-	# t2     real 0.002  POSIX
+    Run shell: dash
+    # t1     <skip>
+    # t2      real 0.011 POSIX
+    Run shell: ksh93
+    # t1     real 0.004  [[ == ]]
+    # t2     real 0.002  POSIX
+    Run shell: bash
+    # t1     real 0.003  [[ == ]]
+    # t2     real 0.002  POSIX
 ```
 
 - There is no performance difference
@@ -1040,7 +1037,7 @@ Modern equivalents:
     if [ "$a" ] ...
 
     # Variable does not have something,
-	# that is: variable is empty
+    # that is: variable is empty
     if [ ! "$a" ] ...
 
     # Logical OR between statements
@@ -1850,3 +1847,15 @@ Keywords: shell, sh, POSIX, bash,
 ksh, ksh93, programming,
 optimizing, performance, profiling,
 portability
+
+<!-- references -->
+
+[Perl]: //www.perl.org
+[Python]: https://www.python.org
+[Ruby]: https://www.ruby-lang.org
+[bash]: https://www.gnu.org/software/bash
+[dash]: https://tracker.debian.org/pkg/dash
+[posh]: https://tracker.debian.org/pkg/posh
+[ksh]: https://tracker.debian.org/pkg/ksh93u+m
+
+<!-- END OF FILE -->
