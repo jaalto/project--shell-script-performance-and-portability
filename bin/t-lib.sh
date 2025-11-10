@@ -73,9 +73,9 @@ random_file=${random_file:-t.random.numbers.tmp}
 random_file_count=${random_file_count:-10000}
 loop_max=${loop_max:-100}
 
-SED=${SED:-"sed"}    # preferrably GNU version
-AWK=${AWK:-"awk"}    # preferrably GNU version
-STAT=${STAT:-"stat"} # must be GNU version
+SED=${SED:-"sed"}
+AWK=${AWK:-"awk"}
+STAT=${STAT:-"stat"} # Must be GNU version
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
 
@@ -387,19 +387,19 @@ RequireParallel ()
 RequireDictionary ()
 {
     IsFeatureDictionary && return 0
-    Die "${1:-}: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY_FILE"
+    Die "${1:-}: ERROR: missing requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY_FILE"
 }
 
 RequireBash ()
 {
     IsShellBash && return 0
-    Die "${1:-}: ERROR: no requirement: Bash"
+    Die "${1:-}: ERROR: missing requirement: Bash"
 }
 
 RequireGnuStat ()
 {
     IsCommandGnuStat && return 0
-    Die "${1:-}: ERROR: no requirement: GNU stat(1), or set envvar STAT"
+    Die "${1:-}: ERROR: missing requirement: GNU stat(1), or set envvar STAT"
 }
 
 RequireGnuAwk ()
