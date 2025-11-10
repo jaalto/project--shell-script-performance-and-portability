@@ -401,7 +401,7 @@ TODO
   [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   on string. In-memory handling is much
   more efficient than calling the
-  `grep` command in Bash on a file,
+  [grep] command in Bash on a file,
   especially if multiple matches are
   needed.
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
@@ -760,7 +760,7 @@ these offer practical benefits.
 ```
 
 - One might think that choosing
-  optimized `grep` options would make a
+  optimized [grep] options would make a
   difference. In practice, for typical
   file sizes (below few Megabytes),
   performance is nearly identical even
@@ -919,7 +919,7 @@ None of these offer any advantages to speed up shell scripts.
     done
 ```
 
-- With `grep`, the use of
+- With [GNU grep], the use of
   [GNU parallel],
   a [Perl] program, makes things
   notably slower for typical file
@@ -928,12 +928,12 @@ None of these offer any advantages to speed up shell scripts.
   search in parallel is intriguing, but
   the overhead of starting Perl
   interpreter with
-  `parallel` is orders of magnitude
+  [GNU parallel] is orders of magnitude
   more expensive compared to running
-  already optimized `grep` only once.
+  already optimized [grep] only once.
   Usually the limiting factor when
   grepping a file is the disk's I/O
-  speed. Otherwise, GNU `parallel` is
+  speed. Otherwise, `parallel` is
   excellent for making full use of
   multiple cores. Based on
   StackOverflow discussions, if file
