@@ -349,9 +349,9 @@ TODO
     # In Bash, at least 100x slower
     echo "$str" | grep -E "$re"
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
@@ -401,9 +401,9 @@ TODO
 
     ext=$(echo "$str" | sed 's/^[^.]\+//')
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
 
@@ -446,9 +446,9 @@ TODO
         ...
     fi
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     (1) read once + case..end
     (2) loop do.. grep file ..done
@@ -486,15 +486,15 @@ TODO
     # This is an example only. It
     # is not needed in POSIX sh
     # shells, because 'ret=$(cmd)'
-	# is already fast
+    # is already fast
 
     fnNamerefPosix()
     {
         # NOTE: uses non-POSIX
         # 'local' but it is widely
-        # supported in POSIX-compliant
-        # shells: dash, posh, mksh,
-        # ksh93 etc.
+        # supported in POSIX
+        # compliant shells: dash,
+        # posh, mksh, ksh93 etc.
 
         local retref=$1
         shift
@@ -518,9 +518,9 @@ TODO
     fnNamerefPosix ret "arg"
     fnNamerefBash ret "arg"
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
 
@@ -539,7 +539,6 @@ TODO
     # t2     real 0.006s fnNamerefPosix
     # t3     real 0.094s ret=$(fn)
 ```
-
 
 - In Bash, it is about 2 times faster
   for line-by-line handling to read
@@ -565,9 +564,9 @@ TODO
         ...
     done < file
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-content-loop.sh
 
@@ -631,9 +630,9 @@ TODO
        ...
     done < file
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
 
@@ -721,9 +720,9 @@ TODO
     # In Bash: POSIX, 2.3x slower
     str=$(cat file)
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
 
@@ -880,34 +879,34 @@ None of these offer any advantages to speed up shell scripts.
 
     # Bash
     if [[ $string == $pattern ]]; then
-	    ...
+        ...
     fi
 
     # POSIX
     case $string in
         $pattern)
-            return 0   # in function, true
+            # true
             ;;
         *)
-            return 1   # in function, false
+            # false
             ;;
     esac
 
-    # --------------------------------
+    # ----------------------------
     # Different shells compared.
-    # --------------------------------
+    # ----------------------------
 
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
-	Run shell: dash
-	# t1     <skip>
-	# t2      real 0.011 POSIX
-	Run shell: ksh93
-	# t1     real 0.004  [[ == ]]
-	# t2     real 0.002  POSIX
-	Run shell: bash
-	# t1     real 0.003  [[ == ]]
-	# t2     real 0.002  POSIX
+    Run shell: dash
+    # t1     <skip>
+    # t2      real 0.011 POSIX
+    Run shell: ksh93
+    # t1     real 0.004  [[ == ]]
+    # t2     real 0.002  POSIX
+    Run shell: bash
+    # t1     real 0.003  [[ == ]]
+    # t2     real 0.002  POSIX
 ```
 
 - There is no performance difference
@@ -1041,7 +1040,7 @@ Modern equivalents:
     if [ "$a" ] ...
 
     # Variable does not have something,
-	# that is: variable is empty
+    # that is: variable is empty
     if [ ! "$a" ] ...
 
     # Logical OR between statements
