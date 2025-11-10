@@ -439,7 +439,7 @@ TODO
 ```bash
     # POSIX sh
     # ... str=$(cat file)
-    # ... but slower in bash
+    # is much slower in Bash
     #
     # Bash, Ksh syntax
     str=$(< file)
@@ -562,7 +562,7 @@ TODO
         ...
     done
 
-    # POSIX. In bash, slower
+    # POSIX. In Bash, slower
     while read -r line
     do
         ...
