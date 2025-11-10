@@ -98,7 +98,7 @@ scripts. Learn more about POSIX on
 > Please note that `sh` here refers to
 > modern, best-of-effort POSIX-compatible,
 > minimal shells like
-> [dash] and [posh].
+> [dash], [posh], [mksh], [ash] etc.
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
 In Linux-like systems, for well-rounded
@@ -112,8 +112,11 @@ matches), and utilization of functions.
 
 On the other hand, In BSD and lecacy UNIX
 systems, the choice for shell scripting
-would be [Korn Shell}
-([ksh93], [mksh] etc.).
+would be [Korn Shell] family; like
+[ksh93]. For plain `/bin/sh` it is
+[mksh] or [ash]; which are similar to
+Debian [dash]. By the way, [mksh] is the
+default shell on Android.
 
 Shell scripting is about combining
 redirections, pipes, and calls to
@@ -126,12 +129,11 @@ respective fields where the requirements
 differ from those of the shell.
 
 Certain features in Bash are slow, but
-knowing the bottlenecks and using
+knowing the bottlenecks and using faster
 alternatives helps. On the other hand,
-small POSIX `sh` scripts, for example
-[dash], are much faster at calling
-external processes and functions.
-More about this in section
+small POSIX `sh` scripts, are much faster
+at calling external processes and
+functions. More about this in section
 [SHELLS AND PERFORMANCE](#32-shells-and-performance).
 
 The results presented here provide only
@@ -225,34 +227,30 @@ the following factors.
   [StackOverflow](https://stackoverflow.com/a/22661643),
   the [GNU grep] is considerably faster
   and more optimized than the operating
-  system's (macOS, BSD) default. For
-  shells, the utilities consist mainly of
-  [GNU coreutils], [GNU grep] and
-  [GNU awk]. If needed, arrange `PATH` to
-  prefer GNU utilities.
+  system's default (macOS, BSD). For
+  shells scriptiing, the utilities
+  consist mainly of [GNU coreutils],
+  [GNU grep] and [GNU awk]. If needed,
+  arrange `PATH` to prefer GNU utilities.
 
 - Minimize extra processes as much as
   possible. In most cases, a single
-  [GNU awk]
-  can handle all of
-  [sed],
-  [cut],
-  [grep]
-  etc.
-  chains. The [awk] program is *very*
-  fast and more efficient than
-  [Perl], [Python] or [Ruby]
-  scripts where startup time and higher
-  memory consumption is a factor.
+  [GNU awk] can handle all of [sed],
+  [cut], [grep] etc. chains. The [awk]
+  program is *very* fast and more
+  efficient than [Perl], [Python] or
+  [Ruby] scripts where startup time and
+  higher memory consumption is a factor.
   *Note*: If you need to process large
   files, use a lot of regular
-  expressions, manipulate or work on
-  data extensively, there is probably
-  nothing that can replace the speed of
-  [Perl] unless you go even lower-level
-  languages like `C`. But then again,
-  we assume that you know how to choose
-  your tools in those cases.
+  expressions, manipulate or work on data
+  extensively, there is probably nothing
+  that can replace the speed and
+  compactness of [Perl] unless you go
+  even lower-level languages like `C`.
+  But then again, we assume that you know
+  how to choose your tools in those
+  cases.
 
 ```bash
     cmd | awk '{...}'
@@ -303,11 +301,11 @@ TODO
   calling utilities is
   *very* fast. Compared to Bash's
   [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
-  the `expr` in `dash` is only 5x
-  slower, which is negligible because
-  the time differences are measured in
-  mere few milliseconds.
-  See [code](./bin/t-string-match-regexp.sh)
+  the [expr] in [dash] is only 5x slower,
+  which is still negligible because the
+  time differences are measured in mere
+  few milliseconds. See
+  [code](./bin/t-string-match-regexp.sh)
 
 ```bash
     str="abcdef"
@@ -317,7 +315,7 @@ TODO
     [[ $str =~ $re ]]
 
     # In Bash, at least 60x slower
-    expr match "$str" ".*$re"
+    expr "$str" : ".*$re"
 
     # In Bash, at least 100x slower
     echo "$str" | grep -E "$re"
@@ -1797,6 +1795,7 @@ portability
 [bash]: https://www.gnu.org/software/bash
 [sh]: https://tracker.debian.org/pkg/dash
 [Bourne Shell]: https://en.wikipedia.org/wiki/Bourne_shell
+[ash]: https://en.wikipedia.org/wiki/Almquist_shell
 [Almquist shell]: https://en.wikipedia.org/wiki/Almquist_shell
 [dash]: https://tracker.debian.org/pkg/dash
 [posh]: https://tracker.debian.org/pkg/posh
@@ -1827,19 +1826,19 @@ portability
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX.1-2024]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX parameter expansions]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
+[awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
 [cut]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html
+[echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
+[env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
 [expr]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html
 [grep]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html
-[sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
-[env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
-[type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
 [hash]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/hash.html
-[echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
-[shift]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html
-[awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
-[true]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html
 [printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
 [read]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html
+[sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
+[shift]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html
+[true]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html
+[type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
 
 [GNU parallel]: https://www.gnu.org/software/parallel/
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
