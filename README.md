@@ -86,9 +86,7 @@ Table of Contents
 The tests reflect results under Linux
 using GNU utilities. The focus is on the
 features found in
-[Bash](https://www.gnu.org/software/bash)
-and
-[POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/)
+[Bash] and [POSIX.1-2024]
 compliant `sh` shells. The term compliant
 is used here as "most POSIX compliant",
 as there is no, and has never been,
@@ -106,20 +104,17 @@ more portable scripts. See also POSIX in
 In Linux like systems, for all rounded
 shell scripting, Bash is the sensible
 choice for data manipulation in memory
-with
+with regular
 [arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html),
 associative arrays, and strings with an
 extended set of parameter expansions,
 regular expressions, including extracting
 regex matches and utilizing functions.
 
-In other operating systems, for example
-BSD, the obvious choice for shell
-scripting would be fast
-[Ksh](https://en.wikipedia.org/wiki/KornShell)
-([ksh93](https://tracker.debian.org/pkg/ksh93u+m),
-[mksh](https://tracker.debian.org/pkg/mksh),
-etc.).
+On the other hand, In BSD and lecacy UNIX
+systems, the choice for shell scripting
+would be [Korn Shell}
+([ksh93], [mksh] etc.).
 
 Shell scripting is about combining
 redirections, pipes, calling external
@@ -193,11 +188,8 @@ the fastest results.
 ## 3.1 GENERAL PERFORMANCE ADVICE
 
 Regardless of the shell you use for
-scripting
-([sh](https://tracker.debian.org/pkg/dash),
-[bash], [ksh])
-consider these factors.
-
+scripting ([sh], [bash], [ksh]) consider
+the following factors.
 
 - If you run scripts on many small files,
   set up a RAM disk and copy the files to
@@ -217,48 +209,40 @@ consider these factors.
   [vmtouch](https://hoytech.com/vmtouch/).
 
 - If you have tasks that can be run concurrently,
-  use
-  [Perl](https://www.perl.org)
-  based
-  [GNU parallel](https://www.gnu.org/software/parallel/)
-  for massive gains in performance.
-  See also how to use
+  use [Perl] based [GNU parallel] for
+  massive gains in performance. See also
+  how to use
   [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
   ([tutorial](https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore))
   to wait for all concurrent tasks to
   finish before continuing with the rest
   of the tasks in the pipeline. In some
-  cases, even parallelizing work with GNU
-[`xargs --max-procs=0`](https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html)
-can help.
+  cases, even parallelizing work with
+  [GNU xargs] with `--max-procs=0` can
+  help.
 
 - Use GNU utilities. According to
   benchmarks, like
   [StackOverflow](https://stackoverflow.com/a/22661643),
-  the GNU `grep` is considerably faster
+  the [GNU grep] is considerably faster
   and more optimized than the operating
-  system's default. For shells, the GNU
-  utilities consist mainly of
-  [coreutils](https://tracker.debian.org/pkg/coreutils),
-  [grep](https://tracker.debian.org/pkg/grep) and
-  [awk](https://tracker.debian.org/pkg/gawk).
-  If needed, arrange `PATH` to prefer
-  GNU utilities (for example, on
-  macOS).
+  system's (macOS, BSD) default. For
+  shells, the utilities consist mainly of
+  [GNU coreutils], [GNU grep] and
+  [GNU awk]. If needed, arrange `PATH` to
+  prefer GNU utilities.
 
 - Minimize extra processes as much as
   possible. In most cases, a single
-[awk](https://www.gnu.org/software/gawk/)
+  [GNU awk]
   can handle all of
-  [`sed`](https://www.gnu.org/software/sed/),
-  [`cut`](https://www.gnu.org/software/coreutils/manual/html_node/index.html),
-  [`grep`](https://www.gnu.org/software/grep/)
+  [sed],
+  [cut],
+  [grep]
   etc.
-  chains. The `awk` binary program is *very*
+  chains. The [awk] program is *very*
   fast and more efficient than
-  [Perl](https://www.perl.org)
-  or
-  [Python](https://www.python.org)
+  [Perl], [Python] or [Ruby]
   scripts where startup time and higher
   memory consumption is a factor.
   *Note*: If you need to process large
@@ -266,8 +250,7 @@ can help.
   expressions, manipulate or work on
   data extensively, there is probably
   nothing that can replace the speed of
-  [Perl](https://www.perl.org)
-  unless you go even lower-level
+  [Perl] unless you go even lower-level
   languages like `C`. But then again,
   we assume that you know how to choose
   your tools in those cases.
@@ -275,7 +258,7 @@ can help.
 ```bash
     cmd | awk '{...}'
 
-    # ... could probably
+    # Single awk could probably
     # replace all of these
 
     cmd | head ... | cut ...
@@ -293,8 +276,8 @@ can help.
   issues are not as relevant.
 
 - Use Shell built-ins
-  (see [Bash](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html))
-  and not binaries:
+  (see Bash [built-ins]) and not
+  external binaries:
 
 ```bash
     echo     # not /usr/bin/echo
@@ -314,14 +297,12 @@ TODO
   [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   rather than to calling external
   POSIX utilities
-  [`expr`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html)
-  or
-  [`grep`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
+  [expr] or [grep].
 
   **NOTE**: In POSIX `sh`, like
-  [dash](https://tracker.debian.org/pkg/dash)
-  , calling utilities is
-  *extremely* fast. Compared to Bash's
+  [dash],
+  calling utilities is
+  *very* fast. Compared to Bash's
   [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
   the `expr` in `dash` is only 5x
   slower, which is negligible because
@@ -369,9 +350,9 @@ TODO
   just how expensive it is, reminds us
   to utilize the possibilities of POSIX
   `#`, `##`, `%` and `%%`
-  [parameter expansions](https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02).
-  See more in
-  [Bash](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion).
+  [POSIX parameter expansions].
+  More extended set is available in
+  Bash [parameter expansions].
   See [code](./bin/t-string-file-path-components.sh).
 
 ```bash
@@ -417,8 +398,7 @@ TODO
 
 - In Bash, it is about 10 times faster
   to read a file into memory as a
-  string and use
-  [pattern matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
+  string and use [pattern matching]
   or regular expressions binary
   operator
   [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
@@ -473,8 +453,7 @@ TODO
   to return a value. In Bash, the
   `ret=$(cmd)` is inefficient to call
   functions. On the other hand, in
-  POSIX `sh` shells, like
-  [dash](https://tracker.debian.org/pkg/dash),
+  POSIX `sh` shells, like [dash]
   there is practically no overhead
   in using `$(cmd)`.
   See [code](./bin/t-function-return-value-nameref.sh).
@@ -538,12 +517,10 @@ TODO
 ```
 
 - In Bash, it is about 2 times faster
-  for line-by-line handling to read
-  the file into an array and then loop
+  for line-by-line handling to read the
+  file into an array and then loop
   through the array. The built-in
-  [`readarray`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray)
-  is synonym for
-  [`mapfile`](https://www.gnu.org/software/bash/manual/bash.html#index-mapfile),
+  [readarray] is synonym for [mapfile].
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```bash
@@ -580,17 +557,15 @@ TODO
 ```
 
 - In Bash, it is about 2 times faster to
-  prefilter with
-  [grep](https://tracker.debian.org/pkg/grep)
+  prefilter with [GNU grep]
   to process only
   certain lines instead of reading the
   whole file into a loop and then
   selecting lines. The
-  [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
+  [process substitution]
   is more general because variables
-  persist after the loop. The
-  [dash](https://tracker.debian.org/pkg/dash)
-  is very fast compared to Bash.
+  persist after the loop. The [dash]
+  shell much faster compared to Bash.
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
@@ -651,7 +626,7 @@ TODO
   a string into an array using list
   rather than using Bash here-string.
   This is because
-[HERE STRING](https://www.gnu.org/software/bash/manual/bash.html#Here-Strings)
+  [HERE STRING]
   `<<<` uses a pipe or temporary file,
   whereas Bash list operates entirely
   in memory. The pipe buffer behavor
@@ -698,11 +673,11 @@ TODO
 ```
 
 - It is about 2 times faster to read
-  file into a string using Bash command
-  substitution
-  [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
+  file into a string using Bash
+  [command substitution]
+  `$(< file)`.
   **NOTE**: Note: In POSIX `sh`, like
-  `dash`, the `$(cat file)` is
+  [dash], the `$(cat file)` is
   also extremely fast.
   See [code](./bin/t-file-read-into-string.sh).
 
@@ -743,14 +718,14 @@ According to the results, none of
 these offer practical benefits.
 
 - The Bash
-  [brace expansion](https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion)
+  [brace expansion]
   `{N..M}` might offer a
   neglible advantage. However it may be
   impractical because `N..M` cannot be
   parameterized. Surprisingly, the
   simple and elegant `$(seq N M)` is
   fast, even though
-[command substitution](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Command-Substitution)
+  [command substitution]
   uses a subshell. The last POSIX
   `while` loop example was slightly
   slower in all subsequent tests.
@@ -837,7 +812,7 @@ None of these offer any advantages to speed up shell scripts.
 
 - There are no practical differences
   between these. The POSIX
-  [arithmetic expansion](https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion)
+  [arithmetic expansion]
   `$(())`
   compound command will do fine. Note
   that the null command
@@ -863,8 +838,7 @@ None of these offer any advantages to speed up shell scripts.
   for pattern matching compared to
   POSIX `case..esac`. Interestingly
   pattern matching is 4x slower under
-  [dash](https://tracker.debian.org/pkg/dash)
-  compared to Bash. However,
+  [dash] compared to Bash. However,
   that means nothing because the time
   differences are measured in minuscule
   milliseconds (0.002s).
@@ -908,7 +882,7 @@ None of these offer any advantages to speed up shell scripts.
 
 - There is no performance difference
   between a regular while loop and a
-  [process substitution](https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html)
+  [process substitution]
   loop. However, the latter is more
   general, as any variable set during
   the loop will persist after *and*
@@ -948,8 +922,8 @@ None of these offer any advantages to speed up shell scripts.
 ```
 
 - With `grep`, the use of
-  [GNU parallel](https://www.gnu.org/software/parallel/),
-  a `perl` program, makes things
+  [GNU parallel],
+  a [Perl] program, makes things
   notably slower for typical file
   sizes. The idea of splitting a file
   into chunks of lines and running the
@@ -966,8 +940,7 @@ None of these offer any advantages to speed up shell scripts.
   multiple cores. Based on
   StackOverflow discussions, if file
   sizes are in the several hundreds of
-  megabytes or larger, GNU
-  [`parallel`](https://www.gnu.org/software/parallel/)
+  megabytes or larger, [GNU parallel]
   can help speed things up.
   See [code](./bin/t-command-grep-parallel.sh).
 
@@ -981,19 +954,15 @@ None of these offer any advantages to speed up shell scripts.
 ## 4.1 LEGACY SHELL SCRIPTING
 
 In typical cases, the legacy `sh`
-([Bourne Shell](https://en.wikipedia.org/wiki/Bourne_shell))
+(or ancient [Bourne Shell])
 is not a relevant target for shell
 scripting. The Linux and and modern
 UNIX operating systems have long
 provided an `sh` that is
 POSIX-compliant enough. Nowadays `sh`
-is usually a symbolic link to
-[dash](https://tracker.debian.org/pkg/dash)
-(on Linux since 2006),
-[ksh](https://tracker.debian.org/pkg/ksh93u+m)
-(on some BSDs), or it may point to
-[Bash](https://www.gnu.org/software/bash)
-(on macOS).
+is usually a symbolic link to [dash] (on
+Linux since 2006), [ksh] (on some BSDs),
+or it may point to [bash] (on macOS).
 
 Examples of pre-2000 shell scripting
 practises:
@@ -1069,9 +1038,9 @@ involves considering several factors.
 - *Portable scripts.* If you intend to
   use the scripts across some operating
   systems — from Linux to Windows
-  ([Git Bash](https://gitforwindows.org/),
-  [Cygwin](https://cygwin.com),
-  [MSYS2](https://www.msys2.org) [\*][\*\*]) —
+  ([Git Bash], [Cygwin], [MSYS2]
+  [\*]
+  [\*\*]) —
   the obvious choice would be Bash.
   Between macOS and Linux, writing
   scripts in Bash is generally more
@@ -1089,11 +1058,10 @@ involves considering several factors.
   issues become quite complex. You are
   probably better off writing `sh`
   POSIX-compliant scripts and testing
-  them with
-  [dash](https://tracker.debian.org/pkg/dash),
-  since relying on Bash can lead to
-  unexpected issues — different systems
-  have different Bash versions, and
+  them with [dash], since relying on Bash
+  can lead to unexpected issues —
+  different systems have different Bash
+  versions, and
   there’s no guarantee that a script
   written on Linux will run without
   problems on older Bash versions, such
@@ -1105,13 +1073,12 @@ involves considering several factors.
 
 [\*] "Git Bash" is available with the
 popular native Windows installation of
-[Git for Windows](https://git-scm.com/downloads/win).
+[Git for Windows]
 Under the hood, the installation is based on
-MSYS2, which in turn is based on
-Cygwin. The common denominator of
+[MSYS2], which in turn is based on
+[Cygwin]. The common denominator of
 all native Windows Linux-like
-environments is the
-[Cygwin](https://cygwin.com)
+environments is the [Cygwin]
 base which, in all
 practical terms, provides the usual
 command-line utilities,
@@ -1128,15 +1095,12 @@ additional Linux utilities.
 
 [\*\*] In Windows, there is also
 the Windows Subsystem for Linux
-([WSL](https://learn.microsoft.com/en-us/windows/wsl/)),
+([WSL]),
 where you can install (See `wsl --list --onlline`)
-Linux distributions like
-[Debian](https://en.wikipedia.org/wiki/Debian),
-[Ubuntu](https://en.wikipedia.org/wiki/Ubuntu),
-[OpenSUSE](https://en.wikipedia.org/wiki/OpenSUSE) and
-[Oracle Linux](https://en.wikipedia.org/wiki/Oracle_Linux).
+Linux distributions like [Debian],
+[Ubuntu], [OpenSUSE] and [Oracle Linux].
 Bash is the obvious choice for shell
-scripts in this environment.
+scripts in the WSL environment.
 
 ## 4.3 WRITING POSIX COMPLIANT SHELL SCRIPS
 
@@ -1160,28 +1124,24 @@ Let's first consider the typical `sh`
 shells in order of their strictness to
 POSIX:
 
-- [posh](https://tracker.debian.org/pkg/posh).
-  Minimal `sh`, Policy-compliant
-  Ordinary SHell. Very close to POSIX.
-  Stricter than
-  [dash](https://tracker.debian.org/pkg/dash).
-  Supports
-  `local` keyword to define local
-  variables in functions. The keyword
-  is not defined in POSIX.
+- [posh]. Minimal `sh`.
+  Policy-compliant Ordinary SHell,
+Very close to POSIX. Stricter than
+  [dash]. Supports `local` keyword to
+  define function local variables. The
+  keyword `local` is not defined in
+  POSIX.
 
-- [dash](https://tracker.debian.org/pkg/dash).
-  Minimal `sh`, Debian Almquish Shell.
+- [dash]. Minimal `sh`, The
+  Debian Almquish Shell.
   Close to POSIX. Supports `local`
   keyword. The shell aims to meet the
   requirements of the Debian Linux
   distribution.
-- [Busybox ash](https://www.busybox.net)
-  is based on
-  [dash](https://tracker.debian.org/pkg/dash)
-  with some more
-  features added. Supports `local`
-  keyword. See ServerFault
+- [Busybox ash]
+  `ash' shell is based on [dash] with
+  some more features added. Supports
+  `local` keyword. See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
 
 Let's also consider what the `/bin/sh`
@@ -1202,25 +1162,21 @@ discussion on StackExchange.
 
 - On Linux, most distributions already
   use, or are moving towards using,
-  `sh` as a symlink to
-  [dash](https://tracker.debian.org/pkg/dash).
+  `sh` as a symlink to [dash].
   Older Linux versions (Red Hat,
   Fedora, CentOS) used to have `sh` to
   be a symlink to `bash`.
 
 - On the most conservative NetBSD,
   it is `ash`, the old
-  [Almquist shell](https://en.wikipedia.org/wiki/Almquist_shell).
-  On FreeBSD, `sh` is also `ash`.
-  On
-  [OpenBSD, sh](https://man.netbsd.org/sh.1) is
-  [ksh93](https://tracker.debian.org/pkg/ksh93u+m)
-  from the
-  [Ksh family](https://en.wikipedia.org/wiki/KornShell).
+  [Almquist shell].
+  On FreeBSD, `sh` is also `ash`. On
+  [OpenBSD, sh](https://man.netbsd.org/sh.1)
+  is [ksh93] from the [Korn Shell]
+  family.
 - On many commercial, conservative
   UNIX systems `sh` is nowadays quite
-  capable
-  [ksh93](https://tracker.debian.org/pkg/ksh93u+m).
+  capable [ksh93].
 - On macOS, `sh` points to `bash
   --posix`, where the Bash version is
   indefinitely stuck at version 3.2.x
@@ -1240,13 +1196,10 @@ discussion on StackExchange.
 
 In practical terms, if you plan to aim
 for POSIX-compliant shell scripts, the
-best shells for testing would be
-[posh](https://tracker.debian.org/pkg/posh)
-and
-[dash](https://tracker.debian.org/pkg/dash).
-You can also extend testing
-with BSD Ksh shells and other shells.
-See
+best shells for testing your scripts
+would be [posh] and [dash]. You can also
+extend testing with BSD Ksh shells and
+other shells. See
 [FURTHER READING](#further-reading)
 for external utilities to check and
 improve shell scripts even more.
@@ -1280,16 +1233,16 @@ improve shell scripts even more.
     # Use is like:
     shelltest script.sh
 
-    # External utility
+    # See Google. External utility
     shellcheck script.sh
 
-    # External utility
+    # See Google. External utility
     checkbashisms script.sh
 
 ## 4.4 SHEBANG LINE IN SCRIPTS
 
 Note that POSIX does not define the
-[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+[shebang]
 — the traditional first line that
 indicates which interpreter to use. See
 POSIX C language's section "exec family
@@ -1386,25 +1339,21 @@ with `python` (2.x) or `python3`.
     #! /usr/bin/python2
     #! /usr/bin/python3.13.2
 
-But this is not all. Python is one
-of those languages which might require
+But this is not all. Python is one of
+those languages which might require
 multiple virtual environments based on
 projects. It is typical to manage these
-environments with tools like
-[uv](https://docs.astral.sh/uv/pip/environments/)
-or older
-[virtualenv](https://virtualenv.pypa.io),
-[pyenv](https://github.com/pyenv/pyenv)
-etc. For even better portability, the
-following would allow user to use his
-active Python environment:
+environments with tools like [uv] or
+older [virtualenv], [pyenv] etc. For even
+better portability, the following would
+allow user to use his active Python
+environment:
 
     ... portable
 
     #! /usr/bin/env python3
 
-The fine print here is that
-[`env`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html)
+The fine print here is that [env]
 is a standard POSIX utility, but its
 path is not mandated by POSIX. However,
 in 99.9% of cases, the de facto
@@ -1423,8 +1372,7 @@ called from the script also has to be
 considered. Those of `echo`, `cut`,
 `tail` make big part of of the scripts.
 If you want to ensure portability,
-check options defined in
-[POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/).
+check options defined in [POSIX].
 See top left menu "Shell & Utilities"
 followed by bottom left menu
 ["4. Utilities"](https://pubs.opengroup.org/onlinepubs/9799919799/idx/utilities.html)
@@ -1435,18 +1383,16 @@ Notable observations:
   [`command -v`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/command.html)
   to check if command exists.
   Note that POSIX also defines
-  [`type`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html),
-  as in `type <command>`
+  [type], as in `type <command>`
   without any options. POSIX also
-  defines utility
-  [`hash`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html),
+  defines utility [hash],
   as in `hash <command>`. Problem with
   `type` is that the semantics, return
   codes, support or output are not
   necessarily uniform. Problem with
   `hash` are similar. Neither `type`
   nor `hash` is supported by
-  [posh](https://tracker.debian.org/pkg/posh);
+  [posh] shell;
   see table
   [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt).
   Note: The `which <command>` is
@@ -1484,17 +1430,15 @@ Notable observations:
 ```
 
 - Use plain
-  [`echo`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html)
-  without any options. Use
-  [`printf`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html)
-  when more functionality is needed.
+  [echo]
+  without any options for simple
+  printing. Use
+  [printf] when more functionality is needed.
   Relying solely on `printf` may not be
   ideal. In POSIX-compliant `sh` shells,
   `printf` is not always a built-in
-  command (e.g., in
-  [posh](https://tracker.debian.org/pkg/posh)
-  or
-  [mksh](https://tracker.debian.org/pkg/mksh))
+  command (e.g. nor in [posh]
+  or [mksh])
   which can lead to performance overhead
   due to the need to invoke an external
   process.
@@ -1511,21 +1455,21 @@ Notable observations:
 
 ```
 
-- Use [`grep -E`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html).
+- Use [grep] with option `-E`.
   In 2001 POSIX removed `egrep`.
 
-- [`read`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html).
-  POSIX requires a VARIABLE, so always
-  supply one. In Bash, the command would
-  default to variable `REPLY` if omitted.
-  You should also always use option `-r`
-  which is eplained in
+- [read] POSIX comand requires a
+  VARIABLE, so always supply one. In
+  Bash, the command would default to
+  variable `REPLY` if omitted. You should
+  also always use option `-r` which is
+  eplained in
   shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
   BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
   POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
   and
   BashWiki [IFS](https://mywiki.wooledge.org/IFS).
-  See in depth details
+  In Bash manual, see in depth details
   how the
   [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
   command does not reads characters and
@@ -1548,8 +1492,8 @@ Notable observations:
    esac
 ```
 
-- Use [`shift N`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html)
-  always with shell special parameter
+- Always use [shift]
+  with shell special parameter
   [`$#`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_05_02)
 
 ```bash
@@ -1567,16 +1511,15 @@ Notable observations:
 
 ### 4.5.1 Case Study: sed
 
-As a case study, the Linux GNU `sed(1)`
- and its options differ or
-are incompatible. The Linux GNU
-[`sed`](https://www.gnu.org/software/sed/)
-`--in-place` option for replacing file
-content cannot be used in macOS and
-BSD. Additionally, in macOS and BSD,
-you will find GNU programs under a
-`g`-prefix, such as `gsed(1)`, etc. See
-StackOverflow
+As a case study, the Linux [GNU sed] and
+its options differ or are incompatible in
+default `sed` found in macOS and BSD. The
+GNU sed has option `--in-place` for
+replacing file content which cannot be
+used in macOS and BSD. Additionally, in
+macOS and BSD, you will find GNU programs
+under a `g`-prefix, such as `gsed`,
+etc. See StackOverflow
 ["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068). For more
 discussions about the topic, see
 StackOverflow [1](https://stackoverflow.com/q/48712373),
@@ -1586,7 +1529,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     # Linux (works)
     #
     # GNU sed(1). Replace 'this'
-    # with 'that'
+    # with 'that' in file.
 
     sed -i 's/this/that/g' file
 
@@ -1620,11 +1563,10 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
 
 ### 4.5.2 Case Study: awk
 
-POSIX
-[`awk`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html),
-does not support the `-v` option to
-define variables. You can use
-assignments after the program instead.
+POSIX [awk] does not support the GNU
+option `-v` option to define variables.
+You can use assignments after the program
+instead.
 
     # POSIX
     awk '{print var}' var=1 file
@@ -1650,7 +1592,7 @@ operands without any files:
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   might be slightly preferrable than
   utlity
-  [`true`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html)
+  [true]
   according to
   GNU autoconf's manual
   ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
@@ -1684,7 +1626,7 @@ operands without any files:
   Including UNIX like AIX, HP-UX and
   conservative Oracle Solaris 10 (2005)
   whose support ends in
-[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
+  [2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
   (see Solaris
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
@@ -1705,8 +1647,7 @@ https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autocon
 
 See the Bash manual how to use
 [`time`](https://www.gnu.org/software/bash/manual/bash.html#Pipeline)
-reserved word with
-[TIMEFORMAT](https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT)
+reserved word with [TIMEFORMAT]
 variable to display results in
 different formats. The use of time as a
 reserved word permits the timing of
@@ -1724,8 +1665,7 @@ testing:
 
 ## 6.1 BASH PROGRAMMING
 
-- Bash
-  [Manual](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash manual]
 - Greg's Bash Wiki and FAQ
   https://mywiki.wooledge.org/BashGuide
 - List of which features were added to
@@ -1848,14 +1788,77 @@ ksh, ksh93, programming,
 optimizing, performance, profiling,
 portability
 
-<!-- references -->
+<!-- REFERENCES -->
 
 [Perl]: //www.perl.org
 [Python]: https://www.python.org
 [Ruby]: https://www.ruby-lang.org
+
 [bash]: https://www.gnu.org/software/bash
+[sh]: https://tracker.debian.org/pkg/dash
+[Bourne Shell]: https://en.wikipedia.org/wiki/Bourne_shell
+[Almquist shell]: https://en.wikipedia.org/wiki/Almquist_shell
 [dash]: https://tracker.debian.org/pkg/dash
 [posh]: https://tracker.debian.org/pkg/posh
+[Korn Shell]: https://en.wikipedia.org/wiki/KornShell
 [ksh]: https://tracker.debian.org/pkg/ksh93u+m
+[ksh93]: https://tracker.debian.org/pkg/ksh93u+m
+[mksh]: https://tracker.debian.org/pkg/mksh
+[busybox]: https://www.busybox.net
+
+<!-- Bash Manual -->
+
+[Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
+[TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
+[parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
+[brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
+[arithmetic expansion]: https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion
+[pattern matching]: https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching
+[process substitution]: https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html
+[command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
+[built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
+[readarray]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray
+[mapfile]: https://www.gnu.org/software/bash/manual/bash.html#index-mapfile
+[HERE STRING]: https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
+
+[POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
+[POSIX.1-2024]: https://pubs.opengroup.org/onlinepubs/9799919799/
+[POSIX parameter expansions]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
+[cut]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html
+[expr]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html
+[grep]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html
+[sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
+[env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
+[type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
+[hash]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/hash.html
+[echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
+[shift]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html
+[awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
+[true]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html
+[printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
+[read]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html
+
+[GNU parallel]: https://www.gnu.org/software/parallel/
+[GNU coreutils]: https://www.gnu.org/software/coreutils/
+[GNU grep]: https://tracker.debian.org/pkg/grep
+[GNU awk]: https://tracker.debian.org/pkg/gawk
+[GNU sed]: https://www.gnu.org/software/sed/
+[GNU cut]: https://www.gnu.org/software/coreutils/manual/html_node/cut-invocation.html
+[GNU xargs]: https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html
+
+[Git Bash]: https://gitforwindows.org
+[Git for Windows]: https://gitforwindows.org
+[Cygwin]: https://cygwin.com
+[MSYS2]: https://www.msys2.org
+[WSL]: https://learn.microsoft.com/en-us/windows/wsl/
+[Debian]: https://en.wikipedia.org/wiki/Debian
+[Ubuntu]: https://en.wikipedia.org/wiki/Ubuntu
+[OpenSUSE]: https://en.wikipedia.org/wiki/OpenSUSE
+[Oracle Linux]: https://en.wikipedia.org/wiki/Oracle_Linux
+
+[shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
+[uv]: https://docs.astral.sh/uv/pip/environments/
+[virtualenv]: https://virtualenv.pypa.io
+[pyenv]: https://github.com/pyenv/pyenv
 
 <!-- END OF FILE -->
