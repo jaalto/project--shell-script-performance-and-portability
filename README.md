@@ -829,7 +829,7 @@ None of these offer any advantages to speed up shell scripts.
     : $((i++))       # POSIX, Uhm
     : $((i = i + 1)) # POSIX, Uhm
     ((i++))          # Bash, Ksh
-    let i++          # Bash, Ksh
+    let i++          # Bash, Ksh; Uhm
 ```
 
 - There is no performance
