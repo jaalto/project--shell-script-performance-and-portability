@@ -58,6 +58,7 @@
 #           $PARALLEL
 #           $PERL
 #           $SED
+#           $SHUF
 #           $STAT
 #           $TR
 #
@@ -94,6 +95,7 @@ PARALLEL=${PARALLEL:-"parallel"}
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
 SED=${SED:-"sed"}
+SHUF=${SHUF:-"shuf"}
 STAT=${STAT:-"stat"} # Must be GNU version
 TR=${TR:-"tr"}
 
@@ -106,7 +108,8 @@ DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 
 RUNNER=t.run
 
-[ "${KSH_VERSION:-}" ] && alias local=typeset
+# Nope, does not work around 'local' in ksh
+# [ "${KSH_VERSION:-}" ] && alias local=typeset
 
 AtExitDefault ()
 {
@@ -332,45 +335,50 @@ IsCommandPushd ()
 
 IsCacheGnu ()
 {
-    local cmd
-    cmd==${1:?ERROR: missing arg: cmd}
+    cmd=${1:?ERROR: missing arg: cmd}
 
     case ${T_LIB_CACHE_GNU:-} in
         *$cmd*)
+            unset cmd
             return 0
             ;;
         *)
+            unset cmd
             return 1
     esac
 }
 
 CacheGnuSave ()
 {
-    local cmd
     cmd=${1:?ERROR: missing arg: cmd}
 
     if ! IsCacheGnu "$cmd"; then
         T_LIB_CACHE_GNU="$T_LIB_CACHE_GNU $cmd"
     fi
 
+    unset cmd
     return 0
 }
 
 IsCommandGnuVersion ()
 {
-    local cmd
     cmd=${1:-}
 
-    [ "$cmd" ] || return 1
+    if [ ! "$cmd" ]; then
+        unset cmd
+        return 1
+    fi
 
     IsCacheGnu "$cmd" && return 0
 
     case $("$cmd" --version 2> /dev/null) in
         *GNU*)
             CacheGnuSave "$cmd"
+            unset cmd
             return 0
             ;;
         *)
+            unset cmd
             return 1
             ;;
     esac
@@ -432,7 +440,7 @@ RandomWordsGibberish ()
     # - Limit output to column 80.
     # - Separate words by spaces.
 
-    local dev=/dev/urandom
+    dev=/dev/urandom
 
     if [ -e "$dev" ]; then
         : # ok
@@ -448,13 +456,15 @@ RandomWordsGibberish ()
         $TR --complement --delete 'a-zA-Z0-9 ' |
         $FOLD --width=80 |
         $HEAD --bytes="${1:-100k}"
+
+    unset dev
 }
 
 RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
-    shuf --head-count=200000 "$DICTIONARY_FILE" |
+    $SHUF --head-count=200000 "$DICTIONARY_FILE" |
     $AWK '
         BEGIN {
             total_size = 0;
@@ -483,7 +493,7 @@ RandomWordsDictionary ()
                 total_size += length(line) + 1;
             }
         }' |
-    head --bytes=${1:-100k}
+    $HEAD --bytes=${1:-100k}
 }
 
 RandomNumbersAwk ()
@@ -538,7 +548,6 @@ RunTestCase ()
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
 
-    local format hasformat
     format="real %3R  user %3U  sys %3S" # precision 3: N.NNN
 
     if [ "$ZSH_VERSION" ]; then
@@ -570,7 +579,6 @@ RunTestCase ()
     # Run
     # -------------------------------------------------------
 
-    local timecmd
     timecmd=""
 
     case $(command -v time 2>&1) in
@@ -638,20 +646,18 @@ TestData ()
     # time RandomNumbersPython "$1" > /dev/null
 
     if [ ! -s "$random_file" ]; then
-        RandomNumbersAwk "$1" > "$random_file"
+        RandomNumbersAwk "${1:-}" > "$random_file"
     fi
 }
 
 t ()
 {
-    local dummy
     dummy="t()"
-
-    local test
     test=${1:-}
 
     if [ ! "$test" ]; then
         Warn "WARN: t() called without a test case"
+        unset dummy test
         return 1
     fi
 
@@ -731,7 +737,7 @@ RunTests ()
         if [ "${1:-}" ]; then # Condition
             printf "%-28s " "$arg $*"
 
-            if $arg "$@" ; then
+            if "$@" ; then
                 "$arg"
             else
                 printf "<skip> "
