@@ -483,8 +483,9 @@ TODO
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
-	# This is an example only. It is not needed in
-	# POSIX sh shells, because 'ret=$(cmd)'
+    # This is an example only. It
+    # is not needed in POSIX sh
+    # shells, because 'ret=$(cmd)'
 	# is already fast
 
     fnNamerefPosix()
