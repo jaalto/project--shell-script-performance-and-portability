@@ -618,6 +618,8 @@ RunTestCase ()
         # 0m00.08s real  0m00.05s user  0m00.03s system
         #
         # - convert "0m00" => "0"
+        # - change order of fields:
+        #   0m00.08s real ... => real 0m00.08s ...
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
