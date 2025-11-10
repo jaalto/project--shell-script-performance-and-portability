@@ -390,7 +390,6 @@ TODO
     # t3aExt real 0.004s
     # t3cExt real 0.358s
     # t3eExt real 0.431s
-
 ```
 
 - In Bash, it is about 10 times faster
