@@ -53,9 +53,13 @@
 #           $DICTIONARY_FILE
 #           $AWK
 #           $BASE64
+#           $FOLD
+#           $HEAD
+#           $PARALLEL
 #           $PERL
 #           $SED
 #           $STAT
+#           $TR
 #
 #           $loop_max
 #           $random_file
@@ -74,7 +78,7 @@ VERBOSE=""
 T_LIB_CACHE_GNU=""
 
 # -- ------------------------------------
-# -- User settable variables in environment
+# -- User settable env variables
 # -- ------------------------------------
 
 # create random number test file
@@ -83,11 +87,15 @@ random_file_count=${random_file_count:-10000}
 loop_max=${loop_max:-100}
 
 AWK=${AWK:-"awk"}
-BASE64=${BASe64:-"base64"}
+BASE64=${BASE64:-"base64"}
+FOLD=${FOLD:-"fold"}
+HEAD=${HEAD:-"head"}
+PARALLEL=${PARALLEL:-"parallel"}
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
 SED=${SED:-"sed"}
 STAT=${STAT:-"stat"} # Must be GNU version
+TR=${TR:-"tr"}
 
 DICTIONARY_DEFAULT="/usr/share/dict/words"
 DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
@@ -309,12 +317,12 @@ IsFeatureArray ()
 
 IsCommandParallel ()
 {
-    IsCommandExist parallel
+    IsCommandExist "$PARALLEL"
 }
 
 IsCommandStat ()
 {
-    IsCommandExist stat
+    IsCommandExist "$STAT"
 }
 
 IsCommandPushd ()
@@ -391,31 +399,31 @@ IsCommandGnuFind ()
 RequireParallel ()
 {
     IsCommandParallel && return 0
-    Die "${1:-}: ERROR: no requirement: parallel(1) not in PATH"
+    Die "${1:-}: ERROR: no GNU parallel(1) in PATH. Set envvar \$PARALLEL"
 }
 
 RequireDictionary ()
 {
     IsFeatureDictionary && return 0
-    Die "${1:-}: ERROR: missing requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY_FILE"
+    Die "${1:-}: ERROR: missing requirement: $DICTIONARY_DEFAULT. Set envvar \$DICTIONARY_FILE"
 }
 
 RequireBash ()
 {
     IsShellBash && return 0
-    Die "${1:-}: ERROR: missing requirement: Bash"
+    Die "${1:-}: ERROR: no GNU bash(1) in PATH"
 }
 
 RequireGnuStat ()
 {
     IsCommandGnuStat && return 0
-    Die "${1:-}: ERROR: missing requirement: GNU stat(1), or set envvar STAT"
+    Die "${1:-}: ERROR: no GNU stat(1) in PATH. Set envvar STAT"
 }
 
 RequireGnuAwk ()
 {
     IsCommandGnuAwk && return 0
-    Die "${1:-}: ERROR: no requirement: GNU awk(1), or set envvar AWK"
+    Die "${1:-}: ERROR: no GNU awk(1) in PATH. Set envvar AWK"
 }
 
 RandomWordsGibberish ()
@@ -437,9 +445,9 @@ RandomWordsGibberish ()
     IsCommandExist "$BASE64" || Die "ERROR: not in PATH: $BASE64"
 
     base64 --decode "$dev" |
-        tr --complement --delete 'a-zA-Z0-9 ' |
-        fold --width=80 |
-        head --bytes="${1:-100k}"
+        $TR --complement --delete 'a-zA-Z0-9 ' |
+        $FOLD --width=80 |
+        $HEAD --bytes="${1:-100k}"
 }
 
 RandomWordsDictionary ()
