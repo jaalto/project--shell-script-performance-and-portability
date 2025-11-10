@@ -450,7 +450,7 @@ TODO
   to return a value. In Bash, the
   `ret=$(cmd)` is inefficient to call
   functions. On the other hand, in
-  POSIX `sh` shells, like [dash]
+  POSIX `sh` shells, like [dash],
   there is practically no overhead
   in using `$(cmd)`.
   See [code](./bin/t-function-return-value-nameref.sh).
