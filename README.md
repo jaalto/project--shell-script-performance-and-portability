@@ -437,7 +437,11 @@ TODO
   See [code](./bin/t-file-grep-vs-match-in-memory.sh).
 
 ```bash
-    # Bash, Ksh
+    # POSIX sh
+    # ... str=$(cat file)
+    # ... but slower in bash
+    #
+    # Bash, Ksh syntax
     str=$(< file)
 
     if [[ $str =~ $regexp1 ]]; then
@@ -704,9 +708,9 @@ TODO
   file into a string using Bash command
   substitution
   [`$(< file)`](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution).
-  **NOTE**: In POSIX `sh`, like
+  **NOTE**: Note: In POSIX `sh`, like
   `dash`, the `$(cat file)` is
-  extremely fast.
+  also extremely fast.
   See [code](./bin/t-file-read-into-string.sh).
 
 ```bash
