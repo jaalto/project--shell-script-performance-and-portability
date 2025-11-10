@@ -1,6 +1,6 @@
 #  -*- mode: sh; -*-
 #
-#   t-lib.sh - Liibrary of common shell functions for testing.
+#   t-lib.sh - Library of common shell functions for testing.
 #
 #   Copyright
 #
