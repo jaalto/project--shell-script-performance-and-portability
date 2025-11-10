@@ -83,16 +83,16 @@ Table of Contents
 - [COPYRIGHT](#copyright)
 - [LICENSE](#license)
 
-The tests reflect results under Linux
-using GNU utilities. The focus is on the
-features found in
-[Bash] and [POSIX.1-2024]
-compliant `sh` shells. The term compliant
-is used here as "most POSIX compliant",
-as there is no, and has never been,
-shell that is fully POSIX compliant.
-POSIX is useful if you are looking for
-more portable scripts. See also POSIX in
+The tests reflect results under **Linux
+using GNU utilities**. The focus is on
+the features found in shells compliant
+with **[Bash]** and **[POSIX.1-2024]**.
+The term "compliant" is used here to mean
+"**most POSIX compliant**," as there is
+not, and never has been, a shell that is
+**fully POSIX compliant**. POSIX is
+useful if you are looking for **more
+portable scripts**. See also POSIX on
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
@@ -101,15 +101,14 @@ more portable scripts. See also POSIX in
 > [dash] and [posh].
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
-In Linux like systems, for all rounded
+In Linux-like systems, for well-rounded
 shell scripting, Bash is the sensible
-choice for data manipulation in memory
-with regular
-[arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html),
-associative arrays, and strings with an
-extended set of parameter expansions,
-regular expressions, including extracting
-regex matches and utilizing functions.
+choice for data manipulation in memory,
+offering regular [arrays], associative
+arrays, and strings with an extended set
+of parameter expansions, regular
+expressions (including extracting regex
+matches), and utilization of functions.
 
 On the other hand, In BSD and lecacy UNIX
 systems, the choice for shell scripting
@@ -117,33 +116,33 @@ would be [Korn Shell}
 ([ksh93], [mksh] etc.).
 
 Shell scripting is about combining
-redirections, pipes, calling external
-utilities, and gluing them all together.
-Shell scripts are also quite portable by
-default, requiring no additional
-installation. [Perl], [Python] ot [Ruby]
-excel in their respective fields, where
-the requirements differ from those of
-the shell.
+redirections, pipes, and calls to
+external utilities, gluing them all
+together. Shell scripts are also quite
+portable by default, requiring no
+additional installation. [Perl],
+[Python], or [Ruby] excel in their
+respective fields where the requirements
+differ from those of the shell.
 
 Certain features in Bash are slow, but
-knowing the cold spots and using
+knowing the bottlenecks and using
 alternatives helps. On the other hand,
-small POSIX `sh`, for example
-[dash], scrips are much faster at calling
-external processes and functions. More
-about this in section
+small POSIX `sh` scripts, for example
+[dash], are much faster at calling
+external processes and functions.
+More about this in section
 [SHELLS AND PERFORMANCE](#32-shells-and-performance).
 
-The results presented in this README
-provide only some highlighs from the test
-cases listed in RESULTS. Consider the raw
-[`time`](https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words)
-results only as guidance, as they reflect
-only the system used at the time of
-testing. Instead, compare the relative
-order in which each test case produced
-the fastest results.
+The results presented here provide only
+some highlights from the test cases
+listed in RESULTS. Consider the raw
+`time` (see Bash [reserved words])
+results only as guidance, as they
+reflect only the system used at the
+time of testing. Instead, compare the
+relative order in which each test
+case produced the fastest results.
 
 ## 1.1 THE PROJECT STRUCTURE
 
@@ -1819,7 +1818,10 @@ portability
 [command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
 [built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
 [readarray]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray
+[reserved words]: https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words
+[arrays]: https://www.gnu.org/software/bash/manual/html_node/Arrays.html
 [mapfile]: https://www.gnu.org/software/bash/manual/bash.html#index-mapfile
+
 [HERE STRING]: https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
 
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
