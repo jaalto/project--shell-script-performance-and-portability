@@ -85,9 +85,9 @@ Table of Contents
 
 The tests reflect results under Linux
 using GNU utilities. The focus is on the
-features found in shells compliant with
-[Bash] and [POSIX.1-2024] The term
-"compliant" is used here to mean "most
+features found in [Bash] and
+[POSIX.1-2024] compliant shells. The term
+**compliant** is used here to mean "most
 POSIX compliant," as there is not, and
 never has been, a shell that is fully
 POSIX compliant. POSIX is still useful if
