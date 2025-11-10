@@ -83,16 +83,16 @@ Table of Contents
 - [COPYRIGHT](#copyright)
 - [LICENSE](#license)
 
-The tests reflect results under **Linux
-using GNU utilities**. The focus is on
-the features found in shells compliant
-with **[Bash]** and **[POSIX.1-2024]**.
-The term "compliant" is used here to mean
-"**most POSIX compliant**," as there is
-not, and never has been, a shell that is
-**fully POSIX compliant**. POSIX is
-useful if you are looking for **more
-portable scripts**. See also POSIX on
+The tests reflect results under Linux
+using GNU utilities. The focus is on the
+features found in shells compliant with
+[Bash] and [POSIX.1-2024] The term
+"compliant" is used here to mean "most
+POSIX compliant," as there is not, and
+never has been, a shell that is fully
+POSIX compliant. POSIX is still useful if
+you are looking for more portable
+scripts. Learn more about POSIX on
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
