@@ -806,8 +806,9 @@ None of these offer any advantages to speed up shell scripts.
     [[ $var = 1 ]]   # Bash
 
     [ ! "$var" ]     # POSIX
+    [ -z "$var" ]    # POSIX archaic
     [[ ! $var ]]     # Bash
-    [ -z "$var" ]    # archaic
+
 ```
 
 - There are no practical differences
