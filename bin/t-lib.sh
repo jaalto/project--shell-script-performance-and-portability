@@ -604,24 +604,44 @@ RunTestCase ()
 
         # Format the output using other means.
 
-        printf "# $1  "
+        # printf "# $1"
 
         # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
         # =============================
         # |
-        # sed: delete this part and limit output to 2 spaces.
+        # sed:
+        # - delete up till 'real'
+        # - convert multiple spaces to 2
+        # - convert tabs to 2 spaces
+        #
+        # mksh:
+        # 0m00.08s real  0m00.05s user  0m00.03s system
+        #
+        # - convert "0m00" => "0"
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
             ${SED:-sed} \
                 --regexp-extended \
-                --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
+                --expression 's,^.*[[:space:]]+([0-9]+m[0-9.]+s[[:space:]]+real),\1, ' \
                 --expression 's,   +,  ,g' \
                 --expression 's,\t,  ,g' |
-            $TR --delete '\n'
+            $TR --delete '\n' |
+            $AWK '
+            {
+                gsub(/0m00/, "0")
+                sub(/system/, "sys")
 
-        # Add newline
-        echo
+                if (match($2, "real"))
+                {
+                    # 0.08s real  ... => real 0.08s
+                    $0 = $2 " " $1 "  " $4 " " $3 "  " $6 " " $5
+                }
+
+                printf "# %-24s%s\n", test, $0
+            }' \
+            test="$1"
+
     else
         Die "ERROR: t(): Abort, no suitable built-in time command in Shell"
     fi
