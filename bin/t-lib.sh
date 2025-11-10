@@ -50,9 +50,10 @@
 #           $PROGRAM
 #           $TMPBASE
 #           $DICTIONARY_FILE
-#           $SED
 #           $AWK
+#           $BASE64
 #           $PERL
+#           $SED
 #           $STAT
 #
 #           $loop_max
@@ -80,11 +81,12 @@ random_file=${random_file:-t.random.numbers.tmp}
 random_file_count=${random_file_count:-10000}
 loop_max=${loop_max:-100}
 
-SED=${SED:-"sed"}
 AWK=${AWK:-"awk"}
-STAT=${STAT:-"stat"} # Must be GNU version
+BASE64=${BASe64:-"base64"}
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
+SED=${SED:-"sed"}
+STAT=${STAT:-"stat"} # Must be GNU version
 
 DICTIONARY_DEFAULT="/usr/share/dict/words"
 DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
@@ -430,6 +432,8 @@ RandomWordsGibberish ()
     else
         Die "ERROR: no /dev/urandom"
     fi
+
+    IsCommandExist "$BASE64" || Die "ERROR: not in PATH: $BASE64"
 
     base64 --decode "$dev" |
         tr --complement --delete 'a-zA-Z0-9 ' |
