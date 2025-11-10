@@ -27,10 +27,11 @@
 #
 #           . <file>
 #
-# Depends
+# Requirements
 #
 #       Requires GNU utilities first in PATH. Those
-#       of sed, awk, cut, head, tr etc.
+#       of sed, awk, cut, head, tr etc. Used GNU --long
+#       options for calling commands (code maintenance).
 #
 # Description
 #
