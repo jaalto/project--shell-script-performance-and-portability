@@ -27,14 +27,16 @@
 #
 # Description
 #
-#       This is a library. Common utilities. When sourced, it will
-#       create the following test file to be used by <test cases>:
+#       This is a library. Common
+#       utilities. When sourced, it will
+#       create the following test file to
+#       be used by <test cases>:
 #
 #           t.random.numbers.tmp
 #
 #       Global variables used:
 #
-#           $VERBOSE         in Verbose()
+#           $VERBOSE in Verbose()
 #
 #       Exported variables:
 #
@@ -50,9 +52,11 @@
 #           $random_file
 #           $random_file_count
 
-# -- -------------------------------------------------------
+# -- ------------------------------------
+
+# -- ------------------------------------
 # -- Exported variables
-# -- -------------------------------------------------------
+# -- ------------------------------------
 
 PROGRAM=$0
 TMPBASE=${LOGNAME:-$USER}.$$.test
@@ -60,9 +64,9 @@ TMPBASE=${LOGNAME:-$USER}.$$.test
 VERBOSE=""
 T_LIB_CACHE_GNU=""
 
-# -- -------------------------------------------------------
+# -- ------------------------------------
 # -- User settable variables in environment
-# -- -------------------------------------------------------
+# -- ------------------------------------
 
 # create random number test file
 random_file=${random_file:-t.random.numbers.tmp}
@@ -78,9 +82,9 @@ PYTHON=${PYTHON:-"python3"}
 DICTIONARY_DEFAULT="/usr/share/dict/words"
 DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 
-# -- -------------------------------------------------------
+# -- ------------------------------------
 # -- Private variables
-# -- -------------------------------------------------------
+# -- ------------------------------------
 
 RUNNER=t.run
 
