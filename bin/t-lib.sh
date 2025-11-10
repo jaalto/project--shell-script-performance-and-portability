@@ -436,7 +436,7 @@ RandomWordsGibberish ()
 
     if [ -e "$dev" ]; then
         : # ok
-    if [ -e /dev/random ]; then
+    elif [ -e /dev/random ]; then
         dev=/dev/random
     else
         Die "ERROR: no /dev/urandom"
