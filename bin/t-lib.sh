@@ -310,7 +310,8 @@ IsCommandPushd ()
 
 IsCacheGnu ()
 {
-    local cmd=${1:?ERROR: missing arg: cmd}
+    local cmd
+    cmd==${1:?ERROR: missing arg: cmd}
 
     case ${T_LIB_CACHE_GNU:-} in
         *$cmd*)
@@ -323,7 +324,8 @@ IsCacheGnu ()
 
 CacheGnuSave ()
 {
-    local cmd=${1:?ERROR: missing arg: cmd}
+    local cmd
+    cmd=${1:?ERROR: missing arg: cmd}
 
     if ! IsCacheGnu "$cmd"; then
         T_LIB_CACHE_GNU="$T_LIB_CACHE_GNU $cmd"
@@ -334,7 +336,8 @@ CacheGnuSave ()
 
 IsCommandGnuVersion ()
 {
-    local cmd=${1:-}
+    local cmd
+    cmd=${1:-}
 
     [ "$cmd" ] || return 1
 
@@ -483,6 +486,7 @@ RandomNumbersPython ()
 
 RunMaybe ()
 {
+    local cmd
     cmd=${1:-}
 
     [ "$cmd" ] || return 0
@@ -499,7 +503,7 @@ RunTestCase ()
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
 
-    format hasformat 2> /dev/null
+    local format hasformat
     format="real %3R  user %3U  sys %3S" # precision 3: N.NNN
 
     if [ "$ZSH_VERSION" ]; then
@@ -531,6 +535,7 @@ RunTestCase ()
     # Run
     # -------------------------------------------------------
 
+    local timecmd
     timecmd=""
 
     case $(command -v time 2>&1) in
@@ -602,8 +607,10 @@ TestData ()
 
 t ()
 {
+    local dummy
     dummy="t()"
 
+    local test
     test=${1:-}
 
     if [ ! "$test" ]; then
@@ -636,13 +643,19 @@ t ()
 
 RunTestSet ()
 {
+    local dummy
     dummy="RunTestSet()"
+
+    local testset
     testset=${1:-}
     shift
 
+    local saved
     saved=$IFS
     IFS=":
 "
+
+    local test
 
     for test in $testset
     do
@@ -651,11 +664,12 @@ RunTestSet ()
 
     IFS=$saved
 
-    unset dummy test testset saved
+    unset dummy testset saved test
 }
 
 RunTests ()
 {
+    local dummy
     dummy="RunTests()"
 
     # ARG 1 is list of tests to run in
@@ -669,6 +683,7 @@ RunTests ()
     # and all argumens from ARG 2 are
     # considered <test cases> to run,
 
+    local tests
     tests=${1:-}
     tests=${tests#:}  # Delete leading ":"
     tests=${tests%:}  # Delete trailing ":"
@@ -677,6 +692,7 @@ RunTests ()
     RunMaybe Info
 
     if [ "${1:-}" ]; then
+        local arg
         arg=$1
         shift
 
