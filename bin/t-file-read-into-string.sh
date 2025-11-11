@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #
-# Q: To read file into string: $(< file) vs read -N vs str=$(cat file)
-# A: It is about 2x faster to use $(< file)
+# Q: To read file into string: `$(< file)` vs `read -N` vs `str=$(cat file)`
+# A: It is about 2x faster to use `$(< file)´
 # priority: 5
 #
 #     t1  real 0m0.170s $(< file)    Bash
