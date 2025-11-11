@@ -38,7 +38,7 @@ relatively small (test file: ~600 lines).
 *A: No notable difference between --extended-regexp, --perl-regexp, --ignore-case*<br/>
 _priority: 2_
 
-    t1pure     real 0m0.382s LANG=C --fixed-strings
+    t1langc    real 0m0.382s LANG=C --fixed-strings
     t1utf8     real 0m0.389s LANG=C.UTF-8 --fixed-strings
     t1extended real 0m0.382s LANG=C --extended-regexp
     t1perl     real 0m0.381s LANG=C --perl-regexp
@@ -48,8 +48,8 @@ _priority: 2_
 
 ## Notes
 
-The tests suggest that with typical file sizes
-(100 kB), the choice between the "C" locale and
+The tests suggest that with 10 KiB file sizes,
+the choice between the "C" locale and
 UTF-8 is not significant. Similarly, the type of
 regular expression or case sensitivity does not
 seem to be a major factor.
@@ -554,7 +554,7 @@ more effectively in shell scripts.
 
 It's not surprising that `echo "$str" | cut`
 perform practically the same as Bash HERE
-STRINGS in `sut <<< "$str"` use pipes under
+STRINGS in `cut <<< "$str"` use pipes under
 the hood in lastest Bash versions. See
 version 5.1 and section "c" in
 https://github.com/bminor/bash/blob/master/CHANGES
