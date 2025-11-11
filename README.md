@@ -247,7 +247,7 @@ the following factors:
   the [GNU grep] is considerably faster
   and more optimized than the operating
   system's default (macOS, BSD). For
-  shells scripting, the utilities
+  shell scripting, the utilities
   consist mainly of [GNU coreutils],
   [GNU grep] and [GNU awk]. If needed,
   arrange `PATH` to prefer GNU utilities.
