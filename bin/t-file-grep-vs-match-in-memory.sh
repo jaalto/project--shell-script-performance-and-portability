@@ -31,6 +31,15 @@
 # The `grep` command is leaps ahead of
 # re-reading the file in a loop and using
 # the shell’s own matching capabilities.
+#
+# In Ksh, the "read into memory first, then
+# match" is extremely fast:
+#
+#     t1a real 0.005  user 0.002  sys 0.002
+#     t1b real 0.334  user 0.328  sys 0.005
+#     t2  real 0.221  user 0.126  sys 0.096
+#     t3  real 0.478  user 0.343  sys 0.137
+#     t4  real 0.222  user 0.153  sys 0.071
 
 . ./t-lib.sh ; rand=$random_file
 
