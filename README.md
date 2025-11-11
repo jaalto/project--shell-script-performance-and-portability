@@ -133,9 +133,9 @@ On the other hand, In BSD and lecacy UNIX
 systems, the choice for shell scripting
 would be [Korn Shell] family; like
 [ksh93]. For plain `/bin/sh` it is
-[mksh] or [ash]; which are similar to
-Debian [dash]. By the way, [mksh] is the
-default shell on Android.
+typically [mksh] or [ash]; which are
+similar to Debian [dash]. By the way,
+[mksh] is the default shell on Android.
 
 Shell scripting is about combining
 redirections, pipes, and calls to
