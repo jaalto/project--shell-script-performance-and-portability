@@ -346,7 +346,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1     <skip>
+    # t1     <skip>       [[ =~ ]]
     # t2     real 0.010s  expr
     # t3     real 0.010s  grep
     Run shell: ksh93
