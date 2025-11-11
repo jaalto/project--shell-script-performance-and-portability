@@ -338,6 +338,11 @@ IsFeatureArray ()
     IsShellModern
 }
 
+IsFeatureArraysHereString ()
+{
+    IsFeatureArrays && IsFeatureHereString
+}
+
 IsCommandParallel ()
 {
     IsCommandExist "$PARALLEL"
