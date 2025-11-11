@@ -27,8 +27,8 @@ FILE: t-dir-entries.sh
 # A: No notable differences.`ls` is good enough.
 
 FILE: t-file-copy-check-exist.sh
-# Q: Should you test existense before copying?
-# A: It is about 40x faster is you test existense before copying.
+# Q: Should you test newer before copying?
+# A: It is about 40x faster is you test before copying.
 
 FILE: t-file-for-loop-vs-awk.sh
 # Q: for-loop file-by-file to awk vs awk handling all the files?
@@ -39,7 +39,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 # A: `compgen` and array+glob are slightly faster than `stat`
 
 FILE: t-file-grep-vs-match-in-memory.sh
-# Q: To search file for matches: in memory searh vs `grep`
+# Q: To search file for matches: in memory search vs `grep`
 # A: It is about 8-10x faster to read file into memory and then do matching
 
 FILE: t-file-newest-in-dir.sh
@@ -59,11 +59,11 @@ FILE: t-file-read-content-loop.sh
 # A: It is about 2x faster to use `readarray`
 
 FILE: t-file-read-into-string.sh
-# Q: To read file into string: $(< file) vs read -N vs str=$(cat file)
-# A: It is about 2x faster to use $(< file)
+# Q: To read file into string: `$(< file)` vs `read -N` vs `str=$(cat file)`
+# A: It is about 2x faster to use `$(< file)´
 
 FILE: t-file-read-match-lines-loop-vs-grep.sh
-# Q: Howabout using `grep` to prefilter before loop?
+# Q: Use `grep` to prefilter before loop?
 # A: It is about 2x faster to use `grep` than doing all in a loop
 
 FILE: t-file-read-shell-result.sh
@@ -83,8 +83,8 @@ FILE: t-function-return-value-nameref.sh
 # A: It is about 8x faster to use nameref to return value from a function
 
 FILE: t-statement-arithmetic-for-loop.sh
-# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
-# A: The `{1..N}` and `$(seq N)` are very fast
+# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...i++))` vs POSIX `i=$((i + 1))`
+# A: The `$(seq N)` is fast in all shells. In ksh `{1..N}` is very slow.
 
 FILE: t-statement-arithmetic-increment.sh
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
@@ -95,12 +95,12 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 # A: No notable difference.
 
 FILE: t-string-file-path-components.sh
-# Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
+# Q: Extract /path/file.txt to components: parameter expansion vs `basename` etc.
 # A: It is 10-40x faster to use in memory parameter expansion where possible
 
 FILE: t-string-match-pattern.sh
-# Q: Match string by pattern: Bash vs case..esac
-# A: No noticeable difference, both are extremely fast
+# Q: Match string by pattern: `[[ str == pattern ]]` vs case..esac
+# A: No noticeable difference, both are very fast
 
 FILE: t-string-match-regexp.sh
 # Q: Match string by regexp: Bash vs expr vs grep

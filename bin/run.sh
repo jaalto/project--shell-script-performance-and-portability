@@ -143,13 +143,13 @@ RunBash ()
     [ "$shell" ] || return 1
 
     # Run with Bash when shell does not
-    # support proper time keyword
+    # support proper 'time' keyword
 
     # ignore set -e
     # shellcheck disable=SC2310
 
     if ! IsShellBashAvailable; then
-        Die "bash not in PATH. Required for timing."
+        Die "ERROR: bash not in PATH. Required for timing."
     fi
 
     # ignore follow
@@ -204,6 +204,8 @@ RunFile ()
              ;;
     esac
 
+    dummy="check: VERBOSE"
+
     if [ "$VERBOSE" ]; then
         Header "$testfile"
 
@@ -213,6 +215,8 @@ RunFile ()
     else
         Header "$testfile" "short"
     fi
+
+    dummy="check: shlist"
 
     if [ ! "$shlist" ]; then
         "$testfile"  # Run <test case> as is

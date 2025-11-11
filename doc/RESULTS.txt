@@ -163,8 +163,8 @@ FILE: t-dir-entries.sh
 FILE: t-file-copy-check-exist.sh
 #! /usr/bin/env bash
 #
-# Q: Should you test existense before copying?
-# A: It is about 40x faster is you test existense before copying.
+# Q: Should you test newer before copying?
+# A: It is about 40x faster is you test before copying.
 # priority: 1
 #
 #     t1 real 0m0.007s <file test> cp
@@ -209,7 +209,7 @@ FILE: t-file-glob-bash-compgen-vs-stat.sh
 FILE: t-file-grep-vs-match-in-memory.sh
 #! /usr/bin/env bash
 #
-# Q: To search file for matches: in memory searh vs `grep`
+# Q: To search file for matches: in memory search vs `grep`
 # A: It is about 8-10x faster to read file into memory and then do matching
 # priority: 10
 #
@@ -338,8 +338,8 @@ FILE: t-file-read-content-loop.sh
 FILE: t-file-read-into-string.sh
 #! /usr/bin/env bash
 #
-# Q: To read file into string: $(< file) vs read -N vs str=$(cat file)
-# A: It is about 2x faster to use $(< file)
+# Q: To read file into string: `$(< file)` vs `read -N` vs `str=$(cat file)`
+# A: It is about 2x faster to use `$(< file)´
 # priority: 5
 #
 #     t1  real 0m0.170s $(< file)    Bash
@@ -349,7 +349,7 @@ FILE: t-file-read-into-string.sh
 FILE: t-file-read-match-lines-loop-vs-grep.sh
 #! /usr/bin/env bash
 #
-# Q: Howabout using `grep` to prefilter before loop?
+# Q: Use `grep` to prefilter before loop?
 # A: It is about 2x faster to use `grep` than doing all in a loop
 # priority: 7
 #
@@ -439,14 +439,14 @@ FILE: t-function-return-value-nameref.sh
 FILE: t-statement-arithmetic-for-loop.sh
 #! /usr/bin/env bash
 #
-# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
-# A: The `{1..N}` and `$(seq N)` are very fast
+# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...i++))` vs POSIX `i=$((i + 1))`
+# A: The `$(seq N)` is fast in all shells. In ksh `{1..N}` is very slow.
 # priority: 2
 #
 #     t1 real 0m0.003s for i in {1..N}
 #     t2 real 0m0.004s for i in $(seq ...)
 #     t3 real 0m0.006s for ((i=0; i < N; i++))
-#     t4 real 0m0.010s while [ $i -le $N ] ... i++
+#     t4 real 0m0.010s while [ $i -le $N ] ... i=$((i + 1))
 #
 # Notes:
 #
@@ -481,6 +481,14 @@ FILE: t-statement-arithmetic-increment.sh
 # practical difference whichever you choose. The
 # portable POSIX version works in all shells:
 # `i=$((i + 1))`.
+#
+# When run under `ksh93`, the tests seems to
+# favor `(())` operator which is about 2x faster.
+#
+#     t1 real 0m0.011s ((i++))      Ksh
+#     t2 real 0m0.024s let i++      Ksh
+#     t3 real 0m0.026s i=$((i + 1)) POSIX
+#     t4 real 0m0.036s : $((i++))   POSIX (true; with side effect)
 
 FILE: t-statement-if-test-posix-vs-bash.sh
 #! /usr/bin/env bash
@@ -513,7 +521,7 @@ FILE: t-statement-if-test-posix-vs-bash.sh
 FILE: t-string-file-path-components.sh
 #! /usr/bin/env bash
 #
-# Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
+# Q: Extract /path/file.txt to components: parameter expansion vs `basename` etc.
 # A: It is 10-40x faster to use in memory parameter expansion where possible
 # priority: 10
 #
@@ -577,8 +585,8 @@ FILE: t-string-file-path-components.sh
 FILE: t-string-match-pattern.sh
 #! /usr/bin/env bash
 #
-# Q: Match string by pattern: Bash vs case..esac
-# A: No noticeable difference, both are extremely fast
+# Q: Match string by pattern: `[[ str == pattern ]]` vs case..esac
+# A: No noticeable difference, both are very fast
 # priority: 0
 #
 #     t1 real 0m0.002s Bash
