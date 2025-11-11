@@ -653,8 +653,7 @@ RunTestCase ()
                 }
 
                 printf "# %-24s%s\n", test, $0
-            }' \   # ' comment fix. Ksh bug: does not see closing quote
-            test="$1"
+            }' test="$1"  # ' comment fix. Ksh bug: does not see closing quote
 
     else
         Die "ERROR: t(): Abort, no suitable built-in time command in Shell"
