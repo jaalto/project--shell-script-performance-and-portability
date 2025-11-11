@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 #
 # Q: Split string into an array by IFS?
-# A: It is about 10 times faster to use local IFS than use Bash array `<<<` HERE STRING
+# A: It is about 10 times faster to use IFS+array than to use Bash array `<<<` HERE STRING
 # priority: 8
 #
 #     t1 real  0.011 eval array=(string)
-#     t2 real  0.021 arr=(string)
+#     t2 real  0.021 IFS...save arr=(string) IFS..restore
 #     t3 real  0.098 read -ra arr <<< string
 #
 # Code:
@@ -83,6 +83,9 @@ t1 ()
         # to allow assignments in the same line
         #
         #  var=value command eval <statement>
+        #            =======
+        #
+        # In Bash, it is not required
 
         IFS=":" eval 'array=($string)'
         item=${array[0]}
@@ -106,7 +109,8 @@ t3 ()
 {
     for i in $(seq $loop_max)
     do
-        # Slow, because internally uses temporary file to store STRING.
+        # Slow, because internally '<<<' uses
+        # a temporary file to store STRING.
         IFS=',' read -ra array <<< "$string"
         item=${array[0]}
     done
@@ -119,7 +123,7 @@ rm --force t.bash
 t="\
 :t t1 IsShellBash
 :t t2 IsFeatureArrays
-:t t3 IsFeatureArrays
+:t t3 IsFeatureArraysHereString
 "
 
 Setup
