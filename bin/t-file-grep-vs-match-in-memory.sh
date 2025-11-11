@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 #
-# Q: To search file for matches: in memory searh vs `grep`
+# Q: To search file for matches: in memory search vs `grep`
 # A: It is about 8-10x faster to read file into memory and then do matching
 # priority: 10
 #
