@@ -1305,7 +1305,7 @@ Note that POSIX does not define the
 indicates which interpreter to use. See
 POSIX C language's section "exec family
 of functions" and
-[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)
+[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE).
 
 > (...) Another way that some
 > historical implementations handle
