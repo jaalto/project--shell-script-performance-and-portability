@@ -556,19 +556,34 @@ TODO
   prefilter with [GNU grep]
   to process only
   certain lines instead of reading the
-  whole file into a loop and then
+  whole file in a loop and then
   selecting lines. The
   [process substitution]
   is more general because variables
-  persist after the loop. The [dash]
-  shell much faster compared to Bash.
+  persist after the loop. With `sh`,
+  like [dash], external [grep] and
+  in-loop prefilter are equally fast
+  compared to Bash. Overall `sh' is
+  magnitudes faster than Bash.
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
+- In Bash, it is about 2 times faster to
+  prefilter with [grep] to process only
+  certain lines, instead of reading the
+  whole file in a loop and then selecting
+  those lines. [Process substitution]
+  is more general because variables
+  persist after the loop. With `sh`, such
+  as [dash], external [grep] and
+  in-loop prefiltering are equally fast.
+  Overall, `sh` is magnitudes faster
+  than Bash.
+
 ```bash
-    # Bash
+    # Bash, Ksh
     while read -r ...
     do
-        ...
+        # variables persist after loop
     done < <(grep "$re" file)
 
     # POSIX
@@ -577,7 +592,8 @@ TODO
     grep "$re" file) |
     while read -r ...
     do
-        ...
+        # variables not visible after loop
+		...
     done
 
     # POSIX
@@ -586,7 +602,8 @@ TODO
     grep "$re" file) > tmpfile
     while read -r ...
     do
-        ...
+        # variables persist after loop
+		...
     done < tmpfile
     rm tmpfile
 
@@ -594,8 +611,10 @@ TODO
     # in-loop prefilter
     while read -r line
     do
-       [[ $line =~ $re ]] || continue
-       ...
+        [[ $line =~ $re ]] || continue
+        ...
+        # variables persist after loop
+		...
     done < file
 
     # ----------------------------
