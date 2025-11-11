@@ -272,6 +272,18 @@ IsShellModern ()
     IsShellBash || IsShellKsh93 || IsShellZsh
 }
 
+IsShellConditionalExpression ()
+{
+    # Supports: [[ ... ]]
+    IsShellModern || IsShellMksh
+}
+
+IsShellMatchPattern ()
+{
+    # Supports: [[ abc == *b* ]]
+    IsShellConditionalExpression
+}
+
 IsFeatureDictionary ()
 {
     [ -e "$DICTIONARY_FILE" ]
