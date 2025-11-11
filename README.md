@@ -566,21 +566,6 @@ TODO
 ```
 
 - In Bash, it is about 2 times faster to
-  prefilter with [GNU grep]
-  to process only
-  certain lines instead of reading the
-  whole file in a loop and then
-  selecting lines. The
-  [process substitution]
-  is more general because variables
-  persist after the loop. With `sh`,
-  like [dash], external [grep] and
-  in-loop prefilter are equally fast
-  compared to Bash. Overall `sh' is
-  magnitudes faster than Bash.
-  See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
-
-- In Bash, it is about 2 times faster to
   prefilter with [grep] to process only
   certain lines, instead of reading the
   whole file in a loop and then selecting
@@ -589,8 +574,9 @@ TODO
   persist after the loop. With `sh`, such
   as [dash], external [grep] and
   in-loop prefiltering are equally fast.
-  Overall, `sh` is magnitudes faster
-  than Bash.
+  Overall, `sh`, like [dash], is
+  magnitudes faster than Bash.
+  See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
     # Bash, Ksh
