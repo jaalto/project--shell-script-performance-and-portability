@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #
-# Q: Match string by pattern: Bash vs case..esac
-# A: No noticeable difference, both are extremely fast
+# Q: Match string by pattern: `[[ str == pattern ]]` vs case..esac
+# A: No noticeable difference, both are very fast
 # priority: 0
 #
 #     t1 real 0m0.002s Bash
@@ -34,7 +34,7 @@ t1 () # Bash, Ksh
 }
 EOF
 
-IsShellModern && . ./t.bash
+IsShellMatchPattern && . ./t.bash
 rm --force t.bash
 
 t2 () # POSIX
@@ -53,7 +53,7 @@ t2 () # POSIX
 }
 
 t="\
-:t t1 IsShellModern
+:t t1 IsShellMatchPattern
 :t t2
 "
 
