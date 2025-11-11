@@ -1453,13 +1453,18 @@ Notable observations:
 ```bash
     REQUIRE="sqlite curl"
 
+    IsCommand ()
+	{
+	    command -v "${1:-}" > /dev/null 2>&1
+	}
+
     RequireFeatures ()
     {
         local cmd
 
         for cmd # Implicit "$@"
         do
-            if ! command -v "$cmd" > /dev/null; then
+            if IsCommand "$cmd"; then
                 echo "ERROR: not in PATH: $cmd" >&2
                 return 1
             fi
