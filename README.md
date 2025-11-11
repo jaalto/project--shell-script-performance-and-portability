@@ -1173,8 +1173,8 @@ POSIX:
   keyword. The shell aims to meet the
   requirements of the Debian Linux
   distribution.
-- [Busybox ash]
-  `ash' shell is based on [dash] with
+- [busybox ash]
+  shell is based on [dash] with
   some more features added. Supports
   `local` keyword. See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
@@ -1211,7 +1211,26 @@ discussion on StackExchange.
   family.
 - On many commercial, conservative
   UNIX systems `sh` is nowadays quite
-  capable [ksh93].
+  capable [ksh93]. The trouble with
+  `ksh` it uses keyword `typeset' and
+  not `local'. In order to write
+  cross platform script to support also
+  `ksh' as `/bin/sh`, add following
+  code to the beginning:
+
+``` bash
+# Check if 'local' is supported
+if ! command -v local > /dev/null 2>&1; then
+    # Check if we are in ksh
+    if command -v typeset > /dev/null 2>&1; then
+        # Use 'eval' to hide from other shells
+		# so that defining function with name
+		# 'local' does generate an error.
+        eval 'local () { typeset "$@" ; }'
+    fi
+fi
+```
+
 - On macOS, `sh` points to `bash
   --posix`, where the Bash version is
   indefinitely stuck at version 3.2.x
@@ -1232,14 +1251,14 @@ discussion on StackExchange.
 In practical terms, if you plan to aim
 for POSIX-compliant shell scripts, the
 best shells for testing your scripts
-would be [posh] and [dash]. You can also
-extend testing with BSD Ksh shells and
+would be [dash] and [posh]. You can also
+extend testing with BSD Korn shells and
 other shells. See
 [FURTHER READING](#further-reading)
 for external utilities to check and
 improve shell scripts even more.
 
-    # Save in shell startup file
+    # Save in a shell startup file
     # like ~/.bashrc
 
     shelltest()
@@ -1843,7 +1862,8 @@ portability
 [ksh]: https://tracker.debian.org/pkg/ksh93u+m
 [ksh93]: https://tracker.debian.org/pkg/ksh93u+m
 [mksh]: https://tracker.debian.org/pkg/mksh
-[busybox]: https://www.busybox.net
+[busybox]: https://busybox.net
+[busybox ash]: https://busybox.net
 
 <!-- Bash Manual -->
 
