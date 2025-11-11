@@ -16,6 +16,15 @@
 # practical difference whichever you choose. The
 # portable POSIX version works in all shells:
 # `i=$((i + 1))`.
+#
+# When run under `ksh93`, the tests seems to
+# favor `(())` operator which is about 2x faster.
+#
+#     t1 real 0m0.011s ((i++))      Ksh
+#     t2 real 0m0.024s let i++      Ksh
+#     t3 real 0m0.026s i=$((i + 1)) POSIX
+#     t4 real 0m0.036s : $((i++))   POSIX (true; with side effect)
+
 
 [ "${loop_max:+user}" = "user" ] && loop_count=$loop_max
 
