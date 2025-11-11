@@ -209,7 +209,7 @@ case produced the fastest results.
 
 Regardless of the shell you use for
 scripting ([sh], [bash], [ksh]), consider
-the following factors.
+the following factors:
 
 - If you run scripts on many small files,
   set up a RAM disk and copy the files to
