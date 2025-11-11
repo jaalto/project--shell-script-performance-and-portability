@@ -101,13 +101,21 @@ scripts. Learn more about POSIX on
 > [dash], [posh], [mksh], [ash] etc.
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
-> **About the code examples**: The
-> `local` keyword is not defined in the
-> [POSIX] standard, but it is 100%
+> **About the code examples**: function
+> local variables are defined using
+> `local`. The keyword isn't defined in
+> the [POSIX] standard, but it is 100%
 > supported by all the best-effort
 > POSIX-compatible `sh` shells. The
 > `local` keyword is "portable enough" to
-> be used in modern shell scripts. 
+> be used in modern shell scripts. See
+> section
+> [4.3](#43-writing-posix-compliant-shell-scrips)
+> for more information on how to add
+> `local` keyword emulation in `sh`
+> scripts that are also compatible with
+> BSD and UNIX `/bin/sh`, which may be a
+> link to `ksh`.
 
 In Linux-like systems, for well-rounded
 shell scripting, Bash is the sensible
@@ -1153,7 +1161,7 @@ POSIX:
 
 - [posh]. Minimal `sh`.
   Policy-compliant Ordinary SHell,
-Very close to POSIX. Stricter than
+  Very close to POSIX. Stricter than
   [dash]. Supports `local` keyword to
   define function local variables. The
   keyword `local` is not defined in
