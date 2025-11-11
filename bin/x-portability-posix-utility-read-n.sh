@@ -11,10 +11,17 @@
 # using the variable `$REPLY`.
 
 f="t.tmp"
-: > "$f"
+echo "1234567890" > "$f"
 
-read -r -N10 REPLY < "$f"
-code=$?
+REPLY=""
+read -r -N1 REPLY < "$f"
+
+code=1
+
+case $REPLY in
+  1) code=0
+     ;;
+esac
 
 rm -f "$f"
 exit $code
