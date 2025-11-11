@@ -988,10 +988,10 @@ practises:
 ```bash
     if [ x$a = y ] ...
 
-    # test if variable's lenght is non-zero
+    # Test if variable's lenght is non-zero
     if [ -n "$a" ] ...
 
-    # Vtest of variable's lenght is zero
+    # Test of variable's lenght is zero
     if [ -z "$a" ] ...
 
     # Deprecated in next POSIX
