@@ -48,8 +48,8 @@ run:
 	./$(BIN_RUN) t-*
 
 # portability - Run portability tests
-.PHONY: run
-run:
+.PHONY: portability
+portability:
 	cd bin && \
 	./$(BIN_PORTABILITY) x-*
 
