@@ -90,9 +90,12 @@ features found in [Bash] and
 **compliant** is used here to mean "most
 POSIX compliant," as there is not, and
 never has been, a shell that is fully
-POSIX compliant. POSIX is still useful if
-you are looking for more portable
-scripts. Learn more about POSIX on
+POSIX compliant. If you are interested in
+creating highly portable shell scripts,
+POSIX provides the necessary foundation
+for scripts that function reliably across
+a broad spectrum of Unix-like operating
+systems. Learn more about POSIX on
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
@@ -130,9 +133,9 @@ On the other hand, In BSD and lecacy UNIX
 systems, the choice for shell scripting
 would be [Korn Shell] family; like
 [ksh93]. For plain `/bin/sh` it is
-[mksh] or [ash]; which are similar to
-Debian [dash]. By the way, [mksh] is the
-default shell on Android.
+typically [mksh] or [ash]; which are
+similar to Debian [dash]. By the way,
+[mksh] is the default shell on Android.
 
 Shell scripting is about combining
 redirections, pipes, and calls to
@@ -205,8 +208,8 @@ case produced the fastest results.
 ## 3.1 GENERAL PERFORMANCE ADVICE
 
 Regardless of the shell you use for
-scripting ([sh], [bash], [ksh]) consider
-the following factors.
+scripting ([sh], [bash], [ksh]), consider
+the following factors:
 
 - If you run scripts on many small files,
   set up a RAM disk and copy the files to
@@ -244,7 +247,7 @@ the following factors.
   the [GNU grep] is considerably faster
   and more optimized than the operating
   system's default (macOS, BSD). For
-  shells scripting, the utilities
+  shell scripting, the utilities
   consist mainly of [GNU coreutils],
   [GNU grep] and [GNU awk]. If needed,
   arrange `PATH` to prefer GNU utilities.
@@ -343,7 +346,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1     <skip>
+    # t1     <skip>       [[ =~ ]]
     # t2     real 0.010s  expr
     # t3     real 0.010s  grep
     Run shell: ksh93
