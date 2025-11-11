@@ -25,7 +25,6 @@
 #     t3 real 0m0.026s i=$((i + 1)) POSIX
 #     t4 real 0m0.036s : $((i++))   POSIX (true; with side effect)
 
-
 [ "${loop_max:+user}" = "user" ] && loop_count=$loop_max
 
 . ./t-lib.sh ; f=$random_file
