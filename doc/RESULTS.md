@@ -645,7 +645,7 @@ _priority: 7_
 # t-variable-array-split-string.sh
 
 **Q: Split string into an array by IFS?**<br/>
-*A: It is about 10 times faster to use IFS+array than to use Bash array `<<<` HERE STRING*<br/>
+*A: It is about 10x faster to use IFS+array than to use Bash array `<<<` HERE STRING*<br/>
 _priority: 8_
 
     t1 real  0.011 eval array=(string)
