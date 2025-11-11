@@ -96,10 +96,18 @@ scripts. Learn more about POSIX on
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
-> modern, best-of-effort POSIX-compatible,
+> modern, best-effort POSIX-compatible,
 > minimal shells like
 > [dash], [posh], [mksh], [ash] etc.
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
+
+> **About the code examples**: The
+> `local` keyword is not defined in the
+> [POSIX] standard, but it is 100%
+> supported by all the best-effort
+> POSIX-compatible `sh` shells. The
+> `local` keyword is "portable enough" to
+> be used in modern shell scripts. 
 
 In Linux-like systems, for well-rounded
 shell scripting, Bash is the sensible
@@ -228,7 +236,7 @@ the following factors.
   the [GNU grep] is considerably faster
   and more optimized than the operating
   system's default (macOS, BSD). For
-  shells scriptiing, the utilities
+  shells scripting, the utilities
   consist mainly of [GNU coreutils],
   [GNU grep] and [GNU awk]. If needed,
   arrange `PATH` to prefer GNU utilities.
@@ -1228,7 +1236,7 @@ improve shell scripts even more.
 
     shelltest()
     {
-        local script shell
+        local script name shell
 
         for script # Implicit "$@"
         do
@@ -1241,7 +1249,10 @@ improve shell scripts even more.
                 bash \
                 zsh
             do
-                if command -v "$shell" > /dev/null; then
+			    # "busybox ash" => busybox
+			    name=${shell%% *}
+
+                if command -v "$name" > /dev/null 2>&1; then
                     echo "-- shell: $shell"
                     $shell -nx "$script"
                 fi
