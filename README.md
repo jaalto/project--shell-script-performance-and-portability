@@ -479,14 +479,8 @@ TODO
     # shells, because 'ret=$(cmd)'
     # is already fast
 
-    fnNamerefPosix()
+    NamerefPosix()
     {
-        # NOTE: uses non-POSIX
-        # 'local' but it is widely
-        # supported in POSIX
-        # compliant shells: dash,
-        # posh, mksh, ksh93 etc.
-
         local retref=$1
         shift
         local arg=$1
@@ -494,7 +488,7 @@ TODO
         eval "$retref=\$arg"
     }
 
-    fnNamerefBash()
+    NamerefBash()
     {
         local -n retref=$1
         shift
@@ -506,8 +500,8 @@ TODO
     # Return value set to
     # variable 'ret'
 
-    fnNamerefPosix ret "arg"
-    fnNamerefBash ret "arg"
+    NamerefPosix ret "arg"
+    NamerefBash ret "arg"
 
     # ----------------------------
     # Different shells compared.
@@ -572,21 +566,6 @@ TODO
 ```
 
 - In Bash, it is about 2 times faster to
-  prefilter with [GNU grep]
-  to process only
-  certain lines instead of reading the
-  whole file in a loop and then
-  selecting lines. The
-  [process substitution]
-  is more general because variables
-  persist after the loop. With `sh`,
-  like [dash], external [grep] and
-  in-loop prefilter are equally fast
-  compared to Bash. Overall `sh' is
-  magnitudes faster than Bash.
-  See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
-
-- In Bash, it is about 2 times faster to
   prefilter with [grep] to process only
   certain lines, instead of reading the
   whole file in a loop and then selecting
@@ -595,8 +574,9 @@ TODO
   persist after the loop. With `sh`, such
   as [dash], external [grep] and
   in-loop prefiltering are equally fast.
-  Overall, `sh` is magnitudes faster
-  than Bash.
+  Overall, `sh`, like [dash], is
+  magnitudes faster than Bash.
+  See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
     # Bash, Ksh
@@ -713,7 +693,7 @@ TODO
   file into a string using Bash
   [command substitution]
   `$(< file)`.
-  **NOTE**: Note: In POSIX `sh`, like
+  Note: In POSIX `sh`, like
   [dash], the `$(cat file)` is
   also extremely fast.
   See [code](./bin/t-file-read-into-string.sh).
@@ -1008,10 +988,10 @@ practises:
 ```bash
     if [ x$a = y ] ...
 
-    # test if variable's lenght is non-zero
+    # Test if variable's lenght is non-zero
     if [ -n "$a" ] ...
 
-    # Vtest of variable's lenght is zero
+    # Test of variable's lenght is zero
     if [ -z "$a" ] ...
 
     # Deprecated in next POSIX
@@ -1151,11 +1131,12 @@ there is no need to attempt to write
 measures are required only if you
 target legacy UNIX operating systems
 whose `sh` may not have changed in 30
-years. your best guide probably is
-the wealth of knowledge collected by
-the GNU autoconf project; see
+years. For Legacy systems your best guide
+probably is the wealth of knowledge
+collected by the GNU autoconf project;
+see
 ["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell).
-For more discussion see
+For more discussion, see
 [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes).
 
 Let's first consider the typical `sh`
@@ -1472,13 +1453,18 @@ Notable observations:
 ```bash
     REQUIRE="sqlite curl"
 
+    IsCommand ()
+	{
+	    command -v "${1:-}" > /dev/null 2>&1
+	}
+
     RequireFeatures ()
     {
         local cmd
 
         for cmd # Implicit "$@"
         do
-            if ! command -v "$cmd" > /dev/null; then
+            if IsCommand "$cmd"; then
                 echo "ERROR: not in PATH: $cmd" >&2
                 return 1
             fi
