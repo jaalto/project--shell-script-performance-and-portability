@@ -108,8 +108,16 @@ DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 
 RUNNER=t.run
 
-# Nope, does not work around 'local' in ksh
-# [ "${KSH_VERSION:-}" ] && alias local=typeset
+# Emulate 'local' if needed
+
+if [ "${KSH_VERSION:-}" ]; then
+    if ! command -v local > /dev/null 2>&1; then
+        if command -v typeset > /dev/null 2>&1; then
+            # Use eval to hide from shell parsers
+            eval 'local () { typeset "$@" ; }'
+        fi
+    fi
+fi
 
 AtExitDefault ()
 {
@@ -335,6 +343,7 @@ IsCommandPushd ()
 
 IsCacheGnu ()
 {
+    local cmd
     cmd=${1:?ERROR: missing arg: cmd}
 
     case ${T_LIB_CACHE_GNU:-} in
@@ -350,6 +359,7 @@ IsCacheGnu ()
 
 CacheGnuSave ()
 {
+    local cmd
     cmd=${1:?ERROR: missing arg: cmd}
 
     if ! IsCacheGnu "$cmd"; then
@@ -362,6 +372,7 @@ CacheGnuSave ()
 
 IsCommandGnuVersion ()
 {
+    local cmd
     cmd=${1:-}
 
     if [ ! "$cmd" ]; then
@@ -440,6 +451,7 @@ RandomWordsGibberish ()
     # - Limit output to column 80.
     # - Separate words by spaces.
 
+    local dev
     dev=/dev/urandom
 
     if [ -e "$dev" ]; then
@@ -530,6 +542,7 @@ RandomNumbersPython ()
 
 RunMaybe ()
 {
+    local cmd
     cmd=${1:-}
 
     [ "$cmd" ] || return 0
@@ -544,6 +557,8 @@ RunMaybe ()
 RunTestCase ()
 {
     [ "${1:-}" ] || return 1
+
+    local fromat hasformat timecmd
 
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
@@ -601,10 +616,7 @@ RunTestCase ()
         unset timeformat
 
     elif [ "$timecmd" ]; then
-
         # Format the output using other means.
-
-        # printf "# $1"
 
         # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
         # =============================
@@ -641,7 +653,7 @@ RunTestCase ()
                 }
 
                 printf "# %-24s%s\n", test, $0
-            }' \
+            }' \   # ' comment fix. Ksh bug: does not see closing quote
             test="$1"
 
     else
@@ -674,6 +686,7 @@ TestData ()
 
 t ()
 {
+    local dummy test
     dummy="t()"
     test=${1:-}
 
@@ -708,6 +721,7 @@ t ()
 
 RunTestSet ()
 {
+    local dummy test testset saved
     dummy="RunTestSet()"
 
     testset=${1:-}
@@ -725,11 +739,12 @@ RunTestSet ()
 
     IFS=$saved
 
-    unset dummy testset saved test
+    unset dummy test testset saved test
 }
 
 RunTests ()
 {
+    local dummy
     dummy="RunTests()"
 
     # ARG 1 is list of tests to run in
@@ -741,7 +756,10 @@ RunTests ()
     #
     # if ARG 2 is present, the ARG 1 is ignored
     # and all argumens from ARG 2 are
-    # considered <test cases> to run,
+    # considered set of test cases to run, like
+    # "t1" "t2" ...
+
+    local tests
 
     tests=${1:-}
     tests=${tests#:}  # Delete leading ":"
@@ -750,13 +768,15 @@ RunTests ()
 
     RunMaybe Info
 
+    local arg
+
     if [ "${1:-}" ]; then
         arg=$1
         shift
 
         dummy="check:condition"
 
-        if [ "${1:-}" ]; then # Condition
+        if [ "${1:-}" ]; then # Pre-condition
             printf "%-28s " "$arg $*"
 
             if "$@" ; then
@@ -765,6 +785,7 @@ RunTests ()
                 printf "<skip> "
             fi
         else
+            dummy="run:it"
             printf "%-28s " "$arg"
             "$arg"
         fi
