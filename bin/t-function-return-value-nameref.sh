@@ -7,7 +7,6 @@
 #     t1 real 0m0.005s t2 funcall Bash nameref
 #     t2 real 0m0.006s t2 funcall POSIX nameref
 #     t3 real 0m0.055s t1 $(funcall)
-
 #
 # Code:
 #
