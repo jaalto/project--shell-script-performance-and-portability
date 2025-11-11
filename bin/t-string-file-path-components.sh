@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 #
-# Q: Extract /path/file.txt to components: parameter expansion vs ´basename` etc.
+# Q: Extract /path/file.txt to components: parameter expansion vs `basename` etc.
 # A: It is 10-40x faster to use in memory parameter expansion where possible
 # priority: 10
 #
