@@ -1304,8 +1304,8 @@ Note that POSIX does not define the
 — the traditional first line that
 indicates which interpreter to use. See
 POSIX C language's section "exec family
-of functions" and
-[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE).
+of functions". From
+[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)\:
 
 > (...) Another way that some
 > historical implementations handle
