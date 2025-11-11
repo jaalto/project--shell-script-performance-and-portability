@@ -479,14 +479,8 @@ TODO
     # shells, because 'ret=$(cmd)'
     # is already fast
 
-    fnNamerefPosix()
+    NamerefPosix()
     {
-        # NOTE: uses non-POSIX
-        # 'local' but it is widely
-        # supported in POSIX
-        # compliant shells: dash,
-        # posh, mksh, ksh93 etc.
-
         local retref=$1
         shift
         local arg=$1
@@ -494,7 +488,7 @@ TODO
         eval "$retref=\$arg"
     }
 
-    fnNamerefBash()
+    NamerefBash()
     {
         local -n retref=$1
         shift
@@ -506,8 +500,8 @@ TODO
     # Return value set to
     # variable 'ret'
 
-    fnNamerefPosix ret "arg"
-    fnNamerefBash ret "arg"
+    NamerefPosix ret "arg"
+    NamerefBash ret "arg"
 
     # ----------------------------
     # Different shells compared.
