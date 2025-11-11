@@ -52,23 +52,23 @@ t0 ()  # Baseline
 
 t1a ()
 {
-    parallel --pipepart grep --quiet --fixed-strings "$re" < $f
+    $PARALLEL --pipepart grep --quiet --fixed-strings "$re" < $f
 }
 
 t1b ()
 {
     # Use default values. In Linux blocksize is around 64k
-    parallel --pipe grep --quiet --fixed-strings "$re" < $f
+    $PARALLEL --pipe grep --quiet --fixed-strings "$re" < $f
 }
 
 t2 ()
 {
-    parallel --pipe --block-size 32k grep --quiet --fixed-strings "$re" < $f
+    $PARALLEL --pipe --block-size 32k grep --quiet --fixed-strings "$re" < $f
 }
 
 t3 ()
 {
-    parallel --pipe --block-size 16k grep --quiet --fixed-strings "$re" < $f
+    $PARALLEL --pipe --block-size 16k grep --quiet --fixed-strings "$re" < $f
 }
 
 t="\

@@ -275,6 +275,9 @@ Main ()
 {
     local shlist=""
 
+    # Reset
+    unset PS1 PS2 PS3 PS4
+
     while :
     do
         # Unused, but useful during debug
