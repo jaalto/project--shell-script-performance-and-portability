@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #
 # Q: Split string into an array by IFS?
-# A: It is about 10 times faster to use IFS+array than to use Bash array `<<<` HERE STRING
+# A: It is about 10x faster to use IFS+array than to use Bash array `<<<` HERE STRING
 # priority: 8
 #
 #     t1 real  0.011 eval array=(string)
