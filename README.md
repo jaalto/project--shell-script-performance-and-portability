@@ -1131,11 +1131,12 @@ there is no need to attempt to write
 measures are required only if you
 target legacy UNIX operating systems
 whose `sh` may not have changed in 30
-years. your best guide probably is
-the wealth of knowledge collected by
-the GNU autoconf project; see
+years. For Legacy systems your best guide
+probably is the wealth of knowledge
+collected by the GNU autoconf project;
+see
 ["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell).
-For more discussion see
+For more discussion, see
 [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes).
 
 Let's first consider the typical `sh`
