@@ -96,10 +96,26 @@ scripts. Learn more about POSIX on
 [Wikipedia](https://en.wikipedia.org/wiki/POSIX).
 
 > Please note that `sh` here refers to
-> modern, best-of-effort POSIX-compatible,
+> modern, best-effort POSIX-compatible,
 > minimal shells like
 > [dash], [posh], [mksh], [ash] etc.
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
+
+> **About the code examples**: function
+> local variables are defined using
+> `local`. The keyword isn't defined in
+> the [POSIX] standard, but it is 100%
+> supported by all the best-effort
+> POSIX-compatible `sh` shells. The
+> `local` keyword is "portable enough" to
+> be used in modern shell scripts. See
+> section
+> [4.3](#43-writing-posix-compliant-shell-scrips)
+> for more information on how to add
+> `local` keyword emulation in `sh`
+> scripts that are also compatible with
+> BSD and UNIX `/bin/sh`, which may be a
+> link to `ksh`.
 
 In Linux-like systems, for well-rounded
 shell scripting, Bash is the sensible
@@ -228,7 +244,7 @@ the following factors.
   the [GNU grep] is considerably faster
   and more optimized than the operating
   system's default (macOS, BSD). For
-  shells scriptiing, the utilities
+  shells scripting, the utilities
   consist mainly of [GNU coreutils],
   [GNU grep] and [GNU awk]. If needed,
   arrange `PATH` to prefer GNU utilities.
@@ -1145,7 +1161,7 @@ POSIX:
 
 - [posh]. Minimal `sh`.
   Policy-compliant Ordinary SHell,
-Very close to POSIX. Stricter than
+  Very close to POSIX. Stricter than
   [dash]. Supports `local` keyword to
   define function local variables. The
   keyword `local` is not defined in
@@ -1157,8 +1173,8 @@ Very close to POSIX. Stricter than
   keyword. The shell aims to meet the
   requirements of the Debian Linux
   distribution.
-- [Busybox ash]
-  `ash' shell is based on [dash] with
+- [busybox ash]
+  shell is based on [dash] with
   some more features added. Supports
   `local` keyword. See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
@@ -1193,9 +1209,29 @@ discussion on StackExchange.
   [OpenBSD, sh](https://man.netbsd.org/sh.1)
   is [ksh93] from the [Korn Shell]
   family.
-- On many commercial, conservative
-  UNIX systems `sh` is nowadays quite
-  capable [ksh93].
+- On many commercial, conservative UNIX
+  systems, `sh` is already quite capable
+  [ksh93]. The trouble with [ksh] is that
+  it uses the keyword `typeset` and not
+  `local`. In order to write a
+  cross-platform POSIX-compliant shell
+  script to support `ksh` as `/bin/sh`,
+  add the following code to the
+  beginning:
+
+``` bash
+# Check if 'local' is supported
+if ! command -v local > /dev/null 2>&1; then
+    # Check if we are in ksh
+    if command -v typeset > /dev/null 2>&1; then
+        # Use 'eval' to hide from other shells
+		# so that defining function with name
+		# 'local' does generate an error.
+        eval 'local () { typeset "$@" ; }'
+    fi
+fi
+```
+
 - On macOS, `sh` points to `bash
   --posix`, where the Bash version is
   indefinitely stuck at version 3.2.x
@@ -1216,19 +1252,19 @@ discussion on StackExchange.
 In practical terms, if you plan to aim
 for POSIX-compliant shell scripts, the
 best shells for testing your scripts
-would be [posh] and [dash]. You can also
-extend testing with BSD Ksh shells and
+would be [dash] and [posh]. You can also
+extend testing with BSD Korn shells and
 other shells. See
 [FURTHER READING](#further-reading)
 for external utilities to check and
 improve shell scripts even more.
 
-    # Save in shell startup file
+    # Save in a shell startup file
     # like ~/.bashrc
 
     shelltest()
     {
-        local script shell
+        local script name shell
 
         for script # Implicit "$@"
         do
@@ -1241,7 +1277,10 @@ improve shell scripts even more.
                 bash \
                 zsh
             do
-                if command -v "$shell" > /dev/null; then
+			    # "busybox ash" => busybox
+			    name=${shell%% *}
+
+                if command -v "$name" > /dev/null 2>&1; then
                     echo "-- shell: $shell"
                     $shell -nx "$script"
                 fi
@@ -1265,8 +1304,8 @@ Note that POSIX does not define the
 — the traditional first line that
 indicates which interpreter to use. See
 POSIX C language's section "exec family
-of functions" and
-[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)
+of functions". From
+[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)\:
 
 > (...) Another way that some
 > historical implementations handle
@@ -1353,7 +1392,7 @@ with `python` (2.x) or `python3`.
     #! /usr/bin/python
     #! /usr/bin/python3
 
-    .... not supported
+    .... not portable
 
     #! /usr/bin/python2
     #! /usr/bin/python3.13.2
@@ -1824,7 +1863,8 @@ portability
 [ksh]: https://tracker.debian.org/pkg/ksh93u+m
 [ksh93]: https://tracker.debian.org/pkg/ksh93u+m
 [mksh]: https://tracker.debian.org/pkg/mksh
-[busybox]: https://www.busybox.net
+[busybox]: https://busybox.net
+[busybox ash]: https://busybox.net
 
 <!-- Bash Manual -->
 
