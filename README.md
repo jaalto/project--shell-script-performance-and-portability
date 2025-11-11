@@ -1392,7 +1392,7 @@ with `python` (2.x) or `python3`.
     #! /usr/bin/python
     #! /usr/bin/python3
 
-    .... not supported
+    .... not portable
 
     #! /usr/bin/python2
     #! /usr/bin/python3.13.2
