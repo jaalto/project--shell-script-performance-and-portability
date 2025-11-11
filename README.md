@@ -34,9 +34,9 @@ INFORMATION FOR EDITING
   Emacs editor settings:
 
   ;; eval code with C-x C-e
-  (setq fill-column 41)
-  ;; M-x display-fill-column-indicator-mode
-  (display-fill-column-indicator-mode 1)
+  (progn
+    (setq fill-column 41)
+    (display-fill-column-indicator-mode 1))
 
 MISCELLANEOUS
 
@@ -194,7 +194,7 @@ the following factors.
 
 - If you run scripts on many small files,
   set up a RAM disk and copy the files to
-  it. This can lead to massive speed
+  it. This can lead to significant speed
   gains. In Linux, see
   [tmpfs](https://en.wikipedia.org/wiki/Tmpfs),
   which allows you to set a size limit,
@@ -205,13 +205,13 @@ the following factors.
 
 - If you know the files beforehand,
   preload them into memory. This can also
-  lead to massive speed gains.
+  lead to substantial speed gains.
   In Linux, see
   [vmtouch](https://hoytech.com/vmtouch/).
 
 - If you have tasks that can be run concurrently,
   use [Perl] based [GNU parallel] for
-  massive gains in performance. See also
+  dramatic gains in performance. See also
   how to use
   [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
   ([tutorial](https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore))
