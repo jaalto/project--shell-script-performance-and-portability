@@ -604,13 +604,13 @@ _priority: 0_
 
 # t-string-match-regexp.sh
 
-**Q: Match string by regexp: Bash vs expr vs grep**<br/>
-*A: It is 100x faster to use Bash. Expr is 1.3x faster than grep*<br/>
+**Q: Match string by regexp: Bash `[[ s =~ re ]]` vs `expr` vs `grep`**<br/>
+*A: It is 100x faster to use Bash. expr is 1.3x faster than grep*<br/>
 _priority: 10_
 
-    t1 real 0m0.002s Bash
-    t2 real 0m0.220s expr match RE STRING
-    t1 real 0m0.290s echo | grep -E
+    t1 real 0m0.002s [[ STRING =~ RE ]] Bash
+    t2 real 0m0.220s expr RE : STRING
+    t1 real 0m0.290s echo STRING | grep -E RE
 
 ## Code
 
@@ -627,11 +627,11 @@ _priority: 10_
 
 # t-string-trim-whitespace.sh
 
-**Q: Trim whitepace using Bash RE vs `sed`**<br/>
+**Q: Trim whitepace using Bash REGEXP vs `sed`**<br/>
 *A: It is 8x faster to use Bash, especially with fn() nameref*<br/>
-_priority: 10_
+_priority: 7_
 
-    t1 real 0m0.025s Bash fn() RE, using nameref for return value
+    t1 real 0m0.025s Bash fn() RE, using nameref to return value
     t2 real 0m0.107s Bash fn() RE
     t1 real 0m0.440s echo | sed RE
 
@@ -645,11 +645,11 @@ _priority: 10_
 # t-variable-array-split-string.sh
 
 **Q: Split string into an array by IFS?**<br/>
-*A: It is about 10 times faster to use local IFS than use Bash array `<<<` HERE STRING*<br/>
+*A: It is about 10 times faster to use IFS+array than to use Bash array `<<<` HERE STRING*<br/>
 _priority: 8_
 
     t1 real  0.011 eval array=(string)
-    t2 real  0.021 arr=(string)
+    t2 real  0.021 IFS...save arr=(string) IFS..restore
     t3 real  0.098 read -ra arr <<< string
 
 ## Code
