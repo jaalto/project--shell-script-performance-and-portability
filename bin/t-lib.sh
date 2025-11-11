@@ -272,16 +272,16 @@ IsShellModern ()
     IsShellBash || IsShellKsh93 || IsShellZsh
 }
 
-IsShellConditionalExpression ()
+IsFeatureConditionalExpression ()
 {
     # Supports: [[ ... ]]
     IsShellModern || IsShellMksh
 }
 
-IsShellMatchPattern ()
+IsFeatureMatchPattern ()
 {
     # Supports: [[ abc == *b* ]]
-    IsShellConditionalExpression
+    IsFeatureConditionalExpression
 }
 
 IsFeatureDictionary ()
