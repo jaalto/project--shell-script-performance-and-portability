@@ -1,13 +1,13 @@
 #! /usr/bin/env bash
 #
-# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...))` vs POSIX `i++`
-# A: The `{1..N}` and `$(seq N)` are very fast
+# Q: for-loop: `{1..N}` vs `$(seq N)` vs `((...i++))` vs POSIX `i=$((i + 1))`
+# A: The `$(seq N)` is fast in all shells. In ksh `{1..N}` is very slow.
 # priority: 2
 #
 #     t1 real 0m0.003s for i in {1..N}
 #     t2 real 0m0.004s for i in $(seq ...)
 #     t3 real 0m0.006s for ((i=0; i < N; i++))
-#     t4 real 0m0.010s while [ $i -le $N ] ... i++
+#     t4 real 0m0.010s while [ $i -le $N ] ... i=$((i + 1))
 #
 # Notes:
 #
@@ -61,7 +61,7 @@ t3 ()
 }
 EOF
 
-IsShellBash && . ./t.bash
+IsShellModern && . ./t.bash
 rm --force t.bash
 
 t4 ()
@@ -78,7 +78,7 @@ t4 ()
 t="\
 :t t1
 :t t2
-:t t3 IsShellBash
+:t t3 IsShellModern
 :t t4
 "
 
