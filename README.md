@@ -208,7 +208,7 @@ case produced the fastest results.
 ## 3.1 GENERAL PERFORMANCE ADVICE
 
 Regardless of the shell you use for
-scripting ([sh], [bash], [ksh]) consider
+scripting ([sh], [bash], [ksh]), consider
 the following factors.
 
 - If you run scripts on many small files,
