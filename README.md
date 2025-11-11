@@ -1209,14 +1209,14 @@ discussion on StackExchange.
   [OpenBSD, sh](https://man.netbsd.org/sh.1)
   is [ksh93] from the [Korn Shell]
   family.
-- On many commercial, conservative
-  UNIX systems `sh` is nowadays quite
-  capable [ksh93]. The trouble with
-  `ksh` it uses keyword `typeset' and
-  not `local'. In order to write
-  cross platform script to support also
-  `ksh' as `/bin/sh`, add following
-  code to the beginning:
+- On many commercial, conservative UNIX
+  systems, `sh` is already quite capable
+  [ksh93]. The trouble with [ksh] is that
+  it uses the keyword `typeset` and not
+  `local`. In order to write a
+  cross-platform POSIX `sh` script to
+  support `ksh` as `/bin/sh`, add the
+  following code to the beginning:
 
 ``` bash
 # Check if 'local' is supported
