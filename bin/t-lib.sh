@@ -347,7 +347,7 @@ IsCacheGnu ()
     cmd=${1:?ERROR: missing arg: cmd}
 
     case ${T_LIB_CACHE_GNU:-} in
-        *$cmd*)
+        *" $cmd "*)
             unset cmd
             return 0
             ;;
@@ -363,7 +363,7 @@ CacheGnuSave ()
     cmd=${1:?ERROR: missing arg: cmd}
 
     if ! IsCacheGnu "$cmd"; then
-        T_LIB_CACHE_GNU="$T_LIB_CACHE_GNU $cmd"
+        T_LIB_CACHE_GNU="$T_LIB_CACHE_GNU $cmd "
     fi
 
     unset cmd
