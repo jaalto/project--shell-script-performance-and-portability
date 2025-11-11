@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #
-# Q: Should you test existense before copying?
-# A: It is about 40x faster is you test existense before copying.
+# Q: Should you test newer before copying?
+# A: It is about 40x faster is you test before copying.
 # priority: 1
 #
 #     t1 real 0m0.007s <file test> cp
