@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 #
-# Q: Trim whitepace using Bash RE vs `sed`
+# Q: Trim whitepace using Bash REGEXP vs `sed`
 # A: It is 8x faster to use Bash, especially with fn() nameref
-# priority: 10
+# priority: 7
 #
-#     t1 real 0m0.025s Bash fn() RE, using nameref for return value
+#     t1 real 0m0.025s Bash fn() RE, using nameref to return value
 #     t2 real 0m0.107s Bash fn() RE
 #     t1 real 0m0.440s echo | sed RE
 #
@@ -16,7 +16,7 @@
 
 . ./t-lib.sh ; f=$random_file
 
-# Define perl style \s and \S shorthand variables
+# Define Perl style \s and \S shorthand variables
 s='[[:space:]]+'
 S='[^[:space:]]+'
 
@@ -49,7 +49,7 @@ TrimRe ()
     echo "$var"
 }
 EOF
-IsShellModern && . ./t.bash
+IsFeatureMatchRegexp && . ./t.bash
 rm --force t.bash
 
 t1 ()
