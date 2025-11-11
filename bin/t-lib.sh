@@ -1,6 +1,6 @@
 #  -*- mode: sh; -*-
 #
-#   t-lib.sh - Liibrary of common shell functions for testing.
+#   t-lib.sh - Library of common shell functions for testing.
 #
 #   Copyright
 #
@@ -23,36 +23,54 @@
 #
 # Usage
 #
-#       . <file>
+#       Source this file with command:
+#
+#           . <file>
+#
+# Requirements
+#
+#       Requires GNU utilities first in PATH. Those
+#       of sed, awk, cut, head, tr etc. Used GNU --long
+#       options for calling commands (code maintenance).
 #
 # Description
 #
-#       This is a library. Common utilities. When sourced, it will
-#       create the following test file to be used by <test cases>:
+#       This is a library. Common
+#       utilities. When sourced, it will
+#       create the following test file to
+#       be used by <test cases>:
 #
 #           t.random.numbers.tmp
 #
 #       Global variables used:
 #
-#           $VERBOSE         in Verbose()
+#           $VERBOSE in Verbose()
 #
 #       Exported variables:
 #
 #           $PROGRAM
 #           $TMPBASE
 #           $DICTIONARY_FILE
-#           $SED
 #           $AWK
+#           $BASE64
+#           $FOLD
+#           $HEAD
+#           $PARALLEL
 #           $PERL
+#           $SED
+#           $SHUF
 #           $STAT
+#           $TR
 #
 #           $loop_max
 #           $random_file
 #           $random_file_count
 
-# -- -------------------------------------------------------
+# -- ------------------------------------
+
+# -- ------------------------------------
 # -- Exported variables
-# -- -------------------------------------------------------
+# -- ------------------------------------
 
 PROGRAM=$0
 TMPBASE=${LOGNAME:-$USER}.$$.test
@@ -60,31 +78,38 @@ TMPBASE=${LOGNAME:-$USER}.$$.test
 VERBOSE=""
 T_LIB_CACHE_GNU=""
 
-# -- -------------------------------------------------------
-# -- User settable variables in environment
-# -- -------------------------------------------------------
+# -- ------------------------------------
+# -- Public. User settable env variables
+# -- ------------------------------------
 
 # create random number test file
 random_file=${random_file:-t.random.numbers.tmp}
 random_file_count=${random_file_count:-10000}
 loop_max=${loop_max:-100}
 
-SED=${SED:-"sed"}    # preferrably GNU version
-AWK=${AWK:-"awk"}    # preferrably GNU version
-STAT=${STAT:-"stat"} # must be GNU version
+AWK=${AWK:-"awk"}
+BASE64=${BASE64:-"base64"}
+FOLD=${FOLD:-"fold"}
+HEAD=${HEAD:-"head"}
+PARALLEL=${PARALLEL:-"parallel"}
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
+SED=${SED:-"sed"}
+SHUF=${SHUF:-"shuf"}
+STAT=${STAT:-"stat"} # Must be GNU version
+TR=${TR:-"tr"}
 
 DICTIONARY_DEFAULT="/usr/share/dict/words"
 DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 
-# -- -------------------------------------------------------
-# -- Private variables
-# -- -------------------------------------------------------
+# -- ------------------------------------
+# -- Private
+# -- ------------------------------------
 
 RUNNER=t.run
 
-[ "${KSH_VERSION:-}" ] && alias local=typeset
+# Nope, does not work around 'local' in ksh
+# [ "${KSH_VERSION:-}" ] && alias local=typeset
 
 AtExitDefault ()
 {
@@ -295,12 +320,12 @@ IsFeatureArray ()
 
 IsCommandParallel ()
 {
-    IsCommandExist parallel
+    IsCommandExist "$PARALLEL"
 }
 
 IsCommandStat ()
 {
-    IsCommandExist stat
+    IsCommandExist "$STAT"
 }
 
 IsCommandPushd ()
@@ -310,42 +335,50 @@ IsCommandPushd ()
 
 IsCacheGnu ()
 {
-    local cmd=${1:?ERROR: missing arg: cmd}
+    cmd=${1:?ERROR: missing arg: cmd}
 
     case ${T_LIB_CACHE_GNU:-} in
         *$cmd*)
+            unset cmd
             return 0
             ;;
         *)
+            unset cmd
             return 1
     esac
 }
 
 CacheGnuSave ()
 {
-    local cmd=${1:?ERROR: missing arg: cmd}
+    cmd=${1:?ERROR: missing arg: cmd}
 
     if ! IsCacheGnu "$cmd"; then
         T_LIB_CACHE_GNU="$T_LIB_CACHE_GNU $cmd"
     fi
 
+    unset cmd
     return 0
 }
 
 IsCommandGnuVersion ()
 {
-    local cmd=${1:-}
+    cmd=${1:-}
 
-    [ "$cmd" ] || return 1
+    if [ ! "$cmd" ]; then
+        unset cmd
+        return 1
+    fi
 
     IsCacheGnu "$cmd" && return 0
 
     case $("$cmd" --version 2> /dev/null) in
         *GNU*)
             CacheGnuSave "$cmd"
+            unset cmd
             return 0
             ;;
         *)
+            unset cmd
             return 1
             ;;
     esac
@@ -374,31 +407,31 @@ IsCommandGnuFind ()
 RequireParallel ()
 {
     IsCommandParallel && return 0
-    Die "${1:-}: ERROR: no requirement: parallel(1) not in PATH"
+    Die "${1:-}: ERROR: no GNU parallel(1) in PATH. Set envvar \$PARALLEL"
 }
 
 RequireDictionary ()
 {
     IsFeatureDictionary && return 0
-    Die "${1:-}: ERROR: no requirement: $DICTIONARY_DEFAULT or set envvar \$DICTIONARY_FILE"
+    Die "${1:-}: ERROR: missing requirement: $DICTIONARY_DEFAULT. Set envvar \$DICTIONARY_FILE"
 }
 
 RequireBash ()
 {
     IsShellBash && return 0
-    Die "${1:-}: ERROR: no requirement: Bash"
+    Die "${1:-}: ERROR: no GNU bash(1) in PATH"
 }
 
 RequireGnuStat ()
 {
     IsCommandGnuStat && return 0
-    Die "${1:-}: ERROR: no requirement: GNU stat(1), or set envvar STAT"
+    Die "${1:-}: ERROR: no GNU stat(1) in PATH. Set envvar STAT"
 }
 
 RequireGnuAwk ()
 {
     IsCommandGnuAwk && return 0
-    Die "${1:-}: ERROR: no requirement: GNU awk(1), or set envvar AWK"
+    Die "${1:-}: ERROR: no GNU awk(1) in PATH. Set envvar AWK"
 }
 
 RandomWordsGibberish ()
@@ -407,17 +440,31 @@ RandomWordsGibberish ()
     # - Limit output to column 80.
     # - Separate words by spaces.
 
-    base64 --decode /dev/urandom |
-        tr --complement --delete 'a-zA-Z0-9 ' |
-        fold --width=80 |
-        head --bytes="${1:-100k}"
+    dev=/dev/urandom
+
+    if [ -e "$dev" ]; then
+        : # ok
+    elif [ -e /dev/random ]; then
+        dev=/dev/random
+    else
+        Die "ERROR: no /dev/urandom"
+    fi
+
+    IsCommandExist "$BASE64" || Die "ERROR: not in PATH: $BASE64"
+
+    base64 --decode "$dev" |
+        $TR --complement --delete 'a-zA-Z0-9 ' |
+        $FOLD --width=80 |
+        $HEAD --bytes="${1:-100k}"
+
+    unset dev
 }
 
 RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
-    shuf --head-count=200000 "$DICTIONARY_FILE" |
+    $SHUF --head-count=200000 "$DICTIONARY_FILE" |
     $AWK '
         BEGIN {
             total_size = 0;
@@ -446,7 +493,7 @@ RandomWordsDictionary ()
                 total_size += length(line) + 1;
             }
         }' |
-    head --bytes=${1:-100k}
+    $HEAD --bytes=${1:-100k}
 }
 
 RandomNumbersAwk ()
@@ -462,7 +509,7 @@ RandomNumbersAwk ()
 
         for (i = 1; i <= n; i++)
             print int(rand() * (2**14 - 1))
-    }' \
+    }' \    # ' fix. Ksh parser bug: "quote may be missing"
     n="$1" \
     < /dev/null
 }
@@ -490,6 +537,8 @@ RunMaybe ()
     if IsCommandExist "$cmd" ; then
         $cmd
     fi
+
+    unset cmd
 }
 
 RunTestCase ()
@@ -499,7 +548,6 @@ RunTestCase ()
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
 
-    format hasformat 2> /dev/null
     format="real %3R  user %3U  sys %3S" # precision 3: N.NNN
 
     if [ "$ZSH_VERSION" ]; then
@@ -556,22 +604,46 @@ RunTestCase ()
 
         # Format the output using other means.
 
-        printf "# $1  "
+        # printf "# $1"
 
         # Wed Feb 12 15:16:15 EET 2025 0m00.00s real 0m00.00s user 0m00.00s system
         # =============================
         # |
-        # sed: delete this part and limit output to 2 spaces.
+        # sed:
+        # - delete up till 'real'
+        # - convert multiple spaces to 2
+        # - convert tabs to 2 spaces
+        #
+        # mksh:
+        # 0m00.08s real  0m00.05s user  0m00.03s system
+        #
+        # - convert "0m00" => "0"
+        # - change order of fields:
+        #   0m00.08s real ... => real 0m00.08s ...
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
             ${SED:-sed} \
                 --regexp-extended \
-                --expression 's,^.* +([0-9]+m[0-9.]+s +real),\1, ' \
+                --expression 's,^.*[[:space:]]+([0-9]+m[0-9.]+s[[:space:]]+real),\1, ' \
                 --expression 's,   +,  ,g' \
                 --expression 's,\t,  ,g' |
-            tr -d '\n'
-        echo  # Add newline
+            $TR --delete '\n' |
+            $AWK '
+            {
+                gsub(/0m00/, "0")
+                sub(/system/, "sys")
+
+                if (match($2, "real"))
+                {
+                    # 0.08s real  ... => real 0.08s
+                    $0 = $2 " " $1 "  " $4 " " $3 "  " $6 " " $5
+                }
+
+                printf "# %-24s%s\n", test, $0
+            }' \
+            test="$1"
+
     else
         Die "ERROR: t(): Abort, no suitable built-in time command in Shell"
     fi
@@ -596,18 +668,18 @@ TestData ()
     # time RandomNumbersPython "$1" > /dev/null
 
     if [ ! -s "$random_file" ]; then
-        RandomNumbersAwk "$1" > "$random_file"
+        RandomNumbersAwk "${1:-}" > "$random_file"
     fi
 }
 
 t ()
 {
     dummy="t()"
-
     test=${1:-}
 
     if [ ! "$test" ]; then
         Warn "WARN: t() called without a test case"
+        unset dummy test
         return 1
     fi
 
@@ -637,6 +709,7 @@ t ()
 RunTestSet ()
 {
     dummy="RunTestSet()"
+
     testset=${1:-}
     shift
 
@@ -646,12 +719,13 @@ RunTestSet ()
 
     for test in $testset
     do
+        test="$test"   # For debug
         eval $test
     done
 
     IFS=$saved
 
-    unset dummy test testset saved
+    unset dummy testset saved test
 }
 
 RunTests ()
@@ -684,6 +758,7 @@ RunTests ()
 
         if [ "${1:-}" ]; then # Condition
             printf "%-28s " "$arg $*"
+
             if "$@" ; then
                 "$arg"
             else
