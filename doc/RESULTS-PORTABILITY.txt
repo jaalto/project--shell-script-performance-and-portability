@@ -11,7 +11,7 @@ POSIX command -v                         +  +  +  +  +  +  +  +  +
 POSIX false (builtin)                    +  +  +  +  +  +  +  +  +
 POSIX hash                               -  +  +  +  +  +  +  +  +
 POSIX printf (builtin)                   -  +  +  +  -  +  +  +  +
-POSIX read (-N)                          -  -  -  -  -  -  -  -  -
+POSIX read (-N)                          -  -  -  -  +  +  +  +  -
 POSIX read (REPLY)                       -  -  -  +  +  +  +  +  +
 POSIX true (builtin)                     +  +  +  +  +  +  +  +  +
 POSIX type                               -  +  +  +  +  +  +  +  +
