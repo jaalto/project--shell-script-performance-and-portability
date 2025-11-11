@@ -34,7 +34,7 @@ t1 () # Bash, Ksh
 }
 EOF
 
-IsShellMatchPattern && . ./t.bash
+IsFeatureMatchPattern && . ./t.bash
 rm --force t.bash
 
 t2 () # POSIX
@@ -53,7 +53,7 @@ t2 () # POSIX
 }
 
 t="\
-:t t1 IsShellMatchPattern
+:t t1 IsFeatureMatchPattern
 :t t2
 "
 
