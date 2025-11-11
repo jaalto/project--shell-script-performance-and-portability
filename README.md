@@ -659,11 +659,14 @@ TODO
     str="1:2:3"
 
     # Bash, Ksh. Fastest.
+	# NOTE: no arrays in POSIX sh
     IFS=":" eval 'array=($str)'
 
-    fn() # Bash
+	# Bash. The same, if you need
+	# to do it in a function.
+    fn()
     {
-        local str=$1
+        local str=${1:?ERROR: no arg}
 
         # Make 'set' local
         local -
@@ -678,7 +681,7 @@ TODO
         ...
     }
 
-    # Bash. Slower than 'eval'.
+    # Bash. 10x slower than 'eval'.
     IFS=":" read -ra array <<< "$str"
 
     # In Linux, see what Bash uses
