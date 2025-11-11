@@ -693,7 +693,7 @@ TODO
   file into a string using Bash
   [command substitution]
   `$(< file)`.
-  **NOTE**: Note: In POSIX `sh`, like
+  Note: In POSIX `sh`, like
   [dash], the `$(cat file)` is
   also extremely fast.
   See [code](./bin/t-file-read-into-string.sh).
