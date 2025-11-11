@@ -1,12 +1,12 @@
 #! /usr/bin/env bash
 #
-# Q: Match string by regexp: Bash vs expr vs grep
-# A: It is 100x faster to use Bash. Expr is 1.3x faster than grep
+# Q: Match string by regexp: Bash `[[ s =~ re ]]` vs `expr` vs `grep`
+# A: It is 100x faster to use Bash. expr is 1.3x faster than grep
 # priority: 10
 #
-#     t1 real 0m0.002s Bash
-#     t2 real 0m0.220s expr match RE STRING
-#     t1 real 0m0.290s echo | grep -E
+#     t1 real 0m0.002s [[ STRING =~ RE ]] Bash
+#     t2 real 0m0.220s expr RE : STRING
+#     t1 real 0m0.290s echo STRING | grep -E RE
 #
 # Code:
 #
