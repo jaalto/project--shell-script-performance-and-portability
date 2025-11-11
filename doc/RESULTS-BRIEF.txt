@@ -103,14 +103,14 @@ FILE: t-string-match-pattern.sh
 # A: No noticeable difference, both are very fast
 
 FILE: t-string-match-regexp.sh
-# Q: Match string by regexp: Bash vs expr vs grep
-# A: It is 100x faster to use Bash. Expr is 1.3x faster than grep
+# Q: Match string by regexp: Bash `[[ s =~ re ]]` vs `expr` vs `grep`
+# A: It is 100x faster to use Bash. expr is 1.3x faster than grep
 
 FILE: t-string-trim-whitespace.sh
-# Q: Trim whitepace using Bash RE vs `sed`
+# Q: Trim whitepace using Bash REGEXP vs `sed`
 # A: It is 8x faster to use Bash, especially with fn() nameref
 
 FILE: t-variable-array-split-string.sh
 # Q: Split string into an array by IFS?
-# A: It is about 10 times faster to use local IFS than use Bash array `<<<` HERE STRING
+# A: It is about 10 times faster to use IFS+array than to use Bash array `<<<` HERE STRING
 
