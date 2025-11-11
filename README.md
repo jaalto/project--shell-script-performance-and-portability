@@ -1214,9 +1214,10 @@ discussion on StackExchange.
   [ksh93]. The trouble with [ksh] is that
   it uses the keyword `typeset` and not
   `local`. In order to write a
-  cross-platform POSIX `sh` script to
-  support `ksh` as `/bin/sh`, add the
-  following code to the beginning:
+  cross-platform POSIX-compliant shell
+  script to support `ksh` as `/bin/sh`,
+  add the following code to the
+  beginning:
 
 ``` bash
 # Check if 'local' is supported
