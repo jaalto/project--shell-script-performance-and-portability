@@ -4,7 +4,7 @@
 # A: It is about 10x faster to use IFS+array than to use Bash array `<<<` HERE STRING
 # priority: 8
 #
-#     t1 real  0.011 IFS= eval array=(string)
+#     t1 real  0.011 IFS=... eval array=(string)
 #     t2 real  0.021 IFS+save arr=(string) IFS+restore
 #     t3 real  0.098 read -ra arr <<< string
 #
@@ -55,12 +55,13 @@ Setup ()
 }
 
 # Hide test case from other Shells
-t1 () { : ; } # stub
-t2 () { : ; } # stub
-t3 () { : ; } # stub
+t1a () { : ; } # stub
+t1b () { : ; } # stub
+t2  () { : ; } # stub
+t3  () { : ; } # stub
 
 cat << 'EOF' > t.bash
-t1 ()
+t1a ()
 {
     # Enable local '-f' feature
     #
@@ -87,6 +88,17 @@ t1 ()
         #
         # In Bash, it is not required
 
+        IFS=":" eval 'array=($string)'
+        item=${array[0]}
+    done
+}
+
+t1b ()
+{
+    # The very basic version
+
+    for i in $(seq $loop_max)
+    do
         IFS=":" eval 'array=($string)'
         item=${array[0]}
     done
@@ -121,9 +133,10 @@ IsFeatureArrays && . ./t.bash
 rm --force t.bash
 
 t="\
-:t t1 IsShellBash
-:t t2 IsFeatureArrays
-:t t3 IsFeatureArraysHereString
+:t t1a IsShellBash
+:t t1b IsFeatureArrays
+:t t2  IsFeatureArrays
+:t t3  IsFeatureArraysHereString
 "
 
 Setup
