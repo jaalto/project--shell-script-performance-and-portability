@@ -104,21 +104,22 @@ systems. Learn more about POSIX on
 > [dash], [posh], [mksh], [ash] etc.
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
-> **About the code examples**: function
-> local variables are defined using
-> `local`. The keyword isn't defined in
-> the [POSIX] standard, but it is 100%
+> **About variables in functions**:
+> The keyword `local` isn't defined in
+> the [POSIX] standard, but it is 99%
 > supported by all the best-effort
 > POSIX-compatible `sh` shells. The
 > `local` keyword is "portable enough" to
 > be used in modern shell scripts. See
 > section
 > [4.3](#43-writing-posix-compliant-shell-scrips)
-> for more information on how to add
-> `local` keyword emulation in `sh`
-> scripts that are also compatible with
-> BSD and UNIX `/bin/sh`, which may be a
-> link to `ksh`.
+> on how to add local keyword support to
+> shell scripts in a way that ensures
+> cross-platform compatibility, even
+> with BSD and UNIX systems where
+> `/bin/sh` might be a symbolic link to
+> `ksh`, which doesn't natively support
+> the `local` keyword.
 
 In Linux-like systems, for well-rounded
 shell scripting, Bash is the sensible
@@ -562,7 +563,6 @@ TODO
     Run shell: bash
     # t1     real 0.045  readarray
     # t2     real 0.108  POSIX
-
 ```
 
 - In Bash, it is about 2 times faster to
@@ -592,7 +592,7 @@ TODO
     while read -r ...
     do
         # variables not visible after loop
-		...
+        ...
     done
 
     # POSIX
@@ -602,7 +602,7 @@ TODO
     while read -r ...
     do
         # variables persist after loop
-		...
+        ...
     done < tmpfile
     rm tmpfile
 
@@ -613,7 +613,7 @@ TODO
         [[ $line =~ $re ]] || continue
         ...
         # variables persist after loop
-		...
+        ...
     done < file
 
     # ----------------------------
@@ -631,18 +631,16 @@ TODO
     Run shell: bash
     # t1a    real 4.567s
     # t2a    real 10.88s
-
 ```
 
 ## 3.4 MODERATE PERFORMANCE GAINS
 
-- It is about 10 times faster to split
-  a string into an array using list
-  rather than using Bash here-string.
-  This is because
-  [HERE STRING]
+- In Bash, it is about 9 times faster to
+  split a string into an array using
+  list rather than here-string. This is
+  because [HERE STRING] in Bash
   `<<<` uses a pipe or temporary file,
-  whereas Bash list operates entirely
+  whereas list operates entirely
   in memory. The pipe buffer behavor
   was introduced in
   [Bash 5.1 section c](https://github.com/bminor/bash/blob/master/CHANGES).
@@ -657,12 +655,12 @@ TODO
 ```bash
     str="1:2:3"
 
-    # Bash, Ksh. Fastest.
-	# NOTE: no arrays in POSIX sh
+    # (1) Bash, fastest.
+    # NOTE: no arrays in POSIX sh
     IFS=":" eval 'array=($str)'
 
-	# Bash. The same, if you need
-	# to do it in a function.
+    # Bash. The same, if you need
+    # to do it in a function.
     fn()
     {
         local str=${1:?ERROR: no arg}
@@ -680,13 +678,36 @@ TODO
         ...
     }
 
-    # Bash. 10x slower than 'eval'.
+    # (2) Bash. Same speed. Ksh: fastest
+    saved="$IFS"
+    IFS=":"
+    array=($str)
+    IFS="$saved"
+
+    # (3) Bash. 9x slower than 'eval'.
     IFS=":" read -ra array <<< "$str"
 
     # In Linux, see what Bash uses
     # for HERE STRING: pipe or
     # temporary file
     bash -c 'ls -l --dereference /proc/self/fd/0 <<< hello'
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-variable-array-split-string.sh
+
+    Run shell: dash
+    ... <skip all>      POSIX, no arrays
+    Run shell: ksh93
+    # t1 real 0.008     (1) IFS=: eval
+    # t2 real 0.002     (2) IFS..saved
+    # t3 real 0.003     (3) IFS ... <<<
+    Run shell: bash
+    # t1 real 0.010     (1) IFS=: eval
+    # t2 real 0.008     (2) IFS..saved
+    # t3 real 0.090     (3) IFS ... <<<
 ```
 
 - It is about 2 times faster to read
@@ -1209,8 +1230,8 @@ if ! command -v local > /dev/null 2>&1; then
     # Check if we are in ksh
     if command -v typeset > /dev/null 2>&1; then
         # Use 'eval' to hide from other shells
-		# so that defining function with name
-		# 'local' does generate an error.
+        # so that defining function with name
+        # 'local' does generate an error.
         eval 'local () { typeset "$@" ; }'
     fi
 fi
@@ -1261,8 +1282,8 @@ improve shell scripts even more.
                 bash \
                 zsh
             do
-			    # "busybox ash" => busybox
-			    name=${shell%% *}
+                # "busybox ash" => busybox
+                name=${shell%% *}
 
                 if command -v "$name" > /dev/null 2>&1; then
                     echo "-- shell: $shell"
@@ -1454,9 +1475,9 @@ Notable observations:
     REQUIRE="sqlite curl"
 
     IsCommand ()
-	{
-	    command -v "${1:-}" > /dev/null 2>&1
-	}
+    {
+        command -v "${1:-}" > /dev/null 2>&1
+    }
 
     RequireFeatures ()
     {
