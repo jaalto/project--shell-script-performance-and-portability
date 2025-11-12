@@ -863,7 +863,10 @@ RunTests ()
                 printf "<skip> "
             fi
         else
-            dummy="run:it"
+            # Unused, but useful during debug
+            # shellcheck disable=SC2034
+            dummy="run:doit"
+
             printf "%-28s " "$arg"
             "$arg"
         fi
