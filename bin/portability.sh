@@ -74,9 +74,11 @@ if IsCommandExist readlink ; then
     # In Linux, sh may be symlink to dash
     # No need to test sh
 
-    if [ "$(readlink /bin/sh)" = "dash" ]; then
-        SHELL_LIST=$SHELL_LIST_DEFAULT_DASH
-    fi
+    case "$(readlink /bin/sh)" in
+        *dash*)
+            SHELL_LIST=$SHELL_LIST_DEFAULT_DASH
+            ;;
+    esac
 fi
 
 Help ()
