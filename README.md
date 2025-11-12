@@ -698,7 +698,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-variable-array-split-string.sh
 
     Run shell: dash
-    # <skip all>     no arrays
+    # ..  <skip all>  no arrays
     Run shell: ksh93
     # t1  real 0.008  (1) IFS=: eval
     # t2  real 0.002  (2) IFS..saved
