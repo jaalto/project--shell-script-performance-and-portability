@@ -786,7 +786,7 @@ t ()
 
     if [ "${1:-}" ]; then
         if "$@"; then
-            RunTestCase $test
+            RunTestCase "$test"
         else
             printf "# %-24s<skip>\n" "$test $*"
         fi
