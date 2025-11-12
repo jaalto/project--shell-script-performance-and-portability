@@ -604,8 +604,7 @@ RandomNumbersAwk ()
 
         for (i = 1; i <= n; i++)
             print int(rand() * (2**14 - 1))
-    }' n="$1" \    # ' fix. Ksh parser bug: "quote may be missing"
-    < /dev/null
+    }' n="$1" < /dev/null # ' fix. Ksh parser bug: "quote may be missing"
 }
 
 RandomNumbersPerl ()
