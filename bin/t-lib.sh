@@ -791,7 +791,7 @@ t ()
             printf "# %-24s<skip>\n" "$test $*"
         fi
     else
-        RunTestCase $test
+        RunTestCase "$test"
     fi
 
     unset dummy test
