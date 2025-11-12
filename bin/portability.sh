@@ -338,7 +338,7 @@ ResultsData ()
 Line ()
 {
     local max="${1:-}"
-    local ch="${2:-'-'}"
+    local ch="${2:-"-"}"
     local i=0
 
     [ "$max" ] || return 1
