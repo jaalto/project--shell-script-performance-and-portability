@@ -582,7 +582,7 @@ RandomWordsDictionary ()
                 total_size += length(line) + 1;
             }
         }' |
-    $HEAD --bytes=${1:-100k}
+    $HEAD --bytes="${1:-100k}"
 }
 
 RandomNumbersAwk ()
