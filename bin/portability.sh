@@ -35,7 +35,7 @@ BASH_VERSION=${BASH_VERSION:-$(bash -c 'echo $BASH_VERSION' 2> /dev/null)}
 # Defined in t-lib.sh
 TMPBASE=""
 VERBOSE=""
-WIDTH=""
+WIDTH="40"
 LINE_LENGTH="66"
 
 # ignore follow
@@ -74,9 +74,11 @@ if IsCommandExist readlink ; then
     # In Linux, sh may be symlink to dash
     # No need to test sh
 
-    if [ "$(readlink /bin/sh)" = "dash" ]; then
-        SHELL_LIST=$SHELL_LIST_DEFAULT_DASH
-    fi
+    case "$(readlink /bin/sh)" in
+        *dash*)
+            SHELL_LIST=$SHELL_LIST_DEFAULT_DASH
+            ;;
+    esac
 fi
 
 Help ()
@@ -98,6 +100,10 @@ OPTIONS
         List of shell to check for support in x-*
         portability test FILES
 
+    -w, --width SIZE
+        The width SIZE of the description part
+        to the left.
+
     -v, --verbose
         Display verbose messages.
 
@@ -114,12 +120,25 @@ DESCRIPTION
     If no --shell options is used, try testing known shells.
 
 NOTES
-    The `bash --posix 3.2` runs with `BASH_COMPAT=3.2` in effect to
+    The 'bash --posix 3.2' runs with 'BASH_COMPAT=3.2' in effect to
     test macOS compatibility.
     https://www.gnu.org/software/bash/manual/bash.html#Shell-Compatibility-Mode
 
+TEST FILE FORMAT
+    Each test file must return true (0) or false (non-zero).
+    The comment section at the beginning must include:
+
+    #! <path to interpreter>
+    # Short: <short description up to 40 characters>
+    # Desc: <longer description up to 80 characters>
+
+    <code>
+
+    # End of file
+
 EXAMPLES
     $program x-*
+    $program --width 25 x-*
     $program --shell dash,mksh x-*"
 
     exit 0
@@ -127,6 +146,9 @@ EXAMPLES
 
 HelpBposh ()
 {
+    # ignore single quote
+    # shellcheck disable=SC2016
+
     echo 'THE PBOSH SHELL
 
     From schilitools, you can find the pbosh shell.
@@ -164,7 +186,7 @@ ShellVersionDash ()
 
 ShellVersionMain ()
 {
-    local sh=$1
+    local sh="${1:-}"
 
     case $sh in
         *dash*)
@@ -180,10 +202,15 @@ ShellVersionMain ()
             }'
             ;;
         *posh*)
+            # ignore $var in single quote
+            # shellcheck disable=SC2016
             $sh -c 'echo $POSH_VERSION'
             ;;
         *mksh*)
             # @(#)MIRBSD KSH R59 2024/07/26 +Debian
+
+            # ignore $var in single quote
+            # shellcheck disable=SC2016
             $sh -c 'echo $KSH_VERSION' | ${AWK:-awk} '
             /2[0-2][0-9][0-9]/ {
                 gsub("/", "-")
@@ -193,6 +220,10 @@ ShellVersionMain ()
             ;;
         ksh | ksh93*)
             # ... (AT&T Research) 93u+m/1.0.10 2024-08-01
+
+            # ignore single quote
+            # shellcheck disable=SC2016
+
             $sh --version 2>&1 | ${AWK:-awk} '
             /AT.T Research. +[0-9]+/ {
                 print $(NF -1) " " $(NF)
@@ -201,6 +232,10 @@ ShellVersionMain ()
             ;;
         *bash*)
             # GNU bash, version 5.2.37(1)-release ...
+
+            # ignore single quote
+            # shellcheck disable=SC2016
+
             $sh --version 2>&1 | ${AWK:-awk} '
             /^GNU bash.* +[0-9]/ {
                 $0 = $4
@@ -211,6 +246,10 @@ ShellVersionMain ()
             ;;
         *zsh*)
             # zsh 5.9 (x86_64-debian-linux-gnu)
+
+            # ignore single quote
+            # shellcheck disable=SC2016
+
             $sh --version 2>&1 | ${AWK:-awk} '
             /^zsh +[0-9]/ {
                 print $2
@@ -219,6 +258,10 @@ ShellVersionMain ()
             ;;
         *busybox*)
             # BusyBox v1.37.0 (Debian 1:1.37.0-4) multi-call binary.
+
+            # ignore single quote
+            # shellcheck disable=SC2016
+
             busybox --help 2>&1 | ${AWK:-awk} '
             /^BusyBox v[0-9]+\./ {
                 sub("^BusyBox +v?", "")
@@ -231,9 +274,11 @@ ShellVersionMain ()
 
 ResultsData ()
 {
-    local separator=$1
-    local list=$2
-    local lsep=$3
+    local separator="${1:-}"
+    local list="${2:-}"
+    local lsep="${3:-}"
+
+    [ "$lsep" ] || return 1
 
     shift ; shift ; shift
 
@@ -256,7 +301,7 @@ ResultsData ()
     }
 
     {
-        fmt="%-40s"
+        fmt="%-" width "s"
 
         if (!header)
         {
@@ -280,18 +325,21 @@ ResultsData ()
     ' \
     list="$list" \
     sep="$lsep" \
+    width="$WIDTH" \
     "${1:-}"
 }
 
 Line ()
 {
-    local max=$1
-    local ch=${2:-"-"}
+    local max="${1:-}"
+    local ch="${2:-'-'}"
     local i=0
+
+    [ "$max" ] || return 1
 
     while [ "$i" -lt "$max" ]
     do
-        printf "$ch"
+        printf "%s" "$ch"
         i=$((i + 1))
     done
 
@@ -300,24 +348,26 @@ Line ()
 
 LineStraight ()
 {
-    Line $LINE_LENGTH
+    Line "$LINE_LENGTH"
 }
 
 ResultsShellInfo ()
 {
-    local list=$1
-    local sep=$2
+    local list="${1:-}"
+    local sep="${2:-}"
+
+    [ "$sep" ] || return 1
 
     LineStraight
 
     local sh
     local i=1
-    local saved=$IFS
+    local saved="$IFS"
     IFS="$sep"
 
     for sh in $list
     do
-        version="$(ShellVersionMain $sh)"
+        version="$(ShellVersionMain "$sh")"
 
         if [ "$version" ]; then
             printf "%02d %s %s\n" "$i" "$sh" "$version"
@@ -328,7 +378,7 @@ ResultsShellInfo ()
         i=$((i + 1))
     done
 
-    IFS=$saved
+    IFS="$saved"
 
     LineStraight
 }
@@ -358,7 +408,7 @@ RunShells ()
     local shresult=""
     local shell
 
-    local saved=$IFS
+    local saved="$IFS"
     local IFS=","
 
     for shell in $shlist
@@ -370,10 +420,13 @@ RunShells ()
         case $shell in
             bash*--posix*)
                 if [ "$usecompat" ] ; then
-                    env=$compat
+                    env="$compat"
 
-                    local ifs=$IFS
-                    IFS=$saved
+                    local ifs="$IFS"
+                    IFS="$saved"
+
+                    # ignore quotes
+                    # shellcheck disable=SC2086
 
                     set -- $shell
 
@@ -384,7 +437,7 @@ RunShells ()
                             ;;
                     esac
 
-                    IFS=$ifs
+                    IFS="$ifs"
                 fi
                 ;;
         esac
@@ -392,6 +445,9 @@ RunShells ()
         # eval is needed because shell would be
         # "busybox ash", which must be broken apart
         # to separate words.
+
+        # ignore quotes
+        # shellcheck disable=SC2086
 
         if eval $env $shell "$file" > /dev/null 2>&1; then
             result="+"
@@ -411,14 +467,17 @@ RunShells ()
 
 RunCheck ()
 {
-    local shlist=$1
+    local shlist="${1:-}"
+
+    [ "$shlist" ] || return 1
+
     shift
 
     local sep="@"
-    local results=$(mktemp -t $TMPBASE.results.XXX)
+    local results="$(mktemp -t "$TMPBASE.results.XXX")"
     local file
 
-    for file
+    for file # Implicit "$@"
     do
         desc=$(Description "$file")
         shresult=$(RunShells "$shlist")
@@ -447,12 +506,14 @@ Main ()
         case ${1:-} in
             -s | --shell)
                 shift
-                [ "$1" ] || Die "ERROR: missing --shell ARG"
+                [ "${1:-}" ] || Die "ERROR: missing --shell ARG"
 
-                SHELL_LIST=$1
+                SHELL_LIST="$1"
                 shift
                 ;;
             -w | --width)
+                DieOption "--width" "$2"
+                DieOptionNotNumber "--width" "$2"
                 WIDTH=$2
                 shift ; shift
                 ;;
@@ -502,8 +563,11 @@ Main ()
 
     local shell
     local shlist=""
-    local saved=$IFS
+    local saved="$IFS"
     IFS=","
+
+    # ignore quotes
+    # shellcheck disable=SC2086
 
     for shell in $SHELL_LIST
     do

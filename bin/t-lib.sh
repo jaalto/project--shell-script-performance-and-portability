@@ -106,8 +106,6 @@ DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 # -- Private
 # -- ------------------------------------
 
-RUNNER=t.run
-
 # Emulate 'local' if needed
 
 if [ "${KSH_VERSION:-}" ]; then
@@ -128,6 +126,9 @@ SetupTrapAtExit ()
 {
     if ! IsCommandExist AtExit; then
         # Define default AtExit
+
+        # ignore never invoked
+        # shellcheck disable=SC2329
         AtExit ()
         {
             AtExitDefault
@@ -152,6 +153,68 @@ Die ()
 {
     Warn "$*"
     exit 1
+}
+
+DieEmpty ()
+{
+    [ "${1:-}" ] && return 0
+
+    shift
+    Die "$*"
+}
+
+DieOptionNotNumber ()
+{
+    case "${2:-}" in
+        [0-9]*)
+            ;;
+        *)
+            Die "$PROGRAM: ERROR: option ${1:-} requires a number, got: ${1:-}"
+            ;;
+    esac
+}
+
+DieOptionMinus ()
+{
+    case "${2:-}" in
+        -*)
+            Die "$PROGRAM: ERROR: option ${1:-} requires ARG, got $2"
+            ;;
+    esac
+}
+
+DieOptionEmpty ()
+{
+    if [ ! "$2" ]; then
+        Die "$PROGRAM: ERROR: option ${1:-} requires ARG, got empty"
+    fi
+}
+
+DieOption ()
+{
+    DieOptionMinus "$@"
+    DieOptionEmpty "$@"
+}
+
+DieNoFile ()
+{
+    if [ ! -e "${1:-}" ]; then
+        Die "$PROGRAM: ERROR: no such file: ${1:-}"
+    fi
+}
+
+DieEmptyFile ()
+{
+    if [ ! -s "${1:-}" ]; then
+        Die "$PROGRAM: ERROR: empty file: ${1:-}"
+    fi
+}
+
+DieNoDir ()
+{
+    if [ ! -d "${1:-}" ]; then
+        Die "$PROGRAM: ERROR: no such dir: ${1:-}"
+    fi
 }
 
 IsVerbose ()
@@ -183,7 +246,7 @@ IsOsLinux ()
 IsUnameMatch ()
 {
     case $(uname -a) in
-        ${1:-})
+        "${1:-}")
             return 0
             ;;
         *)  return 1
@@ -493,6 +556,9 @@ RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
+    # ignore AWK single quote
+    # shellcheck disable=SC2016
+
     $SHUF --head-count=200000 "$DICTIONARY_FILE" |
     $AWK '
         BEGIN {
@@ -522,7 +588,7 @@ RandomWordsDictionary ()
                 total_size += length(line) + 1;
             }
         }' |
-    $HEAD --bytes=${1:-100k}
+    $HEAD --bytes="${1:-100k}"
 }
 
 RandomNumbersAwk ()
@@ -538,9 +604,7 @@ RandomNumbersAwk ()
 
         for (i = 1; i <= n; i++)
             print int(rand() * (2**14 - 1))
-    }' \    # ' fix. Ksh parser bug: "quote may be missing"
-    n="$1" \
-    < /dev/null
+    }' n="$1" < /dev/null # ' fix. Ksh parser bug: "quote may be missing"
 }
 
 RandomNumbersPerl ()
@@ -575,7 +639,7 @@ RunTestCase ()
 {
     [ "${1:-}" ] || return 1
 
-    local fromat hasformat timecmd
+    local format hasformat timecmd
 
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
@@ -622,6 +686,8 @@ RunTestCase ()
     esac
 
     if [ "$hasformat" ]; then
+        local timeformat=""
+
         eval "timeformat=\$$hasformat" # save
         printf "# %-24s" "$1"
 
@@ -649,6 +715,9 @@ RunTestCase ()
         # - convert "0m00" => "0"
         # - change order of fields:
         #   0m00.08s real ... => real 0m00.08s ...
+
+        # ignore AWK single quote
+        # shellcheck disable=SC2016
 
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
@@ -724,12 +793,12 @@ t ()
 
     if [ "${1:-}" ]; then
         if "$@"; then
-            RunTestCase $test
+            RunTestCase "$test"
         else
             printf "# %-24s<skip>\n" "$test $*"
         fi
     else
-        RunTestCase $test
+        RunTestCase "$test"
     fi
 
     unset dummy test
@@ -750,7 +819,7 @@ RunTestSet ()
     for test in $testset
     do
         test="$test"   # For debug
-        eval $test
+        eval "$test"
     done
 
     IFS=$saved
@@ -801,7 +870,10 @@ RunTests ()
                 printf "<skip> "
             fi
         else
-            dummy="run:it"
+            # Unused, but useful during debug
+            # shellcheck disable=SC2034
+            dummy="run:doit"
+
             printf "%-28s " "$arg"
             "$arg"
         fi
