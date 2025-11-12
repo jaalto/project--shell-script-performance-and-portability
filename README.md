@@ -347,17 +347,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1     <skip>       [[ =~ ]]
-    # t2     real 0.010s  expr
-    # t3     real 0.010s  grep
+    # t1  <skip>       [[ =~ ]]
+    # t2  real 0.010s  expr
+    # t3  real 0.010s  grep
     Run shell: ksh93
-    # t1     real 0.001s [[ =~ ]]
-    # t2     real 0.139s expr
-    # t3     real 0.262s grep
+    # t1  real 0.001s [[ =~ ]]
+    # t2  real 0.139s expr
+    # t3  real 0.262s grep
     Run shell: bash
-    # t1     real 0.003s [[ =~ ]]
-    # t2     real 0.200s expr
-    # t3     real 0.348s grep
+    # t1  real 0.003s [[ =~ ]]
+    # t2  real 0.200s expr
+    # t3  real 0.348s grep
 ```
 
 - In Bash, it is about 50 times
@@ -450,17 +450,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
 
     Run shell: dash
-    # t1b    real 0.023s (1) once
-    # t2     real 0.018s (2) grep
-    # t3     real 0.021s (3) case
+    # t1b real 0.023s (1) once
+    # t2  real 0.018s (2) grep
+    # t3  real 0.021s (3) case
     Run shell: ksh93
-    # t1b    real 0.333s (1) once
-    # t2     real 0.208s (2) grep
-    # t3     real 0.453s (3) case
+    # t1b real 0.333s (1) once
+    # t2  real 0.208s (2) grep
+    # t3  real 0.453s (3) case
     Run shell: bash
-    # t1b    real 0.048s (1) once
-    # t2     real 0.277s (2) grep
-    # t3     real 0.415s (3) case
+    # t1b real 0.048s (1) once
+    # t2  real 0.277s (2) grep
+    # t3  real 0.415s (3) case
 ```
 
 - In Bash, it is about 8 times faster,
@@ -511,17 +511,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
 
     Run shell: dash
-    # t1     <skip>
-    # t2     real 0.006s fnNamerefPosix
-    # t3     real 0.005s ret=$(fn)
+    # t1  <skip>
+    # t2  real 0.006s fnNamerefPosix
+    # t3  real 0.005s ret=$(fn)
     Run shell: ksh93
-    # t1     <skip>
-    # t2     real 0.004s fnNamerefPosix
-    # t3     real 0.005s ret=$(fn)
+    # t1  <skip>
+    # t2  real 0.004s fnNamerefPosix
+    # t3  real 0.005s ret=$(fn)
     Run shell: bash
-    # t1     real 0.006s fnNamerefBash
-    # t2     real 0.006s fnNamerefPosix
-    # t3     real 0.094s ret=$(fn)
+    # t1  real 0.006s fnNamerefBash
+    # t2  real 0.006s fnNamerefPosix
+    # t3  real 0.094s ret=$(fn)
 ```
 
 - In Bash, it is about 2 times faster
@@ -553,14 +553,14 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-content-loop.sh
 
     Run shell: dash
-    # t1     <skip>
-    # t2     real 0.085  POSIX
+    # t1  <skip>
+    # t2  real 0.085  POSIX
     Run shell: ksh93
-    # t1     <skip>
-    # t2     real 0.021  POSIX
+    # t1  <skip>
+    # t2  real 0.021  POSIX
     Run shell: bash
-    # t1     real 0.045  readarray
-    # t2     real 0.108  POSIX
+    # t1  real 0.045  readarray
+    # t2  real 0.108  POSIX
 ```
 
 - In Bash, it is about 2 times faster to
@@ -621,14 +621,14 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
 
     Run shell: dash
-    # t1a    real 0.015s grep prefilter
-    # t2a    real 0.012s loop: case...esac
+    # t1a real 0.015s grep prefilter
+    # t2a real 0.012s loop: case...esac
     Run shell: ksh93
-    # t1a    real 2.940s
-    # t2a    real 1.504s
+    # t1a real 2.940s
+    # t2a real 1.504s
     Run shell: bash
-    # t1a    real 4.567s
-    # t2a    real 10.88s
+    # t1a real 4.567s
+    # t2a real 10.88s
 ```
 
 ## 3.4 MODERATE PERFORMANCE GAINS
@@ -700,13 +700,13 @@ TODO
     Run shell: dash
     # <skip all>     no arrays
     Run shell: ksh93
-    # t1 real 0.008  (1) IFS=: eval
-    # t2 real 0.002  (2) IFS..saved
-    # t3 real 0.003  (3) IFS <<<
+    # t1  real 0.008  (1) IFS=: eval
+    # t2  real 0.002  (2) IFS..saved
+    # t3  real 0.003  (3) IFS <<<
     Run shell: bash
-    # t1 real 0.010  (1) IFS=: eval
-    # t2 real 0.008  (2) IFS..saved
-    # t3 real 0.090  (3) IFS <<<
+    # t1  real 0.010  (1) IFS=: eval
+    # t2  real 0.008  (2) IFS..saved
+    # t3  real 0.090  (3) IFS <<<
 ```
 
 - It is about 2 times faster to read
@@ -736,17 +736,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
 
     Run shell: dash
-    # t1     <skip>
-    # t2     <skip>
-    # t3     real 0.013s $(cat ...)
+    # t1  <skip>
+    # t2  <skip>
+    # t3  real 0.013s $(cat ...)
     Run shell: ksh93
-    # t1     real 0.088s $(< ...)
-    # t2     real 0.095s read -N
-    # t3     real 0.267s $(cat ...)
+    # t1  real 0.088s $(< ...)
+    # t2  real 0.095s read -N
+    # t3  real 0.267s $(cat ...)
     Run shell: bash
-    # t1     real 0.139s $(< ...)
-    # t2     real 0.254s read -N
-    # t3     real 0.312s $(cat ...)
+    # t1  real 0.139s $(< ...)
+    # t2  real 0.254s read -N
+    # t3  real 0.312s $(cat ...)
 ```
 
 ## 3.5 MINOR PERFORMANCE GAINS
@@ -908,14 +908,14 @@ None of these offer any advantages to speed up shell scripts.
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1     <skip>
-    # t2      real 0.011 POSIX
+    # t1  <skip>
+    # t2  real 0.011 POSIX
     Run shell: ksh93
-    # t1     real 0.004  [[ == ]]
-    # t2     real 0.002  POSIX
+    # t1  real 0.004  [[ == ]]
+    # t2  real 0.002  POSIX
     Run shell: bash
-    # t1     real 0.003  [[ == ]]
-    # t2     real 0.002  POSIX
+    # t1  real 0.003  [[ == ]]
+    # t2  real 0.002  POSIX
 ```
 
 - There is no performance difference
