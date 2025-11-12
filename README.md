@@ -1638,13 +1638,11 @@ operands without any files:
 - The shell's null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   might be slightly preferrable than
-  utlity
-  [true]
-  according to
-  GNU autoconf's manual
-  ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
-  which states that `:` might not be
-  always builtin and "(...) the
+  utlity [true]. But's that's
+  mostly due to tradition.
+  According to GNU autoconf's manual
+["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
+  which states that "(...) the
   portable shell community tends to
   prefer using :".
 
@@ -1656,7 +1654,6 @@ operands without any files:
 
     # Create an empty file
     : > file
-
 ```
 
 - Prefer POSIX
