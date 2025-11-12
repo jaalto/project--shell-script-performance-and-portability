@@ -194,7 +194,8 @@ ShellVersionMain ()
             ;;
         *pbosh*)
             # sh (Schily Bourne Shell) version pbosh 2023/01/12 a+ (--)
-            $sh --version 2>&1 | ${AWK:-awk} '
+            $sh --version 2>&1 |
+            ${AWK:-awk} '
             /2[0-2][0-9][0-9]/ {
                 gsub("^.*pbosh +", "")
                 print
@@ -204,14 +205,15 @@ ShellVersionMain ()
         *posh*)
             # ignore $var in single quote
             # shellcheck disable=SC2016
-            $sh -c 'echo $POSH_VERSION'
+            $sh -c 'echo $POSH_VERSION' 2> /dev/null
             ;;
         *mksh*)
             # @(#)MIRBSD KSH R59 2024/07/26 +Debian
 
             # ignore $var in single quote
             # shellcheck disable=SC2016
-            $sh -c 'echo $KSH_VERSION' | ${AWK:-awk} '
+            $sh -c 'echo $KSH_VERSION'  2> /dev/null |
+            ${AWK:-awk} '
             /2[0-2][0-9][0-9]/ {
                 gsub("/", "-")
                 print $3 " " $4
@@ -224,7 +226,8 @@ ShellVersionMain ()
             # ignore single quote
             # shellcheck disable=SC2016
 
-            $sh --version 2>&1 | ${AWK:-awk} '
+            $sh --version 2>&1 |
+            ${AWK:-awk} '
             /AT.T Research. +[0-9]+/ {
                 print $(NF -1) " " $(NF)
                 exit
@@ -236,7 +239,8 @@ ShellVersionMain ()
             # ignore single quote
             # shellcheck disable=SC2016
 
-            $sh --version 2>&1 | ${AWK:-awk} '
+            $sh --version 2>&1 |
+            ${AWK:-awk} '
             /^GNU bash.* +[0-9]/ {
                 $0 = $4
                 sub("[(].+$", "")
@@ -250,7 +254,8 @@ ShellVersionMain ()
             # ignore single quote
             # shellcheck disable=SC2016
 
-            $sh --version 2>&1 | ${AWK:-awk} '
+            $sh --version 2>&1 |
+            ${AWK:-awk} '
             /^zsh +[0-9]/ {
                 print $2
                 exit
@@ -262,7 +267,8 @@ ShellVersionMain ()
             # ignore single quote
             # shellcheck disable=SC2016
 
-            busybox --help 2>&1 | ${AWK:-awk} '
+            busybox --help 2>&1 |
+            ${AWK:-awk} '
             /^BusyBox v[0-9]+\./ {
                 sub("^BusyBox +v?", "")
                 print $1
