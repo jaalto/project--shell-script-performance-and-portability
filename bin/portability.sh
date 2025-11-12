@@ -35,7 +35,7 @@ BASH_VERSION=${BASH_VERSION:-$(bash -c 'echo $BASH_VERSION' 2> /dev/null)}
 # Defined in t-lib.sh
 TMPBASE=""
 VERBOSE=""
-WIDTH=""
+WIDTH="40"
 LINE_LENGTH="66"
 
 # ignore follow
@@ -100,6 +100,10 @@ OPTIONS
         List of shell to check for support in x-*
         portability test FILES
 
+    -w, --width SIZE
+        The width SIZE of the description part
+        to the left.
+
     -v, --verbose
         Display verbose messages.
 
@@ -125,7 +129,7 @@ TEST FILE FORMAT
     The comment section at the beginning must include:
 
     #! <path to interpreter>
-    # Short: <short description up to 20 characters>
+    # Short: <short description up to 40 characters>
     # Desc: <longer description up to 80 characters>
 
     <code>
@@ -134,6 +138,7 @@ TEST FILE FORMAT
 
 EXAMPLES
     $program x-*
+    $program --width 25 x-*
     $program --shell dash,mksh x-*"
 
     exit 0
@@ -270,7 +275,7 @@ ResultsData ()
     }
 
     {
-        fmt="%-40s"
+        fmt="%-" width "s"
 
         if (!header)
         {
@@ -294,6 +299,7 @@ ResultsData ()
     ' \
     list="$list" \
     sep="$lsep" \
+    width="$WIDTH" \
     "${1:-}"
 }
 
@@ -314,7 +320,7 @@ Line ()
 
 LineStraight ()
 {
-    Line $LINE_LENGTH
+    Line "$LINE_LENGTH"
 }
 
 ResultsShellInfo ()
@@ -432,7 +438,7 @@ RunCheck ()
     local results=$(mktemp -t $TMPBASE.results.XXX)
     local file
 
-    for file
+    for file # Implicit "$@"
     do
         desc=$(Description "$file")
         shresult=$(RunShells "$shlist")
@@ -467,6 +473,8 @@ Main ()
                 shift
                 ;;
             -w | --width)
+                DieOption "--width" "$2"
+                DieOptionNotNumber "--width" "$2"
                 WIDTH=$2
                 shift ; shift
                 ;;
