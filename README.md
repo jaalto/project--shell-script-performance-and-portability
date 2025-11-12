@@ -514,12 +514,10 @@ TODO
     # t1     <skip>
     # t2     real 0.006s fnNamerefPosix
     # t3     real 0.005s ret=$(fn)
-
     Run shell: ksh93
     # t1     <skip>
     # t2     real 0.004s fnNamerefPosix
     # t3     real 0.005s ret=$(fn)
-
     Run shell: bash
     # t1     real 0.006s fnNamerefBash
     # t2     real 0.006s fnNamerefPosix
