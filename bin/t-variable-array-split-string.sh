@@ -4,8 +4,8 @@
 # A: It is about 10x faster to use IFS+array than to use Bash array `<<<` HERE STRING
 # priority: 8
 #
-#     t1 real  0.011 eval array=(string)
-#     t2 real  0.021 IFS...save arr=(string) IFS..restore
+#     t1 real  0.011 IFS= eval array=(string)
+#     t2 real  0.021 IFS+save arr=(string) IFS+restore
 #     t3 real  0.098 read -ra arr <<< string
 #
 # Code:
