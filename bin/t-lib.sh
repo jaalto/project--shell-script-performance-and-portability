@@ -716,6 +716,9 @@ RunTestCase ()
         # - change order of fields:
         #   0m00.08s real ... => real 0m00.08s ...
 
+        # ignore AWK single quote
+        # shellcheck disable=SC2016
+
         { time "$@" ; } 2>&1 |
             paste --serial --delimiters=" " |
             ${SED:-sed} \
