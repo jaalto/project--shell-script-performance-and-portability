@@ -635,7 +635,7 @@ RunTestCase ()
 {
     [ "${1:-}" ] || return 1
 
-    local fromat hasformat timecmd
+    local format hasformat timecmd
 
     # We're supposing recent Bash 5.x or Ksh
     # which defines TIMEFORMAT
