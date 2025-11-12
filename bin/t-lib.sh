@@ -556,6 +556,9 @@ RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
+    # ignore AWK single quote
+    # shellcheck disable=SC2016
+
     $SHUF --head-count=200000 "$DICTIONARY_FILE" |
     $AWK '
         BEGIN {
@@ -601,8 +604,7 @@ RandomNumbersAwk ()
 
         for (i = 1; i <= n; i++)
             print int(rand() * (2**14 - 1))
-    }' \    # ' fix. Ksh parser bug: "quote may be missing"
-    n="$1" \
+    }' n="$1" \    # ' fix. Ksh parser bug: "quote may be missing"
     < /dev/null
 }
 
