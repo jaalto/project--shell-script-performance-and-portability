@@ -812,7 +812,7 @@ RunTestSet ()
     for test in $testset
     do
         test="$test"   # For debug
-        eval $test
+        eval "$test"
     done
 
     IFS=$saved
