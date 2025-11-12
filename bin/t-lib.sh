@@ -682,6 +682,8 @@ RunTestCase ()
     esac
 
     if [ "$hasformat" ]; then
+        local timeformat=""
+
         eval "timeformat=\$$hasformat" # save
         printf "# %-24s" "$1"
 
