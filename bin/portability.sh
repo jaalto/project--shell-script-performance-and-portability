@@ -37,6 +37,7 @@ TMPBASE=""
 VERBOSE=""
 WIDTH="40"
 LINE_LENGTH="66"
+LINE_STR=""
 
 # ignore follow
 # shellcheck disable=SC1091
@@ -364,7 +365,7 @@ ResultsShellInfo ()
 
     [ "$sep" ] || return 1
 
-    LineStraight
+    echo "$LINE_STR"
 
     local sh
     local i=1
@@ -386,7 +387,7 @@ ResultsShellInfo ()
 
     IFS="$saved"
 
-    LineStraight
+    echo "$LINE_STR"
 }
 
 Description ()
@@ -493,7 +494,7 @@ RunCheck ()
 
     IFS=$saved
 
-    LineStraight
+    echo "$LINE_STR"
 
     ResultsData "$sep" "$SHELL_LIST" "," "$results"
     ResultsShellInfo "$SHELL_LIST" ","
@@ -556,6 +557,8 @@ Main ()
     fi
 
     local filelist=""
+
+    LINE_STR=$(LineStraight)
 
     for file
     do
