@@ -106,8 +106,6 @@ DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 # -- Private
 # -- ------------------------------------
 
-RUNNER=t.run
-
 # Emulate 'local' if needed
 
 if [ "${KSH_VERSION:-}" ]; then
