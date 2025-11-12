@@ -504,11 +504,13 @@ Main ()
 {
     SetupTrapAtExit
 
+    local dummy
+
     while :
     do
         # Unused, but useful during debug
         # shellcheck disable=SC2034
-        local dummy="OPT: ${1:-}"
+        dummy="OPT: ${1:-}"
 
         case ${1:-} in
             -s | --shell)
@@ -560,7 +562,7 @@ Main ()
 
     LINE_STR=$(LineStraight)
 
-    for file
+    for file # Implicit "$@"
     do
         if [ ! -f "$file" ]; then
             IsVerbose && Warn "WARN: ignore, no file: $file"
@@ -577,6 +579,8 @@ Main ()
 
     # ignore quotes
     # shellcheck disable=SC2086
+
+    dummy="shellist: $SHELL_LIST"
 
     for shell in $SHELL_LIST
     do
