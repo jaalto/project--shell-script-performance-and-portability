@@ -126,6 +126,9 @@ SetupTrapAtExit ()
 {
     if ! IsCommandExist AtExit; then
         # Define default AtExit
+
+        # ignore never invoked
+        # shellcheck disable=SC2329
         AtExit ()
         {
             AtExitDefault
