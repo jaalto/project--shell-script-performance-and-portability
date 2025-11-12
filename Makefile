@@ -78,7 +78,7 @@ port: cat-portability
 
 .PHONY: cat-portability
 cat-portability:
-	@cat doc/$(DOCDIR)/$(DOC_PORTABILITY)
+	@cat $(DOCDIR)/$(DOC_PORTABILITY)
 
 .PHONY: doc-portability
 doc-portability:
