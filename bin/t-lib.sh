@@ -154,6 +154,68 @@ Die ()
     exit 1
 }
 
+DieEmpty ()
+{
+    [ "${1:-}" ] && return 0
+
+    shift
+    Die "$*"
+}
+
+DieOptionNotNumber ()
+{
+    case "${2:-}" in
+        [0-9]*)
+            ;;
+        *)
+            Die "$PROGRAM: ERROR: option ${1:-} requires a number, got: ${1:-}"
+            ;;
+    esac
+}
+
+DieOptionMinus ()
+{
+    case "${2:-}" in
+        -*)
+            Die "$PROGRAM: ERROR: option ${1:-} requires ARG, got $2"
+            ;;
+    esac
+}
+
+DieOptionEmpty ()
+{
+    if [ ! "$2" ]; then
+        Die "$PROGRAM: ERROR: option ${1:-} requires ARG, got empty"
+    fi
+}
+
+DieOption ()
+{
+    DieOptionMinus "$@"
+    DieOptionEmpty "$@"
+}
+
+DieNoFile ()
+{
+    if [ ! -e "${1:-}" ]; then
+        Die "$PROGRAM: ERROR: no such file: ${1:-}"
+    fi
+}
+
+DieEmptyFile ()
+{
+    if [ ! -s "${1:-}" ]; then
+        Die "$PROGRAM: ERROR: empty file: ${1:-}"
+    fi
+}
+
+DieNoDir ()
+{
+    if [ ! -d "${1:-}" ]; then
+        Die "$PROGRAM: ERROR: no such dir: ${1:-}"
+    fi
+}
+
 IsVerbose ()
 {
     [ "$VERBOSE" ]
