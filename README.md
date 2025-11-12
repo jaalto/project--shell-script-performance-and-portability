@@ -678,13 +678,14 @@ TODO
         ...
     }
 
-    # (2) Bash. Same speed. Ksh: fastest
+    # (2) Bash. Same speed.
+    # Ksh: fastest
     saved="$IFS"
     IFS=":"
     array=($str)
     IFS="$saved"
 
-    # (3) Bash. 9x slower than 'eval'.
+    # (3) Bash. 9x slower than eval
     IFS=":" read -ra array <<< "$str"
 
     # In Linux, see what Bash uses
@@ -699,15 +700,15 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-variable-array-split-string.sh
 
     Run shell: dash
-    ... <skip all>      POSIX, no arrays
+    ... <skip all>   no arrays
     Run shell: ksh93
-    # t1 real 0.008     (1) IFS=: eval
-    # t2 real 0.002     (2) IFS..saved
-    # t3 real 0.003     (3) IFS ... <<<
+    # t1 real 0.008  (1) IFS=: eval
+    # t2 real 0.002  (2) IFS..saved
+    # t3 real 0.003  (3) IFS <<<
     Run shell: bash
-    # t1 real 0.010     (1) IFS=: eval
-    # t2 real 0.008     (2) IFS..saved
-    # t3 real 0.090     (3) IFS ... <<<
+    # t1 real 0.010  (1) IFS=: eval
+    # t2 real 0.008  (2) IFS..saved
+    # t3 real 0.090  (3) IFS <<<
 ```
 
 - It is about 2 times faster to read
