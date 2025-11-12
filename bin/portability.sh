@@ -35,6 +35,8 @@ BASH_VERSION=${BASH_VERSION:-$(bash -c 'echo $BASH_VERSION' 2> /dev/null)}
 # Defined in t-lib.sh
 TMPBASE=""
 VERBOSE=""
+WIDTH=""
+LINE_LENGTH="66"
 
 # ignore follow
 # shellcheck disable=SC1091
@@ -298,7 +300,7 @@ Line ()
 
 LineStraight ()
 {
-    Line 60
+    Line $LINE_LENGTH
 }
 
 ResultsShellInfo ()
@@ -450,11 +452,13 @@ Main ()
                 SHELL_LIST=$1
                 shift
                 ;;
+            -w | --width)
+                WIDTH=$2
+                shift ; shift
+                ;;
             -v | --verbose)
-
                 # not unused, see t-lib.sh
                 # shellcheck disable=SC2034
-
                 VERBOSE="verbose"
                 shift
                 ;;
