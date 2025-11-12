@@ -72,6 +72,14 @@ define doc-portability-function
 	./$(BIN_PORTABILITY) x-* > ../$(DOCDIR)/$(DOC_PORTABILITY)
 endef
 
+# port - Display portability results
+.PHONY: port
+port: cat-portability
+
+.PHONY: cat-portability
+cat-portability:
+	@cat doc/$(DOCDIR)/$(DOC_PORTABILITY)
+
 .PHONY: doc-portability
 doc-portability:
 	$(call doc-portability-function)
