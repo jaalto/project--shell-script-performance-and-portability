@@ -512,15 +512,15 @@ TODO
 
     Run shell: dash
     # t1  <skip>
-    # t2  real 0.006s fnNamerefPosix
+    # t2  real 0.006s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: ksh93
     # t1  <skip>
-    # t2  real 0.004s fnNamerefPosix
+    # t2  real 0.004s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: bash
-    # t1  real 0.006s fnNamerefBash
-    # t2  real 0.006s fnNamerefPosix
+    # t1  real 0.006s NamerefBash
+    # t2  real 0.006s NamerefPosix
     # t3  real 0.094s ret=$(fn)
 ```
 
