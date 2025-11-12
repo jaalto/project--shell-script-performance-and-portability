@@ -120,6 +120,18 @@ NOTES
     test macOS compatibility.
     https://www.gnu.org/software/bash/manual/bash.html#Shell-Compatibility-Mode
 
+TEST FILE FORMAT
+    Each test file must return true (0) or false (non-zero).
+    The comment section at the beginning must include:
+
+    #! <path to interpreter>
+    # Short: <short description up to 20 characters>
+    # Desc: <longer description up to 80 characters>
+
+    <code>
+
+    # End of file
+
 EXAMPLES
     $program x-*
     $program --shell dash,mksh x-*"
