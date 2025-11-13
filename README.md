@@ -1250,7 +1250,7 @@ if ! IsCommand local; then
         # defining function with
         # name 'local' does not
         # generate an error.
-        eval 'local () { typeset "$@" ; }'
+        eval 'local () { typeset "$@"; }'
     fi
 fi
 ```
