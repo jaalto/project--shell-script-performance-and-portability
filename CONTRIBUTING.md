@@ -59,14 +59,15 @@ follows regarding the impact on performance:
                   variable-hash-*
 ```
 
-- Name portability <test case> files as extra
+- Name portability \<test case\> files as extra
   `x-portability-*.sh`. If testing utilities
-  (cut, read, etc.) defined in POSIX, name
-  the file `x-portability-posix-*.sh`. Each
-  file contains a simple shell feature test.
-  The return code indicates whether the
-  feature is supported. Incde two comment lines
-  at the top of the file:
+  which are defined in POSIX (`cut`, `read`,
+  etc.), name the file
+  `x-portability-posix-*.sh`. Each file
+  contains a simple shell feature test. The
+  return code indicates whether the feature
+  is supported. Incde two comment lines at
+  the top of the file:
 
 ```
     Short: <In less than 40 chars, summary>
