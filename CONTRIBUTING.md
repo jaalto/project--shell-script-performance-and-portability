@@ -212,7 +212,7 @@ z
 
 ```
 
-# PROJECT CODING STYLE
+# CODING STYLE
 
 Use conventions to maximize clarity
 and simplicity. The \<test case\> files are
