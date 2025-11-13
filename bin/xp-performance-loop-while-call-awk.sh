@@ -1,6 +1,11 @@
 #! /bin/sh
 # Short: while loop
 # Desc: Measure while loop and external awk call count
+#
+# Notes:
+#
+# Useful to test overall disk speed and system latency.
+# E.g in one system and then in another.
 
 timeout 1 ${1:-bash} <<'EOF' 2> /dev/null
 
