@@ -1225,13 +1225,20 @@ discussion on StackExchange.
   beginning:
 
 ``` bash
+IsCommand ()
+{
+    command -v "${1:-}" > /dev/null 2>&1
+]
+
 # Check if 'local' is supported
-if ! command -v local > /dev/null 2>&1; then
+if ! IsCommand local; then
     # Check if we are in ksh
-    if command -v typeset > /dev/null 2>&1; then
-        # Use 'eval' to hide from other shells
-        # so that defining function with name
-        # 'local' does generate an error.
+    if IsCommand typeset; then
+        # Use 'eval' to hide from
+        # other shells so that
+        # defining function with
+        # name 'local' does
+        # generate an error.
         eval 'local () { typeset "$@" ; }'
     fi
 fi
