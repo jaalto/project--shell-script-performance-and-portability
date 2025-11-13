@@ -119,7 +119,7 @@ fi
 
 AtExitDefault ()
 {
-    rm --force "$TMPBASE"*
+    [ "${TMPBASE:-}" ] && rm --force "$TMPBASE"*
 }
 
 SetupTrapAtExit ()
@@ -136,11 +136,11 @@ SetupTrapAtExit ()
     fi
 
     trap AtExit EXIT HUP INT QUIT TERM
-    unset trap
 }
 
 TrapReset ()
 {
+    # Clear our traps
     trap - EXIT HUP INT QUIT TERM
 }
 
