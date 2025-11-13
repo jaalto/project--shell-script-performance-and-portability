@@ -1214,15 +1214,26 @@ discussion on StackExchange.
   [OpenBSD, sh](https://man.netbsd.org/sh.1)
   is [ksh93] from the [Korn Shell]
   family.
-- On many commercial, conservative UNIX
-  systems, `sh` is already quite capable
-  [ksh93]. The trouble with [ksh] is that
-  it uses the keyword `typeset` and not
-  `local`. In order to write a
-  cross-platform POSIX-compliant shell
-  script to support `ksh` as `/bin/sh`,
-  add the following code to the
-  beginning:
+  
+- On many commercial and
+  conservative UNIX systems, the
+  default `/bin/sh` shell is highly
+  capable, often implemented as a
+  modern KornShell [ksh93]. The key
+  compatibility challenge with
+  `ksh` is that it uses the keyword
+  `typeset` for defining
+  function-local variables, rather
+  than the `local` keyword
+  available in most other common
+  shell derivatives. If you want to
+  ensure wider cross-platform
+  compatibility, use the `local`
+  keyword. To make scripts function
+  correctly even when `ksh` is used
+  as `/bin/sh`, include the
+  following compatibility code at
+  the beginning of your script:
 
 ``` bash
 IsCommand ()
@@ -1237,7 +1248,7 @@ if ! IsCommand local; then
         # Use 'eval' to hide from
         # other shells so that
         # defining function with
-        # name 'local' does
+        # name 'local' does not
         # generate an error.
         eval 'local () { typeset "$@" ; }'
     fi
