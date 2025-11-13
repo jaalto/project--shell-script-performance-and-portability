@@ -66,7 +66,7 @@ follows regarding the impact on performance:
   `x-portability-posix-*.sh`. Each file
   contains a simple shell feature test. The
   return code indicates whether the feature
-  is supported. Incde two comment lines at
+  is supported. Add two comment lines at
   the top of the file:
 
 ```
