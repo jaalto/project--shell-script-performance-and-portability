@@ -4,8 +4,8 @@ information for contributing test cases.
 
 # TEST CASE FILE LAYOUT
 
-Write documentation comments in the `\<text
-case\>.sh` files as they would appear in
+Write documentation comments in the `<test
+case>.sh` files as they would appear in
 markdown. The comments "# " will be stripped
 during documentation conversion. See
 [txt2markdown.sh](./bin/Makefile::d).
@@ -27,7 +27,7 @@ during documentation conversion. See
     of the results, commentary, notes>
 ```
 
-Based on the results, select <priority> as
+Based on the results, select \<priority\> as
 follows regarding the impact on performance:
 
 ```
