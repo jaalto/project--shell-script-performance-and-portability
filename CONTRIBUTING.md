@@ -87,12 +87,36 @@ follows regarding the impact on performance:
 
 - Name performance <test case> files as extra
   `xp-performance-*.sh`. Each file contains a
-  simple feature test. A single integer
+  simple feature test. The program can use
+  command line arguments. A single integer
   return value indicates the result.
 
 ```
     Short: <In less than 40 chars, summary>
     Desc: <In one sentence, description>
+```
+
+  An example:
+
+```
+#! /bin/sh
+# Short: while loop
+# Desc: Measure while loop and external awk call count
+
+timeout 1 ${1:-bash} <<'EOF' 2> /dev/null
+
+trap 'echo "$n"; trap - EXIT TERM INT; exit' EXIT TERM INT
+
+n=0
+
+while :
+do
+    awk 1 < /dev/null
+    n=$((n + 1))
+done
+EOF
+
+# End of file
 ```
 
 # TEST CASE FILE FORMAT
