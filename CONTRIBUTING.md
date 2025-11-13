@@ -212,7 +212,7 @@ z
 
 ```
 
-# GENERAL CODING STYLE CONSIDERATIONS
+# PROJECT CODING STYLE
 
 Use relaxed conventions for maximum clarity
 and simplicity. The <test case> files are
