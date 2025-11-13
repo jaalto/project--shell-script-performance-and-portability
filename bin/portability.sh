@@ -31,13 +31,19 @@ pwd=$(cd "$(dirname "$0")" && pwd)
 
 BASH_VERSION=${BASH_VERSION:-$(bash -c 'echo $BASH_VERSION' 2> /dev/null)}
 
-# Forward decalarations for shellcheck(1)
-# Defined in t-lib.sh
-TMPBASE=""
-VERBOSE=""
 WIDTH="40"
 LINE_LENGTH="66"
 LINE_STR=""
+
+# Forward decalarations for shellcheck(1)
+# Defined in t-lib.sh
+
+# shellcheck disable=SC2034
+TMPBASE=""
+# shellcheck disable=SC2034
+VERBOSE=""
+
+AtExit () { :; }    # Clear. See t-lib.sh
 
 # ignore follow
 # shellcheck disable=SC1091
@@ -84,7 +90,7 @@ fi
 
 Help ()
 {
-    program=$PROGRAM
+    local program="$PROGRAM"
 
     case ${program:-} in
         */*) ;;
