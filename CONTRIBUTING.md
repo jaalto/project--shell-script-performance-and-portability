@@ -77,12 +77,12 @@ follows regarding the impact on performance:
   An example:
 
 ```
-	#! /bin/bash
-	# Short: arrays
-	# Desc: Test array support
+    #! /bin/bash
+    # Short: arrays
+    # Desc: Test array support
 
-	array=(1 2 3)
-	: "${array[1]}"
+    array=(1 2 3)
+    : "${array[1]}"
 ```
 
 - Name performance <test case> files as extra
@@ -134,7 +134,7 @@ EOF
   create temporary files.
 
 ```
-	f="$TMPBASE.this-test-file-name.tmp"
+    f="$TMPBASE.this-test-file-name.tmp"
 ```
 
 - To clean  `TMPBASE` derived temporary
@@ -146,13 +146,13 @@ EOF
   clean `TMPBASE` files.
 
 ```
-	SetupTrapAtExit # defines AtExit to clean TMPBASE* files
+    SetupTrapAtExit # defines AtExit to clean TMPBASE* files
 
     AtExit ()
-	{
-	    AtExitDefault # Clean TMPBASE* files
-		rm --recursive --force $tmpdir  # my custom cleanup
-	}
+    {
+        AtExitDefault # Clean TMPBASE* files
+        rm --recursive --force $tmpdir  # my custom cleanup
+    }
 
     SetupTrapAtExit AtExit    # Use your custom AtExit
 ```
@@ -163,20 +163,20 @@ z
   independent.
 
 ```
-	t1 ()
-	{
-		# test case
-	}
+    t1 ()
+    {
+        # test case
+    }
 ```
 
 - Define function `Info` to display information once
   before test cases are being run.
 
 ```
-	Info ()
-	{
-		ls -l $f  # Test file information
-	}
+    Info ()
+    {
+        ls -l $f  # Test file information
+    }
 ```
 
 - Define test cases to be run in a string, where test cases
@@ -186,27 +186,27 @@ z
   [t-lib.sh](./bin/t-lib.sh)
 ```
     # Define lists of test cases,
-	# leading colon(:) at
-	# the beginning of string
-	# is ignored.
-	#
-	# Test cases t1 and t2 can be run
-	# only under shells that meet the
-	# criteria.
-	#
-	# Test case t3 can be run under any
-	# POSIX shell.
+    # leading colon(:) at
+    # the beginning of string
+    # is ignored.
+    #
+    # Test cases t1 and t2 can be run
+    # only under shells that meet the
+    # criteria.
+    #
+    # Test case t3 can be run under any
+    # POSIX shell.
 
-	t="\
-	:t1 IsFeatureArrays
-	:t2 IsShellBash
-	:t3
-	"
+    t="\
+    :t1 IsFeatureArrays
+    :t2 IsShellBash
+    :t3
+    "
 
-	# Run test cases. The "source" variable
-	# use defined when called using
-	#
-	#   run.sh --shell dash <test case>.sh
+    # Run test cases. The "source" variable
+    # use defined when called using
+    #
+    #   run.sh --shell dash <test case>.sh
 
     [ "$source" ] || RunTests "$t" "$@"
 
@@ -214,17 +214,19 @@ z
 
 # PROJECT CODING STYLE
 
-Use relaxed conventions for maximum clarity
-and simplicity. The <test case> files are
+Use conventions to maximize clarity
+and simplicity. The \<test case\> files are
 intended to be as clear and straightforward
 as possible and not Production Code.
 
-No need to lint using `shellcheck` etc.
-Ref: <https://www.shellcheck.net>.
+No mandatory lint needed using [shellcheck]
+etc.
 
-- Write for target shell Bash. For macOS portability
-  use `/usr/bin/env'. Use space in shebang line
-  to help readability.
+- Write in POSIX `sh` if possible.
+
+- For Bash scripts, use the portable `env`
+  shebang. Improve readability by adding a
+  space after the interpreter path.
 
 ```
   #! /usr/bin/env bash
@@ -232,41 +234,64 @@ Ref: <https://www.shellcheck.net>.
 
 - Use 4 spaces for indentation.
 
-- Use readable `--long` options for commands
-  that support them.
+- Assume GNU utilities. Use readable GNU
+  `--long` options for all supporting
+  commands. Adherence to POSIX short options
+  is not required.
 
-- Do not `"$quote"` variables unless needed.
+- No need to `"$quote"` variables unless
+  needed.
 
-- No `local` variables unless needed.
+- Use `local` keyword in functions to define
+  variables. Although not in POSIX, it is
+  99% supported in all modern shells.
 
-- Define function names in
-  [camelCase[(https://en.wikipedia.org/wiki/Camel_case)
-  style.
-
-- Use Allman style for these:
+- In variable tests, use practical
+  and simple notations. Do not use `-z`
+  or `-n` tests.
 
 ```
-    fn()
+	[ "$var" ]    # Has value
+	[ ! "$var" ]  # Empty, does not have a value
+```
+
+- Define function names using [CamelCase].
+  Start identifier with an uppercase letter
+  to minimize conflict to existing
+  commands. Always include a space before the
+  function parentheses '()' matching Bash
+  `type` command output, and do not use the
+  non-POSIX `function` keyword.
+
+- Use [Allman] style for these:
+
+```
+    ThisFunctionName ()
     {
         ...
     }
 
-    <loop statement>
+	for item in $list
     do
         ...
     done
 
-    case <string> in
-        pattern)
-			...
-			;;
-        pattern)
-			...
-			;;
+	while read -r item
+    do
+        ...
+    done < file
+
+    case $var in
+        pattern1)
+            ...
+            ;;
+        pattern2)
+            ...
+            ;;
     fi
 ```
 
-- K&R style for placing `then` keyword
+- Use K&R style for placing `then` keyword
   provided that `<statement>` is short and
   simple enough.
 
@@ -274,7 +299,16 @@ Ref: <https://www.shellcheck.net>.
     if <statement>; then
         ...
     fi
+
+    # In longer statements, switch to [Allman]
+	# for more clarity
+
+    if <this is an example of a very long statement>
+    then
+        ...
+    fi
 ```
+
 
 # REFERENCES
 
@@ -286,5 +320,12 @@ Ref: <https://www.shellcheck.net>.
   https://en.wikipedia.org/wiki/Lint_(software)
 - Shellcheck - static shell script code analysis
   https://www.shellcheck.net
+
+<!-- links -->
+
+[shellcheck]: https://www.shellcheck.net
+[CamelCase]: https://en.wikipedia.org/wiki/Camel_case
+[Allman]: https://en.wikipedia.org/wiki/Indentation_style#Allman_style
+[K&R]: https://en.wikipedia.org/wiki/Indentation_style#K&R
 
 End of file
