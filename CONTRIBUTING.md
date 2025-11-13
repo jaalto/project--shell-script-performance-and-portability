@@ -1,6 +1,6 @@
 # CONTRIBUTING
 
-information for contributing more test cases.
+information for contributing test cases.
 
 # TEST CASE FILE LAYOUT
 
@@ -39,9 +39,9 @@ follows regarding the impact on performance:
 
 # GENERAL TEST CASE FILE NAMING
 
-- Name <test case> files
-  as `t-<category>-*.sh`,
-  where category is one of:
+- Name <test case> files as
+  `t-<category>-*.sh`, where category
+  is one of:
 
 
 ```
@@ -58,25 +58,39 @@ follows regarding the impact on performance:
                   variable-hash-*
 ```
 
-- Name portability <test case> files as
+- Name portability <test case> files as extra
   `x-portability-*.sh`. If testing utilities
-  (cut, read, etc.) defined in POSIX, name the
-  file `x-portability-posix-*.sh`. Each file
-  contains a simple shell feature test. The
-  return code indicates whether the feature is
-  supported.
-
+  (cut, read, etc.) defined in POSIX, name
+  the file `x-portability-posix-*.sh`. Each
+  file contains a simple shell feature test.
+  The return code indicates whether the
+  feature is supported. Incde two comment lines
+  at the top of the file:
 
 ```
-   # FILE: x-portability-array.sh
-   # Q: Test array support
-   a=(1 2 3)
+    Short: <In less than 40 chars, summary>
+    Desc: <In one sentence, description>
+```
 
-   # To test feature from command line
-   bash x-portability-array.sh ; echo $?
-   dash x-portability-array.sh ; echo $?
-   ...
+  An example:
 
+```
+	#! /bin/bash
+	# Short: arrays
+	# Desc: Test array support
+
+	array=(1 2 3)
+	: "${array[1]}"
+```
+
+- Name performance <test case> files as extra
+  `xp-performance-*.sh`. Each file contains a
+  simple feature test. A single integer
+  return value indicates the result.
+
+```
+    Short: <In less than 40 chars, summary>
+    Desc: <In one sentence, description>
 ```
 
 # TEST CASE FILE FORMAT
