@@ -481,7 +481,7 @@ TODO
     # shells, because 'ret=$(cmd)'
     # is already fast
 
-    NamerefPosix()
+    NamerefPosix ()
     {
         local retref=$1
         shift
@@ -490,7 +490,7 @@ TODO
         eval "$retref=\$arg"
     }
 
-    NamerefBash()
+    NamerefBash ()
     {
         local -n retref=$1
         shift
@@ -660,7 +660,7 @@ TODO
 
     # Bash. The same, if you need
     # to do it in a function.
-    fn()
+    fn ()
     {
         local str=${1:?ERROR: no arg}
 
@@ -1285,7 +1285,7 @@ improve shell scripts even more.
     # Save in a shell startup file
     # like ~/.bashrc
 
-    shelltest()
+    shelltest ()
     {
         local script name shell
 
