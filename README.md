@@ -1236,23 +1236,23 @@ discussion on StackExchange.
   the beginning of your script:
 
 ``` bash
-IsCommand ()
-{
-    command -v "${1:-}" > /dev/null 2>&1
-]
+    IsCommand ()
+    {
+        command -v "${1:-}" > /dev/null 2>&1
+    ]
 
-# Check if 'local' is supported
-if ! IsCommand local; then
-    # Check if we are in ksh
-    if IsCommand typeset; then
-        # Use 'eval' to hide from
-        # other shells so that
-        # defining function with
-        # name 'local' does not
-        # generate an error.
-        eval 'local () { typeset "$@"; }'
+    # Check if 'local' is supported
+    if ! IsCommand local; then
+        # Check if we are in ksh
+        if IsCommand typeset; then
+            # Use 'eval' to hide from
+            # other shells so that
+            # defining function with
+            # name 'local' does not
+            # generate an error.
+            eval 'local () { typeset "$@"; }'
+        fi
     fi
-fi
 ```
 
 - On macOS, `sh` points to `bash
@@ -1282,8 +1282,14 @@ other shells. See
 for external utilities to check and
 improve shell scripts even more.
 
+``` bash
     # Save in a shell startup file
     # like ~/.bashrc
+
+    IsCommand ()
+    {
+        command -v "${1:-}" > /dev/null 2>&1
+    }
 
     shelltest ()
     {
@@ -1303,7 +1309,7 @@ improve shell scripts even more.
                 # "busybox ash" => busybox
                 name=${shell%% *}
 
-                if command -v "$name" > /dev/null 2>&1; then
+                if IsCommand "$name"; then
                     echo "-- shell: $shell"
                     $shell -nx "$script"
                 fi
@@ -1319,6 +1325,7 @@ improve shell scripts even more.
 
     # See Google. External utility
     checkbashisms script.sh
+```
 
 ## 4.4 SHEBANG LINE IN SCRIPTS
 
