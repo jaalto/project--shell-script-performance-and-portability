@@ -291,7 +291,7 @@ etc.
     fi
 ```
 
-- Use K&R style for placing `then` keyword
+- Use [K&R] style for placing `then` keyword
   provided that `<statement>` is short and
   simple enough.
 
