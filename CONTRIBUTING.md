@@ -214,13 +214,31 @@ z
 
 # SHELL SCRIPT CODING STYLE
 
-Use conventions to maximize clarity
-and simplicity. The \<test case\> files are
-intended to be as clear and straightforward
-as possible and not Production Code.
+Use conventions that maximize clarity and
+simplicity in your technical documentation.
 
-No mandatory lint needed using [shellcheck]
-etc.
+When dealing with small scripts, aim to be as
+clear and straightforward as possible; avoid
+treating them with the exhaustive rigor of
+production code.
+
+The intentional omission of double quotes
+around variables (e.g., $var instead of
+"$var") is not always a gross mistake or a
+sign of unprofessionalism. This practice is
+contextual and depends heavily on the use
+case and expected input.
+
+**However**, when sharing code intended for a
+wider audience, or for deployment in a
+production or operational environment,
+strictly adhere to shell scripting best
+practices, including robust variable quoting,
+to prevent unexpected behavior and guarantee
+cross-platform reliability.
+
+No mandatory linting, like with [shellcheck].
+is always needed for small scripts
 
 - Write in POSIX `sh` if possible.
 
