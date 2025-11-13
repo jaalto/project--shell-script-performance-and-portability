@@ -512,15 +512,15 @@ TODO
 
     Run shell: dash
     # t1  <skip>
-    # t2  real 0.006s fnNamerefPosix
+    # t2  real 0.006s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: ksh93
     # t1  <skip>
-    # t2  real 0.004s fnNamerefPosix
+    # t2  real 0.004s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: bash
-    # t1  real 0.006s fnNamerefBash
-    # t2  real 0.006s fnNamerefPosix
+    # t1  real 0.006s NamerefBash
+    # t2  real 0.006s NamerefPosix
     # t3  real 0.094s ret=$(fn)
 ```
 
@@ -698,7 +698,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-variable-array-split-string.sh
 
     Run shell: dash
-    # <skip all>     no arrays
+    # ..  <skip all>  no arrays
     Run shell: ksh93
     # t1  real 0.008  (1) IFS=: eval
     # t2  real 0.002  (2) IFS..saved
