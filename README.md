@@ -70,6 +70,7 @@ Table of Contents
   - [4.4 SHEBANG LINE IN SCRIPTS](#44-shebang-line-in-scripts)
     - [4.4.1 About Bash and Shebang](#441-about-bash-and-shebang)
     - [4.4.2 About Python and Shebang](#442-about-python-and-shebang)
+    - [4.4.3 The fine print of /usr/bin/env in shebang](#443-the-fine-print-of-usrbinenv-in-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
     - [4.5.2 Case Study: awk](#451-case-study-awk)
@@ -1415,11 +1416,29 @@ environment:
 
     #! /usr/bin/env python3
 
-The fine print here is that [env]
-is a standard POSIX utility, but its
-path is not mandated by POSIX. However,
-in 99.9% of cases, the de facto
-portable location is `/usr/bin/env`.
+### 4.4.3 The fine print of /usr/bin/env in shebang
+
+The [env] utility is defined as a
+standard POSIX command, but its exact
+path is not mandated by the POSIX
+specification.
+
+However, in nearly all operational
+environments, the de facto standard and
+highly portable location for this
+utility is `/usr/bin/env`. It is
+currently considered a safe and robust
+assumption that virtually all modern
+systems provide `env` utility at this
+specific path.
+
+Compatibility and Legacy Caveat: While
+`/usr/bin/env` is the universal
+expectation, it is important to note
+that some legacy UNIX systems may still
+place the env utility in an alternative
+location. This scenario is exceedingly
+rare in current practice.
 
 ## 4.5 PORTABILITY OF UTILITIES
 
