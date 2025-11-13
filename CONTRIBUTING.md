@@ -284,5 +284,7 @@ Ref: <https://www.shellcheck.net>.
   https://en.wikipedia.org/wiki/Indentation_style#K&R
 - Linting - static code analysis
   https://en.wikipedia.org/wiki/Lint_(software)
+- Shellcheck - static shell script code analysis
+  https://www.shellcheck.net
 
 End of file
