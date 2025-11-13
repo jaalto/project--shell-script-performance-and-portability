@@ -1809,6 +1809,10 @@ forum
 
 ## 6.4 MISCELLANEOUS LINKS
 
+- Everything you ever wanted to
+  know about shebang. Extensive research
+  by Sven Mascheck.
+  https://www.in-ulm.de/%7Emascheck/various/shebang/
 - A comprehensive history of `ash`.
   "Ash (Almquist Shell) Variants" by
   Sven Mascheck
