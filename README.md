@@ -363,17 +363,16 @@ TODO
     # t3  real 0.348s grep
 ```
 
-- In Bash, it is about 50 times
-  faster to do string manipulation in
-  memory, than calling external
-  utilities. Seeing the measurements
-  just how expensive it is, reminds us
-  to utilize the possibilities of POSIX
-  `#`, `##`, `%` and `%%`
-  [POSIX parameter expansions].
-  More extended set is available in
-  Bash [parameter expansions].
-  See [code](./bin/t-string-file-path-components.sh).
+- In Bash, it is about 50 times faster to
+  do string manipulation in memory, than
+  calling external utilities. Seeing the
+  measurements just how expensive it is,
+  reminds us to utilize the possibilities
+  of POSIX `#`, `##`, `%` and `%%`
+  [POSIX parameter expansions]. More
+  extended set is available in Bash
+  [parameter expansions]. See
+  [code](./bin/t-string-file-path-components.sh).
 
 ```bash
     str="/tmp/filename.txt.gz"
@@ -1241,7 +1240,7 @@ discussion on StackExchange.
     IsCommand ()
     {
         command -v "${1:-}" > /dev/null 2>&1
-    ]
+    }
 
     # Check if 'local' is supported
     if ! IsCommand local; then
@@ -1676,10 +1675,10 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
 
 ### 4.5.2 Case Study: awk
 
-POSIX [awk] does not support the GNU
-option `-v` option to define variables.
-You can use assignments after the program
-instead.
+POSIX [awk] does not support the
+GNU option `-v` option to define
+variables. You can use assignments
+after the program instead.
 
     # POSIX
     awk '{print var}' var=1 file
@@ -1724,19 +1723,19 @@ operands without any files:
 
 - Prefer POSIX
   [`$(cmd)`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_18_06_03)
-
   command substitution instead of
-  leagacy POSIX backtics as in \`cmd\`.
-  For more information, see
-  BashFaq [098](https://mywiki.wooledge.org/BashFAQ/082)
+  leagacy POSIX backtics as in
+  \`cmd\`. For more information,
+  see BashFaq
+  [098](https://mywiki.wooledge.org/BashFAQ/082)
   and shellcheck
   [SC2006](https://github.com/koalaman/shellcheck/wiki/SC2006).
   For 20 years all the modern `sh`
   shells have supported `$()`.
-  Including UNIX like AIX, HP-UX and
-  conservative Oracle Solaris 10 (2005)
-  whose support ends in
-  [2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
+  Including UNIX like AIX, HP-UX
+  and conservative Oracle Solaris
+  10 (2005) whose support ends in
+[2026](https://www.theregister.com/2024/01/29/oracle_extends_solaris_support/#:~:text=During%202023%2C%20Oracle%20added%20another,2027%20instead%20of%20during%202024)
   (see Solaris
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
@@ -1759,15 +1758,15 @@ See the Bash manual how to use
 [`time`](https://www.gnu.org/software/bash/manual/bash.html#Pipeline)
 reserved word with [TIMEFORMAT]
 variable to display results in
-different formats. The use of time as a
-reserved word permits the timing of
-shell builtins, shell functions, and
-pipelines.
+different formats. The use of time
+as a reserved word permits the
+timing of shell builtins, shell
+functions, and pipelines.
 
     TIMEFORMAT='real: %R'  # '%R %U %S'
 
-You could also drop kernel cache before
-testing:
+You could also drop kernel cache
+before testing:
 
     echo 3 > /proc/sys/vm/drop_caches
 
@@ -1781,40 +1780,48 @@ testing:
 - List of which features were added to
   specific releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
+- Bats - Bash Automated Testing System
+  https://github.com/bats-core/bats-core
 
 ## 6.2 PORTABILITY AND UTILITIES
 
--  GNU autoconf's manual section
+- GNU autoconf's manual section
   ["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell)
-  **Note:** This presents information
-  intended to overcome operating system
-  portability issues dating back to the
-  1970s. Consider some tips with a grain
-  of salt, given the capabilities of more
-  modern POSIX-compliant shells.
-- For cross platform operating system
-  detection, see useful files to check:
+  **Note:** This presents
+  information intended to overcome
+  operating system portability
+  issues dating back to the 1970s.
+  Consider some tips with a grain
+  of salt, given the capabilities
+  of more modern POSIX-compliant
+  shells.
+- For cross platform operating
+  system detection, see useful
+  files to check:
   http://linuxmafia.com/faq/Admin/release-files.html
-- `shellcheck` (Haskell)
-  can help to improve and write portable
-  POSIX scripts. It can statically Lint
-  scripts for potential mistakes. There
-  is also a web interface where you can
-  upload the script at
-  https://www.shellcheck.net. In Debian,
-  see package "shellcheck". The manual
-  page is at
-https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
-- `checkbashisms` can help to improve and
-  write portable POSIX scripts. In
-  Debian, the command is available in
-  package "devscripts". The manual page
-  is at
+- `shellcheck` (Haskell) can help
+  to improve and write portable
+  POSIX scripts. It can statically
+  [Lint] scripts for potential
+  mistakes. There is also a web
+  interface where you can upload
+  the script at
+  https://www.shellcheck.net. In
+  Debian, see package "shellcheck".
+  The manual page is at
+  https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
+- `checkbashisms` can help to
+  improve and write portable POSIX
+  scripts. In Debian, the command
+  is available in package
+  "devscripts". The manual page is
+  at
   https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
 
 ## 6.3 STANDARDS
 
-Relevant POSIX links from 2000 onward:
+Relevant POSIX links from 2000
+onward:
 
 - https://en.wikipedia.org/wiki/POSIX
 - POSIX.1-2024
@@ -1833,46 +1840,50 @@ Relevant POSIX links from 2000 onward:
 
 Relevant UNIX standardization links.
 [Single UNIX Specification](https://en.wikipedia.org/wiki/Single_UNIX_Specification)
-(SUSv4) documents are derived from POSIX
-standards. For an operating system to
-become UNIX certified, it must meet all
-specified requirements—a process that is
-both costly and arduous. The only
-"Linux-based" system that has undergone
-full certification is Apple's
+(SUSv4) documents are derived from
+POSIX standards. For an operating
+system to become UNIX certified, it
+must meet all specified
+requirements—a process that is both
+costly and arduous. The only
+"Linux-based" system that has
+undergone full certification is
+Apple's
 [macOS](https://en.wikipedia.org/wiki/MacOS)
-10.5 Leopard in 2007. Read the story
-shared by Apple’s project lead,
-Terry Lambert, in a Quora's discussion
-forum
+10.5 Leopard in 2007. Read the
+story shared by Apple’s project
+lead, Terry Lambert, in a Quora's
+discussion forum
 ["What goes into making an OS to be Unix compliant certified?"](https://www.quora.com/What-goes-into-making-an-OS-to-be-Unix-compliant-certified)
 
 - The Single UNIX Specification,
   Version 4
   https://unix.org/version4/
-- See discussion at StackExchnage about
+- See discussion at StackExchnage
+  about
   ["Difference between POSIX, Single UNIX Specification, and Open Group Base Specifications?"](https://unix.stackexchange.com/q/14368).
 
 ## 6.4 MISCELLANEOUS LINKS
 
 - Everything you ever wanted to
-  know about shebang. Extensive research
-  by Sven Mascheck.
+  know about shebang. Extensive
+  research by Sven Mascheck.
   https://www.in-ulm.de/%7Emascheck/various/shebang/
 - A comprehensive history of `ash`.
-  "Ash (Almquist Shell) Variants" by
-  Sven Mascheck
+  "Ash (Almquist Shell) Variants"
+  by Sven Mascheck
   https://www.in-ulm.de/~mascheck/various/ash/
 - Late Jörg Shillings's
   [schilitools](https://codeberg.org/schilytools/schilytools.git)
-  contains `pbosh` shell that can be used
-  for POSIX-sh-like testing.
-  See discussion of preserving
-  the project and some history at
+  contains `pbosh` shell that can
+  be used for POSIX-sh-like
+  testing. See discussion of
+  preserving the project and some
+  history at
   [Reddit](https://www.reddit.com/r/linux/comments/w9vrpx/continued_development_of_j%C3%B6rg_schillings_tools/?rdt=56420).
-- Super simple `s` command interpreter
-  to write shell-like scripts (security
-  oriented):
+- Super simple `s` command
+  interpreter to write shell-like
+  scripts (security oriented):
   https://github.com/rain-1/s
 
 # COPYRIGHT
@@ -1979,5 +1990,7 @@ portability
 [uv]: https://docs.astral.sh/uv/pip/environments/
 [virtualenv]: https://virtualenv.pypa.io
 [pyenv]: https://github.com/pyenv/pyenv
+
+[lint]: https://en.wikipedia.org/wiki/Lint_(software)
 
 <!-- END OF FILE -->
