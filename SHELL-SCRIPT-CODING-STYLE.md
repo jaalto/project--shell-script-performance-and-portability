@@ -1,32 +1,29 @@
 # SHELL SCRIPT CODING STYLE
 
 Use conventions that maximize clarity and
-simplicity in your technical documentation.
+simplicity.
 
-When dealing with small scripts, aim to be as
-clear and straightforward as possible; avoid
-treating them with the exhaustive rigor of
-production code.
+[Linting] is good practice. Utilize [shellcheck].
 
-The intentional omission of double quotes
-around variables (e.g., $var instead of
-"$var") is not always a gross mistake or a
-sign of unprofessionalism. This practice is
-contextual and depends heavily on the use
-case and expected input.
+It is acceptable to prioritize minimum effort
+over rigorous standards for small scripts.
 
-**However**, when sharing code intended for a
-wider audience, or for deployment in a
+**Example**: The intentional omission of double
+quotes around variables (e.g., `$var` instead
+of `"$var"`) is contextual and not always a
+sign of unprofessionalism; it depends heavily
+on the use case and expected input.
+
+On the other hand, when sharing code intended
+for a wider audience, or for deployment in a
 production or operational environment,
 strictly adhere to shell scripting best
 practices, including robust variable quoting,
 to prevent unexpected behavior and guarantee
 cross-platform reliability.
 
-No mandatory linting, like with [shellcheck].
-is always needed for small scripts
-
-- Write in POSIX `sh` if possible.
+- Prefer `/bin/sh`. This ensures
+  maximum portability and execution speed.
 
 - For Bash scripts, use the portable `env`
   shebang. Improve readability by adding a
@@ -36,55 +33,118 @@ is always needed for small scripts
   #! /usr/bin/env bash
 ```
 
+- Even in Bash scripts, minimize the use of
+  Bashisms. Rationale: Simplifies possible
+  conversion to more portable `/bin/sh`
+  scripts. For example, instead of using
+  double brackets ´[[...]]`, make it a habit
+  to use more "safe" quoting.
+
+```
+  [[ $var = $value ]]   # Bash
+  [ "$var" = "$value" ] # POSIX, portable
+```
+
+
 - Use 4 spaces for indentation.
 
 - Assume GNU utilities. Use readable GNU
-  `--long` options for all supporting
-  commands. Adherence to POSIX short options
-  is not required.
+  `--long` options where possible.
+  Note: The GNU utilies are
+  optimized for speed.
 
-- No need to `"$quote"` variables unless
-  needed.
+- Prefer `"$quoted"` variables.
 
-- Use `local` keyword in functions to define
-  variables. Although not in POSIX, it is
-  99% supported in all modern shells.
+- Prefer `$var` by default. Avoid `${var}`.
+  Use the braces only when necessary for
+  boundary conditions (e.g., `${var}suffix`) as
+  the extra sigils compromise line
+  readability. Compare:
+
+```
+  path="$dir/$to/$MY_FILE_NAME"
+
+  path="${dir}/${to}/${MY_FILE_NAME}"
+```
 
 - In variable tests, use practical
-  and simple notations. Do not use `-z`
-  or `-n` tests.
+  and simple notations. Avoid `-z`
+  or `-n` [test] options.
 
 ```
-	[ "$var" ]    # Has value
-	[ ! "$var" ]  # Empty, does not have a value
+    [ "$var" ]    # Has value
+    [ ! "$var" ]  # Empty, does not have a value
 ```
 
-- Define function names using [CamelCase].
-  Start identifier with an uppercase letter
-  to minimize conflict to existing
-  commands. Always include a space before the
-  function parentheses '()' matching Bash
-  `type` command output, and do not use the
-  non-POSIX `function` keyword.
 
-- Use [Allman] style for these:
+- In functions, prefer names using
+  [CamelCase]. Start identifier with an
+  uppercase letter to minimize conflict to
+  existing commands. Avoid the Bash-only
+  `function` keyword; use the standard POSIX
+  parentheses syntax Avoid the use of
+  Bash-only `function` keyword. Prefer
+  including a space before the function
+  parentheses `()` matching Bash `type`
+  command output.
 
 ```
-    ThisFunctionName ()
+    # Non-POSIX: "function Example () ..."
+    Example ()
     {
-        ...
+        local var="value"
+    }
+```
+
+- In functions, use `local` for variables. While
+  not POSIX-compliant, it is supported by
+  virtually all modern Linux `/bin/sh`
+  implementations. **Exception**: For
+  compatibility with certain BSD or UNIX
+  systems using ksh as `/bin/sh`, use the
+  following code at the script's start to
+  emulate the `local` keyword:
+
+``` bash
+    IsCommand ()
+    {
+        command -v "${1:-}" > /dev/null 2>&1
     }
 
-	for item in $list
+    # Check if 'local' is supported
+    if ! IsCommand local; then
+        # Check if we are in ksh
+        if IsCommand typeset; then
+            # Use 'eval' to hide from
+            # other shells so that
+            # defining function with
+            # name 'local' does not
+            # generate an error.
+            eval 'local () { typeset "$@"; }'
+        fi
+    fi
+```
+
+- Use the [Allman] "line up" style in
+  `do..done`
+
+```
+    for item in $list
     do
         ...
     done
 
-	while read -r item
+    while read -r item
     do
         ...
     done < file
+```
 
+- Place pattern case terminators `;;' in
+  their own lines to improves the visual flow
+  and make the action blocks stand out.
+
+```
     case $var in
         pattern1)
             ...
@@ -92,7 +152,7 @@ is always needed for small scripts
         pattern2)
             ...
             ;;
-    fi
+    esac
 ```
 
 - Use [K&R] style for placing `then` keyword
@@ -105,7 +165,7 @@ is always needed for small scripts
     fi
 
     # In longer statements, switch to [Allman]
-	# for more clarity
+    # for more clarity
 
     if <this is an example of a very long statement>
     then
@@ -113,10 +173,21 @@ is always needed for small scripts
     fi
 ```
 
+- Keep it simple; avoid cleverness. Always
+  favor the standard `if...fi` structure.
+  Logical `&&` or `||` blocks sacrifice
+  clarity for readers unfamiliar with shell
+  shorthands.
+
+```
+    <statement> && {
+        ....
+    }
+```
 
 # REFERENCES
 
-- Allman aka BSD style
+- Allman style (aka BSD style)
   https://en.wikipedia.org/wiki/Indentation_style#Allman_style
 - K&R style
   https://en.wikipedia.org/wiki/Indentation_style#K&R
@@ -131,3 +202,5 @@ is always needed for small scripts
 [CamelCase]: https://en.wikipedia.org/wiki/Camel_case
 [Allman]: https://en.wikipedia.org/wiki/Indentation_style#Allman_style
 [K&R]: https://en.wikipedia.org/wiki/Indentation_style#K&R
+[test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
+[linting]: https://en.wikipedia.org/wiki/Lint_(software)
