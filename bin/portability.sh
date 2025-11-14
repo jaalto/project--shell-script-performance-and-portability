@@ -583,8 +583,8 @@ Main ()
     local saved="$IFS"
     IFS=","
 
-    # ignore quotes
-    # shellcheck disable=SC2086
+    # ignore quotes, unused
+    # shellcheck disable=SC2086,SC2034
 
     dummy="shellist: $SHELL_LIST"
 
