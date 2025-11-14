@@ -40,7 +40,7 @@ pwd=$(cd "$(dirname "$0")" && pwd)
 
 Convert ()
 {
-    local file=$1
+    local file="${1:?ERROR: Convert(): missing arg}"
 
     awk '
         /FILE:/ {
