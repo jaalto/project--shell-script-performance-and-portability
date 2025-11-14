@@ -33,12 +33,13 @@ cross-platform reliability.
   #! /usr/bin/env bash
 ```
 
-- Even in Bash scripts, minimize the use of
-  Bashisms. Rationale: Simplifies possible
-  conversion to more portable `/bin/sh`
-  scripts. For example, instead of using
-  double brackets ´[[...]]`, make it a habit
-  to use more "safe" quoting.
+- Even in Bash scripts, prefer standard POSIX
+  statements and minimize the use of
+  Bashisms. Rationale: simplifies possible
+  conversion to portable `/bin/sh` scripts for
+  speed. For example, instead of using
+  double brackets `[[...]]`, make it a habit
+  to use "quotes" more.
 
 ```
   [[ $var = $value ]]   # Bash
@@ -48,10 +49,11 @@ cross-platform reliability.
 
 - Use 4 spaces for indentation.
 
-- Assume GNU utilities. Use readable GNU
-  `--long` options where possible.
-  Note: The GNU utilies are
-  optimized for speed.
+- Assume GNU utilities. Use readable `--long`
+  options where possible. Rationale: GNU
+  utilities are generally optimized for
+  speed. Using `--long` options makes scripts
+  easier to read and maintain.
 
 - Prefer `"$quoted"` variables.
 
@@ -103,7 +105,8 @@ cross-platform reliability.
   compatibility with certain BSD or UNIX
   systems using ksh as `/bin/sh`, use the
   following code at the script's start to
-  emulate the `local` keyword:
+  emulate the `local` keyword to enable
+  script to run under `ksh`.
 
 ``` bash
     IsCommand ()
@@ -141,7 +144,7 @@ cross-platform reliability.
 ```
 
 - Place pattern case terminators `;;' in
-  their own lines to improves the visual flow
+  their own lines to improve the visual flow
   and make the action blocks stand out.
 
 ```
@@ -175,13 +178,16 @@ cross-platform reliability.
 
 - Keep it simple; avoid cleverness. Always
   favor the standard `if...fi` structure.
-  Logical `&&` or `||` blocks sacrifice
-  clarity for readers unfamiliar with shell
-  shorthands.
+  Logical `&&` or `||` with complex blocks
+  sacrifice clarity for readers unfamiliar
+  with shell shorthands.
 
 ```
     <statement> && {
-        ....
+        <code>
+        <code>
+        <code>
+        <... and more code>
     }
 ```
 
