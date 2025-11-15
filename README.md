@@ -1935,21 +1935,15 @@ portability
 
 <!-- Bash Manual -->
 
-[Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
-[TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
-[parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
-[brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
-[arithmetic expansion]: https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion
-[pattern matching]: https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching
-[process substitution]: https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html
-[command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
-[built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
-[readarray]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray
-[reserved words]: https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words
-[arrays]: https://www.gnu.org/software/bash/manual/html_node/Arrays.html
-[mapfile]: https://www.gnu.org/software/bash/manual/bash.html#index-mapfile
+<!--
 
-[HERE STRING]: https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
+Google search help:
+
+  site:www.gnu.org inurl:bash <search words>
+  
+  https://www.google.com/search?q=site%3Awww.gnu.org+inurl%3Abash+%s
+
+-->
 
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX.1-2024]: https://pubs.opengroup.org/onlinepubs/9799919799/
@@ -1965,8 +1959,30 @@ portability
 [read]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html
 [sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
 [shift]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html
+[test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
 [true]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html
 [type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
+
+[Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
+[TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
+[parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
+[brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
+[arithmetic expansion]: https://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion
+[pattern matching]: https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching
+[process substitution]: https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html
+[command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
+[word splitting]: https://www.gnu.org/software/bash/manual/html_node/Word-Splitting.html
+<!-- POSIX: $((...)) -->>
+[arithmetic expansion]: https://www.gnu.org/software/bash/manual/html_node/Arithmetic-Expansion.html
+>!-- non-POSIX: ((..)) -->
+[arithmetic expression]: https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html
+
+[built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
+[readarray]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray
+[reserved words]: https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words
+[arrays]: https://www.gnu.org/software/bash/manual/html_node/Arrays.html
+[mapfile]: https://www.gnu.org/software/bash/manual/bash.html#index-mapfile
+[HERE STRING]: https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
 
 [GNU parallel]: https://www.gnu.org/software/parallel/
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
