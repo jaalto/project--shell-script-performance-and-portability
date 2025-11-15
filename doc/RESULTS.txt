@@ -682,15 +682,17 @@ FILE: t-variable-array-split-string.sh
 # A: It is about 10x faster to use IFS+array than to use Bash array `<<<` HERE STRING
 # priority: 8
 #
-#     t1 real  0.011 eval array=(string)
-#     t2 real  0.021 IFS...save arr=(string) IFS..restore
-#     t3 real  0.098 read -ra arr <<< string
+#     t1a real  0.011 Bash fn(): IFS=... eval array=(string)
+#     t1b real  0.011 IFS=... eval array=(string)
+#     t2  real  0.021 IFS+save arr=(string) IFS+restore
+#     t3  real  0.098 read -ra arr <<< string
 #
 # Code:
 #
-#     t1 IFS=":" eval 'array=($PATH)'
-#     t2 saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
-#     t3 IFS=":" read -ra array <<< "$PATH"
+#     t1a Bash fn(): IFS=":" eval 'array=($PATH)'
+#     t1b IFS=":" eval 'array=($PATH)'
+#     t2  saved=$IFS; IFS=":"; array=($PATH)'; IFS=$saved
+#     t3  IFS=":" read -ra array <<< "$PATH"
 #
 # Notes:
 #
