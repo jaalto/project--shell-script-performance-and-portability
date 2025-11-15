@@ -8,7 +8,7 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
 
 # SHELL SCRIPT CODING STYLE
 
-## Princples
+## Principles
 
 Use conventions that maximize clarity and
 simplicity.
@@ -49,21 +49,17 @@ behavior.
 
 - Use `"$quoted"` variables.
 
-- Prefer `$var` by default. Avoid `${var}`.
-  Use the braces only when necessary for
-  boundary conditions (e.g., `${var}suffix`) as
-  the extra sigils compromise line
-  readability. Compare:
+- Prefer `$var` by default. Use the
+  braces only when necessary for boundary
+  conditions (e.g., `${var}suffix`).
 
 ``` shell
-  path="$dir/$to/$MY_FILE_NAME"
-
-  path="${dir}/${to}/${MY_FILE_NAME}"
+    path="$dir/$to/$MY_FILE_NAME"
 ```
 
-- In variable tests, use practical
-  and simple notations. Avoid `-z`
-  or `-n` [test] options.
+- In variable tests, use and simple
+  notations. Avoid `-z` or `-n` [test]
+  options.
 
 ``` bash
     [ "$var" ]    # Has value test
@@ -110,8 +106,9 @@ behavior.
 ```
 
 - Place pattern case terminators `;;' in
-  their own lines to improve the visual flow
-  and make the action blocks stand out.
+  their own lines. **Rationale:**
+  Improves the visual flow and make the
+  action blocks stand out.
 
 ```
     case $var in
