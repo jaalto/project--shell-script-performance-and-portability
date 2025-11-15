@@ -1,3 +1,11 @@
+<!--
+
+Link: https://is.gd/bGeOoE
+
+https://github.com/jaalto/project--shell-script-performance-and-portability/blob/master/SHELL-SCRIPT-CODING-STYLE.md
+
+-->
+
 # SHELL SCRIPT CODING STYLE
 
 ## Princples
@@ -301,4 +309,3 @@ keyword.
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 
 <!-- END OF FILE -->
-
