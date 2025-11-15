@@ -174,19 +174,21 @@ behavior.
 ```
 
 - Even in Bash, default to POSIX syntax
-  unless Bash-specific features are required.
-  **Rationale:** Ensures later compatibility
-  with `/bin/sh`, allowing scripts to benefit
-  from faster startup, fewer forks, and
-  broader system portability. **Practical
-  Guidance:** Avoid the Bash-specific
+  unless Bash-specific features are
+  required. **Rationale:** Ensures later
+  compatibility with `/bin/sh`, allowing
+  scripts to benefit from faster startup,
+  fewer forks, and broader system
+  portability. **Practical Guidance:**
+  Avoid the Bash-specific
   [arithmetic expression] `((...))` and
-  double bracket [test] `[[...]]`. Use the
-  POSIX-style [test] `[...]` instead and
-  always quote variable expansions.
-  Developing a consistent quoting habit
-  ensures safety, correctness, and
-  portability. Examples:
+  [double bracket] conditional expression
+  `[[...]]`. Use the POSIX-style [test]
+  `[...]` instead and always quote
+  variable expansions. Developing a
+  consistent quoting habit ensures
+  safety, correctness, and portability.
+  Examples:
 
 ``` shell
   # Instead of ...
@@ -296,7 +298,8 @@ keyword.
 [arithmetic expression]: https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html
 [function keyword]: https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html
 [functions]: https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html
-
+[double bracket]: https://www.gnu.org/software/bash/manual/bash.html#ndex-_005b_005b
+{conditional expression]: https://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions
 
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
 [bash type]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-type
