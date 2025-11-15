@@ -33,7 +33,7 @@ behavior.
   readability by adding a space after the
   interpreter path in [shebang] line:
 
-```bash
+``` bash
   #! /bin/sh
 ```
 
@@ -53,7 +53,7 @@ behavior.
   braces only when necessary for boundary
   conditions (e.g., `${var}suffix`).
 
-```shell
+``` shell
     path="$dir/$to/$MY_FILE_NAME"
 ```
 
@@ -111,6 +111,8 @@ behavior.
   action blocks stand out.
 
 ```
+    # Note: according to POSIX, $var does
+    # need quoting
     case $var in
         pattern1)
             ...
