@@ -1250,7 +1250,8 @@ discussion on StackExchange.
             # other shells so that
             # defining function with
             # name 'local' does not
-            # generate an error.
+            # generate an error and
+            # exit script.
             eval 'local () { typeset "$@"; }'
         fi
     fi
