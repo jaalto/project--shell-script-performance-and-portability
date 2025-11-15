@@ -33,7 +33,7 @@ behavior.
   readability by adding a space after the
   interpreter path in [shebang] line:
 
-``` shell
+``` bash
   #! /bin/sh
 ```
 
@@ -65,7 +65,7 @@ behavior.
   and simple notations. Avoid `-z`
   or `-n` [test] options.
 
-``` shell
+``` bash
     [ "$var" ]    # Has value test
     [ ! "$var" ]  # No value test
 ```
