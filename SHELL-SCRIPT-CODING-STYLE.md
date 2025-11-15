@@ -185,7 +185,8 @@ behavior.
   # Instead of ...
   [[ $var = $value ]]
 
-  # Use portable POSIX-style with quoting
+  # Use portable POSIX-style with
+  # quoting
   [ "$var" = "$value" ]
 
   # Apply quoting consistently
@@ -214,12 +215,14 @@ behavior.
 
 **Note: Dynamic scope:** The shell uses
 dynamic scoping to control a variable’s
-visibility within functions. The shell uses
-dynamic scoping to control a variable's
-visibility within functions. This means that
-a function can see variables defined not just
-inside itself, but also variables defined by
-any other function that called it.
+visibility within functions. The shell
+uses dynamic scoping (see [functions] in
+Bash manual) to control a variable's
+visibility within functions. This means
+that a function can see variables defined
+not just inside itself, but also
+variables defined by any other function
+that called it.
 
 ``` shell
     Two ()
@@ -233,7 +236,7 @@ any other function that called it.
         Two
     }
 
-    Ones
+    One
 ```
 
 **Note for [Korn Shell]
