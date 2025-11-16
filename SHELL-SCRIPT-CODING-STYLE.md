@@ -10,21 +10,21 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
 
 ## Principles
 
-Use conventions that maximize clarity and
-simplicity.
+- Use conventions that maximize clarity and
+  simplicity.
 
-Utilize [ShellCheck] or other [linting] tools
-to improve code quality.
+- Utilize [ShellCheck] or other [linting] tools
+  to improve code quality.
 
-Prioritize minimum effort over rigorous
-standards for small controlled scripts.
+- Prioritize minimum effort over rigorous
+  standards for small controlled scripts.
 
-when sharing code intended
-for a wider audience, or for deployment in a
-production or operational environment,
-strictly adhere to best pactises, like
-variable quoting, to prevent unexpected
-behavior.
+- when sharing code intended
+  for a wider audience, or for deployment in a
+  production or operational environment,
+  strictly adhere to best pactises, like
+  variable quoting, to prevent unexpected
+  behavior.
 
 ## General rules
 
