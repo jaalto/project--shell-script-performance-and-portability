@@ -4,23 +4,68 @@ Link: https://is.gd/bGeOoE
 
 https://github.com/jaalto/project--shell-script-performance-and-portability/blob/master/SHELL-SCRIPT-CODING-STYLE.md
 
+INFORMATION FOR EDITING
+
+- Github Markdown Guide:
+  https://is.gd/nqSonp
+
+- View markdown in VSCode:
+  Command Palette (C-S-p)
+  Markdown: Open Preview C-S-v
+  Markdown: Open Preview to the side C-k v
+  [upper right:eye-icon button] Open Preview to the Side
+
+- URL text fragments: #:~:text=
+  https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
+
+- About accessibility
+
+  To support viewing and editing GitHub
+  pages on phone displays, the maximum
+  column widths are described below.
+  Exception: The GNU License at the end
+  of file is included verbatim.
+
+  The maximum column limits are:
+
+  col type
+  ---------------------------------------
+  35  Code: bullet: ``` ... ``´)
+  41  Regular text and paragraphs.
+      Github line limit to support
+      editing.
+  ---------------------------------------
+
+  Emacs editor settings:
+
+  ;; eval code with C-x C-e
+  (progn
+    (setq fill-column 41)
+    (display-fill-column-indicator-mode 1))
+
+MISCELLANEOUS
+
+- To search POSIX.1-2024 in Google
+  site:pubs.opengroup.org inurl:9799919799 <search>
+
 -->
+
 
 # SHELL SCRIPT CODING STYLE
 
 ## Principles
 
-- Use conventions that maximize clarity and
-  simplicity.
+- Use conventions that maximize clarity
+  and simplicity.
 
-- Utilize [ShellCheck] or other [linting] tools
-  to improve code quality.
+- Utilize [ShellCheck] or other [linting]
+  tools to improve code quality.
 
 - Prioritize minimum effort over rigorous
   standards for small controlled scripts.
 
-- When sharing code intended
-  for a wider audience, or for deployment in a
+- When sharing code intended for a wider
+  audience, or for deployment in a
   production or operational environment,
   strictly adhere to best pactises, like
   variable quoting, to prevent unexpected
@@ -28,10 +73,11 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
 
 ## General rules
 
-- Prefer `/bin/sh`. This ensures
-  maximum portability and execution speed. Improve
-  readability by adding a space after the
-  interpreter path in [shebang] line:
+- Prefer `/bin/sh`. This ensures maximum
+  portability and execution speed.
+  Improve readability by adding a space
+  after the interpreter path in [shebang]
+  line:
 
 ``` bash
   #! /bin/sh
@@ -40,12 +86,17 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
 - Use 4 spaces for indentation.
 
 - Use readable `--long` options where
-  possible. Assume GNU utilities and require
-  their installation in the README.
-  **Rationale:** `--long` options make
-  scripts easier to read and maintain. GNU
-  utilities are more capable and generally
-  optimized for speed.
+  possible. Assume [GNU coreutils] and
+  require their installation in the
+  README. **Rationale:** `--long` options
+  make scripts easier to read and
+  maintain. GNU utilities are more
+  capable and generally optimized for
+  speed. They also provide common ground
+  (standardized behavior regardless of
+  the OS), ensuring improved
+  interoperability.
+
 
 - Use `"$quoted"` variables.
 
@@ -69,12 +120,13 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
 - In functions, prefer names using
   [CamelCase]. Start identifier with an
   uppercase letter to minimize conflicts
-  with existing commands. Use the standard
-  POSIX parentheses syntax to define
-  functions; avoid the Bash-only [function
-  keyword]. Prefer including a space before
-  the function parentheses `()` to match the
-  output style of the [Bash type] command.
+  with existing commands. Use the
+  standard POSIX parentheses syntax to
+  define functions; avoid the Bash-only
+  [function keyword]. Prefer including a
+  space before the function parentheses
+  `()` to match the output style of the
+  [Bash type] command.
 
 ``` shell
     # POSIX-compatible syntax
@@ -123,9 +175,9 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
     esac
 ```
 
-- Use [K&R] style for placing `then` keyword
-  provided that `<statement>` is short and
-  simple enough.
+- Use [K&R] style for placing `then`
+  keyword provided that `<statement>` is
+  short and simple enough.
 
 ``` shell
     if <statement>; then
@@ -166,8 +218,8 @@ https://github.com/jaalto/project--shell-script-performance-and-portability/blob
 ## Bash rules
 
 - Use the portable `env` [shebang] line.
-  Improve readability by adding a space after
-  the interpreter path.
+  Improve readability by adding a space
+  after the interpreter path.
 
 ``` shell
   #! /usr/bin/env bash
@@ -248,10 +300,10 @@ that called it.
     One
 ```
 
-**Note for [Korn Shell]
-compatibility**. If supporting BSD or UNIX
-systems that may use `ksh` as `/bin/sh` is
-required, include the necessary code at the
+**Note for [Korn Shell] compatibility**.
+If supporting BSD or UNIX systems that
+may use `ksh` as `/bin/sh` is required,
+include the necessary code at the
 script's start to emulate the `local`
 keyword.
 
@@ -310,5 +362,7 @@ keyword.
 [ksh]: https://en.wikipedia.org/wiki/KornShell
 
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
+
+[GNU coreutils]: https://www.gnu.org/software/coreutils/
 
 <!-- END OF FILE -->
