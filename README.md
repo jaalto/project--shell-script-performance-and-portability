@@ -1756,7 +1756,7 @@ GNU sed has option `--in-place` for
 replacing file content which cannot be
 used in macOS and BSD. Additionally, in
 macOS and BSD, you will find GNU programs
-under a `g`-prefix, such as `gsed`,
+under a g-prefix, such as `gsed`,
 etc. See StackOverflow
 ["sed command with -i option failing on Mac, but works on Linux"](https://stackoverflow.com/q/4247068). For more
 discussions about the topic, see
