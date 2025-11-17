@@ -1230,15 +1230,14 @@ involves considering several factors.
   them with [dash], since relying on Bash
   can lead to unexpected issues —
   different systems have different Bash
-  versions, and
-  there’s no guarantee that a script
-  written on Linux will run without
-  problems on older Bash versions, such
-  as the outdated 3.2 version in
-  `/bin/bash` on macOS. Requiring users
-  to install a newer version on macOS
-  is not trivial because `/bin/bash` is
-  not replaceable.
+  versions, and there’s no guarantee that
+  a script written on Linux will run
+  without problems on older Bash
+  versions, such as the outdated 3.2
+  version in `/bin/bash` on macOS.
+  Requiring users to install a newer
+  version on macOS is not trivial because
+  `/bin/bash` is not replaceable.
 
 [\*] "Git Bash" is available with the
 popular native Windows installation of
