@@ -11,8 +11,6 @@ POSIX command -v                         +  +  +  +  +  +  +  +  +
 POSIX false (builtin)                    +  +  +  +  +  +  +  +  +
 POSIX hash                               -  +  +  +  +  +  +  +  +
 POSIX printf (builtin)                   -  +  +  +  -  +  +  +  +
-POSIX read (-N)                          -  -  -  -  +  +  +  +  -
-POSIX read (REPLY)                       -  -  -  +  +  +  +  +  +
 POSIX timeout                            -  +  +  +  +  +  +  +  +
 POSIX true (builtin)                     +  +  +  +  +  +  +  +  +
 POSIX type                               -  +  +  +  +  +  +  +  +
@@ -28,6 +26,8 @@ $((i++))                                 +  -  +  +  +  +  +  +  +
 let                                      -  -  -  +  +  +  +  +  +
 local                                    +  +  +  +  +  +  +  +  +
 local IFS                                +  +  +  +  +  +  +  +  +
+read (-N)                                -  -  -  -  +  +  +  +  -
+read (REPLY)                             -  -  -  +  +  +  +  +  +
 ------------------------------------------------------------------
 01 posh 0.14.2
 02 dash 0.5.12-12
