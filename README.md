@@ -1857,7 +1857,7 @@ operands without any files:
   and shellcheck
   [SC2006](https://github.com/koalaman/shellcheck/wiki/SC2006).
   For 20 years all the modern `sh`
-  shells have supported `$()`.
+  shells have supported `$(...)`.
   Including UNIX like AIX, HP-UX
   and conservative Oracle Solaris
   10 (2005) whose support ends in
