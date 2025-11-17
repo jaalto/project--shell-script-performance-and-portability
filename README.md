@@ -1197,12 +1197,12 @@ Writing shell scripts inherently
 involves considering several factors.
 
 - *Personal scripts.* When writing
-  scripts for personal or
-  administrative tasks, the choice of
-  shell is unimportant. On Linux, the
-  obvious choice is Bash. On BSD
-  systems, it would be Ksh. On macOS,
-  Zsh might be handy.
+  scripts for personal use, the
+  choice of shell is unimportant.
+  On Linux, the obvious choice is
+  Bash. On BSD systems, it would be
+  Ksh. On macOS, Zsh might be
+  handy.
 
 - *Portable scripts.* If you intend to
   use the scripts across some operating
