@@ -928,7 +928,7 @@ None of these offer any advantages to speed up shell scripts.
 
 - There is no performance
   difference between a
-  Bash-specific 
+  Bash-specific
   [double bracket] expression
   [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   for pattern matching compared to
