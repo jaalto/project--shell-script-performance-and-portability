@@ -2,12 +2,13 @@
 #
 # Q: POSIX `i=$((i + 1))` vs `((i++))` vs `let i++` etc.
 # A: No noticeable difference, POSIX `i=$((i + 1))` will do fine
-# priority: 1
+# priority: 10
 #
-#     t1 real 0m0.025s ((i++))      Bash
-#     t2 real 0m0.047s let i++      Bash
-#     t3 real 0m0.045s i=$((i + 1)) POSIX
-#     t4 real 0m0.061s : $((i++))   POSIX (true; with side effect)
+#     t1  real 0m0.045s i=$((i + 1)) POSIX
+#     t2a real 0m0.072s : $((i + 1)) POSIX (side effect)
+#     t2b real 0m0.063s : $((i++))   POSIX (side effect)
+#     t3  real 0m0.039s ((i++))      Bash
+#     t4  real 0m0.053s let i++      Bash
 #
 # Notes:
 #
@@ -17,13 +18,15 @@
 # portable POSIX version works in all shells:
 # `i=$((i + 1))`.
 #
-# When run under `ksh93`, the tests seems to
-# favor `(())` operator which is about 2x faster.
+# When run under `ksh93`, the tests seems be
+# optimized for  `((...))` operator which is
+# about 2x faster:
 #
-#     t1 real 0m0.011s ((i++))      Ksh
-#     t2 real 0m0.024s let i++      Ksh
-#     t3 real 0m0.026s i=$((i + 1)) POSIX
-#     t4 real 0m0.036s : $((i++))   POSIX (true; with side effect)
+#     t1  real 0m0.029s i=$((i + 1)) POSIX
+#     t2a real 0m0.044s : $((i + 1)) POSIX (side effect)
+#     t2b real 0m0.044s : $((i++))   POSIX (side effect)
+#     t3  real 0m0.014s ((i++))      Bash
+#     t4  real 0m0.034s let i++      Bash
 
 [ "${loop_max:+user}" = "user" ] && loop_count=$loop_max
 
@@ -36,30 +39,20 @@ t1 ()
     item=0
     for i in $(seq $loop_max)
     do
-        ((item++))
-    done
-}
-
-t2 ()
-{
-    item=0
-    var="abc"
-    for i in $(seq $loop_max)
-    do
-        let item++
-    done
-}
-
-t3 ()
-{
-    item=0
-    for i in $(seq $loop_max)
-    do
         item=$((item + 1))  # traditional
     done
 }
 
-t4 ()
+t2a ()
+{
+    item=0
+    for i in $(seq $loop_max)
+    do
+        : $((item = item + 1))
+    done
+}
+
+t2b ()
 {
     item=0
     for i in $(seq $loop_max)
@@ -68,9 +61,28 @@ t4 ()
     done
 }
 
+t3 ()
+{
+    item=0
+    for i in $(seq $loop_max)
+    do
+        ((item++))
+    done
+}
+
+t4 ()
+{
+    item=0
+    for i in $(seq $loop_max)
+    do
+        let item++
+    done
+}
+
 t="\
 :t t1
-:t t2
+:t t2a
+:t t2b
 :t t3
 :t t4
 "

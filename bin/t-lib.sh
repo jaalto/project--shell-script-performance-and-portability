@@ -29,16 +29,15 @@
 #
 # Requirements
 #
-#       Requires GNU utilities first in PATH. Those
-#       of sed, awk, cut, head, tr etc. Used GNU --long
-#       options for calling commands (code maintenance).
+#       Requires GNU utilities first in PATH. Those of sed,
+#       awk, cut, head, tr etc. Used GNU --long options for
+#       calling commands (code maintenance).
 #
 # Description
 #
-#       This is a library. Common
-#       utilities. When sourced, it will
-#       create the following test file to
-#       be used by <test cases>:
+#       This is a library. Common utilities. When sourced, it
+#       will create the following test file to be used by
+#       <test cases>:
 #
 #           t.random.numbers.tmp
 #
@@ -65,8 +64,12 @@
 #           $loop_max
 #           $random_file
 #           $random_file_count
-
-# -- ------------------------------------
+#
+# Notes
+#
+#   In order to support 'ksh' the 'local keyword is written
+#   on its own lines. The code is also accompanied with
+#   addtional 'unset <var>' just in case.
 
 # -- ------------------------------------
 # -- Exported variables
@@ -94,6 +97,7 @@ HEAD=${HEAD:-"head"}
 PARALLEL=${PARALLEL:-"parallel"}
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
+RM=${RM:-"rm"}
 SED=${SED:-"sed"}
 SHUF=${SHUF:-"shuf"}
 STAT=${STAT:-"stat"} # Must be GNU version
@@ -119,7 +123,7 @@ fi
 
 AtExitDefault ()
 {
-    [ "${TMPBASE:-}" ] && rm --force "$TMPBASE"*
+    [ "${TMPBASE:-}" ] && $RM --force "$TMPBASE"*
 }
 
 SetupTrapAtExit ()
@@ -185,7 +189,7 @@ DieOptionMinus ()
 
 DieOptionEmpty ()
 {
-    if [ ! "$2" ]; then
+    if [ ! "${2:-}" ]; then
         Die "$PROGRAM: ERROR: option ${1:-} requires ARG, got empty"
     fi
 }
@@ -423,16 +427,15 @@ IsCommandPushd ()
 
 IsCacheGnu ()
 {
-    local cmd
-    cmd=${1:?ERROR: missing arg: cmd}
+    [ "${1:-}" ] || return 1
+
+    : "debug: case"    # no-op but seen under 'set -x'
 
     case ${T_LIB_CACHE_GNU:-} in
-        *" $cmd "*)
-            unset cmd
+        *" $1 "*)
             return 0
             ;;
         *)
-            unset cmd
             return 1
     esac
 }
@@ -452,19 +455,13 @@ CacheGnuSave ()
 
 IsCommandGnuVersion ()
 {
-    local cmd
-    cmd=${1:-}
+    [ "${1:-}" ] || return 1
 
-    if [ ! "$cmd" ]; then
-        unset cmd
-        return 1
-    fi
+    IsCacheGnu "$1" && return 0
 
-    IsCacheGnu "$cmd" && return 0
-
-    case $("$cmd" --version 2> /dev/null) in
+    case $("$1" --version 2> /dev/null) in
         *GNU*)
-            CacheGnuSave "$cmd"
+            CacheGnuSave "$1"
             unset cmd
             return 0
             ;;
@@ -556,10 +553,23 @@ RandomWordsDictionary ()
 {
     RequireDictionary "t-lib.sh"
 
+    # Ksh93 bug (workaround)
+    #
+    # For unknown reasing the large output
+    # of 'shuf' cannot be piped to
+    # awk without getting an error
+    # 'shuf: write error: Connection reset by peer'
+    #
+    # Use temporary file to work around the bug
+
+    local _tmp
+    _tmp=$(mktemp -t $TMPBASE.random.dictionary.$size.XXX.tmp)
+
     # ignore AWK single quote
     # shellcheck disable=SC2016
 
-    $SHUF --head-count=200000 "$DICTIONARY_FILE" |
+    $SHUF --head-count=200000 "$DICTIONARY_FILE" > "$_tmp"
+
     $AWK '
         BEGIN {
             total_size = 0;
@@ -587,8 +597,11 @@ RandomWordsDictionary ()
                 print line;
                 total_size += length(line) + 1;
             }
-        }' |
+        }' "$_tmp" |
     $HEAD --bytes="${1:-100k}"
+
+    $RM --force "$_tmp"
+    unset _tmp
 }
 
 RandomNumbersAwk ()
@@ -623,16 +636,11 @@ RandomNumbersPython ()
 
 RunMaybe ()
 {
-    local cmd
-    cmd=${1:-}
+    [ "${1:-}" ] || return 0
 
-    [ "$cmd" ] || return 0
-
-    if IsCommandExist "$cmd" ; then
-        $cmd
+    if IsCommandExist "${1:-}" ; then
+        $1
     fi
-
-    unset cmd
 }
 
 RunTestCase ()
@@ -686,7 +694,8 @@ RunTestCase ()
     esac
 
     if [ "$hasformat" ]; then
-        local timeformat=""
+        local timeformat
+        timeformat=""
 
         eval "timeformat=\$$hasformat" # save
         printf "# %-24s" "$1"

@@ -30,7 +30,7 @@
 
 RequireDictionary "t-command-grep.sh"
 
-# can be set externally
+# Can be set externally.
 re=${re:-'ad'}
 size=${size:-10k}
 
