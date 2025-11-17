@@ -1255,7 +1255,7 @@ Windows software
 [MobaXterm](https://mobaxterm.mobatek.net),
 offers X server, terminals
 and other connectivity features, but also
-somes with Cygwin-based
+comes with Cygwin-based
 Bash shell with its own
 [Debian-style](https://www.debian.org/doc/manuals/debian-faq/pkgtools.en.html)
 `apt` package manager which allows installing
