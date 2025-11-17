@@ -1374,10 +1374,11 @@ discussion on StackExchange.
     if ! IsCommand local; then
         # Check if we are in ksh
         if IsCommand typeset; then
-            # Use 'eval' to hide from
-            # other shells so that
-            # defining function with
-            # name 'local' does not
+            # Use 'eval' to hide
+            # from other shells so
+            # that defining
+            # function with name
+            # 'local' does not
             # generate an error and
             # exit script.
             eval 'local () { typeset "$@"; }'
