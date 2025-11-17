@@ -1983,7 +1983,7 @@ discussion forum
 - The Single UNIX Specification,
   Version 4
   https://unix.org/version4/
-- See discussion at StackExchnage
+- See discussion at StackExchange
   about
   ["Difference between POSIX, Single UNIX Specification, and Open Group Base Specifications?"](https://unix.stackexchange.com/q/14368).
 
