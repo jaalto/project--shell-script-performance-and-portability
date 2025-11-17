@@ -1648,7 +1648,7 @@ Notable observations:
         command -v "${1:-}" > /dev/null 2>&1
     }
 
-    RequireFeatures ()
+    Require ()
     {
         local cmd
 
@@ -1662,7 +1662,7 @@ Notable observations:
     }
 
     # Before program starts
-    RequireFeatures $REQUIRE || exit $?
+    Require $REQUIRE || exit $?
     ...
 ```
 
