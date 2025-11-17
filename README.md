@@ -853,9 +853,9 @@ these offer practical benefits.
     # Different shells compared.
     # ----------------------------
 
-     # Using 10k random dictionary file
-     # Using LANG=C
-    ./run.sh --shell dash,ksh93,bash t-command-grep.sh
+    # Using 10k random dictionary file
+    # Using LANG=C
+    /run.sh --shell dash,ksh93,bash t-command-grep.sh
 
     Run shell: dash
     # t1langc    real 0.038 --fixed-strings
@@ -903,8 +903,30 @@ None of these offer any advantages to speed up shell scripts.
     [ -z "$var" ]    # POSIX archaic
     [[ ! $var ]]     # Bash
 
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    /run.sh --shell dash,ksh93,bash t-statement-if-test-posix-vs-bash.sh
+
+    Run shell: dash
+    # t1  real 0.005
+    # t2  real 0.006
+    # t3  real 0.006
+    # t4  real 0.005
+    Run shell: ksh93
+    # t1  real 0.013
+    # t2  real 0.026
+    # t3  real 0.029
+    # t4  real 0.043
+    Run shell: bash
+    # t1  real 0.039
+    # t2  real 0.051
+    # t3  real 0.049
+    # t4  real 0.061
 ```
 
+t-statement-arithmetic-increment.sh
 - There are no practical differences
   between these. The POSIX
   [arithmetic expansion]
@@ -924,6 +946,38 @@ None of these offer any advantages to speed up shell scripts.
     : $((i++))       # POSIX, Uhm
     ((i++))          # Bash, Ksh
     let i++          # Bash, Ksh; Uhm
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    # Do not read much into the
+    # results, as this is an
+    # artificial test involving
+    # 10,000 rounds of iteration
+    # and increment.
+
+    ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
+
+    Run shell: dash
+    # t1  real 0.006 $((i + 1))
+    # t2a real 0.006 : $((i + 1))
+    # t2b real 0.006 : $((i++))
+    # t3  real 0.006 ((i++))
+    # t4  real 0.007 let i++
+    Run shell: ksh93
+    # t1  real 0.029 $((i + 1))
+    # t2a real 0.044 : $((i + 1))
+    # t2b real 0.044 : $((i++))
+    # t3  real 0.014 ((i++))
+    # t4  real 0.034 let i++
+    Run shell: bash
+    # t1  real 0.045 $((i + 1))
+    # t2a real 0.072 : $((i + 1))
+    # t2b real 0.063 : $((i++))
+    # t3  real 0.039 ((i++))
+    # t4  real 0.053 let i++
+
 ```
 
 - There is no performance
@@ -1985,7 +2039,7 @@ ksh, ksh93, programming,
 optimizing, performance, profiling,
 portability
 
-<!-- REFERENCES -->
+<!-- ------- REF:LANG -------- -->
 
 [Perl]: //www.perl.org
 [Python]: https://www.python.org
@@ -2005,17 +2059,7 @@ portability
 [busybox]: https://busybox.net
 [busybox ash]: https://busybox.net
 
-<!-- Bash Manual -->
-
-<!--
-
-Google search help:
-
-  site:www.gnu.org inurl:bash <search words>
-
-  https://www.google.com/search?q=site%3Awww.gnu.org+inurl%3Abash+%s
-
--->
+<!-- ------- REF:POSIX ------- -->
 
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX.1-2024]: https://pubs.opengroup.org/onlinepubs/9799919799/
@@ -2035,6 +2079,11 @@ Google search help:
 [true]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html
 [type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
 
+<!-- ------- REF:BASH -------
+Google search help:
+  site:www.gnu.org inurl:bash <search words>
+-->
+
 [Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
 [TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
 [parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
@@ -2044,7 +2093,7 @@ Google search help:
 [process substitution]: https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html
 [command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
 [word splitting]: https://www.gnu.org/software/bash/manual/html_node/Word-Splitting.html
-<!-- POSIX: $((...)) -->
+<!-- $((...)) -->
 [arithmetic expansion]: https://www.gnu.org/software/bash/manual/html_node/Arithmetic-Expansion.html
 <!-- non-POSIX: ((..)) -->
 [arithmetic expression]: https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html
@@ -2055,7 +2104,10 @@ Google search help:
 [reserved words]: https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words
 [arrays]: https://www.gnu.org/software/bash/manual/html_node/Arrays.html
 [mapfile]: https://www.gnu.org/software/bash/manual/bash.html#index-mapfile
+[let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [HERE STRING]: https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
+
+<!-- ------- REF:GNU --------- -->
 
 [GNU parallel]: https://www.gnu.org/software/parallel/
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
@@ -2064,6 +2116,8 @@ Google search help:
 [GNU sed]: https://www.gnu.org/software/sed/
 [GNU cut]: https://www.gnu.org/software/coreutils/manual/html_node/cut-invocation.html
 [GNU xargs]: https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html
+
+<!-- ------- REF:MISC ------- -->
 
 [Git Bash]: https://gitforwindows.org
 [Git for Windows]: https://gitforwindows.org
