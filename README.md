@@ -854,31 +854,30 @@ these offer practical benefits.
     # ----------------------------
 
      # Using 10k random dictionary file
-	 # Using LANG=C
+     # Using LANG=C
     ./run.sh --shell dash,ksh93,bash t-command-grep.sh
 
-	Run shell: dash
-	# t1langc    real 0.038 --fixed-strings
-	# t1utf8     real 0.039 --fixed-strings (LANG=C.UTF-8)
-	# t1extended real 0.041 --extended-regexp
-	# t1perl     real 0.040 --perl-regexp
-	# t2icasef   real 0.038 --ignore-case --fixed-strings
-	# t2icasee   real 0.029 --ignore-case --extended-regexp
-	Run shell: ksh93
-	# t1langc    real 0.207
-	# t1utf8     real 0.225
-	# t1extended real 0.187
-	# t1perl     real 0.233
-	# t2icasef   real 0.213
-	# t2icasee   real 0.207
-	Run shell: bash
-	# t1langc    real 0.208
-	# t1utf8     real 0.258
-	# t1extended real 0.248
-	# t1perl     real 0.228
-	# t2icasef   real 0.276
-	# t2icasee   real 0.297
-
+    Run shell: dash
+    # t1langc    real 0.038 --fixed-strings
+    # t1utf8     real 0.039 --fixed-strings (LANG=C.UTF-8)
+    # t1extended real 0.041 --extended-regexp
+    # t1perl     real 0.040 --perl-regexp
+    # t2icasef   real 0.038 --ignore-case --fixed-strings
+    # t2icasee   real 0.029 --ignore-case --extended-regexp
+    Run shell: ksh93
+    # t1langc    real 0.207
+    # t1utf8     real 0.225
+    # t1extended real 0.187
+    # t1perl     real 0.233
+    # t2icasef   real 0.213
+    # t2icasee   real 0.207
+    Run shell: bash
+    # t1langc    real 0.208
+    # t1utf8     real 0.258
+    # t1extended real 0.248
+    # t1perl     real 0.228
+    # t2icasef   real 0.276
+    # t2icasee   real 0.297
 ```
 
 ## 3.6 NO PERFORMANCE GAINS
@@ -974,18 +973,21 @@ None of these offer any advantages to speed up shell scripts.
     # t2  real 0.002  POSIX
 ```
 
-- There is no performance difference
-  between a regular while loop and a
-  [process substitution]
-  loop. However, the latter is more
-  general, as any variable set during
-  the loop will persist after *and*
-  there is no need to clean up
-  temporary files like in POSIX (1)
-  solution. The POSIX (1) loop is
-  marginally faster but the speed gain
-  is lost by the extra `rm` command.
-  See [code](./bin/t-command-output-vs-process-substitution.sh).
+
+- In Bash, There is no practical
+  performance difference between a
+  regular while loop and a
+  [process substitution] loop. However,
+  the latter is more general, as any
+  variable set during the loop will
+  persist after *and* there is no need to
+  clean up temporary files like in POSIX
+  (1) solution. The POSIX loop is
+  marginally faster, but the speed gain
+  is lost by the extra `rm` command call
+  (Note: the added time is not included
+  in the test results). See
+  [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```bash
     # Bash, Ksh
@@ -994,7 +996,7 @@ None of these offer any advantages to speed up shell scripts.
         ...
     done < <(command)
 
-    # POSIX (1)
+    # (1) POSIX
     # Same, but with
     # temporary file
     command > file
@@ -1004,7 +1006,7 @@ None of these offer any advantages to speed up shell scripts.
     done < file
     rm file
 
-    # POSIX (2)
+    # (2) POSIX
     # while is being run in
     # separate environment
     # due to pipe(|)
@@ -1013,6 +1015,25 @@ None of these offer any advantages to speed up shell scripts.
     do
         ...
     done
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-command-output-vs-process-substitution.sh
+
+    Run shell: dash
+    # t1  real 0.048  (1) POSIX tmpfile
+    # t2  <skip>      <(..)
+    # t3  real 0.051  (2) POSIX pipe
+    Run shell: ksh93
+    # t1  real 0.242  (1) POSIX tmpfile
+    # t2  real 0.473  <(..)
+    # t3  real 0.417  (2) POSIX pipe
+    Run shell: bash
+    # t1  real 0.529  (1) POSIX tmpfile
+    # t2  real 0.601  <(..)
+    # t3  real 0.634  (2) POSIX pipe
 ```
 
 - With [GNU grep], the use of
