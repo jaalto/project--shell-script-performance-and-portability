@@ -967,15 +967,14 @@ None of these offer any advantages to speed up shell scripts.
 
     Run shell: dash
     # t1  <skip>
-    # t2  real 0.011 POSIX
+    # t2  real 0.011  case..esac
     Run shell: ksh93
     # t1  real 0.004  [[ == ]]
-    # t2  real 0.002  POSIX
+    # t2  real 0.002  case..esac
     Run shell: bash
     # t1  real 0.003  [[ == ]]
-    # t2  real 0.002  POSIX
+    # t2  real 0.002  case..esac
 ```
-
 
 - In Bash, There is no practical
   performance difference between a
