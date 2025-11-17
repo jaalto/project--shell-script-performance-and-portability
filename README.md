@@ -1083,8 +1083,6 @@ Examples of pre-2000 shell scripting
 practises:
 
 ```bash
-    if [ x$a = y ] ...
-
     # Test if variable's lenght is non-zero
     if [ -n "$a" ] ...
 
@@ -1097,7 +1095,7 @@ practises:
     # -o (OR)
     # -a (AND)
 
-    if [ "$a" = "y" -o "$b" = "y" ] ...
+    if [ "$a" = "1" -o "$b" = "2" ] ...
 
     # POSIX allows leading
     # opening "(" paren
@@ -1113,10 +1111,6 @@ practises:
 Modern equivalents:
 
 ```bash
-
-    # Equality
-    if [ "$a" = "y" ] ..
-
     # Variable has something
     if [ "$a" ] ...
 
@@ -1127,9 +1121,13 @@ Modern equivalents:
     # Logical OR between statements
     if [ "$a" = "y" ] || [ "$b" = "y" ] ...
 
+    # Logical AND between statements
+    if [ "$a" = "y" ] && [ "$b" = "y" ] ...
+
     # Without leading "(" paren
+	# The "true" is same as built-in ":"
     case $var in
-         a*) :       # The ":" is same as built-in or external command "true"
+         a*) true
              ;;
          *)  false
              ;;
@@ -1372,7 +1370,7 @@ improve shell scripts even more.
     {
         local script name shell
 
-        for script # Implicit "$@"
+        for script in "$@"
         do
             for shell in \
                 posh \
@@ -1544,11 +1542,6 @@ rare in current practice.
 
 ## 4.5 PORTABILITY OF UTILITIES
 
-In the end, the actual implementation
-of the shell you use (dash, bash,
-ksh...) is less important than what
-utilities you use and how you use them.
-
 It's not just about choosing to write
 in POSIX `sh`; the utilities
 called from the script also has to be
@@ -1592,7 +1585,7 @@ Notable observations:
   ["Debian's which hunt"](https://lwn.net/Articles/874049/).
 
 ```bash
-    REQUIRE="sqlite curl"
+    REQUIRE="sqlite3 curl"
 
     IsCommand ()
     {
@@ -1603,7 +1596,7 @@ Notable observations:
     {
         local cmd
 
-        for cmd # Implicit "$@"
+        for cmd in "$@"
         do
             if IsCommand "$cmd"; then
                 echo "ERROR: not in PATH: $cmd" >&2
@@ -1691,9 +1684,10 @@ Notable observations:
     # shift all positional args
     shift $#
 
-    # Any greater number terminates
-    # the whole program in:
-    # dash, posh, mksh, ksh93 etc.
+    # WARNNG: Any greater number
+    # terminates the whole program
+    # in: dash, posh, mksh, ksh93
+	# etc.
     shift 2
 ```
 
@@ -1785,7 +1779,7 @@ operands without any files:
 ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
   which states that "(...) the
   portable shell community tends to
-  prefer using :".
+  prefer using `:`".
 
 ```bash
     while :
