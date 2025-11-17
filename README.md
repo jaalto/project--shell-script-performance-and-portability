@@ -885,13 +885,15 @@ these offer practical benefits.
 None of these offer any advantages to speed up shell scripts.
 
 - The Bash-specific expression
-  [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
-  might offer a minuscule advantage but
-  only in loops of 10,000 iterations.
-  Unless the safeguards provided by
-  Bash `[[ ]]` are important, the POSIX
-  tests will do fine.
-  See [code](./bin/t-statement-if-test-posix-vs-bash.sh).
+  [double bracket] expression `[[...]]`
+  offers minuscule advantage but only in
+  unrealistic loops of 10,000 iterations.
+  Unless the safeguards and other
+  features (e.g. pattern and regular
+  expression matching) provided by
+  `[[...]]` are important, the standard
+  POSIX `[...]` will do fine. See
+  [code](./bin/t-statement-if-test-posix-vs-bash.sh).
 
 ```bash
     [ "$var" = "1" ] # POSIX
@@ -906,7 +908,7 @@ None of these offer any advantages to speed up shell scripts.
 - There are no practical differences
   between these. The POSIX
   [arithmetic expansion]
-  `$(())`
+  `$((...))`
   compound command will do fine. Note
   that the null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
@@ -926,8 +928,9 @@ None of these offer any advantages to speed up shell scripts.
 
 - There is no performance
   difference between a
-  Bash-specific expression
-  [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  Bash-specific 
+  [double bracket] expression
+  [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   for pattern matching compared to
   POSIX `case..esac`. Interestingly
   pattern matching is 4x slower under
@@ -2046,7 +2049,8 @@ Google search help:
 [arithmetic expansion]: https://www.gnu.org/software/bash/manual/html_node/Arithmetic-Expansion.html
 <!-- non-POSIX: ((..)) -->
 [arithmetic expression]: https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html
-
+<!-- [[...]] -->
+[double bracket]: https://www.gnu.org/software/bash/manual/bash.html#ndex-_005b_005b
 [built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
 [readarray]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray
 [reserved words]: https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words
