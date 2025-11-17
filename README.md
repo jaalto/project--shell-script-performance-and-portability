@@ -2042,9 +2042,9 @@ Google search help:
 [process substitution]: https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html
 [command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
 [word splitting]: https://www.gnu.org/software/bash/manual/html_node/Word-Splitting.html
-<!-- POSIX: $((...)) -->>
+<!-- POSIX: $((...)) -->
 [arithmetic expansion]: https://www.gnu.org/software/bash/manual/html_node/Arithmetic-Expansion.html
->!-- non-POSIX: ((..)) -->
+<!-- non-POSIX: ((..)) -->
 [arithmetic expression]: https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html
 
 [built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
