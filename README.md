@@ -580,7 +580,7 @@ TODO
 
 ```bash
     # (1) Bash, Ksh
-	# grep prefilter
+    # grep prefilter
     while read -r line
     do
         # variables persist after loop
@@ -774,10 +774,10 @@ these offer practical benefits.
 ```bash
 
     N=1
-    M=100
+    M=1000
 
     # Bash
-    for i in {1..100}
+    for i in {1..1000}
     do
         ...
     done
@@ -800,6 +800,28 @@ these offer practical benefits.
     do
         i=$((i + 1))
     done
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-statement-arithmetic-for-loop.sh
+
+    Run shell: dash
+    # t1  real 0.011 {N..M}
+    # t2  real 0.011 POSIX seq
+    # t3  <skip>     ((...))
+    # t4  real 0.015 POSIX while
+    Run shell: ksh93
+    # t1  real 0.024 {N..M}
+    # t2  real 0.004 POSIX seq
+    # t3  real 0.004 ((...))
+    # t4  real 0.005 POSIX while
+    Run shell: bash
+    # t1  real 0.006 {N..M}
+    # t2  real 0.005 POSIX seq
+    # t3  real 0.006 ((...))
+    # t4  real 0.012 POSIX while
 ```
 
 - One might think that choosing
