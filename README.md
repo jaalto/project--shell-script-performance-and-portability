@@ -1448,7 +1448,7 @@ improve shell scripts even more.
         done
     }
 
-    # Use is like:
+    # To test accross shells:
     shelltest script.sh
 
     # See Google. External utility
