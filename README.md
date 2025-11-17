@@ -1906,8 +1906,6 @@ before testing:
 - List of which features were added to
   specific releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
-- Bats - Bash Automated Testing System
-  https://github.com/bats-core/bats-core
 
 ## 6.2 PORTABILITY AND UTILITIES
 
