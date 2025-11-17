@@ -848,6 +848,37 @@ these offer practical benefits.
     LANG=C grep --extended-regexp ...
     LANG=C grep --perl-regexp ...
     LANG=C grep --ignore-case ...
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+     # Using 10k random dictionary file
+	 # Using LANG=C
+    ./run.sh --shell dash,ksh93,bash t-command-grep.sh
+
+	Run shell: dash
+	# t1langc    real 0.038 --fixed-strings
+	# t1utf8     real 0.039 --fixed-strings (LANG=C.UTF-8)
+	# t1extended real 0.041 --extended-regexp
+	# t1perl     real 0.040 --perl-regexp
+	# t2icasef   real 0.038 --ignore-case --fixed-strings
+	# t2icasee   real 0.029 --ignore-case --extended-regexp
+	Run shell: ksh93
+	# t1langc    real 0.207
+	# t1utf8     real 0.225
+	# t1extended real 0.187
+	# t1perl     real 0.233
+	# t2icasef   real 0.213
+	# t2icasee   real 0.207
+	Run shell: bash
+	# t1langc    real 0.208
+	# t1utf8     real 0.258
+	# t1extended real 0.248
+	# t1perl     real 0.228
+	# t2icasef   real 0.276
+	# t2icasee   real 0.297
+
 ```
 
 ## 3.6 NO PERFORMANCE GAINS
