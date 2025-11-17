@@ -368,7 +368,7 @@ TODO
   calling external utilities. Seeing the
   measurements just how expensive it is,
   reminds us to utilize the possibilities
-  of POSIX `#`, `##`, `%` and `%%`
+  of `#`, `##`, `%` and `%%`
   [POSIX parameter expansions]. More
   extended set is available in Bash
   [parameter expansions]. See
@@ -401,17 +401,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
 
     Run shell: dash
-    # t3aExt real 0.009s (1)
-    # t3cExt real 0.008s (2)
-    # t3eExt real 0.009s (3)
+    # t3aExt real 0.009s (1) param
+    # t3cExt real 0.008s (2) cut
+    # t3eExt real 0.009s (3) sed
     Run shell: ksh93
-    # t3aExt real 0.001s
-    # t3cExt real 0.193s
-    # t3eExt real 0.288s
+    # t3aExt real 0.001s (1) param
+    # t3cExt real 0.193s (2) cut
+    # t3eExt real 0.288s (3) sed
     Run shell: bash
-    # t3aExt real 0.004s
-    # t3cExt real 0.358s
-    # t3eExt real 0.431s
+    # t3aExt real 0.004s (1) param
+    # t3cExt real 0.358s (2) cut
+    # t3eExt real 0.431s (3) sed
 ```
 
 - In Bash, it is about 10 times faster
@@ -435,9 +435,9 @@ TODO
     # Bash, Ksh syntax
     str=$(< file)
 
-    if [[ $str =~ $regexp1 ]]; then
+    if [[ $str =~ $re1 ]]; then
         ...
-    elif [[ $str =~ $regexp2 ]]; then
+    elif [[ $str =~ $re2 ]]; then
         ...
     fi
 
@@ -579,8 +579,9 @@ TODO
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
-    # Bash, Ksh
-    while read -r ...
+    # (1) Bash, Ksh
+    # grep prefilter
+    while read -r line
     do
         # variables persist after loop
     done < <(grep "$re" file)
@@ -589,7 +590,7 @@ TODO
     # Problem: while runs in
     # a separate environment
     grep "$re" file) |
-    while read -r ...
+    while read -r line
     do
         # variables not visible after loop
         ...
@@ -598,15 +599,15 @@ TODO
     # POSIX
     # NOTE: extra calls
     # required for tmpfile
-    grep "$re" file) > tmpfile
-    while read -r ...
+    grep "$re" file > tmpfile
+    while read -r line
     do
         # variables persist after loop
         ...
     done < tmpfile
     rm tmpfile
 
-    # Bash, Slowest,
+    # (2) Bash. Slowest,
     # in-loop prefilter
     while read -r line
     do
@@ -623,14 +624,14 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
 
     Run shell: dash
-    # t1a real 0.015s grep prefilter
-    # t2a real 0.012s loop: case...esac
+    # t1a real 0.015s (1) grep
+    # t2a real 0.012s (2) in loop
     Run shell: ksh93
-    # t1a real 2.940s
-    # t2a real 1.504s
+    # t1a real 2.940s (1) grep
+    # t2a real 1.504s (2) in loop
     Run shell: bash
-    # t1a real 4.567s
-    # t2a real 10.88s
+    # t1a real 4.567s (1) grep
+    # t2a real 10.88s (2) in loop
 ```
 
 ## 3.4 MODERATE PERFORMANCE GAINS
@@ -773,10 +774,10 @@ these offer practical benefits.
 ```bash
 
     N=1
-    M=100
+    M=1000
 
     # Bash
-    for i in {1..100}
+    for i in {1..1000}
     do
         ...
     done
@@ -799,6 +800,28 @@ these offer practical benefits.
     do
         i=$((i + 1))
     done
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-statement-arithmetic-for-loop.sh
+
+    Run shell: dash
+    # t1  real 0.011 {N..M}
+    # t2  real 0.011 POSIX seq
+    # t3  <skip>     ((...))
+    # t4  real 0.015 POSIX while
+    Run shell: ksh93
+    # t1  real 0.024 {N..M}
+    # t2  real 0.004 POSIX seq
+    # t3  real 0.004 ((...))
+    # t4  real 0.005 POSIX while
+    Run shell: bash
+    # t1  real 0.006 {N..M}
+    # t2  real 0.005 POSIX seq
+    # t3  real 0.006 ((...))
+    # t4  real 0.012 POSIX while
 ```
 
 - One might think that choosing
@@ -825,6 +848,36 @@ these offer practical benefits.
     LANG=C grep --extended-regexp ...
     LANG=C grep --perl-regexp ...
     LANG=C grep --ignore-case ...
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+     # Using 10k random dictionary file
+     # Using LANG=C
+    ./run.sh --shell dash,ksh93,bash t-command-grep.sh
+
+    Run shell: dash
+    # t1langc    real 0.038 --fixed-strings
+    # t1utf8     real 0.039 --fixed-strings (LANG=C.UTF-8)
+    # t1extended real 0.041 --extended-regexp
+    # t1perl     real 0.040 --perl-regexp
+    # t2icasef   real 0.038 --ignore-case --fixed-strings
+    # t2icasee   real 0.029 --ignore-case --extended-regexp
+    Run shell: ksh93
+    # t1langc    real 0.207
+    # t1utf8     real 0.225
+    # t1extended real 0.187
+    # t1perl     real 0.233
+    # t2icasef   real 0.213
+    # t2icasee   real 0.207
+    Run shell: bash
+    # t1langc    real 0.208
+    # t1utf8     real 0.258
+    # t1extended real 0.248
+    # t1perl     real 0.228
+    # t2icasef   real 0.276
+    # t2icasee   real 0.297
 ```
 
 ## 3.6 NO PERFORMANCE GAINS
@@ -832,13 +885,15 @@ these offer practical benefits.
 None of these offer any advantages to speed up shell scripts.
 
 - The Bash-specific expression
-  [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
-  might offer a minuscule advantage but
-  only in loops of 10,000 iterations.
-  Unless the safeguards provided by
-  Bash `[[ ]]` are important, the POSIX
-  tests will do fine.
-  See [code](./bin/t-statement-if-test-posix-vs-bash.sh).
+  [double bracket] expression `[[...]]`
+  offers minuscule advantage but only in
+  unrealistic loops of 10,000 iterations.
+  Unless the safeguards and other
+  features (e.g. pattern and regular
+  expression matching) provided by
+  `[[...]]` are important, the standard
+  POSIX `[...]` will do fine. See
+  [code](./bin/t-statement-if-test-posix-vs-bash.sh).
 
 ```bash
     [ "$var" = "1" ] # POSIX
@@ -853,7 +908,7 @@ None of these offer any advantages to speed up shell scripts.
 - There are no practical differences
   between these. The POSIX
   [arithmetic expansion]
-  `$(())`
+  `$((...))`
   compound command will do fine. Note
   that the null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
@@ -865,16 +920,17 @@ None of these offer any advantages to speed up shell scripts.
 
 ```bash
     i=$((i + 1))     # POSIX, preferred
-    : $((i++))       # POSIX, Uhm
     : $((i = i + 1)) # POSIX, Uhm
+    : $((i++))       # POSIX, Uhm
     ((i++))          # Bash, Ksh
     let i++          # Bash, Ksh; Uhm
 ```
 
 - There is no performance
   difference between a
-  Bash-specific expression
-  [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  Bash-specific
+  [double bracket] expression
+  [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   for pattern matching compared to
   POSIX `case..esac`. Interestingly
   pattern matching is 4x slower under
@@ -911,27 +967,29 @@ None of these offer any advantages to speed up shell scripts.
 
     Run shell: dash
     # t1  <skip>
-    # t2  real 0.011 POSIX
+    # t2  real 0.011  case..esac
     Run shell: ksh93
     # t1  real 0.004  [[ == ]]
-    # t2  real 0.002  POSIX
+    # t2  real 0.002  case..esac
     Run shell: bash
     # t1  real 0.003  [[ == ]]
-    # t2  real 0.002  POSIX
+    # t2  real 0.002  case..esac
 ```
 
-- There is no performance difference
-  between a regular while loop and a
-  [process substitution]
-  loop. However, the latter is more
-  general, as any variable set during
-  the loop will persist after *and*
-  there is no need to clean up
-  temporary files like in POSIX (1)
-  solution. The POSIX (1) loop is
-  marginally faster but the speed gain
-  is lost by the extra `rm` command.
-  See [code](./bin/t-command-output-vs-process-substitution.sh).
+- In Bash, There is no practical
+  performance difference between a
+  regular while loop and a
+  [process substitution] loop. However,
+  the latter is more general, as any
+  variable set during the loop will
+  persist after *and* there is no need to
+  clean up temporary files like in POSIX
+  (1) solution. The POSIX loop is
+  marginally faster, but the speed gain
+  is lost by the extra `rm` command call
+  (Note: the added time is not included
+  in the test results). See
+  [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```bash
     # Bash, Ksh
@@ -940,7 +998,7 @@ None of these offer any advantages to speed up shell scripts.
         ...
     done < <(command)
 
-    # POSIX (1)
+    # (1) POSIX
     # Same, but with
     # temporary file
     command > file
@@ -950,7 +1008,7 @@ None of these offer any advantages to speed up shell scripts.
     done < file
     rm file
 
-    # POSIX (2)
+    # (2) POSIX
     # while is being run in
     # separate environment
     # due to pipe(|)
@@ -959,6 +1017,25 @@ None of these offer any advantages to speed up shell scripts.
     do
         ...
     done
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-command-output-vs-process-substitution.sh
+
+    Run shell: dash
+    # t1  real 0.048  (1) POSIX tmpfile
+    # t2  <skip>      <(..)
+    # t3  real 0.051  (2) POSIX pipe
+    Run shell: ksh93
+    # t1  real 0.242  (1) POSIX tmpfile
+    # t2  real 0.473  <(..)
+    # t3  real 0.417  (2) POSIX pipe
+    Run shell: bash
+    # t1  real 0.529  (1) POSIX tmpfile
+    # t2  real 0.601  <(..)
+    # t3  real 0.634  (2) POSIX pipe
 ```
 
 - With [GNU grep], the use of
@@ -1008,8 +1085,6 @@ Examples of pre-2000 shell scripting
 practises:
 
 ```bash
-    if [ x$a = y ] ...
-
     # Test if variable's lenght is non-zero
     if [ -n "$a" ] ...
 
@@ -1022,7 +1097,7 @@ practises:
     # -o (OR)
     # -a (AND)
 
-    if [ "$a" = "y" -o "$b" = "y" ] ...
+    if [ "$a" = "1" -o "$b" = "2" ] ...
 
     # POSIX allows leading
     # opening "(" paren
@@ -1038,10 +1113,6 @@ practises:
 Modern equivalents:
 
 ```bash
-
-    # Equality
-    if [ "$a" = "y" ] ..
-
     # Variable has something
     if [ "$a" ] ...
 
@@ -1052,9 +1123,13 @@ Modern equivalents:
     # Logical OR between statements
     if [ "$a" = "y" ] || [ "$b" = "y" ] ...
 
+    # Logical AND between statements
+    if [ "$a" = "y" ] && [ "$b" = "y" ] ...
+
     # Without leading "(" paren
+    # The "true" is same as built-in ":"
     case $var in
-         a*) :       # The ":" is same as built-in or external command "true"
+         a*) true
              ;;
          *)  false
              ;;
@@ -1215,7 +1290,7 @@ discussion on StackExchange.
   [OpenBSD, sh](https://man.netbsd.org/sh.1)
   is [ksh93] from the [Korn Shell]
   family.
-  
+
 - On many commercial and
   conservative UNIX systems, the
   default `/bin/sh` shell is highly
@@ -1250,7 +1325,8 @@ discussion on StackExchange.
             # other shells so that
             # defining function with
             # name 'local' does not
-            # generate an error.
+            # generate an error and
+            # exit script.
             eval 'local () { typeset "$@"; }'
         fi
     fi
@@ -1296,7 +1372,7 @@ improve shell scripts even more.
     {
         local script name shell
 
-        for script # Implicit "$@"
+        for script in "$@"
         do
             for shell in \
                 posh \
@@ -1468,11 +1544,6 @@ rare in current practice.
 
 ## 4.5 PORTABILITY OF UTILITIES
 
-In the end, the actual implementation
-of the shell you use (dash, bash,
-ksh...) is less important than what
-utilities you use and how you use them.
-
 It's not just about choosing to write
 in POSIX `sh`; the utilities
 called from the script also has to be
@@ -1516,7 +1587,7 @@ Notable observations:
   ["Debian's which hunt"](https://lwn.net/Articles/874049/).
 
 ```bash
-    REQUIRE="sqlite curl"
+    REQUIRE="sqlite3 curl"
 
     IsCommand ()
     {
@@ -1527,7 +1598,7 @@ Notable observations:
     {
         local cmd
 
-        for cmd # Implicit "$@"
+        for cmd in "$@"
         do
             if IsCommand "$cmd"; then
                 echo "ERROR: not in PATH: $cmd" >&2
@@ -1615,9 +1686,10 @@ Notable observations:
     # shift all positional args
     shift $#
 
-    # Any greater number terminates
-    # the whole program in:
-    # dash, posh, mksh, ksh93 etc.
+    # WARNNG: Any greater number
+    # terminates the whole program
+    # in: dash, posh, mksh, ksh93
+    # etc.
     shift 2
 ```
 
@@ -1709,7 +1781,7 @@ operands without any files:
 ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
   which states that "(...) the
   portable shell community tends to
-  prefer using :".
+  prefer using `:`".
 
 ```bash
     while :
@@ -1940,7 +2012,7 @@ portability
 Google search help:
 
   site:www.gnu.org inurl:bash <search words>
-  
+
   https://www.google.com/search?q=site%3Awww.gnu.org+inurl%3Abash+%s
 
 -->
@@ -1972,11 +2044,12 @@ Google search help:
 [process substitution]: https://www.gnu.org/software/bash/manual/html_node/Process-Substitution.html
 [command substitution]: https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
 [word splitting]: https://www.gnu.org/software/bash/manual/html_node/Word-Splitting.html
-<!-- POSIX: $((...)) -->>
+<!-- POSIX: $((...)) -->
 [arithmetic expansion]: https://www.gnu.org/software/bash/manual/html_node/Arithmetic-Expansion.html
->!-- non-POSIX: ((..)) -->
+<!-- non-POSIX: ((..)) -->
 [arithmetic expression]: https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html
-
+<!-- [[...]] -->
+[double bracket]: https://www.gnu.org/software/bash/manual/bash.html#ndex-_005b_005b
 [built-ins]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
 [readarray]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-readarray
 [reserved words]: https://www.gnu.org/software/bash/manual/bash.html#Reserved-Words
