@@ -918,8 +918,8 @@ None of these offer any advantages to speed up shell scripts.
 
 ```bash
     i=$((i + 1))     # POSIX, preferred
-    : $((i++))       # POSIX, Uhm
     : $((i = i + 1)) # POSIX, Uhm
+    : $((i++))       # POSIX, Uhm
     ((i++))          # Bash, Ksh
     let i++          # Bash, Ksh; Uhm
 ```
@@ -1125,7 +1125,7 @@ Modern equivalents:
     if [ "$a" = "y" ] && [ "$b" = "y" ] ...
 
     # Without leading "(" paren
-	# The "true" is same as built-in ":"
+    # The "true" is same as built-in ":"
     case $var in
          a*) true
              ;;
@@ -1687,7 +1687,7 @@ Notable observations:
     # WARNNG: Any greater number
     # terminates the whole program
     # in: dash, posh, mksh, ksh93
-	# etc.
+    # etc.
     shift 2
 ```
 
