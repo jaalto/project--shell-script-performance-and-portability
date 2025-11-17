@@ -1751,7 +1751,7 @@ Notable observations:
 
 As a case study, the Linux [GNU sed] and
 its options differ or are incompatible in
-default `sed` found in macOS and BSD. The
+basic [sed] found in macOS and BSD. The
 GNU sed has option `--in-place` for
 replacing file content which cannot be
 used in macOS and BSD. Additionally, in
