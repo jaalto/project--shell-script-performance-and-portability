@@ -368,7 +368,7 @@ TODO
   calling external utilities. Seeing the
   measurements just how expensive it is,
   reminds us to utilize the possibilities
-  of POSIX `#`, `##`, `%` and `%%`
+  of `#`, `##`, `%` and `%%`
   [POSIX parameter expansions]. More
   extended set is available in Bash
   [parameter expansions]. See
@@ -401,17 +401,17 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
 
     Run shell: dash
-    # t3aExt real 0.009s (1)
-    # t3cExt real 0.008s (2)
-    # t3eExt real 0.009s (3)
+    # t3aExt real 0.009s (1) param
+    # t3cExt real 0.008s (2) cut
+    # t3eExt real 0.009s (3) sed
     Run shell: ksh93
-    # t3aExt real 0.001s
-    # t3cExt real 0.193s
-    # t3eExt real 0.288s
+    # t3aExt real 0.001s (1) param
+    # t3cExt real 0.193s (2) cut
+    # t3eExt real 0.288s (3) sed
     Run shell: bash
-    # t3aExt real 0.004s
-    # t3cExt real 0.358s
-    # t3eExt real 0.431s
+    # t3aExt real 0.004s (1) param
+    # t3cExt real 0.358s (2) cut
+    # t3eExt real 0.431s (3) sed
 ```
 
 - In Bash, it is about 10 times faster
@@ -435,9 +435,9 @@ TODO
     # Bash, Ksh syntax
     str=$(< file)
 
-    if [[ $str =~ $regexp1 ]]; then
+    if [[ $str =~ $re1 ]]; then
         ...
-    elif [[ $str =~ $regexp2 ]]; then
+    elif [[ $str =~ $re2 ]]; then
         ...
     fi
 
@@ -1215,7 +1215,7 @@ discussion on StackExchange.
   [OpenBSD, sh](https://man.netbsd.org/sh.1)
   is [ksh93] from the [Korn Shell]
   family.
-  
+
 - On many commercial and
   conservative UNIX systems, the
   default `/bin/sh` shell is highly
@@ -1941,7 +1941,7 @@ portability
 Google search help:
 
   site:www.gnu.org inurl:bash <search words>
-  
+
   https://www.google.com/search?q=site%3Awww.gnu.org+inurl%3Abash+%s
 
 -->
