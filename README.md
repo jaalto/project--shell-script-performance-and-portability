@@ -1261,14 +1261,14 @@ Bash shell with its own
 `apt` package manager which allows installing
 additional Linux utilities.
 
-[\*\*] In Windows, there is also
-the Windows Subsystem for Linux
-([WSL]),
-where you can install (See `wsl --list --onlline`)
-Linux distributions like [Debian],
-[Ubuntu], [OpenSUSE] and [Oracle Linux].
-Bash is the obvious choice for shell
-scripts in the WSL environment.
+[\*\*] In Windows, there is also the
+Windows Subsystem for Linux ([WSL]),
+where you can install Linux distributions
+like [Debian], [Ubuntu], [OpenSUSE] and
+[Oracle Linux]. Bash is the obvious
+choice for shell scripts in the WSL
+environment. See the command `wsl --list
+--onlline`.
 
 ## 4.3 WRITING POSIX COMPLIANT SHELL SCRIPS
 
