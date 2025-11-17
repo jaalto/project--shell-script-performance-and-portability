@@ -1,6 +1,6 @@
 #! /bin/bash
 # Short: local
-# Desc: Test local keyword in functions
+# Desc: Test 'local' keyword in functions
 
 fn ()
 {
