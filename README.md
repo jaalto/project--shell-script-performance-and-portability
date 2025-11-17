@@ -579,8 +579,9 @@ TODO
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
-    # Bash, Ksh
-    while read -r ...
+    # (1) Bash, Ksh
+	# grep prefilter
+    while read -r line
     do
         # variables persist after loop
     done < <(grep "$re" file)
@@ -589,7 +590,7 @@ TODO
     # Problem: while runs in
     # a separate environment
     grep "$re" file) |
-    while read -r ...
+    while read -r line
     do
         # variables not visible after loop
         ...
@@ -598,15 +599,15 @@ TODO
     # POSIX
     # NOTE: extra calls
     # required for tmpfile
-    grep "$re" file) > tmpfile
-    while read -r ...
+    grep "$re" file > tmpfile
+    while read -r line
     do
         # variables persist after loop
         ...
     done < tmpfile
     rm tmpfile
 
-    # Bash, Slowest,
+    # (2) Bash. Slowest,
     # in-loop prefilter
     while read -r line
     do
@@ -623,14 +624,14 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
 
     Run shell: dash
-    # t1a real 0.015s grep prefilter
-    # t2a real 0.012s loop: case...esac
+    # t1a real 0.015s (1) grep
+    # t2a real 0.012s (2) in loop
     Run shell: ksh93
-    # t1a real 2.940s
-    # t2a real 1.504s
+    # t1a real 2.940s (1) grep
+    # t2a real 1.504s (2) in loop
     Run shell: bash
-    # t1a real 4.567s
-    # t2a real 10.88s
+    # t1a real 4.567s (1) grep
+    # t2a real 10.88s (2) in loop
 ```
 
 ## 3.4 MODERATE PERFORMANCE GAINS
