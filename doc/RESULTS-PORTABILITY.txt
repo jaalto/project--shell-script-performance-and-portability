@@ -15,6 +15,7 @@ POSIX true (builtin)                     +  +  +  +  +  +  +  +  +
 POSIX type                               -  +  +  +  +  +  +  +  +
 $(< file)                                -  -  -  -  +  +  +  +  +
 < <(cmd)                                 -  -  -  +  -  +  +  +  +
+non-POSIX export -f (parsed ok)          +  +  +  +  +  +  +  +  +
 non-POSIX export -f                      +  -  -  -  -  -  +  +  +
 trap -ERR                                -  -  +  +  +  +  +  +  +
 (( ... ))                                -  -  -  -  +  +  +  +  +
