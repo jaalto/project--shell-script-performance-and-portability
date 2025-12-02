@@ -1,6 +1,6 @@
 #! /bin/sh
-# Short: non-POSIX export -f (ignored)
-# Desc: Test POSIX Special Built-in support: export with non-standard option -f accepted
+# Short: non-POSIX export -f (parsed ok)
+# Desc: Test POSIX Special Built-in support: export with non-standard option -f causes no parse error
 # Url: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#export
 
 fn ()
@@ -8,10 +8,13 @@ fn ()
     :
 }
 
-# Check if option '-f' is accepted.
-#
-# Meaning, that you can have the option in script and not
-# cause an error
+# Check if option '-f' is accepted / ignored during parsing the shell
+# syntax
 
-export -f fn
+if true; then
+   :
+else
+   export -f fn
+fi
+
 exit $?
