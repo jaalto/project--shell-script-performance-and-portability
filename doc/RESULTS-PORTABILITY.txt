@@ -2,7 +2,6 @@
                                         01 02 03 04 05 06 07 08 09
 arrays                                   -  -  -  -  +  +  +  +  +
 <<< HERE_STRING                          -  -  -  -  +  +  +  +  +
-POSIX export (-f)                        +  -  -  -  -  -  +  +  +
 POSIX set -h                             -  -  +  -  +  +  +  +  +
 POSIX set -f (-o noglob)                 +  +  +  +  +  +  +  +  +
 POSIX shift N and $?                     -  -  -  +  -  -  +  +  +
@@ -16,6 +15,7 @@ POSIX true (builtin)                     +  +  +  +  +  +  +  +  +
 POSIX type                               -  +  +  +  +  +  +  +  +
 $(< file)                                -  -  -  -  +  +  +  +  +
 < <(cmd)                                 -  -  -  +  -  +  +  +  +
+non-POSIX export -f                      +  -  -  -  -  -  +  +  +
 trap -ERR                                -  -  +  +  +  +  +  +  +
 (( ... ))                                -  -  -  -  +  +  +  +  +
 $((i = $i + 1))                          +  +  +  +  +  +  +  +  +
