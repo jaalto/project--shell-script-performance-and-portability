@@ -555,10 +555,10 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-content-loop.sh
 
     Run shell: dash
-    # t1  <skip>
+    # t1  <skip>      readarray
     # t2  real 0.085  POSIX
     Run shell: ksh93
-    # t1  <skip>
+    # t1  <skip>      readarray
     # t2  real 0.021  POSIX
     Run shell: bash
     # t1  real 0.045  readarray
