@@ -701,7 +701,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-variable-array-split-string.sh
 
     Run shell: dash
-    # ..  <skip all>  no arrays
+    # ..  <skip all>  arrays
     Run shell: ksh93
     # t1  real 0.008  (1) IFS=: eval
     # t2  real 0.002  (2) IFS..saved
@@ -739,8 +739,8 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
 
     Run shell: dash
-    # t1  <skip>
-    # t2  <skip>
+    # t1  <skip>      $(< ...)
+    # t2  <skip>      read -N
     # t3  real 0.013s $(cat ...)
     Run shell: ksh93
     # t1  real 0.088s $(< ...)
