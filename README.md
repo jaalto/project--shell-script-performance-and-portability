@@ -1020,7 +1020,7 @@ t-statement-arithmetic-increment.sh
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1  <skip>
+    # t1  <skip>      [[ == ]]
     # t2  real 0.011  case..esac
     Run shell: ksh93
     # t1  real 0.004  [[ == ]]
