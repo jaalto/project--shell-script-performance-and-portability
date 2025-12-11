@@ -513,11 +513,11 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
 
     Run shell: dash
-    # t1  <skip>
+    # t1  <skip>      NamerefBash
     # t2  real 0.006s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: ksh93
-    # t1  <skip>
+    # t1  <skip>      NamerefBash
     # t2  real 0.004s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: bash
