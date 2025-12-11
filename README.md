@@ -589,10 +589,10 @@ TODO
     # POSIX
     # Problem: while runs in
     # a separate environment
-    grep "$re" file) |
+    grep "$re" file |
     while read -r line
     do
-        # variables not visible after loop
+        # vars not visible after loop
         ...
     done
 
@@ -602,7 +602,7 @@ TODO
     grep "$re" file > tmpfile
     while read -r line
     do
-        # variables persist after loop
+        # vars persist after loop
         ...
     done < tmpfile
     rm tmpfile
@@ -613,7 +613,7 @@ TODO
     do
         [[ $line =~ $re ]] || continue
         ...
-        # variables persist after loop
+        # vars persist after loop
         ...
     done < file
 
