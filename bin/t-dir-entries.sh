@@ -38,14 +38,20 @@ max_dirs=${max_dirs:-20}
 
 Setup ()
 {
-    # GLOBAL: tmpdir
+    # GLOBAL: tmpdir, see AtExit
     tmpdir=$(mktemp --directory --tmpdir="$pwd")
+
+    IFS='
+ '
 
     for i in $(seq $max_dirs)
     do
+        i=$i
         item=$(printf "%03d" $i)
         mkdir "$tmpdir/$item"
     done
+
+    unset i item
 }
 
 AtExit ()
