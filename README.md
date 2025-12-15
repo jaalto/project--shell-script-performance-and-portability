@@ -376,7 +376,8 @@ Linux 13.
 Input:
 
 - 1300 files.
-- 510 000 lines total.
+- 510 000 lines
+- 15 Megabytes of data.
 
 The process consisted of:
 
