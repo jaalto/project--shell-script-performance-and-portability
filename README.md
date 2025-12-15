@@ -361,10 +361,17 @@ suitable for complex shell scripts.
 
 ### CASE STUDY
 
-**The following is a personal observation.** I
-ran a CI testing pipeline consisting of
-SQL files that needed to be tested both
-statically and under SQLite for compliance.
+**The following is a personal
+observation.** I ran a CI testing
+pipeline consisting of SQL files that
+needed to be tested both statically and
+under SQLite for compliance. The server
+used for my personal project was a
+modest old HP laptop with a 2012 Intel
+i5-3427U (4 cores), 12 Gigabytes of RAM,
+and a Samsung EVO 860 SSD (1 TB). An old
+reliable workhorse running Debian/GNU
+Linux 13.
 
 Input:
 
