@@ -513,11 +513,11 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-function-return-value-nameref.sh
 
     Run shell: dash
-    # t1  <skip>
+    # t1  <skip>      NamerefBash
     # t2  real 0.006s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: ksh93
-    # t1  <skip>
+    # t1  <skip>      NamerefBash
     # t2  real 0.004s NamerefPosix
     # t3  real 0.005s ret=$(fn)
     Run shell: bash
@@ -555,10 +555,10 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-content-loop.sh
 
     Run shell: dash
-    # t1  <skip>
+    # t1  <skip>      readarray
     # t2  real 0.085  POSIX
     Run shell: ksh93
-    # t1  <skip>
+    # t1  <skip>      readarray
     # t2  real 0.021  POSIX
     Run shell: bash
     # t1  real 0.045  readarray
@@ -589,10 +589,10 @@ TODO
     # POSIX
     # Problem: while runs in
     # a separate environment
-    grep "$re" file) |
+    grep "$re" file |
     while read -r line
     do
-        # variables not visible after loop
+        # vars not visible after loop
         ...
     done
 
@@ -602,7 +602,7 @@ TODO
     grep "$re" file > tmpfile
     while read -r line
     do
-        # variables persist after loop
+        # vars persist after loop
         ...
     done < tmpfile
     rm tmpfile
@@ -613,7 +613,7 @@ TODO
     do
         [[ $line =~ $re ]] || continue
         ...
-        # variables persist after loop
+        # vars persist after loop
         ...
     done < file
 
@@ -701,7 +701,7 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-variable-array-split-string.sh
 
     Run shell: dash
-    # ..  <skip all>  no arrays
+    # ..  <skip all>  arrays
     Run shell: ksh93
     # t1  real 0.008  (1) IFS=: eval
     # t2  real 0.002  (2) IFS..saved
@@ -739,8 +739,8 @@ TODO
     ./run.sh --shell dash,ksh93,bash t-file-read-into-string.sh
 
     Run shell: dash
-    # t1  <skip>
-    # t2  <skip>
+    # t1  <skip>      $(< ...)
+    # t2  <skip>      read -N
     # t3  real 0.013s $(cat ...)
     Run shell: ksh93
     # t1  real 0.088s $(< ...)
@@ -1020,7 +1020,7 @@ t-statement-arithmetic-increment.sh
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1  <skip>
+    # t1  <skip>      [[ == ]]
     # t2  real 0.011  case..esac
     Run shell: ksh93
     # t1  real 0.004  [[ == ]]
