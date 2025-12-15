@@ -347,9 +347,14 @@ suitable for complex shell scripts.
 ### CASE STUDY
 
 **The following is a personal observation.** I
-ran a CI testing pipeline consisting of about
-1300 SQL files that needed to be tested both
+ran a CI testing pipeline consisting of
+SQL files that needed to be tested both
 statically and under SQLite for compliance.
+
+Input:
+
+- 1300 files.
+- 510 000 lines total.
 
 The process consisted of:
 
@@ -382,7 +387,7 @@ The optimizations:
   shell scripts that processed or heavily
   examined file contents could have been
   converted to faster [Perl], potentially
-  achieving a total time drop to **30-40 seconds**.
+  achieving a total time drop to **40 seconds**.
   However, at this point, it was decided that
   even the text-processing-heavy shell scripts
   were "fast enough."
@@ -433,7 +438,7 @@ extra performance boost at the end.
   [dash],
   calling utilities is
   *very* fast. Compared to Bash's
-  [`[[]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
+  [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
   the [expr] in [dash] is only 5x slower,
   which is still negligible because the
   time differences are measured in mere
