@@ -307,7 +307,117 @@ the following factors:
 
 ## 3.2 SHELLS AND PERFORMANCE
 
-TODO
+### Overall: POSIX sh scripts are fast
+
+Regarding shell performance, looking at the
+test cases in this project, the order is quite clear:
+
+- [sh] is the fastest, as any minimalistic
+  shell like [dash] tends to be.
+- [ksh93] is also fast and close to [dash] in
+  many cases.
+- [bash] is slower by many factors.
+
+It all comes down to two major things
+typically found in shell scripts:
+
+- Calling external processes, e.g., external
+  commands or functions using process
+  substitution: `result=$(<process or function>)`
+- Looping
+
+Both of these are considerably slower in
+Bash. From pure metrics, [ksh93] looks like a
+winner for shell scripts, offering both speed
+and many programming features. The trouble is
+that it cannot be considered for portable
+scripts, however. Linux ([dash], [bash])
+significantly dominates BSD ([ksh]) in market
+share across servers, while BSD holds a much
+smaller niche, somewhere under 1% in general
+desktop and server stats.
+
+The `sh` and `bash` are portable, can be found
+everywhere, whereas `ksh` isn't.
+
+**Conclusion:** POSIX `sh` is fast but often
+the features provided in `bash` may it more
+suitable for complex shell scripts.
+
+### CASE STUDY
+
+**The following is a personal observation.** I
+ran a CI testing pipeline consisting of about
+1300 SQL files that needed to be tested both
+statically and under SQLite for compliance.
+
+The process consisted of:
+
+- GNU Makefile: 2,000 lines of code
+- Battery of shell scripts: about 50
+
+The shell scripts had:
+
+- 11,000 lines of code
+- 500 functions
+- 100 lines of process substitution calls `$(...)`.
+- 200 loops (`while`, `for`)
+
+It took about **10 minutes** to process all files.
+
+The optimizations:
+
+- All files were moved to a Linux RAM disk for
+  processing. Total time dropped to **5
+  minutes.**
+- All Bash scripts were converted to use GNU
+  parallel as much as possible. Total time
+  dropped to **2 minutes.**
+- All Bash scripts that could, were converted
+  to POSIX shell scripts ([dash]). The
+  Bashisms were converted to POSIX features.
+  About 3 of the 50 scripts remained in Bash.
+  Total time dropped to **1 minute.**
+- Further optimizations were considered. The
+  shell scripts that processed or heavily
+  examined file contents could have been
+  converted to faster [Perl], potentially
+  achieving a total time drop to **30-40 seconds**.
+  However, at this point, it was decided that
+  even the text-processing-heavy shell scripts
+  were "fast enough."
+
+**If we analyze the performance gains:**
+
+Optimization  | secs | percent
+------------- | ---: | ------:
+...none...    | 600  | 0%
+Running in RAM| 300  | -50%
+GNU parallel  | 120  | -80%
+Bash to sh    | 60   | -90%
+sh to Perl    | 40   | -93%
+
+Most of the performance gains came from
+factors **other than the shell itself.** In
+the end, rewriting scripts to only use POSIX
+`sh` did gain 10% performance. This proved to
+be valuable in debugging situations: having
+to wait 2 minutes versus 1 minute for a
+finished job made the iterations to add
+features faster. However, the time that would
+have been required to convert some of the
+scripts into higher-level, speedier text
+processing languages like [Perl] or [Python]
+didn't justify the effort. The code base was
+all shell scripts, and introducing a new
+language to the mix did not seem relevant
+enough for the whole.
+
+**Conclusion:** Interestingly, the shell
+scripts were quite capable even in a context
+like a CI testing pipeline. Going from Bash
+to POSIX shell scripts provided a little
+extra performance boost at the end.
 
 ## 3.3 MAJOR PERFORMANCE GAINS
 
