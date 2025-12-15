@@ -27,7 +27,7 @@
 #     t3aExt   ${str#*.}
 #     t3bExt   cut --delimiter="." --fields=2,3 <<< "$str"
 #     t3cExt   echo "$str" | cut --delimiter="." --fields=2,3
-#     t3dExt   awk -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}'
+#     t3dExt   awk -v s="$str" 'BEGIN{$0 = s; sub(/^[^.]+./, ""); print; exit}'
 #     t3eExt   echo "$str" | sed --regexp-extended 's/^[^.]+//'
 #
 # Notes:
@@ -133,7 +133,7 @@ t3dExt ()
 {
     for i in $(seq $loop_max)
     do
-        item=$($AWK -v s="$str" 'BEGIN{$0 = s; sub("^[^.]+.", ""); print; exit}')
+        item=$($AWK -v s="$str" 'BEGIN{$0 = s; sub(/^[^.]+./, ""); print; exit}')
     done
 }
 
