@@ -24,12 +24,12 @@ INFORMATION FOR EDITING
   The maximum column limits are:
 
   col type
-  ---------------------------------------
+  --- -----------------------------
   35  Code: bullet: ``` ... ``´)
   41  Regular text and paragraphs.
       Github line limit to support
       editing.
-  ---------------------------------------
+  --- -----------------------------------
 
   Emacs editor settings:
 
@@ -1270,7 +1270,7 @@ choice for shell scripts in the WSL
 environment. See the command `wsl --list
 --onlline`.
 
-## 4.3 WRITING POSIX COMPLIANT SHELL SCRIPS
+## 4.3 WRITING PORTABLE SHELL SCRIPS
 
 As this document is more focused on
 Linux, macOS, and BSD compatibility,
@@ -1374,16 +1374,28 @@ discussion on StackExchange.
     if ! IsCommand local; then
         # Check if we are in ksh
         if IsCommand typeset; then
-            # Use 'eval' to hide
-            # from other shells so
-            # that defining
-            # function with name
-            # 'local' does not
-            # generate an error and
-            # exit script.
+            # Use 'eval' to hide it
+            # from other shells.
+            # This ensures that
+            # defining a function
+            # with local variables
+            # does not generate an
+            # error and exit the
+            # program.
+
             eval 'local () { typeset "$@"; }'
         fi
     fi
+
+    PortableLocal ()
+    {
+        # Portable use of local:
+        # - Declaraton on its own line
+        # - Assignment on its own line
+
+        local var
+        var="value"
+    }
 ```
 
 - On macOS, `sh` points to `bash
