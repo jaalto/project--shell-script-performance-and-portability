@@ -122,6 +122,21 @@ systems. Learn more about POSIX on
 > `ksh`, which doesn't natively support
 > the `local` keyword.
 
+> **Briefly about [Z shell]**. From a
+> shell scripting and portability point
+> of view, [zsh] is less relevant than
+> POSIX sh or [Bash]. The vast majority
+> of servers are Linux-based, where Bash
+> and sh are the de facto default
+> shells. While Zsh is popular for
+> interactive use on macOS, it is not
+> generally used when writing scripts
+> intended for wide portability across
+> different servers and Linux
+> distributions. In this document zsh is
+> not considered fro shell shell
+> scripting.
+
 In Linux-like systems, for well-rounded
 shell scripting, Bash is the sensible
 choice for data manipulation in memory,
@@ -2033,6 +2048,9 @@ before testing:
 - List of which features were added to
   specific releases of Bash
   https://mywiki.wooledge.org/BashFAQ/061
+- Bash Manual. Appendix B.
+  Major Differences From The Bourne Shell
+  https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Major-Differences-From-The-Bourne-Shell
 
 ## 6.2 PORTABILITY AND UTILITIES
 
@@ -2174,6 +2192,9 @@ portability
 [sh]: https://tracker.debian.org/pkg/dash
 [Bourne Shell]: https://en.wikipedia.org/wiki/Bourne_shell
 [ash]: https://en.wikipedia.org/wiki/Almquist_shell
+[Z shell]: https://en.wikipedia.org/wiki/Z_shell
+<!-- https://zsh.sourceforge.io/ -->
+[zsh]: https://zsh.sourceforge.io
 [Almquist shell]: https://en.wikipedia.org/wiki/Almquist_shell
 [dash]: https://tracker.debian.org/pkg/dash
 [posh]: https://tracker.debian.org/pkg/posh
