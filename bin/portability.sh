@@ -299,7 +299,7 @@ ResultsData ()
     list="${2:-}"
     lsep="${3:-}"
 
-    shift ; shift ; shift
+    shift $#
 
     [ "$lsep" ] || return 1
 
