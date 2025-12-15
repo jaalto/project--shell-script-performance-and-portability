@@ -48,7 +48,7 @@ AtExit () { :; }    # Clear. See t-lib.sh
 # ignore follow
 # shellcheck disable=SC1091
 
-. "$pwd/t-lib.sh"   # Common library
+. "$pwd/t-lib.sh"   # Common library, Ksh typeset/local
 
 SHELL_LIST_DEFAULT="\
 sh,\
@@ -90,7 +90,8 @@ fi
 
 Help ()
 {
-    local program="$PROGRAM"
+    local program
+    program="$PROGRAM"
 
     case ${program:-} in
         */*) ;;
@@ -193,7 +194,8 @@ ShellVersionDash ()
 
 ShellVersionMain ()
 {
-    local sh="${1:-}"
+    local sh
+    sh="${1:-}"
 
     case $sh in
         *dash*)
@@ -287,9 +289,13 @@ ShellVersionMain ()
 
 ResultsData ()
 {
-    local separator="${1:-}"
-    local list="${2:-}"
-    local lsep="${3:-}"
+    local separator
+    local list
+    local lsep
+
+    separator="${1:-}"
+    list="${2:-}"
+    lsep="${3:-}"
 
     [ "$lsep" ] || return 1
 
@@ -344,9 +350,13 @@ ResultsData ()
 
 Line ()
 {
-    local max="${1:-}"
-    local ch="${2:-"-"}"
-    local i=0
+    local max
+    local ch
+    local i
+
+    max="${1:-}"
+    ch="${2:-"-"}"
+    i=0
 
     [ "$max" ] || return 1
 
@@ -366,16 +376,22 @@ LineStraight ()
 
 ResultsShellInfo ()
 {
-    local list="${1:-}"
-    local sep="${2:-}"
+    local list
+    local sep
+
+    list="${1:-}"
+    sep="${2:-}"
 
     [ "$sep" ] || return 1
 
     echo "$LINE_STR"
 
     local sh
-    local i=1
-    local saved="$IFS"
+    local i
+    local saved
+
+    i=1
+    saved="$IFS"
     IFS="$sep"
 
     for sh in $list
@@ -411,31 +427,40 @@ Description ()
 
 RunShells ()
 {
-    local compat="BASH_COMPAT=3.2" # default
-    local usecompat=""
+    local compat
+    local usecompat
+
+    compat="BASH_COMPAT=3.2" # default
+    usecompat=""
 
     if IsShellBashFeatureCompat; then
         usecompat="use-bash-compat"
     fi
 
-    local shresult=""
     local shell
+    local result
+    local env
+    local ifs
+    local shresult
+    local saved
+    local IFS
 
-    local saved="$IFS"
-    local IFS=","
+    shresult=""
+    saved="$IFS"
+    IFS=","
 
     for shell in $shlist
     do
         shell=$shell   # for debug
-        local result="-"
-        local env=""
+        result="-"
+        env=""
 
         case $shell in
             bash*--posix*)
                 if [ "$usecompat" ] ; then
                     env="$compat"
 
-                    local ifs="$IFS"
+                    ifs="$IFS"
                     IFS="$saved"
 
                     # ignore quotes
@@ -480,14 +505,19 @@ RunShells ()
 
 RunCheck ()
 {
-    local shlist="${1:-}"
+    local shlist
+    shlist="${1:-}"
 
     [ "$shlist" ] || return 1
 
     shift
 
-    local sep="@"
-    local results="$(mktemp -t "$TMPBASE.results.XXX")"
+    local sep
+    local results
+
+    sep="@"
+    results="$(mktemp -t "$TMPBASE.results.XXX")"
+
     local file
 
     for file # Implicit "$@"
@@ -564,7 +594,8 @@ Main ()
         Die "ERROR: missing file <portability test case>. See --help."
     fi
 
-    local filelist=""
+    local filelist
+    filelist=""
 
     LINE_STR=$(LineStraight)
 
@@ -579,8 +610,12 @@ Main ()
     done
 
     local shell
-    local shlist=""
-    local saved="$IFS"
+    local shlist
+    local saved
+
+    shlist=""
+    saved="$IFS"
+
     IFS=","
 
     # ignore quotes, unused
