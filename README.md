@@ -341,7 +341,7 @@ The `sh` and `bash` are portable, can be found
 everywhere, whereas `ksh` isn't.
 
 **Conclusion:** POSIX `sh` is fast but often
-the features provided in `bash` may it more
+the features provided in `bash` may make it more
 suitable for complex shell scripts.
 
 ### CASE STUDY
