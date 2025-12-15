@@ -202,11 +202,13 @@ ShellVersionMain ()
             ShellVersionDash
             ;;
         *pbosh*)
-            # sh (Schily Bourne Shell) version pbosh 2023/01/12 a+ (--)
+            # sh (Schily Bourne Shell) version
+            # pbosh 2023/01/12 a+ (--)
+
             $sh --version 2>&1 |
             ${AWK:-awk} '
             /2[0-2][0-9][0-9]/ {
-                gsub("^.*pbosh +", "")
+                gsub(/^.*pbosh +/, "")
                 print
                 exit
             }'
@@ -252,7 +254,7 @@ ShellVersionMain ()
             ${AWK:-awk} '
             /^GNU bash.* +[0-9]/ {
                 $0 = $4
-                sub("[(].+$", "")
+                sub(/[(].+$/, "")
                 print
                 exit
             }'
@@ -279,27 +281,27 @@ ShellVersionMain ()
             busybox --help 2>&1 |
             ${AWK:-awk} '
             /^BusyBox v[0-9]+\./ {
-                sub("^BusyBox +v?", "")
+                sub(/^BusyBox +v?/, "")
                 print $1
                 exit
             }'
             ;;
     esac
+
+    unset sh
 }
 
 ResultsData ()
 {
-    local separator
-    local list
-    local lsep
+    local separator list lsep
 
     separator="${1:-}"
     list="${2:-}"
     lsep="${3:-}"
 
-    [ "$lsep" ] || return 1
-
     shift ; shift ; shift
+
+    [ "$lsep" ] || return 1
 
     # ignore expand... single quotes
     # shellcheck disable=SC2016
@@ -346,13 +348,13 @@ ResultsData ()
     sep="$lsep" \
     width="$WIDTH" \
     "${1:-}"
+
+    unset separator list lsep
 }
 
 Line ()
 {
-    local max
-    local ch
-    local i
+    local max sh i
 
     max="${1:-}"
     ch="${2:-"-"}"
@@ -366,6 +368,7 @@ Line ()
         i=$((i + 1))
     done
 
+    unset max ch i
     printf "\n"
 }
 
@@ -376,8 +379,7 @@ LineStraight ()
 
 ResultsShellInfo ()
 {
-    local list
-    local sep
+    local list sep
 
     list="${1:-}"
     sep="${2:-}"
@@ -386,12 +388,10 @@ ResultsShellInfo ()
 
     echo "$LINE_STR"
 
-    local sh
-    local i
-    local saved
+    local sh i ifs
 
     i=1
-    saved="$IFS"
+    ifs="$IFS"
     IFS="$sep"
 
     for sh in $list
@@ -407,8 +407,9 @@ ResultsShellInfo ()
         i=$((i + 1))
     done
 
-    IFS="$saved"
+    IFS="$ifs"
 
+    unset list sep sh i ifs
     echo "$LINE_STR"
 }
 
@@ -416,8 +417,8 @@ Description ()
 {
     ${AWK:-awk} '
         /^# Short: / {
-            sub("^# Short: +", "")
-            sub(" +$", "");
+            sub(/^# Short:[ \t]+/, "")
+            sub(/[ \t]+$/, "");
             print
             exit
         }
@@ -427,8 +428,7 @@ Description ()
 
 RunShells ()
 {
-    local compat
-    local usecompat
+    local compat usecompat
 
     compat="BASH_COMPAT=3.2" # default
     usecompat=""
@@ -437,13 +437,7 @@ RunShells ()
         usecompat="use-bash-compat"
     fi
 
-    local shell
-    local result
-    local env
-    local ifs
-    local shresult
-    local saved
-    local IFS
+    local shell result env ifs shresult ifs
 
     shresult=""
     saved="$IFS"
@@ -459,7 +453,6 @@ RunShells ()
             bash*--posix*)
                 if [ "$usecompat" ] ; then
                     env="$compat"
-
                     ifs="$IFS"
                     IFS="$saved"
 
@@ -487,7 +480,8 @@ RunShells ()
         # ignore quotes
         # shellcheck disable=SC2086
 
-        if eval $env $shell "$file" > /dev/null 2>&1; then
+        if eval $env $shell "$file" > /dev/null 2>&1
+        then
             result="+"
         fi
 
@@ -499,6 +493,7 @@ RunShells ()
     done
 
     IFS="$saved"
+    unset shell result env ifs shresult ifs saved
 
     echo "$shresult"
 }
