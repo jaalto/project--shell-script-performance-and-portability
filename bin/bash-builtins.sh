@@ -77,7 +77,7 @@ Builtins ()
         variants=$(type -a "$cmd")
         top=$(command -V "$cmd")
 
-        echo "${variants/$top/$top <--}"
+        echo "${variants/$top/$top \<--}"
         echo
     done
 }
