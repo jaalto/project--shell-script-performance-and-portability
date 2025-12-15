@@ -134,7 +134,7 @@ systems. Learn more about POSIX on
 > intended for wide portability across
 > different servers and Linux
 > distributions. In this document zsh is
-> not considered fro shell shell
+> not considered for shell shell
 > scripting.
 
 In Linux-like systems, for well-rounded
