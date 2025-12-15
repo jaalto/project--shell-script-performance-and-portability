@@ -57,7 +57,7 @@ OPTIONS
     -s, --shell SHELL-LIST
         Run <test case> file using SHELL-LIST.
         The list is separated by commas. This could
-        include 'dash', 'posh', 'ksh', 'mksh', 'zsh'
+        include 'dash', 'posh', 'ksh', 'mksh',
         'busybox ash' etc.
 
     -v, --verbose
@@ -69,6 +69,10 @@ OPTIONS
 
 DESCRIPTION
     Run <test case> file(s) using bash or other shell.
+
+    Note: zsh shell cannot be used because it can only
+    time(1) programs. It cannot time test cases that are
+    shell functions.
 
 EXAMPLES
 
@@ -121,14 +125,15 @@ ${PREFIX}$LINE"
 Tests ()
 {
     dummy="Tests()"
+    unset dummy
 
     # Extract test cases in format:
     #
     #    :t <test case> <condition>
 
-    awk '
-        /^:t t/ {
-            sub("^: *t +", "")
+    ${AWK:-awk} '
+        /^:t[ \t]+t/ {
+            sub(/^:[ \t]*t[ \t]+/, "")
             print
         }
     ' "$1"
@@ -136,9 +141,11 @@ Tests ()
 
 RunBash ()
 {
-    local dummy="RunBash()"
-    local shell="${1:-}"
-    local file="${2:-}"
+    local dummy shell file
+
+    dummy="RunBash()"
+    shell="${1:-}"
+    file="${2:-}"
 
     [ "$shell" ] || return 1
 
@@ -167,7 +174,6 @@ RunBash ()
         precondition="$precondition"
 
         if [ "$precondition" ]; then
-
             # ignore quotes
             # shellcheck disable=SC2086
 
@@ -189,14 +195,18 @@ RunBash ()
 
     # Clear
     unset -f Info AtExit
+    unset dummy shell file
+
     TrapReset
 }
 
 RunFile ()
 {
-    local dummy="RunFile()"
-    local testfile="${1:-}"
-    local shlist="${2:-}"
+    local dummy testfile shlist
+
+    dummy="RunFile()"
+    testfile="${1:-}"
+    shlist="${2:-}"
 
     case $testfile in
         */*) ;;
@@ -223,13 +233,19 @@ RunFile ()
         return $?
     fi
 
-    local sh=""
-    local IFS=","
+    local sh ifs
+
+    ifs=$IFS
+    IFS=","
+    sh=""
 
     for sh in $shlist
     do
-        local timewithbash=""
-        local bin="$sh"
+        local timewithbash bin
+
+        timewithbash=""
+
+        bin="$sh"
         bin="${bin%% *}"  # "busybox ash" => "busybox"
 
         if ! IsCommandExist "$bin"; then
@@ -249,9 +265,17 @@ RunFile ()
         if [ "$timewithbash" ]; then
             RunBash "$sh" "$testfile"
         else
+            # ignore quotes
+            # shellcheck disable=SC2086
+
             $sh "$testfile"
         fi
     done
+
+    IFS=$ifs
+
+    unset dummy testfile shlist sh ifs
+    unset timewithbash bin
 }
 
 ValidateTime ()
@@ -277,7 +301,9 @@ ValidateTime ()
 
 Main ()
 {
-    local shlist=""
+    local dummy
+    local shlist
+    shlist=""
 
     # Reset
     unset PS1 PS2 PS3 PS4
@@ -291,7 +317,11 @@ Main ()
         case ${1:-} in
             -s | --shell)
                 shift
-                [ "$1" ] || Die "ERROR: missing --shell ARG"
+                [ "${1:-}" ] || Die "ERROR: missing --shell ARG"
+                if IsMatchGlob "*zsh*" "$1"; then
+                    Die "ERROR: --shell zsh, invalid. Cannot time functions"
+                fi
+
                 shlist=$1
                 shift
                 ;;
@@ -321,7 +351,9 @@ Main ()
         Die "ERROR: missing file <test case>. See --help."
     fi
 
-    for file
+    local file
+
+    for file in "$@"
     do
         if [ ! -f "$file" ]; then
             IsVerbose && Warn "WARN: ignore, no file: $file"
@@ -330,6 +362,8 @@ Main ()
 
         RunFile "$file" "$shlist"
     done
+
+    unset dummy shlist file
 }
 
 Main "${@:-}"
