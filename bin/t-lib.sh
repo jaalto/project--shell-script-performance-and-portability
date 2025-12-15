@@ -67,9 +67,11 @@
 #
 # Notes
 #
-#   In order to support 'ksh' the 'local keyword is written
-#   on its own lines. The code is also accompanied with
-#   addtional 'unset <var>' just in case.
+#   To support ksh, the 'local' keyword
+#   is written on its own line.
+#   Sometimes, the code is also
+#   accompanied by an additional 'unset
+#   <var>' command, just in case.
 
 # -- ------------------------------------
 # -- Exported variables
@@ -123,7 +125,9 @@ fi
 
 AtExitDefault ()
 {
-    [ "${TMPBASE:-}" ] && $RM --force "$TMPBASE"*
+    if [ "${TMPBASE:-}" ]; then
+        $RM --force "$TMPBASE"*
+    fi
 }
 
 SetupTrapAtExit ()
@@ -148,6 +152,28 @@ TrapReset ()
     trap - EXIT HUP INT QUIT TERM
 }
 
+IsCommandExist ()
+{
+    # arg, but is an empty string
+    case ${1:-} in
+        '') return 1
+            ;;
+    esac
+
+    command -v "${1:?ERROR: missing ARG}" > /dev/null
+}
+
+IsMatchGlob () # IsMatchGlob GLOB STR
+{
+    case $2 in
+        ${1:-''})
+            return 0
+            ;;
+        *)  return 1
+            ;;
+    esac
+}
+
 Warn ()
 {
     echo "$*" >&2
@@ -169,7 +195,7 @@ DieEmpty ()
 
 DieOptionNotNumber ()
 {
-    case "${2:-}" in
+    case ${2:-} in
         [0-9]*)
             ;;
         *)
@@ -180,7 +206,7 @@ DieOptionNotNumber ()
 
 DieOptionMinus ()
 {
-    case "${2:-}" in
+    case ${2:-} in
         -*)
             Die "$PROGRAM: ERROR: option ${1:-} requires ARG, got $2"
             ;;
@@ -232,10 +258,6 @@ Verbose ()
     "$@"
 }
 
-IsCommandExist ()
-{
-    command -v "${1:?ERROR: missing ARG}" > /dev/null
-}
 
 IsOsCygwin ()
 {
@@ -249,8 +271,11 @@ IsOsLinux ()
 
 IsUnameMatch ()
 {
+    # ignore quotes
+    # shellcheck disable=SC2254
+
     case $(uname -a) in
-        "${1:-}")
+        ${1:-''})
             return 0
             ;;
         *)  return 1
@@ -261,7 +286,9 @@ IsUnameMatch ()
 IsOsDebian ()
 {
     # http://linuxmafia.com/faq/Admin/release-files.html
-    [ -f /etc/debian_version ] || IsUnameMatch "*Debian*"
+
+    [ -f /etc/debian_version ] ||
+    IsUnameMatch "*Debian*"
 }
 
 IsOsUbuntu ()
@@ -279,7 +306,8 @@ IsOsDebianLike ()
 
 IsShellPosh ()
 {
-    [ "${POSH_VERSION:-}" ]   # Pdkd derivate
+    # pdksh derivate shell
+    [ "${POSH_VERSION:-}" ]
 }
 
 IsShellBash ()
@@ -290,7 +318,8 @@ IsShellBash ()
 IsShellBashFeatureCompat ()
 {
     # https://www.gnu.org/software/bash/manual/bash.html#Shell-Compatibility-Mode
-    # Bash-4.3 introduced a new shell variable: BASH_COMPAT
+    # Bash-4.3 introduced a new shell
+    # variable: BASH_COMPAT
 
     case ${BASH_VERSION:-} in
         4.[4-9]* | [5-9]*)
@@ -300,7 +329,6 @@ IsShellBashFeatureCompat ()
             ;;
     esac
 }
-
 
 IsShellKsh93 ()
 {
@@ -336,18 +364,25 @@ IsShellZsh ()
 
 IsShellModern ()
 {
-    IsShellBash || IsShellKsh93 || IsShellZsh
+    IsShellBash  ||
+    IsShellKsh93 ||
+    IsShellZsh
 }
 
 IsFeatureConditionalExpression ()
 {
-    # Supports: [[ ... ]]
-    IsShellModern || IsShellMksh
+    # Shells that support:
+    # [[ ... ]]
+
+    IsShellModern ||
+    IsShellMksh
 }
 
 IsFeatureMatchPattern ()
 {
-    # Supports: [[ abc == *b* ]]
+    # Shells that support:
+    # [[ abc == *b* ]]
+
     IsFeatureConditionalExpression
 }
 
@@ -358,7 +393,8 @@ IsFeatureDictionary ()
 
 IsFeatureArrays ()
 {
-    IsShellModern || IsShellMksh
+    IsShellModern ||
+    IsShellMksh
 }
 
 IsFeatureProcessSubstitution ()
@@ -374,30 +410,39 @@ IsFeatureReadOptionN ()
 
 IsFeatureCommandSubstitutionReadFile ()
 {
+    # Shells that support:
     # $(< file)
     # https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
+
     IsShellModern
 }
 
 IsFeatureMatchRegexp ()
 {
-    # [[ string =~ ^abc ]]
+    # Shells that support:
+    # [[ string =~ $RE ]]
+
     IsShellModern
 }
 
 IsFeatureMatchGlob ()
 {
+    # Shells that support:
     # [[ string = *str* ]]
-    IsShellModern || IsShellMksh
+
+    IsShellModern ||
+    IsShellMksh
 }
 
 IsFeatureHereString ()
 {
-    # Check HERE STRING support like this:
+    # Shells that support HERE STRING
     # cmd <<< "str"
-    # Ref: https://mywiki.wooledge.org/BashFAQ/061
+    #
+    # https://mywiki.wooledge.org/BashFAQ/061
 
-    IsShellModern || IsShellMksh
+    IsShellModern ||
+    IsShellMksh
 }
 
 IsFeatureArray ()
@@ -407,17 +452,18 @@ IsFeatureArray ()
 
 IsFeatureArraysHereString ()
 {
-    IsFeatureArrays && IsFeatureHereString
+    IsFeatureArrays &&
+    IsFeatureHereString
 }
 
 IsCommandParallel ()
 {
-    IsCommandExist "$PARALLEL"
+    IsCommandExist "${PARALLEL:-}"
 }
 
 IsCommandStat ()
 {
-    IsCommandExist "$STAT"
+    IsCommandExist "${STAT:-}"
 }
 
 IsCommandPushd ()
@@ -551,6 +597,9 @@ RandomWordsGibberish ()
 
 RandomWordsDictionary ()
 {
+    local size
+    size=${1:-1M}
+
     RequireDictionary "t-lib.sh"
 
     # Ksh93 bug (workaround)
@@ -563,14 +612,14 @@ RandomWordsDictionary ()
     # Use temporary file to work around the bug
 
     local _tmp
-    _tmp=$(mktemp -t $TMPBASE.random.dictionary.$size.XXX.tmp)
+    _tmp=$(mktemp -t "$TMPBASE.random.dictionary.$size.XXX.tmp")
+
+    ${SHUF:-shuf} --head-count=200000 "$DICTIONARY_FILE" > "$_tmp"
 
     # ignore AWK single quote
     # shellcheck disable=SC2016
 
-    $SHUF --head-count=200000 "$DICTIONARY_FILE" > "$_tmp"
-
-    $AWK '
+    ${AWK:-awk} '
         BEGIN {
             total_size = 0;
         }
@@ -598,9 +647,9 @@ RandomWordsDictionary ()
                 total_size += length(line) + 1;
             }
         }' "$_tmp" |
-    $HEAD --bytes="${1:-100k}"
+    ${HEAD:-head} --bytes="${1:-100k}"
 
-    $RM --force "$_tmp"
+    ${RM:-rm} --force "$_tmp"
     unset _tmp
 }
 
@@ -610,7 +659,7 @@ RandomNumbersAwk ()
 
     RequireGnuAwk "t-lib.sh"
 
-    $AWK \
+    ${AWK:-awk} \
     '
     BEGIN {
         srand();
@@ -624,7 +673,7 @@ RandomNumbersPerl ()
 {
     [ "${1:-}" ] || return 1
 
-    $PERL -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
+    ${PERL:-perl} -e "print int(rand(2**14-1)) . qq(\n) for 1..$1"
 }
 
 RandomNumbersPython ()
@@ -639,7 +688,7 @@ RunMaybe ()
     [ "${1:-}" ] || return 0
 
     if IsCommandExist "${1:-}" ; then
-        $1
+        ${1:-}
     fi
 }
 
@@ -656,21 +705,27 @@ RunTestCase ()
 
     if [ "$ZSH_VERSION" ]; then
         # https://zsh.sourceforge.io/Doc/Release/Parameters.html
+        #
         # hasformat="TIMEFMT"
         # format="real %*E  user %*U  sys %*S"
 
         # ... maybe later release can
         Die "ERROR: t(): Abort, zsh cannot time(1) functions"
+
     elif [ "$BASH_VERSION" ]; then
         # https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
         hasformat="TIMEFORMAT"
+
     elif [ "$KSH_VERSION" ]; then
         case ${KSH_VERSION:-} in
-            *MIRBSD*) # No format choice in mksh(1)
+            *MIRBSD*)
+                # No format choice
+                # in mksh(1)
                 ;;
             *)  hasformat="TIMEFORMAT"
                 ;;
         esac
+
     else
         case ${0:-} in
             ksh | */ksh | */ksh93*)
