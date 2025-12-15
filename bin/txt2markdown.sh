@@ -44,7 +44,7 @@ Convert ()
 
     awk '
         /FILE:/ {
-            sub("FILE: *", "")
+            sub(/FILE:[ \t]*/, "")
             file = $0
 
             printf("\n# %s\n", file)
@@ -56,7 +56,7 @@ Convert ()
         }
 
         /[#]/ {
-            sub("^# ?", "")
+            sub(/^# ?/, "")
         }
 
         /^Q:/ {
@@ -75,7 +75,7 @@ Convert ()
         }
 
         /(Notes|Code):/ {
-            sub(":", "")
+            sub(/:/, "")
             printf("## %s\n", $0)
             next
         }
