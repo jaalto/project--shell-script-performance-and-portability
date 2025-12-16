@@ -718,14 +718,7 @@ extra performance boost at the end.
   See [code](./bin/t-file-read-match-lines-loop-vs-grep.sh).
 
 ```bash
-    # (1) Bash, Ksh
-    # grep prefilter
-    while read -r line
-    do
-        # variables persist after loop
-    done < <(grep "$re" file)
-
-    # POSIX
+    # (t1a) POSIX
     # Problem: while runs in
     # a separate environment
     grep "$re" file |
@@ -734,6 +727,13 @@ extra performance boost at the end.
         # vars not visible after loop
         ...
     done
+
+    # (t1b) Bash, Ksh
+    # grep prefilter
+    while read -r line
+    do
+        # variables persist after loop
+    done < <(grep "$re" file)
 
     # POSIX
     # NOTE: extra calls
@@ -746,7 +746,19 @@ extra performance boost at the end.
     done < tmpfile
     rm tmpfile
 
-    # (2) Bash. Slowest,
+    # (t2a) POSIX
+    # in-loop prefilter
+    while read -r line
+    do
+        case $line in
+           $glob) || continue
+        esac
+        ...
+        # vars persist after loop
+        ...
+    done < file
+
+    # (t2b) Bash. Slowest,
     # in-loop prefilter
     while read -r line
     do
@@ -760,17 +772,23 @@ extra performance boost at the end.
     # Different shells compared.
     # ----------------------------
 
-    ./run.sh --shell dash,ksh93,bash t-file-read-match-lines-loop-vs-grep.sh
+    ./run.sh --shell dash,ksh93,bash --loop-max 10 t-file-read-match-lines-loop-vs-grep.sh
 
     Run shell: dash
-    # t1a real 0.015s (1) grep
-    # t2a real 0.012s (2) in loop
+    # t1a real 0.211s grep
+    # t1b real <skip> < <(grep)
+    # t2a real 0.580s in loop
+    # t2b real <skip> [[ $line =~ RE ]]
     Run shell: ksh93
-    # t1a real 2.940s (1) grep
-    # t2a real 1.504s (2) in loop
+    # t1a real 0.302s grep
+    # t1b real 0.335s < <(grep)
+    # t2a real 0.186s in loop
+    # t2b real 0.190s [[ $line =~ RE ]]
     Run shell: bash
-    # t1a real 4.567s (1) grep
-    # t2a real 10.88s (2) in loop
+    # t1a real 0.511s grep
+    # t1b real 0.533s < <(grep)
+    # t2a real 1.290s in loop
+    # t2b real 1.246s [[ $line =~ RE ]]
 ```
 
 ## 3.4 MODERATE PERFORMANCE GAINS
