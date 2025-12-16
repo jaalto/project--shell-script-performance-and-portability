@@ -871,7 +871,7 @@ t ()
     # Can be called in following Ways
     #
     #   t <test case>
-    #   t <test case> <arg> <rgs> ...
+    #   t <test case> <arg> <arg> ...
     #
     # for <args>, run those as "$@" to determine
     # if <test case> should be being run.
