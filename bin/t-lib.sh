@@ -182,6 +182,11 @@ IsMatchGlob () # args: GLOB STR
     esac
 }
 
+IsUnameMatch ()
+{
+    IsMatchGlob "${1:-}" "$(uname -a)"
+}
+
 Warn ()
 {
     echo "$*" >&2
@@ -264,20 +269,6 @@ Verbose ()
 {
     IsVerbose || return 0
     "$@"
-}
-
-IsUnameMatch ()
-{
-    # ignore quotes
-    # shellcheck disable=SC2254
-
-    case $(uname -a) in
-        ${1:-''})
-            return 0
-            ;;
-        *)  return 1
-            ;;
-    esac
 }
 
 IsOswinCygwin ()
