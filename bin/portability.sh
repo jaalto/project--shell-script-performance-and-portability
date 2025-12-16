@@ -183,13 +183,17 @@ ShellVersionDash ()
     # not compiled in. Revert to package
     # manager.
 
-    # Output:
-    # ii  dash  0.5.12-12  amd64  POSIX-compliant shell
+    # TODO: Add other Linux distributions
+    # Redhat based etc.
 
-    IsCommandExist dpkg &&
+    if IsCommandExist dpkg; then
+        # Output:
+        # ii  dash  0.5.12-12  amd64  POSIX-compliant shell
+
         DPKG_COLORS=never PAGER=cat \
         dpkg -l dash |
         awk '/dash/ {print $3}'
+    fi
 }
 
 ShellVersionMain ()
