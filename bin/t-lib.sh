@@ -55,6 +55,7 @@
 #           $FOLD
 #           $HEAD
 #           $PARALLEL
+#           $PASTE
 #           $PERL
 #           $SED
 #           $SHUF
@@ -97,6 +98,7 @@ BASE64=${BASE64:-"base64"}
 FOLD=${FOLD:-"fold"}
 HEAD=${HEAD:-"head"}
 PARALLEL=${PARALLEL:-"parallel"}
+PASTE=${PASTE:-"paste"}
 PERL=${PERL:-"perl"}
 PYTHON=${PYTHON:-"python3"}
 RM=${RM:-"rm"}
@@ -803,14 +805,14 @@ RunTestCase ()
         # shellcheck disable=SC2016
 
         { time "$@" ; } 2>&1 |
-            paste --serial --delimiters=" " |
+            ${PASTE:-paste} --serial --delimiters=" " |
             ${SED:-sed} \
                 --regexp-extended \
                 --expression 's,^.*[[:space:]]+([0-9]+m[0-9.]+s[[:space:]]+real),\1, ' \
                 --expression 's,   +,  ,g' \
                 --expression 's,\t,  ,g' |
-            $TR --delete '\n' |
-            $AWK '
+            ${TR:-tr} --delete '\n' |
+            ${AWK:-awk} '
             {
                 gsub(/0m00/, "0")
                 sub(/system/, "sys")
