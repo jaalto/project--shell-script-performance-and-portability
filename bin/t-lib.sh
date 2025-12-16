@@ -277,6 +277,11 @@ IsOsWinCygwin ()
     [ -d /cygdrive/c ]
 }
 
+IsOsWinCygwinNot ()
+{
+    ! IsOsWinCygwin
+}
+
 IsOsWinMobaxterm ()
 {
     [ -d /home/mobaxterm ]
