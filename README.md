@@ -388,7 +388,7 @@ The shell scripts had:
 
 - 11,000 lines of code
 - 500 functions
-- 100 lines of process substitution calls `$(...)`.
+- 100 process substitution calls `$(...)`.
 - 200 loops (`while`, `for`)
 
 It took about **10 minutes** to process all files.
