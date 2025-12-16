@@ -309,6 +309,16 @@ IsOsDebianLike ()
     IsOsDebian || IsOsUbuntu
 }
 
+IsOswinWsl ()
+{
+    [ "$WSL_DISTRO_NAME"  ] && return 0
+    [ "$WSLENV"           ] && return 0
+    [ "$WSL_INTEROP"      ] && return 0
+    [ -e /usr/bin/wslinfo ] && return 0
+
+    IsUnameMatch "*microsoft*"
+}
+
 # TODO: IsShellAsh
 # TODO: IsShellDash
 # TODO: IsShellBusybox
