@@ -910,7 +910,8 @@ RunTestSet ()
 
     runtestset_ifs=$saved
 
-    unset dummy test testset saved test
+    unset dummy test testset test
+    unset runtestset_ifs
 }
 
 RunTests ()
