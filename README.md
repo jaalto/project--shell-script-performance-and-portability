@@ -233,12 +233,10 @@ the following factors:
 - If you run scripts on many small files,
   set up a RAM disk and copy the files to
   it. This can lead to significant speed
-  gains. In Linux, see
-  [tmpfs](https://en.wikipedia.org/wiki/Tmpfs),
-  which allows you to set a size limit,
-  unlike the memory-hogging
-  [ramfs](https://wiki.debian.org/ramfs),
-  which can fill all available memory and
+  gains. In Linux, see [tmpfs], which
+  allows you to set a size limit, unlike
+  the memory-hogging [ramfs], which can
+  fill all available memory and
   potentially halt your server.
 
 - If you know the files beforehand,
@@ -2289,5 +2287,7 @@ Google search help:
 [pyenv]: https://github.com/pyenv/pyenv
 
 [lint]: https://en.wikipedia.org/wiki/Lint_(software)
+[tmpfs]: https://en.wikipedia.org/wiki/Tmpfs
+[ramfs]: https://wiki.debian.org/ramfs
 
 <!-- END OF FILE -->
