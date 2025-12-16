@@ -363,19 +363,23 @@ IsShellBashFeatureCompat ()
     esac
 }
 
+IsShellKsh ()
+{
+    [ "${KSH_VERSION:-}" ]
+}
+
 IsShellKsh93 ()
 {
+    IsShellKsh || return 1
+
     IsMatchGlob "*93*" "${KSH_VERSION:-}"
 }
 
 IsShellMksh ()
 {
-    IsMatchGlob "*MIRBSD*" "${KSH_VERSION:-}"
-}
+    IsShellKsh || return 1
 
-IsShellKsh ()
-{
-    [ "${KSH_VERSION:-}" ]
+    IsMatchGlob "*MIRBSD*" "${KSH_VERSION:-}"
 }
 
 IsShellZsh ()
