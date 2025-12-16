@@ -37,7 +37,9 @@ LIB="$pwd/t-lib.sh"
 
 # ignore follow
 # shellcheck disable=SC1090
+
 source="source-only" . "$LIB"
+SetupTrapAtExit  # clean up temporary files
 
 Help ()
 {
