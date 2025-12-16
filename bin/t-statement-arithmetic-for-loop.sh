@@ -76,7 +76,7 @@ t4 ()
 
 
 t="\
-:t t1
+:t t1 IsShellModern
 :t t2
 :t t3 IsShellModern
 :t t4
