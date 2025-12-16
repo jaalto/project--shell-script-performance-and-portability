@@ -154,13 +154,9 @@ TrapReset ()
 
 IsCommandExist ()
 {
-    # arg, but is an empty string
-    case ${1:-} in
-        '') return 1
-            ;;
-    esac
+    [ "${1:-}" ] || return 1
 
-    command -v "${1:?ERROR: missing ARG}" > /dev/null
+    command -v "$1" > /dev/null 2>&1
 }
 
 IsMatchGlob () # args: GLOB STR
@@ -262,7 +258,7 @@ DieNoDir ()
 
 IsVerbose ()
 {
-    [ "$VERBOSE" ]
+    [ "${VERBOSE:-}" ]
 }
 
 Verbose ()
@@ -275,7 +271,7 @@ IsOswinCygwin ()
 {
     # Also set under MobaXterm
 
-    [ "$OSTYPE" = "cygwin" ] ||
+    [ "${OSTYPE:-}" = "cygwin" ] ||
     [ -d /cygdrive/c ]
 }
 
@@ -288,15 +284,15 @@ IsOswinMsystem ()
 {
     # uname --all # contains "Msys"
 
-    [ "$MSYSTEM" ] ||
-    [ "$MSYSTEM_PREFIX" ] ||
-    [ "$OSTYPE" = "msys" ] ||
+    [ "${MSYSTEM:-}" ] ||
+    [ "${MSYSTEM_PREFIX:-}" ] ||
+    [ "${OSTYPE:-}" = "msys" ] ||
     [ -d /c ]
 }
 
 IsOsLinux ()
 {
-    [ "$OSTYPE" = "linux-gnu" ] ||
+    [ "${OSTYPE:-}" = "linux-gnu" ] ||
     [ "$(uname)" = "Linux" ]
 }
 
@@ -327,10 +323,10 @@ IsOsDebianLike ()
 
 IsOswinWsl ()
 {
-    [ "$WSL_DISTRO_NAME"  ] && return 0
-    [ "$WSLENV"           ] && return 0
-    [ "$WSL_INTEROP"      ] && return 0
-    [ -e /usr/bin/wslinfo ] && return 0
+    [ "${WSL_DISTRO_NAME:-}" ] && return 0
+    [ "${WSLENV:-}"          ] && return 0
+    [ "${WSL_INTEROP:-}"     ] && return 0
+    [ -e /usr/bin/wslinfo    ] && return 0
 
     IsUnameMatch "*microsoft*"
 }
