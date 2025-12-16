@@ -604,10 +604,10 @@ RandomWordsGibberish ()
 
     IsCommandExist "$BASE64" || Die "ERROR: not in PATH: $BASE64"
 
-    $BASE64 --decode "$dev" |
-        $TR --complement --delete 'a-zA-Z0-9 ' |
-        $FOLD --width=80 |
-        $HEAD --bytes="${1:-100k}"
+    ${BASE64:-base64} --decode "$dev" |
+        ${TR:-tr} --complement --delete 'a-zA-Z0-9 ' |
+        ${FOLD:-fold} --width=80 |
+        ${HEAD:-head} --bytes="${1:-100k}"
 
     unset dev
 }
