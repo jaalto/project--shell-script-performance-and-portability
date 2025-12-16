@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 #   Copyright
 #
@@ -88,7 +88,7 @@ EXAMPLES
     # The default repeat count in <test cases>
     # can be modified by setting \$loop_max
 
-    loop_max=500 $program t-test-case.sh"
+    $program --loop-max 500 t-test-case.sh"
 
     exit 0
 }
@@ -139,9 +139,31 @@ Tests ()
     ' "$1"
 }
 
+CalculateTime ()
+{
+    ${AWK:-awk} -v time="$TIME" '
+    BEGIN {
+        # real 0.019  user 0.010  sys 0.002
+        count = split(time, arr)
+
+        basetime_real = arr[2]
+        basetime_user = arr[4]
+        basetime_sys  = arr[6]
+    }
+
+    {
+        real = $2 - basetime_real
+        user = $4 - basetime_user
+        sys  = $6 - basetime_sys
+
+        printf "real %.3f  user %.3f  sys %.3f\n", real, user, sys
+        exit
+    }'
+}
+
 RunBash ()
 {
-    local dummy shell file
+    local dummy shell file time
 
     dummy="RunBash()"
     shell="${1:-}"
@@ -149,26 +171,25 @@ RunBash ()
 
     [ "$shell" ] || return 1
 
+    runbash_ifs="
+ "
+
     # Run with Bash when shell does not
     # support proper 'time' keyword
-
-    # ignore set -e
-    # shellcheck disable=SC2310
-
-    if ! IsShellBashAvailable; then
-        Die "ERROR: bash not in PATH. Required for timing."
-    fi
 
     # ignore follow
     # shellcheck disable=SC1090
 
-    source="source-as-library" . "$file"
+    loop_max=$loop_max source="source-as-library" . "$file"
+    time="$TMPBASE.time"
 
     RunMaybe Info
 
     Tests "$file" |
     while IFS=' ' read -r test precondition
     do
+        IFS=$runbash_ifs
+
         # For debug
         test="$test"
         precondition="$precondition"
@@ -177,18 +198,39 @@ RunBash ()
             # ignore quotes
             # shellcheck disable=SC2086
 
-            if ! $shell -c "source=1 . \"$LIB\" ; $precondition"
+            if ! $shell -c "loop_max=$loop_max source=1 . \"$LIB\" ; $precondition"
             then
-                printf "# %-24s<skip>\n" "$test $precondition"
+                printf "# %-25s <skip>\n" "$test $precondition"
                 continue
             fi
         fi
 
-        printf "# %-24s" "$test"
+        # BASELINE
+        # How long it takes to read a script
+        #
+        # real    0m0.025s
+        # user    0m0.001s
+        # sys     0m0.015s
 
-        env source="source-as-library" \
+        {
+            TIMEFORMAT="$TIMEFORMAT" \
+            source="source-as-library" \
+            bash -c "time $shell $file"
+        } > "$time" 2>&1
+
+        printf "# %-26s" "$test"
+
+        TIME=$(cat "$time")
+
+        {
+            run="run-test" \
+            source="" \
+            loop_max=$loop_max \
             TIMEFORMAT="$TIMEFORMAT" \
             bash -c "time $shell $file $test"
+        }  2>&1 | TIME=$TIME CalculateTime
+
+        IFS=' '
     done
 
     RunMaybe AtExit
@@ -233,9 +275,9 @@ RunFile ()
         return $?
     fi
 
-    local sh ifs
+    local sh runfile_ifs
 
-    ifs=$IFS
+    runfile_ifs=$IFS
     IFS=","
     sh=""
 
@@ -261,21 +303,21 @@ RunFile ()
         fi
 
         echo "Run shell: $sh"
+        dummy="timewithbash: $timewithbash"
 
         if [ "$timewithbash" ]; then
             RunBash "$sh" "$testfile"
         else
             # ignore quotes
             # shellcheck disable=SC2086
-
-            $sh "$testfile"
+            loop_max=$loop_max $sh "$testfile"
         fi
     done
 
-    IFS=$ifs
+    IFS=$runfile_ifs
 
-    unset dummy testfile shlist sh ifs
-    unset timewithbash bin
+    unset dummy testfile shlist sh
+    unset runfile_ifs timewithbash bin
 }
 
 ValidateTime ()
@@ -301,6 +343,13 @@ ValidateTime ()
 
 Main ()
 {
+    # ignore set -e
+    # shellcheck disable=SC2310
+
+    if ! IsShellBashAvailable; then
+        Die "ERROR: bash not in PATH. Required for timing."
+    fi
+
     local dummy
     local shlist
     shlist=""
@@ -319,12 +368,18 @@ Main ()
                 shift
                 [ "${1:-}" ] || Die "ERROR: missing --shell ARG"
                 if IsMatchGlob "*zsh*" "$1"; then
-                    Die "ERROR: --shell zsh, invalid. Cannot time functions"
+                    :
+                    # Die "ERROR: --shell zsh, invalid. Cannot time functions"
                 fi
 
                 shlist=$1
                 shift
                 ;;
+            -l | --loop-max)
+                loop_max=$2   # GLOBAL. Used in t-lib.sh
+                shift ; shift
+                ;;
+
             -v | --verbose)
                 VERBOSE="verbose"
                 shift
