@@ -321,7 +321,7 @@ IsOsDebianLike ()
     IsOsDebian || IsOsUbuntu
 }
 
-IsOswinWsl ()
+IsOsWinWsl ()
 {
     [ "${WSL_DISTRO_NAME:-}" ] && return 0
     [ "${WSLENV:-}"          ] && return 0
