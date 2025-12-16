@@ -73,8 +73,8 @@ t3 ()
 
 t="\
 :t t0
-:t t1a IsOsCygwin
-:t t1b IsOsCygwin
+:t t1a IsOsWinCygwin
+:t t1b IsOswinCygwin
 :t t2
 :t t3
 "
