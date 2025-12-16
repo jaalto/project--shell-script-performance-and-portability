@@ -163,10 +163,18 @@ IsCommandExist ()
     command -v "${1:?ERROR: missing ARG}" > /dev/null
 }
 
-IsMatchGlob () # IsMatchGlob GLOB STR
+IsMatchGlob () # args: GLOB STR
 {
+    # No args, return error condition
+
+    [ "${1:-}" ] || return 1
+    [ "${2:-}" ] || return 1
+
+    # ignore quotes
+    # shellcheck disable=SC2254
+
     case $2 in
-        ${1:-''})
+        $1)
             return 0
             ;;
         *)  return 1
