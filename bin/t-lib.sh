@@ -621,12 +621,14 @@ RandomWordsDictionary ()
 
     # Ksh93 bug (workaround)
     #
-    # For unknown reasing the large output
-    # of 'shuf' cannot be piped to
-    # awk without getting an error
-    # 'shuf: write error: Connection reset by peer'
+    # For unknown reason the large output
+    # of 'shuf' cannot be piped to awk
+    # without getting an error 'shuf:
+    # write error: Connection reset by
+    # peer'
     #
-    # Use temporary file to work around the bug
+    # Use temporary file to work around
+    # the bug
 
     local _tmp
     _tmp=$(mktemp -t "$TMPBASE.random.dictionary.$size.XXX.tmp")
