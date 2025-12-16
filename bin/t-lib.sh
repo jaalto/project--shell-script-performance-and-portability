@@ -296,6 +296,11 @@ IsOswinMsystem ()
     [ -d /c ]
 }
 
+IsOswinMobaxterm ()
+{
+    [ -d /home/mobaxterm ]
+}
+
 IsOsLinux ()
 {
     [ "$OSTYPE" = "linux-gnu" ] ||
