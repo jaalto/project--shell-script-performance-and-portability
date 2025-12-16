@@ -280,10 +280,20 @@ IsUnameMatch ()
     esac
 }
 
-IsOsCygwin ()
+IsOswinCygwin ()
 {
     [ "$OSTYPE" = "cygwin" ] ||
     [ -d /cygdrive/c ]
+}
+
+IsOswinMsystem ()
+{
+    # uname --all # contains "Msys"
+
+    [ "$MSYSTEM" ] ||
+    [ "$MSYSTEM_PREFIX" ] ||
+    [ "$OSTYPE" = "msys" ] ||
+    [ -d /c ]
 }
 
 IsOsLinux ()
