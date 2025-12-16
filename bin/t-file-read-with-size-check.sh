@@ -30,6 +30,12 @@ t="\
 :t t2
 "
 
-[ "$source" ] || RunTests "$t" "$@"
+if [ "$source" ]; then
+     :
+elif [ "$run" ]; then
+    "$@"
+else
+    RunTests "$t" "$@"
+fi
 
 # End of file
