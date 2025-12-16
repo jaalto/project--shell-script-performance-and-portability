@@ -73,8 +73,8 @@ t3 ()
 
 t="\
 :t t0
-:t t1a IsOsWinCygwin
-:t t1b IsOsWinCygwin
+:t t1a IsOsWinCygwinNot
+:t t1b IsOsWinCygwinNot
 :t t2
 :t t3
 "
@@ -82,8 +82,12 @@ t="\
 SetupTrapAtExit
 Setup
 
-if [ ! "$source" ]; then
+if [ "$source" ]; then
+     :
+elif [ "$run" ]; then
     Info
+    "$@"
+else
     RunTests "$t" "$@"
 fi
 

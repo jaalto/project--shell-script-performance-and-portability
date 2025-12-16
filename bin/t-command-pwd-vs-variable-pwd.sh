@@ -69,6 +69,12 @@ t="\
 :t t4
 "
 
-[ "$source" ] || RunTests "$t" "$@"
+if [ "$source" ]; then
+     :
+elif [ "$run" ]; then
+    "$@"
+else
+    RunTests "$t" "$@"
+fi
 
 # End of file

@@ -45,6 +45,12 @@ t="\
 :t t2 IsFeatureProcessSubstitution
 "
 
-[ "$source" ] || RunTests "$t" "$@"
+if [ "$source" ]; then
+     :
+elif [ "$run" ]; then
+    "$@"
+else
+    RunTests "$t" "$@"
+fi
 
 # End of file

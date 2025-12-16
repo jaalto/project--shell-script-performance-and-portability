@@ -61,6 +61,12 @@ t="\
 SetupTrapAtExit AtExit
 Setup
 
-[ "$source" ] || RunTests "$t" "$@"
+if [ "$source" ]; then
+     :
+elif [ "$run" ]; then
+    "$@"
+else
+    RunTests "$t" "$@"
+fi
 
 # End of file
