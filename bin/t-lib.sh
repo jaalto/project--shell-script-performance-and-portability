@@ -891,13 +891,14 @@ t ()
 
 RunTestSet ()
 {
-    local dummy test testset saved
+    local dummy test testset
+    local runtestset_ifs
     dummy="RunTestSet()"
 
     testset=${1:-}
     shift
 
-    saved=$IFS
+    runtestset_ifs=$IFS
     IFS=":
 "
 
@@ -907,7 +908,7 @@ RunTestSet ()
         eval "$test"
     done
 
-    IFS=$saved
+    runtestset_ifs=$saved
 
     unset dummy test testset saved test
 }
