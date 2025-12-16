@@ -606,7 +606,7 @@ RandomWordsGibberish ()
 
     IsCommandExist "$BASE64" || Die "ERROR: not in PATH: $BASE64"
 
-    base64 --decode "$dev" |
+    $BASE64 --decode "$dev" |
         $TR --complement --delete 'a-zA-Z0-9 ' |
         $FOLD --width=80 |
         $HEAD --bytes="${1:-100k}"
