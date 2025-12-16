@@ -282,6 +282,7 @@ IsUnameMatch ()
 
 IsOsCygwin ()
 {
+    [ "$OSTYPE" = "cygwin" ] ||
     [ -d /cygdrive/c ]
 }
 
