@@ -287,6 +287,7 @@ IsOsCygwin ()
 
 IsOsLinux ()
 {
+    [ "$OSTYPE" = "linux-gnu" ] ||
     [ "$(uname)" = "Linux" ]
 }
 
