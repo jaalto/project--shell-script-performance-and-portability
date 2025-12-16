@@ -266,17 +266,6 @@ Verbose ()
     "$@"
 }
 
-
-IsOsCygwin ()
-{
-    [ -d /cygdrive/c ]
-}
-
-IsOsLinux ()
-{
-    [ "$(uname)" = "Linux" ]
-}
-
 IsUnameMatch ()
 {
     # ignore quotes
@@ -289,6 +278,16 @@ IsUnameMatch ()
         *)  return 1
             ;;
     esac
+}
+
+IsOsCygwin ()
+{
+    [ -d /cygdrive/c ]
+}
+
+IsOsLinux ()
+{
+    [ "$(uname)" = "Linux" ]
 }
 
 IsOsDebian ()
