@@ -527,11 +527,9 @@ IsCommandGnuVersion ()
     case $("$1" --version 2> /dev/null) in
         *GNU*)
             CacheGnuSave "$1"
-            unset cmd
             return 0
             ;;
         *)
-            unset cmd
             return 1
             ;;
     esac
