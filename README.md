@@ -476,6 +476,7 @@ extra performance boost at the end.
     # Bash, Ksh
     [[ $str =~ $re ]]
 
+    # POSIX
     # In Bash, at least 60x slower
     expr "$str" : ".*$re"
 
@@ -490,8 +491,8 @@ extra performance boost at the end.
 
     Run shell: dash
     # t1  <skip>       [[ =~ ]]
-    # t2  real 0.010s  expr
-    # t3  real 0.010s  grep
+    # t2  real 0.117s  expr
+    # t3  real 0.188s  grep
     Run shell: ksh93
     # t1  real 0.001s [[ =~ ]]
     # t2  real 0.139s expr
@@ -540,17 +541,67 @@ extra performance boost at the end.
     ./run.sh --shell dash,ksh93,bash t-string-file-path-components.sh
 
     Run shell: dash
-    # t3aExt real 0.009s (1) param
-    # t3cExt real 0.008s (2) cut
-    # t3eExt real 0.009s (3) sed
-    Run shell: ksh93
     # t3aExt real 0.001s (1) param
-    # t3cExt real 0.193s (2) cut
-    # t3eExt real 0.288s (3) sed
+    # t3cExt real 0.250s (2) cut
+    # t3eExt real 0.337s (3) sed
+    Run shell: ksh93
+    # t3aExt real 0.003s (1) param
+    # t3cExt real 0.222s (2) cut
+    # t3eExt real 0.309s (3) sed
     Run shell: bash
     # t3aExt real 0.004s (1) param
     # t3cExt real 0.358s (2) cut
     # t3eExt real 0.431s (3) sed
+```
+
+- In Bash, it is about 50 times
+  faster to use
+  [double bracket] expression
+  [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
+  for pattern matching compared to
+  POSIX `case..esac`.
+  See [code](./bin/t-string-match-pattern.sh).
+
+```bash
+    string="abcdef"
+    pattern="*cd*"
+
+    # (t1) Bash, Ksh
+    if [[ $string == $pattern ]]; then
+        ...
+    fi
+
+    # (t2) POSIX
+    case $string in
+        $pattern)
+            # true
+            ;;
+        *)
+            # false
+            ;;
+    esac
+
+    # (t3) regexp
+    echo "$str" | grep -E RE
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
+
+    Run shell: dash
+    # t1  <skip>      [[ == ]]
+    # t2  real 0.143  case..esac
+    # t3  real 0.213  echo | grep
+    Run shell: ksh93
+    # t1  real 0.004  [[ == ]]
+    # t2  real 0.182  case..esac
+    # t3  real 0.264  echo | grep
+    Run shell: bash
+    # t1  real 0.003  [[ == ]]
+    # t2  real 0.235  case..esac
+    # t3  real 0.286  echo | grep
 ```
 
 - In Bash, it is about 10 times faster
@@ -591,9 +642,9 @@ extra performance boost at the end.
     ./run.sh --shell dash,ksh93,bash t-file-grep-vs-match-in-memory.sh
 
     Run shell: dash
-    # t1b real 0.023s (1) once
-    # t2  real 0.018s (2) grep
-    # t3  real 0.021s (3) case
+    # t1b real 0.018s (1) once
+    # t2  real 0.139s (2) grep
+    # t3  real 0.323s (3) case
     Run shell: ksh93
     # t1b real 0.333s (1) once
     # t2  real 0.208s (2) grep
@@ -611,16 +662,12 @@ extra performance boost at the end.
   `ret=$(cmd)` is inefficient to call
   functions. On the other hand, in
   POSIX `sh` shells, like [dash],
-  there is practically no overhead
-  in using `$(cmd)`.
+  there is considerable gain in using
+  `eval` over the `$(cmd)`. The surprise
+  is how fast [ksh] is with `$(cmd)`.
   See [code](./bin/t-function-return-value-nameref.sh).
 
 ```bash
-    # This is an example only. It
-    # is not needed in POSIX sh
-    # shells, because 'ret=$(cmd)'
-    # is already fast
-
     NamerefPosix ()
     {
         local retref=$1
@@ -654,7 +701,7 @@ extra performance boost at the end.
     Run shell: dash
     # t1  <skip>      NamerefBash
     # t2  real 0.006s NamerefPosix
-    # t3  real 0.005s ret=$(fn)
+    # t3  real 0.042s ret=$(fn)
     Run shell: ksh93
     # t1  <skip>      NamerefBash
     # t2  real 0.004s NamerefPosix
@@ -673,7 +720,7 @@ extra performance boost at the end.
   See [code](./bin/t-file-read-content-loop.sh).
 
 ```bash
-    # Bash
+    # (t1) Bash
     readarray < file
 
     for line in "${MAPFILE[@]}"
@@ -681,7 +728,7 @@ extra performance boost at the end.
         ...
     done
 
-    # POSIX. In Bash, slower
+    # (t3) POSIX. In Bash, slower
     while read -r line
     do
         ...
@@ -695,13 +742,13 @@ extra performance boost at the end.
 
     Run shell: dash
     # t1  <skip>      readarray
-    # t2  real 0.085  POSIX
+    # t3  real 0.067  POSIX
     Run shell: ksh93
     # t1  <skip>      readarray
-    # t2  real 0.021  POSIX
+    # t3  real 0.021  POSIX
     Run shell: bash
     # t1  real 0.045  readarray
-    # t2  real 0.108  POSIX
+    # t3  real 0.108  POSIX
 ```
 
 - In Bash, it is about 2 times faster to
@@ -813,7 +860,7 @@ extra performance boost at the end.
 ```bash
     str="1:2:3"
 
-    # (1) Bash, fastest.
+    # (t1b) Bash, fastest.
     # NOTE: no arrays in POSIX sh
     IFS=":" eval 'array=($str)'
 
@@ -836,14 +883,14 @@ extra performance boost at the end.
         ...
     }
 
-    # (2) Bash. Same speed.
+    # (t2) Bash. Same speed.
     # Ksh: fastest
     saved="$IFS"
     IFS=":"
     array=($str)
     IFS="$saved"
 
-    # (3) Bash. 9x slower than eval
+    # (t3) Bash. 9x slower than eval
     IFS=":" read -ra array <<< "$str"
 
     # In Linux, see what Bash uses
@@ -860,13 +907,13 @@ extra performance boost at the end.
     Run shell: dash
     # ..  <skip all>  arrays
     Run shell: ksh93
-    # t1  real 0.008  (1) IFS=: eval
-    # t2  real 0.002  (2) IFS..saved
-    # t3  real 0.003  (3) IFS <<<
+    # t1  real 0.008  IFS=: eval
+    # t2  real 0.002  IFS..saved
+    # t3  real 0.003  IFS <<<
     Run shell: bash
-    # t1  real 0.010  (1) IFS=: eval
-    # t2  real 0.008  (2) IFS..saved
-    # t3  real 0.090  (3) IFS <<<
+    # t1  real 0.010  IFS=: eval
+    # t2  real 0.008  IFS..saved
+    # t3  real 0.090  IFS <<<
 ```
 
 - It is about 2 times faster to read
@@ -898,7 +945,7 @@ extra performance boost at the end.
     Run shell: dash
     # t1  <skip>      $(< ...)
     # t2  <skip>      read -N
-    # t3  real 0.013s $(cat ...)
+    # t3  real 0.306s $(cat ...)
     Run shell: ksh93
     # t1  real 0.088s $(< ...)
     # t2  real 0.095s read -N
@@ -906,7 +953,7 @@ extra performance boost at the end.
     Run shell: bash
     # t1  real 0.139s $(< ...)
     # t2  real 0.254s read -N
-    # t3  real 0.312s $(cat ...)
+    # t3  real 0.372s $(cat ...)
 ```
 
 ## 3.5 MINOR PERFORMANCE GAINS
@@ -916,16 +963,15 @@ these offer practical benefits.
 
 - The Bash
   [brace expansion]
-  `{N..M}` might offer a
+  `{N..M}` offers a
   neglible advantage. However it may be
   impractical because `N..M` cannot be
   parameterized. Surprisingly, the
-  simple and elegant `$(seq N M)` is
+  simple `$(seq N M)` is
   fast, even though
   [command substitution]
   uses a subshell. The last POSIX
-  `while` loop example was slightly
-  slower in all subsequent tests.
+  `while` loop was also ok.
   See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
 ```bash
@@ -962,13 +1008,17 @@ these offer practical benefits.
     # Different shells compared.
     # ----------------------------
 
-    ./run.sh --shell dash,ksh93,bash t-statement-arithmetic-for-loop.sh
+    # The --loop-max cannot be changed
+    # because {1..1000} cannot be
+    # prametrisized in test case t1
+
+    ./run.sh --shell dash,ksh93,bash --loop-max 1000 t-statement-arithmetic-for-loop.sh
 
     Run shell: dash
-    # t1  real 0.011 {N..M}
-    # t2  real 0.011 POSIX seq
+    # t1  <skip>     {N..M}
+    # t2  real 0.004 POSIX seq
     # t3  <skip>     ((...))
-    # t4  real 0.015 POSIX while
+    # t4  real 0.006 POSIX while
     Run shell: ksh93
     # t1  real 0.024 {N..M}
     # t2  real 0.004 POSIX seq
@@ -976,7 +1026,7 @@ these offer practical benefits.
     # t4  real 0.005 POSIX while
     Run shell: bash
     # t1  real 0.006 {N..M}
-    # t2  real 0.005 POSIX seq
+    # t2  real 0.010 POSIX seq
     # t3  real 0.006 ((...))
     # t4  real 0.012 POSIX while
 ```
@@ -1012,29 +1062,29 @@ these offer practical benefits.
 
     # Using 10k random dictionary file
     # Using LANG=C
-    /run.sh --shell dash,ksh93,bash t-command-grep.sh
+    ./run.sh --shell dash,ksh93,bash t-command-grep.sh
 
     Run shell: dash
-    # t1langc    real 0.038 --fixed-strings
-    # t1utf8     real 0.039 --fixed-strings (LANG=C.UTF-8)
-    # t1extended real 0.041 --extended-regexp
-    # t1perl     real 0.040 --perl-regexp
-    # t2icasef   real 0.038 --ignore-case --fixed-strings
-    # t2icasee   real 0.029 --ignore-case --extended-regexp
+    # t1langc    real 0.190 --fixed-strings
+    # t1utf8     real 0.160 --fixed-strings (LANG=C.UTF-8)
+    # t1extended real 0.147 --extended-regexp
+    # t1perl     real 0.167 --perl-regexp
+    # t2icasef   real 0.193 --ignore-case --fixed-strings
+    # t2icasee   real 0.205 --ignore-case --extended-regexp
     Run shell: ksh93
-    # t1langc    real 0.207
-    # t1utf8     real 0.225
-    # t1extended real 0.187
-    # t1perl     real 0.233
-    # t2icasef   real 0.213
-    # t2icasee   real 0.207
+    # t1langc    real 0.133
+    # t1utf8     real 0.308
+    # t1extended real 0.217
+    # t1perl     real 0.253
+    # t2icasef   real 0.245
+    # t2icasee   real 0.270
     Run shell: bash
-    # t1langc    real 0.208
-    # t1utf8     real 0.258
-    # t1extended real 0.248
-    # t1perl     real 0.228
-    # t2icasef   real 0.276
-    # t2icasee   real 0.297
+    # t1langc    real 0.205
+    # t1utf8     real 0.320
+    # t1extended real 0.254
+    # t1perl     real 0.293
+    # t2icasef   real 0.243
+    # t2icasee   real 0.405
 ```
 
 ## 3.6 NO PERFORMANCE GAINS
@@ -1050,7 +1100,7 @@ None of these offer any advantages to speed up shell scripts.
   expression matching) provided by
   `[[...]]` are important, the standard
   POSIX `[...]` will do fine. See
-  [code](./bin/t-statement-if-test-posix-vs-bash.sh).
+  [code](./bin/t-statement-conditional-if-test-posix-vs-bash-double-bracket.sh).
 
 ```bash
     [ "$var" = "1" ] # POSIX
@@ -1064,7 +1114,9 @@ None of these offer any advantages to speed up shell scripts.
     # Different shells compared.
     # ----------------------------
 
-    /run.sh --shell dash,ksh93,bash t-statement-if-test-posix-vs-bash.sh
+    # TODO: check results
+
+    ./run.sh --shell dash,ksh93,bash t-statement-conditional-if-test-posix-vs-bash-double-bracket.sh
 
     Run shell: dash
     # t1  real 0.005
@@ -1114,14 +1166,14 @@ t-statement-arithmetic-increment.sh
     # 10,000 rounds of iteration
     # and increment.
 
-    ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
+    ./run.sh --shell dash,ksh93,bash --loop-max 10000 t-statement-arithmetic-increment.sh
 
     Run shell: dash
-    # t1  real 0.006 $((i + 1))
-    # t2a real 0.006 : $((i + 1))
-    # t2b real 0.006 : $((i++))
-    # t3  real 0.006 ((i++))
-    # t4  real 0.007 let i++
+    # t1  real 0.014 $((i + 1))
+    # t2a real 0.014 : $((i + 1))
+    # t2b <skip>     : $((i++))
+    # t3  <skip>     ((i++))
+    # t4  <skip>     let i++
     Run shell: ksh93
     # t1  real 0.029 $((i + 1))
     # t2a real 0.044 : $((i + 1))
@@ -1135,56 +1187,6 @@ t-statement-arithmetic-increment.sh
     # t3  real 0.039 ((i++))
     # t4  real 0.053 let i++
 
-```
-
-- There is no performance
-  difference between a
-  Bash-specific
-  [double bracket] expression
-  [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
-  for pattern matching compared to
-  POSIX `case..esac`. Interestingly
-  pattern matching is 4x slower under
-  [dash] compared to Bash. However,
-  that means nothing because the time
-  differences are measured in minuscule
-  milliseconds (0.002s).
-  See [code](./bin/t-string-match-pattern.sh).
-
-```bash
-    string="abcdef"
-    pattern="*cd*"
-
-    # Bash
-    if [[ $string == $pattern ]]; then
-        ...
-    fi
-
-    # POSIX
-    case $string in
-        $pattern)
-            # true
-            ;;
-        *)
-            # false
-            ;;
-    esac
-
-    # ----------------------------
-    # Different shells compared.
-    # ----------------------------
-
-    ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
-
-    Run shell: dash
-    # t1  <skip>      [[ == ]]
-    # t2  real 0.011  case..esac
-    Run shell: ksh93
-    # t1  real 0.004  [[ == ]]
-    # t2  real 0.002  case..esac
-    Run shell: bash
-    # t1  real 0.003  [[ == ]]
-    # t2  real 0.002  case..esac
 ```
 
 - In Bash, there is no practical
@@ -1236,17 +1238,17 @@ t-statement-arithmetic-increment.sh
     ./run.sh --shell dash,ksh93,bash t-command-output-vs-process-substitution.sh
 
     Run shell: dash
-    # t1  real 0.048  (1) POSIX tmpfile
+    # t1  real 0.360  (1) POSIX tmpfile
     # t2  <skip>      <(..)
-    # t3  real 0.051  (2) POSIX pipe
+    # t3  real 0.332  (2) POSIX pipe
     Run shell: ksh93
     # t1  real 0.242  (1) POSIX tmpfile
     # t2  real 0.473  <(..)
-    # t3  real 0.417  (2) POSIX pipe
+    # t3  real 0.390  (2) POSIX pipe
     Run shell: bash
     # t1  real 0.529  (1) POSIX tmpfile
     # t2  real 0.601  <(..)
-    # t3  real 0.634  (2) POSIX pipe
+    # t3  real 0.610  (2) POSIX pipe
 ```
 
 - In Bash, there is no practical
