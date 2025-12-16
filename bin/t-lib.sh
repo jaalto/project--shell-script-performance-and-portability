@@ -311,6 +311,7 @@ IsOsDebianLike ()
 
 # TODO: IsShellAsh
 # TODO: IsShellDash
+# TODO: IsShellBusybox
 
 IsShellPosh ()
 {
