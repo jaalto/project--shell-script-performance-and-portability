@@ -267,7 +267,7 @@ Verbose ()
     "$@"
 }
 
-IsOswinCygwin ()
+IsOsWinCygwin ()
 {
     # Also set under MobaXterm
 
@@ -299,7 +299,7 @@ IsOsLinux ()
 IsOsLinuxLike ()
 {
     IsOsLinux ||
-    IsOswinCygwin ||
+    IsOsWinCygwin ||
     IsOswinMsystem
 }
 
