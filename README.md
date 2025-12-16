@@ -1008,9 +1008,10 @@ these offer practical benefits.
     # Different shells compared.
     # ----------------------------
 
-    # The --loop-max cannot be changed
-    # because {1..1000} cannot be
-    # prametrisized in test case t1
+    # The --loop-max cannot be
+    # changed because {1..1000}
+    # cannot be parametrisized in
+    # test case t1
 
     ./run.sh --shell dash,ksh93,bash --loop-max 1000 t-statement-arithmetic-for-loop.sh
 
