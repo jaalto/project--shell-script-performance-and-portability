@@ -275,7 +275,7 @@ IsOswinCygwin ()
     [ -d /cygdrive/c ]
 }
 
-IsOswinMobaxterm ()
+IsOsWinMobaxterm ()
 {
     [ -d /home/mobaxterm ]
 }
