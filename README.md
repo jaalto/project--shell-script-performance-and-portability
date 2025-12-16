@@ -970,7 +970,7 @@ these offer practical benefits.
   simple `$(seq N M)` is
   fast, even though
   [command substitution]
-  uses a subshell. The last POSIX
+  uses a subshell. The POSIX
   `while` loop was also ok.
   See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
@@ -979,25 +979,25 @@ these offer practical benefits.
     N=1
     M=1000
 
-    # Bash
+    # Bash. Ksh
     for i in {1..1000}
     do
         ...
     done
 
-    # POSIX, fast
+    # POSIX
     for i in $(seq $N $M)
     do
         ...
     done
 
-    # Bash, slow
+    # Bash, Ksh
     for ((i=$N; i <= $M; i++))
     do
         ...
     done
 
-    # POSIX, slowest
+    # POSIX
     i=$N
     while [ "$i" -le "$M" ]
     do
