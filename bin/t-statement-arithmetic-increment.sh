@@ -82,9 +82,9 @@ t4 ()
 t="\
 :t t1
 :t t2a
-:t t2b
-:t t3
-:t t4
+:t t2b IsShellModern
+:t t3  IsShellModern
+:t t4  IsShellModern
 "
 
 if [ "$source" ]; then
