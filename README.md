@@ -1187,7 +1187,7 @@ t-statement-arithmetic-increment.sh
     # t2  real 0.002  case..esac
 ```
 
-- In Bash, There is no practical
+- In Bash, there is no practical
   performance difference between a
   regular while loop and a
   [process substitution] loop. However,
@@ -1248,6 +1248,42 @@ t-statement-arithmetic-increment.sh
     # t2  real 0.601  <(..)
     # t3  real 0.634  (2) POSIX pipe
 ```
+
+- In Bash, there is no practical
+  performance difference between a
+  regular nested if cases vs logical
+  short circuit if cases.
+
+    # (t1)
+
+    if [...]; then
+        if [...]; then
+            if [...]; then
+                # do something
+            fi
+        fi
+    fi
+
+    # (t2)
+      if [...] && [...] && [...]; then
+         # do something
+      fi
+
+    # ----------------------------
+    # Different shells compared.
+    # ----------------------------
+
+    ./run.sh --shell dash,ksh,bash --loop-max 1000 ./t-statement-conditional-if-short-circuit-vs-nested.sh
+
+    Run shell: dash
+    # t1  real 0.051
+    # t2  real 0.043
+    Run shell: ksh
+    # t1  real 0.017
+    # t2  real 0.021
+    Run shell: bash
+    # t1  real 0.157
+    # t2  real 0.139
 
 - With [GNU grep], the use of
   [GNU parallel],
