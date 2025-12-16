@@ -778,7 +778,7 @@ RunTestCase ()
         timeformat=""
 
         eval "timeformat=\$$hasformat" # save
-        printf "# %-24s" "$1"
+        printf "# %-26s" "$1"
 
         eval "$hasformat='$format'"    # set
 
@@ -827,7 +827,7 @@ RunTestCase ()
                     $0 = $2 " " $1 "  " $4 " " $3 "  " $6 " " $5
                 }
 
-                printf "# %-24s%s\n", test, $0
+                printf "# %-26s%s\n", test, $0
             }' test="$1"  # ' comment fix. Ksh bug: does not see closing quote
 
     else
@@ -861,7 +861,7 @@ TestData ()
 t ()
 {
     local dummy test
-    dummy="t()"
+    dummy="run test case t(): $*"
     test=${1:-}
 
     if [ ! "$test" ]; then
@@ -903,16 +903,18 @@ RunTestSet ()
     shift
 
     runtestset_ifs=$IFS
-    IFS=":
-"
+    IFS=":"
 
     for test in $testset
     do
         test="$test"   # For debug
+
+        IFS="$runtestset_ifs"
         eval "$test"
+        IFS=":"
     done
 
-    runtestset_ifs=$saved
+    IFS=$runtestset_ifs
 
     unset dummy test testset test
     unset runtestset_ifs
