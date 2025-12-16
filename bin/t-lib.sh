@@ -405,6 +405,14 @@ IsFeatureMatchPattern ()
     IsFeatureConditionalExpression
 }
 
+IsFeatureMatchRegexp ()
+{
+    # Shells that support:
+    # [[ string =~ $RE ]]
+
+    IsShellModern
+}
+
 IsFeatureDictionary ()
 {
     [ -e "$DICTIONARY_FILE" ]
@@ -432,14 +440,6 @@ IsFeatureCommandSubstitutionReadFile ()
     # Shells that support:
     # $(< file)
     # https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
-
-    IsShellModern
-}
-
-IsFeatureMatchRegexp ()
-{
-    # Shells that support:
-    # [[ string =~ $RE ]]
 
     IsShellModern
 }
