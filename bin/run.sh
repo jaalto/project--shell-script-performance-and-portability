@@ -158,6 +158,17 @@ CalculateTime ()
         user = $4 - basetime_user
         sys  = $6 - basetime_sys
 
+        # No negative values
+
+        if (real < 0)
+            real = 0
+
+        if (user < 0)
+            user = 0
+
+        if (sys < 0)
+            sys = 0
+
         printf "real %.3f  user %.3f  sys %.3f\n", real, user, sys
         exit
     }'
