@@ -282,8 +282,15 @@ IsUnameMatch ()
 
 IsOswinCygwin ()
 {
+    # Also set under MobaXterm
+
     [ "$OSTYPE" = "cygwin" ] ||
     [ -d /cygdrive/c ]
+}
+
+IsOswinMobaxterm ()
+{
+    [ -d /home/mobaxterm ]
 }
 
 IsOswinMsystem ()
@@ -296,15 +303,17 @@ IsOswinMsystem ()
     [ -d /c ]
 }
 
-IsOswinMobaxterm ()
-{
-    [ -d /home/mobaxterm ]
-}
-
 IsOsLinux ()
 {
     [ "$OSTYPE" = "linux-gnu" ] ||
     [ "$(uname)" = "Linux" ]
+}
+
+IsOsLinuxLike ()
+{
+    IsOsLinux ||
+    IsOswinCygwin ||
+    IsOswinMsystem
 }
 
 IsOsDebian ()
