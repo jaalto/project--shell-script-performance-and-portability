@@ -357,7 +357,7 @@ everywhere, whereas `ksh` isn't.
 the features provided in `bash` may make it more
 suitable for complex shell scripts.
 
-### CASE STUDY
+### CASE STUDY: CI testing pipeline
 
 **The following is a personal
 observation.** I ran a CI testing
@@ -393,51 +393,54 @@ It took about **10 minutes** to process all files.
 
 The optimizations:
 
-- All files were moved to a Linux RAM disk for
-  processing. Total time dropped to **5
-  minutes.**
-- All Bash scripts were converted to use GNU
-  parallel as much as possible. Total time
-  dropped to **2 minutes.**
-- All Bash scripts that could, were converted
-  to POSIX shell scripts ([dash]). The
-  Bashisms were converted to POSIX features.
-  About 3 of the 50 scripts remained in Bash.
-  Total time dropped to **1 minute.**
-- Further optimizations were considered. The
-  shell scripts that processed or heavily
-  examined file contents could have been
-  converted to faster [Perl], potentially
-  achieving a total time drop to **40 seconds**.
-  However, at this point, it was decided that
-  even the text-processing-heavy shell scripts
+- All files were moved to a Linux RAM
+  disk [tmpfs] for processing. Total time
+  dropped to **5 minutes.**
+- All Bash scripts were converted to use
+  [GNU parallel] as much as possible.
+  Total time dropped to **2 minutes.**
+- All Bash scripts that could, were
+  converted to POSIX [dash] shell scripts
+  About 3 of the 50 scripts remained in
+  [Bash]. Total time dropped to **1
+  minute.**
+- Further optimizations were considered.
+  The shell scripts that processed or
+  heavily examined file contents could
+  have been converted to faster [Perl],
+  potentially achieving a total time drop
+  to **40 seconds**. However, at this
+  point, it was decided that even the
+  text-processing-heavy shell scripts
   were "fast enough."
 
 **If we analyze the performance gains:**
 
 Optimization  | secs | percent
 ------------- | ---: | ------:
-...none...    | 600  | 0%
+...none...    | 600  |   0%
 Running in RAM| 300  | -50%
 GNU parallel  | 120  | -80%
-Bash to sh    | 60   | -90%
-sh to Perl    | 40   | -93%
+Bash to sh    |  60  | -90%
+sh to Perl    |  40  | -93%
 
 Most of the performance gains came from
-factors **other than the shell itself.** In
-the end, rewriting scripts to only use POSIX
-`sh` did gain 10% performance. This proved to
-be valuable in debugging situations: having
-to wait 2 minutes versus 1 minute for a
-finished job made the iterations to add
-features faster. However, the time that would
-have been required to convert some of the
-scripts into higher-level, speedier text
-processing languages like [Perl] or [Python]
-didn't justify the effort. The code base was
-all shell scripts, and introducing a new
-language to the mix did not seem relevant
-enough for the whole.
+factors **other than the shell itself.**
+In the end, rewriting Bash to POSIX shell
+scripts did gain additional 10%
+performance. This proved to be valuable
+in debugging situations: having to wait 2
+minutes versus 1 minute (50% speed up)
+for a finished job made the iterations to
+add features faster. However, the time
+that would have been required to convert
+some of the scripts into higher-level,
+speedier text processing languages like
+[Perl] or [Python] didn't justify the
+effort. The code base was all shell
+scripts, and introducing a new language
+to the mix did not seem relevant enough
+for the whole.
 
 **Conclusion:** Interestingly, the shell
 scripts were quite capable even in a context
