@@ -3,6 +3,6 @@
 
 shells=${1:-dash,ksh93,bash}
 
-./run.sh --shell "$shells" $(ls ./t-*.sh | grep -v lib)
+{ ./run.sh --shell "$shells" $(ls ./t-*.sh | grep -v lib) ; } 2>&1
 
 # End of file
