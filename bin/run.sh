@@ -330,6 +330,8 @@ RunFile ()
 
     for sh in $shlist
     do
+        IFS=$runfile_ifs
+
         local timewithbash bin
 
         timewithbash=""
@@ -359,6 +361,8 @@ RunFile ()
             # shellcheck disable=SC2086
             loop_max=$loop_max $sh "$testfile"
         fi
+
+        IFS=","
     done
 
     IFS=$runfile_ifs
