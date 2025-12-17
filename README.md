@@ -122,7 +122,7 @@ systems. Learn more about POSIX on
 > `ksh`, which doesn't natively support
 > the `local` keyword.
 
-> **Briefly about [Z shell]**. From a
+> **About [Z shell]**. From a
 > shell scripting and portability point
 > of view, [zsh] is less relevant than
 > POSIX sh or [Bash]. The vast majority
