@@ -8,7 +8,10 @@ LIB="t-lib.sh"
 shells=${1:-dash,ksh93,bash}
 
 {
-    if IsCommandParallel; then
+    # Disable: the 'time' won't preserver results in pretty order
+    # parallel not used
+
+    if [ "" ] && IsCommandParallel; then
         ${test:+echo} "$PARALLEL" --keep-order --quote \
             ./run.sh --shell "$shells" ::: \
             $(ls ./t-*.sh | grep -v "$LIB")
