@@ -47,6 +47,11 @@ run:
 	cd bin && \
 	./$(BIN_RUN) t-*
 
+# run-tests - Run all test cases
+.PHONY: run-tests
+run-tests:
+	{ ./run-all.sh ; } 2>&1
+
 # portability - Run portability tests
 .PHONY: portability
 portability:
