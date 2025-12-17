@@ -23,7 +23,7 @@ t1 ()
     do
         cd /
         # ... do the things
-        cd "$OLDDIR"    # POSIX
+        cd "$OLDPWD"    # POSIX
     done
 }
 
@@ -33,7 +33,7 @@ t2 ()
 
     for i in $(seq $loop_max)
     do
-        oldddir=$PWD
+        olddir=$PWD
         cd /
         # ... do the things
         cd "$olddir"
