@@ -141,8 +141,33 @@ Tests ()
     ' "$1"
 }
 
+CalculateTimeEpoch ()
+{
+    # Calculate difference of Bash 5.x $EPOCHREALTIME
+
+    [ "${1:-}" ] || return 1
+    [ "${2:-}" ] || return 1
+
+    local beg
+    beg="$1"
+
+    local end
+    end="$2"
+
+    local diff
+    diff=$(echo "$end - $beg" | bc)
+
+    # Format to 3 decimal places (0.000s)
+    printf "%.3fs\n" "$diff"
+}
+
 CalculateTime ()
 {
+    # Format output of /usr/bin/time
+
+    # ignore quotes
+    # shellcheck disable=SC2016
+
     ${AWK:-awk} -v time="$TIME" '
     BEGIN {
         # real 0.019  user 0.010  sys 0.002
@@ -194,6 +219,10 @@ RunBash ()
     # shellcheck disable=SC1090
 
     loop_max=$loop_max source="source-as-library" . "$file"
+
+    # ignore variable - TMPBASE is defined in t-lib.sh
+    # shellcheck disable=SC2154
+
     time="$TMPBASE.time"
 
     RunMaybe Info
@@ -218,7 +247,10 @@ RunBash ()
             fi
         fi
 
-        # BASELINE
+        # TODO: could the time be accomplished
+        # by using Bach EPOCHTIME?
+
+        # GET BASELINE
         # How long it takes to read a script
         #
         # real    0m0.025s
@@ -229,7 +261,8 @@ RunBash ()
             TIMEFORMAT="$TIMEFORMAT" \
             source="source-as-library" \
             bash -c "time $shell $file"
-        } > "$time" 2>&1
+        } \
+        > "$time" 2>&1
 
         printf "# %-26s" "$test"
 
@@ -238,10 +271,11 @@ RunBash ()
         {
             run="run-test" \
             source="" \
-            loop_max=$loop_max \
+            loop_max="$loop_max" \
             TIMEFORMAT="$TIMEFORMAT" \
             bash -c "time $shell $file $test"
-        }  2>&1 | TIME=$TIME CalculateTime
+        } \
+        2>&1 | TIME="$TIME" CalculateTime
 
         IFS=' '
     done
