@@ -457,16 +457,6 @@ extra performance boost at the end.
   rather than to calling external
   POSIX utilities
   [expr] or [grep].
-
-  **NOTE**: In POSIX `sh`, like
-  [dash],
-  calling utilities is
-  *very* fast. Compared to Bash's
-  [`[[...]]`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b),
-  the [expr] in [dash] is only 5x slower,
-  which is still negligible because the
-  time differences are measured in mere
-  few milliseconds. See
   [code](./bin/t-string-match-regexp.sh)
 
 ```bash
