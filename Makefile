@@ -50,7 +50,8 @@ run:
 # run-tests - Run all test cases
 .PHONY: run-tests
 run-tests:
-	{ ./run-all.sh ; } 2>&1
+	cd bin && \
+	./run-all.sh
 
 # portability - Run portability tests
 .PHONY: portability
