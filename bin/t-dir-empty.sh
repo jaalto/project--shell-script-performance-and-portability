@@ -95,7 +95,7 @@ t4 ()
 
 t="\
 :t t1 IsShellBash
-:t t2
+:t t2 IsShellBash
 :t t3
 :t t4
 "
