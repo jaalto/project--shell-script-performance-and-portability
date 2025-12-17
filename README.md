@@ -645,7 +645,7 @@ extra performance boost at the end.
     # t3  real 0.415s (3) case
 ```
 
-- In Bash, it is about 8 times faster,
+- In Bash, it is about 10 times faster,
   to use
   [nameref](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
   to return a value. In Bash, the
