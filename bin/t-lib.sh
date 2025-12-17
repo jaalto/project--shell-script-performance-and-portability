@@ -889,7 +889,7 @@ t ()
         if "$@"; then
             RunTestCase "$test"
         else
-            printf "# %-24s<skip>\n" "$test $*"
+            printf "# %-25s <skip>\n" "$test $*"
         fi
     else
         RunTestCase "$test"
