@@ -8,8 +8,8 @@ LIB="t-lib.sh"
 shells=${1:-dash,ksh93,bash}
 
 {
-    # Disable: the 'time' won't preserver results in pretty order
-    # parallel not used
+    # Disable. Parallel not used.
+    # The 'time' results are not displayed properly
 
     if [ "" ] && IsCommandParallel; then
         ${test:+echo} "$PARALLEL" --keep-order --quote \
