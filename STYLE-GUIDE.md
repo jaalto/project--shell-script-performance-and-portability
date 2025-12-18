@@ -712,29 +712,27 @@ explicitly required.
   # Instead of ...
   [[ $var = $value ]]
 
-  # Use portable POSIX-style with
-  # quoting
+  # Use portable POSIX-style
+  # with quoting
   [ "$var" = "$value" ]
 
   # Apply quoting consistently
   file="$path/$conf"
   result=$(command "$file")
 
-  # - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - -
 
   # Instead of ...
-  for ((i=0; i < 10; i++))
+  for ((i=1; i <= 10; i++))
   do
       ...
   done
 
-  # Use portable POSIX-style
-  i=0
-  while [ "$i" -lt 10 ]
+  # Use portable POSIX
+  # No performance difference
+  for $(seq 10)
   do
-      # Use POSIX arithmetic expansion
-      # $() for iteration
-      i=$((i + 1))
+      ...
   done
 ```
 
