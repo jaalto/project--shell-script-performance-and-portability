@@ -60,8 +60,12 @@ MISCELLANEOUS
 - Use [POSIX] conventions where possible
   to improve portability.
 
-- Use conventions that maximize clarity
-  and simplicity.
+- Use conventions that maximize
+  simplicity and clarity. Embrace
+  minimalism in the spirit of the
+  [Less Is More] design principle,
+  similar to KISS
+  [Keep It Short and Simple].
 
 - Utilize [ShellCheck] or other [linting]
   tools to improve code quality.
@@ -821,6 +825,7 @@ Google search help:
 
 [SPDX License List]: https://spdx.org/licenses/
 [Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
+[Less Is More]: https://en.wikipedia.org/wiki/Less_is_more
 
 <!-- ------- REF:LANG -------- -->
 
