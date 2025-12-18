@@ -89,18 +89,166 @@ MISCELLANEOUS
 ```
 
 - **trade-off to the POSIX portability
-  focus**: Use readable `--long` options
+  focus**: In calling utilities (e.g.
+  `grep`), Use readable `--long` options
   where possible. Assume [GNU coreutils]
   and require their installation in the
-  README. **Rationale:** `--long` options
-  make scripts easier to read and
-  maintain in the long term. GNU
+  README. **Rationale:** `--long`
+  options make scripts easier to read
+  and maintain in the long term. GNU
   utilities are more capable and
   generally optimized for speed. They
   also provide common ground
   (standardized behavior regardless of
   the OS), ensuring improved
   interoperability.
+
+- **Standard options:** A standard set
+  of options should be utilized by every
+  script to ensure a predictable user
+  interface. At a minimum, `-h` (help)
+  is implemented. Rationale: User
+  expectations are met by providing
+  familiar interface anchors. By
+  implementing -h, accidental
+
+Option|Long Option|Description
+---|---|---
+-h|--help|Display usage instructions and exit
+-v|--verbose|Increase output detail for monitoring.
+-V|--version|Print version information and exit.
+-D|--debug|(Optional) Enable tracing output.
+
+``` shell
+   # Code for option handling
+   #
+   # NOTE: POSIX `getopts` utility does
+   # not support long options. The
+   # Limitation of the code is that it
+   # does not provide stacked short
+   # options in form of "-l -x" => "-lx"
+
+   while :
+   do
+        local opt
+        opt="${1:-none}"
+
+        case $opt in
+            -v | --verbose)
+                shift
+                VERBOSE="verbose"
+                ;;
+            -V | --version)
+                shift
+                Version  # Calls exit 0
+                ;;
+            -D | --debug)
+                shift
+                DEBUG="debug"
+                ;;
+            -h | --help)
+                shift
+                Help # Calls exit 0
+                ;;
+            --)
+                shift  # End of options
+                break
+                ;;
+            -*)
+                shift
+                echo "$0: WARN Unknown option: $opt" >&2
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+```
+
+- Documentation. Every script must have
+  a top-level comment block including:
+  **License:** Consult [SPDX License List].
+  Prefer known licences like GPL, MIT etc.
+  **Description:** What the script does.
+  **Usage:** Example of how to call it.
+  The easiest is to provide
+  `Help` near the top of the script.
+
+``` shell
+    #! /bin/sh
+    #
+    #   <file> -- <description>
+    #
+    #   Copyright
+    #
+    #       Copyright (C) YYYY Firstname Lastname <email>
+    #
+    #   License
+    #
+    #       This program is free software; you can redistribute it and/or
+    #       modify it under the terms of the GNU General Public License as
+    #       published by the Free Software Foundation; either version 2 of the
+    #       License, or (at your option) any later version
+    #
+    #       This program is distributed in the hope that it will be useful, but
+    #       WITHOUT ANY WARRANTY; without even the implied warranty of
+    #       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    #       General Public License for more details.
+    #
+    #       You should have received a copy of the GNU General Public License
+    #       along with program; see the file COPYING. If not, write to the
+    #       Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    #       Boston, MA 02110-1301, USA.
+    #
+    #       Visit <http://www.gnu.org/copyleft/gpl.html>
+    #
+    #   Description
+    #
+    #       See option:
+    #
+    #           --help
+    #
+    #   Dependecies
+    #
+    #       GNU utilities: grep, gawk etc.
+
+    Help ()  # See formatting ideas from manual pages
+    {
+        echo "\
+    SYNOPSIS
+        $0 [options]
+
+    OPTIONS
+        -f, --file FILE
+            Use FILE.
+
+        -t, --test
+            Run in test mode.
+
+        -D, --debug
+            Turn on debug.
+
+        -v, --version
+            Display version and exit.
+
+        -v, --verbose
+            Display verbose message.
+
+        -h, --help
+            Display help and exit.
+
+    DESCRIPTION
+        <...>
+
+    FILES
+        <...>
+
+    ENVIRONMENT
+        <...>
+    "
+        exit 0
+    }
+```
 
 ## 2. Rules
 
@@ -144,9 +292,9 @@ MISCELLANEOUS
 
 ``` shell
     # in case you do not use
-	# set -o errexit
+    # set -o errexit
 
-	cd "$dir" || exit $?
+    cd "$dir" || exit $?
 ```
 
 - Use safe temporary files and
@@ -156,8 +304,8 @@ MISCELLANEOUS
   environments. See [Bash FAQ/062].
 
 ``` shell
-	tmpfile=$(mktemp -t tmp.file.XXX)
-	tmpdir=$(mktemp --directory -t tmp.dir.XXX)
+    tmpfile=$(mktemp -t tmp.file.XXX)
+    tmpdir=$(mktemp --directory -t tmp.dir.XXX)
 ```
 
 - Use a [trap] to ensure proper cleanup
@@ -267,10 +415,10 @@ MISCELLANEOUS
 - Send error messages to stderr.
 
 ``` bash
-	echo "ERROR: message" >&2
+    echo "ERROR: message" >&2
 
-	# Not like this
-	echo >&2 "ERROR: message"
+    # Not like this
+    echo >&2 "ERROR: message"
 ```
 
 - Display help to stdout. Displaying
@@ -280,10 +428,10 @@ MISCELLANEOUS
 ``` bash
     arg=${1:-}
 
-	if [ "$arg" = "--help" ]; then
-		echo "Synopsis: ...."
-		exit 0
-	fi
+    if [ "$arg" = "--help" ]; then
+        echo "Synopsis: ...."
+        exit 0
+    fi
 ```
 
 - Use `read -r`. **Rationale:** When
@@ -342,9 +490,9 @@ MISCELLANEOUS
 
 
 ``` shell
-	Example ()
-	{
-		# arguments in $1, $2, etc., not the parens
+    Example ()
+    {
+        # arguments in $1, $2, etc., not the parens
     }
 
     # Behaves like a system command
@@ -470,10 +618,10 @@ integers. For decimals, use `bc` or
     j=0.1
 
     # No leading zero: .6
-	k=$(echo "$i + $j" | bc)
+    k=$(echo "$i + $j" | bc)
 
     # With leading zero: 0.6
-	printf -v k "%g" "$(echo "$i + $j" | bc)"
+    printf -v k "%g" "$(echo "$i + $j" | bc)"
 
     # GNU awk. With leading zero: 0.6
     k=$(awk -v i="$i" -v j="$j" '{BEGIN print i + j}'
@@ -629,5 +777,6 @@ Google search help:
 [Powershell scrict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
 [Perl]: //www.perl.org
+[SPDX License List]: https://spdx.org/licenses/
 
 <!-- END OF FILE -->
