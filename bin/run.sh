@@ -223,7 +223,7 @@ RunBash ()
     # ignore variable - TMPBASE is defined in t-lib.sh
     # shellcheck disable=SC2154
 
-    time="$TMPBASE.time"
+    time=$(mktemp -t "$TMPBASE.time.XXX")
 
     RunMaybe Info
 
