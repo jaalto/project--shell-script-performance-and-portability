@@ -450,12 +450,12 @@ Option|Long Option|Description
 
 - [Command Substitution]: Use POSIX
   `$(command)` instead of archaic
-  backticks `command` for command
-  substitution, as it allows for cleaner
-  nesting and is generally easier to
-  read. Both are POSIX, but the
-  dollar-parentheses form is preferred.
-  See [Bash FAQ/082].
+  backticks \`command\` for command
+  substitution. **Rationale:** it allows
+  for cleaner nesting and is generally
+  easier to read. Both are POSIX, but
+  the dollar-parentheses form is
+  preferred. See [Bash FAQ/082].
 
 ``` bash
     # Use
