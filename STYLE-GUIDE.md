@@ -131,7 +131,7 @@ MISCELLANEOUS
 
     # Optional
     set -o errtrace  # fail on $()
-    set -o pipefial  # fail cmd on pipe
+    set -o pipefail  # fail cmd on pipe
 ```
 
 - Set a exit status: Scripts should exit
