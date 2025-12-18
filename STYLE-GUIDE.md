@@ -703,11 +703,10 @@ explicitly required.
   [double bracket] conditional `[[...]]`.
   Instead, use the portable POSIX [test]
   command `[...]` and always quote
-  variable expansions. Consistent quoting
-  ensures safety, correctness, and
-  portability. Developing a consistent
-  quoting habit ensures safety,
-  correctness, and portability. Examples:
+  variable expansions. Developing a
+  consistent quoting habit ensures
+  safety, correctness, and portability.
+  Examples:
 
 ``` shell
   # Instead of ...
