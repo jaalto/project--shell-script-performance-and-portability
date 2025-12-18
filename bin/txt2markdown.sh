@@ -23,10 +23,12 @@
 #
 #       See the --help option.
 #
+# Description
+#
 #       Convert result text file into markdown format.
 #
 #       This is not a general utility but a
-#       specific program to the project.
+#       specific program for the project.
 
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
