@@ -349,7 +349,10 @@ Option| Long Option |Description
   conditions (e.g., `${var}suffix`).
 
 ``` shell
-    path="$dir/$to/$MY_FILE_NAME"
+    path="$dir/$to/$file"
+
+    # Not like this
+    path="${dir}/$[to}/$[file}"
 ```
 
 - In variable tests, use simple
