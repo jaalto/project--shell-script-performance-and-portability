@@ -730,7 +730,7 @@ explicitly required.
 
   # Use portable POSIX
   # No performance difference
-  for $(seq 10)
+  for i in $(seq 10)
   do
       ...
   done
