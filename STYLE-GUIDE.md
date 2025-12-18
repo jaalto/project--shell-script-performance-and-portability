@@ -599,18 +599,15 @@ Option| Long Option |Description
         command -v "${1:-}" > /dev/null 2>&1
     }
 
-    # Check if 'local' is supported
     if ! IsCommand local; then
-        # Check if we are in ksh
         if IsCommand typeset; then
-            # Use 'eval' to hide it
-            # from other shells.
-            # This ensures that
-            # defining a function
-            # with local variables
-            # does not generate an
-            # error and exit the
-            # program.
+            # Use 'eval' to
+			# hide statement.
+            # Would otherwise
+            # casue program
+			# to exit due to
+			# parse error at
+			" 'local' keyword.
 
             eval 'local () { typeset "$@"; }'
         fi
@@ -618,9 +615,10 @@ Option| Long Option |Description
 
     PortableLocal ()
     {
-        # Portable use of local:
-        # - Declaraton on its own line
-        # - Assignment on its own line
+        # Portable use of local.
+		# On its own lines:
+        # - Declaration
+        # - Assignment
 
         local var
         var="value"
