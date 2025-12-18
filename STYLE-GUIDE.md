@@ -416,11 +416,12 @@ Option| Long Option |Description
         ...
     fi
 
-    # In longer statements, switch
-    # to Allman style for more
-    # clarity. Command is more
-    # visually prominent (it stands
-    # out better).
+    # In longer statements,
+    # switch to Allman style
+    # for more clarity. Command
+    # is more visually
+    # prominent (it stands out
+    # better).
 
     if <this is an example of a very long statement>
     then
