@@ -604,7 +604,7 @@ Option| Long Option |Description
             # Use 'eval' to
 			# hide statement.
             # Would otherwise
-            # casue program
+            # cause program
 			# to exit due to
 			# parse error at
 			# 'local' keyword.
