@@ -636,10 +636,11 @@ integers. For decimals, use `bc` or
     k=$(echo "$i + $j" | bc)
 
     # With leading zero: 0.6
-    printf -v k "%g" "$(echo "$i + $j" | bc)"
+    k=$(printf "%g" "$(echo "$i + $j" | bc)")
 
-    # GNU awk. With leading zero: 0.6
-    k=$(awk -v i="$i" -v j="$j" '{BEGIN print i + j}'
+    # POSIX awk
+	k=$(i=0.5 j=0.1 awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+
 ```
 
 ## 3. Bash Notes
