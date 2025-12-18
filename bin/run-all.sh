@@ -21,9 +21,9 @@
 #
 # Description
 #
-#       Run all test cases
+#       Run all test cases.
 #
-# Synopsis
+# Usage
 #
 #       ./run-all.sh [<comma separated list of shells>]
 #
