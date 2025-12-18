@@ -298,7 +298,7 @@ Option|Long Option|Description
 ```
 
 - Use safe temporary files and
-  directories with `mktemp'.
+  directories with `mktemp`.
   **Rationale:** Prevent symlink attacks
   and race conditions in multi-user
   environments. See [Bash FAQ/062].
@@ -335,7 +335,7 @@ Option|Long Option|Description
   variable. This is mandatory to keep
   each argument distinct and uncorrupted.
 
-- Prefer `$var` by default. Use the
+- Prefer simple `$var` by default. Use the
   braces only when necessary for boundary
   conditions (e.g., `${var}suffix`).
 
