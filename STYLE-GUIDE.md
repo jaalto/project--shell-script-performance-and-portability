@@ -88,29 +88,30 @@ MISCELLANEOUS
   #! /bin/sh
 ```
 
-- **trade-off to the POSIX portability
-  focus**: In calling utilities (e.g.
-  `grep`), Use readable `--long` options
-  where possible. Assume [GNU coreutils]
-  and require their installation in the
-  README. **Rationale:** `--long`
-  options make scripts easier to read
-  and maintain in the long term. GNU
+- Assume [GNU coreutils] and require
+  their installation in the README. GNU
   utilities are more capable and
   generally optimized for speed. They
-  also provide common ground
-  (standardized behavior regardless of
-  the OS), ensuring improved
-  interoperability.
+  also provide standardized behavior
+  regardless of the OS, ensuring
+  improved interoperability.
 
-- **Standard options:** A standard set
-  of options should be utilized by every
-  script to ensure a predictable user
-  interface. At a minimum, `-h` (help)
-  is implemented. Rationale: User
-  expectations are met by providing
-  familiar interface anchors. By
-  implementing -h, accidental
+- **utilities trade-off to the POSIX
+  portability focus**: In calling
+  utilities (e.g. `grep`), use readable
+  GNU `--long` options where possible.
+  **Rationale:** `--long` options make
+  scripts easier to read and maintain in
+  the long term.
+
+- **Standard options in scripts:** A
+  standard set of options should be
+  utilized by every script to ensure a
+  uniform user interface. At a minimum,
+  `-h` (help) must be implemented.
+  **Rationale:** User expectations are
+  best met by providing standardized
+  interface.
 
 Option|Long Option|Description
 ---|---|---
