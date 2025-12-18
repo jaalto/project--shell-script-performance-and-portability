@@ -441,8 +441,8 @@ Option| Long Option |Description
 ```
 
 - Display help to stdout. Displaying
-  help, program version etc. are not an
-  errors conditions.
+  help, program version etc. are not
+  error conditions.
 
 ``` bash
     arg=${1:-}
