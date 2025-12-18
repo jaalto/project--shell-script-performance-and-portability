@@ -298,7 +298,7 @@ Option|Long Option|Description
 ```
 
 - Use safe temporary files and
-  directories with `mktemp'.
+  directories with `mktemp`.
   **Rationale:** Prevent symlink attacks
   and race conditions in multi-user
   environments. See [Bash FAQ/062].
