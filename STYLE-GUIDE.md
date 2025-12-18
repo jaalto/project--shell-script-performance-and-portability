@@ -335,7 +335,7 @@ Option|Long Option|Description
   variable. This is mandatory to keep
   each argument distinct and uncorrupted.
 
-- Prefer `$var` by default. Use the
+- Prefer simple `$var` by default. Use the
   braces only when necessary for boundary
   conditions (e.g., `${var}suffix`).
 
