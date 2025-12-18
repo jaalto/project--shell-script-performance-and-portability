@@ -267,8 +267,7 @@ Option| Long Option |Description
 - At the beginning of file, explicitly
   set shell options for early exit and
   error checking. Use variations of the
-  [unofficial bash strict mode] to ensure
-  scripts exit early on error. For
+  [unofficial bash strict mode]. For
   robustness, include at least the first
   two options. **Rationale:** These
   settings (*errexit, nounset*) treat
