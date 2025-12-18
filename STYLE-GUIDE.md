@@ -361,9 +361,15 @@ Option| Long Option |Description
     path="${dir}/${to}/${file}"
 ```
 
-- In variable tests, use simple
-  notations. Avoid `-z` or `-n` [test]
-  options.
+- In boolean variable tests, use
+  simple notations, similar to
+  [Python], [Ruby] or [Perl]. Omit
+  explicit [test] options `-n`
+  (length is non-zero) or `-z`
+  (length is zero). **Rationale:**
+  Less is more. Redundant options
+  don't add functional value when
+  values are in double-quotes.
 
 ``` bash
     [ "$var" ]    # Has value
@@ -659,7 +665,6 @@ integers. For decimals, use `bc` or
 
     # POSIX awk
 	k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
-
 ```
 
 ## 3. Bash Notes
@@ -812,8 +817,13 @@ Google search help:
 [C# struct mode]: https://www.meziantou.net/csharp-compiler-strict-mode.htm
 [Powershell scrict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
-[Perl]: //www.perl.org
 [SPDX License List]: https://spdx.org/licenses/
 [Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
+
+<!-- ------- REF:LANG -------- -->
+
+[Perl]: //www.perl.org
+[Python]: https://www.python.org
+[Ruby]: https://www.ruby-lang.org
 
 <!-- END OF FILE -->
