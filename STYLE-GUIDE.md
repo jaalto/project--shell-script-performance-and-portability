@@ -350,8 +350,9 @@ Option| Long Option |Description
   when utilizing shell
   [parameter expansion] (e.g.,
   `${var:-default}`). **Rationale:**
-  minimalism in the spirit of Keep It
-  Short and Simple design principle.
+  minimalism in the spirit of
+  [Keep It Short and Simple]
+  design principle.
 
 ``` shell
     path="$dir/$to/$file"
