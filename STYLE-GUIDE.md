@@ -459,10 +459,10 @@ Option|Long Option|Description
 
 ``` bash
     # Use
-    dir=$(dirname $(pwd))
+    dirname=$(basename $(pwd))
 
     # Instead of ...
-    dir=`dirname \`pwd\``
+    dirname=`basename \`pwd\``
 ```
 
 ### 2.5 Functions and Scope
