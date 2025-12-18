@@ -346,10 +346,12 @@ Option| Long Option |Description
 
 - Prefer simple `$var` by default. Use the
   braces only when necessary for boundary
-  conditions (e.g., `${var}suffix`).
-  **Rationale:** minimalism in the spirit
-  of Keep It Short and Simple
-  design principle.
+  conditions (e.g., `${var}suffix`) or
+  when utilizing shell
+  [parameter expansion} (e.g.,
+  `${var:-default}`). **Rationale:**
+  minimalism in the spirit of Keep It
+  Short and Simple design principle.
 
 ``` shell
     path="$dir/$to/$file"
