@@ -607,7 +607,7 @@ Option| Long Option |Description
             # casue program
 			# to exit due to
 			# parse error at
-			" 'local' keyword.
+			# 'local' keyword.
 
             eval 'local () { typeset "$@"; }'
         fi
