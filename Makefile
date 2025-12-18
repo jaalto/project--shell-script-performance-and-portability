@@ -9,6 +9,7 @@ MAKEFILE = Makefile
 DOC      = RESULTS
 BRIEF    = RESULTS-BRIEF.txt
 DOC_PORTABILITY = RESULTS-PORTABILITY.txt
+BINDIR	 = bin
 
 GREP     = grep --extended-regexp
 RM	 = rm --force
@@ -38,25 +39,25 @@ help:
 # show - Show test results (!)
 .PHONY: show
 show:
-	@cd bin && \
+	@cd $(BINDIR) && \
 	./$(BIN_DOC) t-*
 
 # run - Run performance tests
 .PHONY: run
 run:
-	cd bin && \
+	cd $(BINDIR) && \
 	./$(BIN_RUN) t-*
 
 # run-tests - Run all test cases
 .PHONY: run-tests
 run-tests:
-	cd bin && \
+	cd $(BINDIR) && \
 	./run-all.sh
 
 # portability - Run portability tests
 .PHONY: portability
 portability:
-	cd bin && \
+	cd $(BINDIR) && \
 	./$(BIN_PORTABILITY) x-*
 
 # doc - Generate documentation
@@ -64,7 +65,7 @@ portability:
 doc: doc-all doc-brief doc-portability
 
 define doc-function
-	cd bin && \
+	cd $(BINDIR) && \
 	./$(BIN_DOC) $$(ls t-* | grep -v t-lib.sh) > ../$(DOCDIR)/$(DOC).txt
 	bin/txt2markdown.sh $(DOCDIR)/$(DOC).txt > $(DOCDIR)/$(DOC).md
 endef
@@ -74,7 +75,7 @@ doc-all:
 	$(call doc-function)
 
 define doc-portability-function
-	cd bin && \
+	cd $(BINDIR) && \
 	./$(BIN_PORTABILITY) x-* > ../$(DOCDIR)/$(DOC_PORTABILITY)
 endef
 
@@ -96,6 +97,11 @@ $(DOCDIR)/$(DOC):
 .PHONY: doc-brief
 doc-brief: $(DOCDIR)/$(DOC).txt
 	$(GREP) "^($$|FILE:|# [QA]:)" $(DOCDIR)/$(DOC).txt > $(DOCDIR)/$(BRIEF)
+
+# ls - list *.sh files in bin/
+ls:
+	@cd $(BINDIR) && \
+	ls -1 *.sh | grep --extended-regexp --invert-match 't-lib.sh|^..?-'
 
 # clean - Delete generated doc files
 .PHONY: clean
