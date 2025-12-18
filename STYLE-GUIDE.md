@@ -171,14 +171,16 @@ Option| Long Option |Description
     done
 ```
 
-- Documentation. Every script must have
-  a top-level comment block including:
-  **License:** Consult [SPDX License List].
-  Prefer known licences like GPL, MIT etc.
-  **Description:** What the script does.
-  **Usage:** Example of how to call it.
-  The easiest is to provide
-  `Help` near the top of the script.
+- Documentation. Add a top-level
+  comment block including:
+  **License:** Consult
+  [SPDX License List]. Prefer known
+  licences like GPL, MIT etc.
+  **Description:** What the script
+  does. **Usage:** Example of how
+  to call it. The easiest is to
+  provide `Help` near the top of
+  the script.
 
 ``` shell
     #! /bin/sh
