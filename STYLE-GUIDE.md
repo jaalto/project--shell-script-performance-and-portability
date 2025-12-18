@@ -658,7 +658,7 @@ integers. For decimals, use `bc` or
     k=$(printf "%g" "$(echo "$i + $j" | bc)")
 
     # POSIX awk
-	k=$(i=0.5 j=0.1 awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+	k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 
 ```
 
