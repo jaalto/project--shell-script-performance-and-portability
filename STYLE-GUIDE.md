@@ -87,7 +87,7 @@ MISCELLANEOUS
 ``` bash
   #! /bin/sh
 ```
-  
+
 - **trade-off to the POSIX portability
   focus**: Use readable `--long` options
   where possible. Assume [GNU coreutils]
@@ -123,14 +123,14 @@ MISCELLANEOUS
     #! /bin/sh
 
     # Use readable long options
-	# instead of 'set -eu'
+    # instead of 'set -eu'
 
     # Recommended
     set -o errexit   # Exit on error
-	set -o nounset   # unused vars
+    set -o nounset   # unused vars
 
-	# Optional
-	set -o errtrace  # fail on $()
+    # Optional
+    set -o errtrace  # fail on $()
     set -o pipefial  # fail cmd on pipe
 ```
 
@@ -173,13 +173,13 @@ MISCELLANEOUS
     path="$dir/$to/$MY_FILE_NAME"
 ```
 
-- In variable tests, use and simple
+- In variable tests, use simple
   notations. Avoid `-z` or `-n` [test]
   options.
 
 ``` bash
-    [ "$var" ]    # Has value test
-    [ ! "$var" ]  # No value test
+    [ "$var" ]    # Has value
+    [ ! "$var" ]  # No value
 ```
 
 ### 2.3 Formatting and Syntax
@@ -280,28 +280,51 @@ MISCELLANEOUS
   with existing commands. Use the
   standard POSIX parentheses syntax to
   define functions; avoid the Bash-only
-  [function keyword]. Prefer including a
-  space before the function parentheses
-  `()` to match the output style of the
-  [Bash type] command.
+  [function keyword].
 
-- Function Argument Handling: prefer
-  assigning positional arguments (`$1`,
-  `$2` etc.) immediately to meaningful,
-  local variables to improve readability
-  within the function.
+- Prefer including a space before the
+  function parentheses `()` to match the
+  output style of the [Bash type]
+  command. **Rationale:** Shell functions
+  are treated as internal commands rather
+  than traditional programming functions.
+  Because `()` is not used for argument
+  passing in shell functions, a new
+  command—behaving similarly to `ls`-—is
+  emphasized by the `Name ()` notation,
+  rather than a subroutine with a fixed
+  signature.
+
+
+``` shell
+	Example ()
+	{
+		# arguments in $1, $2, etc., not the parens
+    }
+
+    # Behaves like a system command
+    Example "arg"
+```
+
+- **Function Argument Handling:** in
+  longer functions prefer assigning
+  positional arguments (`$1`, `$2` etc.)
+  immediately to meaningful, local
+  variables to improve readability within
+  the function.
+
 
 ``` shell
     Example ()
     {
         # Use 'local' though not
-        # strictly POSIX, it's
-        # supported by virtually
-        # all modern /bin/sh
+        # strictly POSIX. It's
+        # widely supported in
+        # modern /bin/sh
         # implementations.
 
         local file
-		file="$1"
+        file="$1"
     }
 ```
 
@@ -309,14 +332,13 @@ MISCELLANEOUS
 
 - **Note: Dynamic scope:** The shell uses
   dynamic scoping to control a variable’s
-  visibility within functions. The shell
-  uses dynamic scoping (see [functions]
-  in Bash manual) to control a variable's
-  visibility within functions. This means
+  visibility within functions. See
+  [functions] in Bash manual. This means
   that a function can see variables
   defined not just inside itself, but
   also variables defined by any other
   function that called it.
+
 
 ``` shell
     Two ()
@@ -327,7 +349,7 @@ MISCELLANEOUS
     One ()
     {
         local var
-		var="hello"
+        var="hello"
 
         Two
     }
@@ -388,9 +410,7 @@ with shell shorthands.
 ``` shell
     <statement> && {
         <code>
-        <code>
-        <code>
-        <... and more code>
+        <...>
     }
 ```
 
@@ -398,7 +418,9 @@ with shell shorthands.
 
 ### 3.1 Bash shebang
 
-Use the portable `env` [shebang] line. Improve readability by adding a space after the interpreter path.
+Use the portable `env` [shebang] line.
+  Improve readability by adding a space
+  after the interpreter path.
 
 ``` shell
   #! /usr/bin/env bash
@@ -406,21 +428,27 @@ Use the portable `env` [shebang] line. Improve readability by adding a space aft
 
 ### 3.2 Limit Bashism
 
-Even in Bash, default to POSIX syntax unless Bash-specific features
+Even in Bash, default to POSIX syntax
+  unless Bash-specific features
 are explicitly required.
 
-**Rationale:** This ensures broader system portability and later
-compatibility with `/bin/sh`, allowing scripts to benefit from faster
-startup and fewer forks.
+**Rationale:** This ensures broader
+  system portability and later
+  compatibility with `/bin/sh`, allowing
+  scripts to benefit from faster startup
+  and fewer forks.
 
-**Practical Guidance:** Avoid Bash-specific constructs like the
-arithmetic expression `((...))` and the [double bracket] conditional
-`[[...]]`. Instead, use the portable POSIX [test] command `[...]` and
-always quote variable expansions. Consistent quoting ensures safety,
-correctness, and portability. Developing a
-consistent quoting habit ensures
-safety, correctness, and portability.
-Examples:
+**Practical Guidance:** Avoid
+  Bash-specific constructs like the
+  arithmetic expression `((...))` and the
+  [double bracket] conditional `[[...]]`.
+  Instead, use the portable POSIX [test]
+  command `[...]` and always quote
+  variable expansions. Consistent quoting
+  ensures safety, correctness, and
+  portability. Developing a consistent
+  quoting habit ensures safety,
+  correctness, and portability. Examples:
 
 ``` shell
   # Instead of ...
@@ -460,7 +488,8 @@ Examples:
   https://en.wikipedia.org/wiki/Indentation_style#K&R
 - Linting - static code analysis
   https://en.wikipedia.org/wiki/Lint_(software)
-- Shellcheck - static shell script code analysis
+- Shellcheck - static shell script code
+  analysis
   https://www.shellcheck.net
 - The "Unofficial Bash strict mode" blog
   post by Aaron Maxwell introduced on a
