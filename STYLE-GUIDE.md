@@ -51,7 +51,7 @@ MISCELLANEOUS
 -->
 
 
-# SHELL SCRIPT STYLE STYLE
+# SHELL SCRIPT STYLE GUIDE
 
 ## 1. Core Principles
 
@@ -469,11 +469,25 @@ Option|Long Option|Description
 
 - Prefer function names using
   [CamelCase]. Start identifier with an
-  uppercase letter to minimize conflicts
-  with existing commands. Use the
-  standard POSIX parentheses syntax to
-  define functions; avoid the Bash-only
-  [function keyword].
+  uppercase letter. **Rationale:** to
+  minimize conflicts with existing
+  commands.
+
+- Use the standard POSIX parentheses
+  syntax to define functions; avoid the
+  Bash-only [function keyword].
+
+``` shell
+   Example ()
+   {
+	  # POSIX
+   }
+
+   function Example ()
+   {
+	  # Bash only
+   }
+```
 
 - Prefer including a space before the
   function parentheses `()` to match the
@@ -517,7 +531,7 @@ Option|Long Option|Description
         # implementations.
 
         local file
-        file="$1"
+        file="${1:-}"
     }
 ```
 
@@ -560,6 +574,7 @@ Option|Long Option|Description
 ``` shell
     IsCommand ()
     {
+		[ "${1:-}" ] || return 1
         command -v "${1:-}" > /dev/null 2>&1
     }
 
@@ -621,10 +636,11 @@ integers. For decimals, use `bc` or
     k=$(echo "$i + $j" | bc)
 
     # With leading zero: 0.6
-    printf -v k "%g" "$(echo "$i + $j" | bc)"
+    k=$(printf "%g" "$(echo "$i + $j" | bc)")
 
-    # GNU awk. With leading zero: 0.6
-    k=$(awk -v i="$i" -v j="$j" '{BEGIN print i + j}'
+    # POSIX awk
+	k=$(i=0.5 j=0.1 awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+
 ```
 
 ## 3. Bash Notes
