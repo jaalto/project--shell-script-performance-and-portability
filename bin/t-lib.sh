@@ -81,7 +81,7 @@
 PROGRAM=$0
 TMPBASE=${LOGNAME:-$USER}.$$.test
 
-VERBOSE=""
+VERBOSE=${VERBOSE:-}
 T_LIB_CACHE_GNU=""
 
 # -- ------------------------------------
