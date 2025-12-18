@@ -469,11 +469,25 @@ Option|Long Option|Description
 
 - Prefer function names using
   [CamelCase]. Start identifier with an
-  uppercase letter to minimize conflicts
-  with existing commands. Use the
-  standard POSIX parentheses syntax to
-  define functions; avoid the Bash-only
-  [function keyword].
+  uppercase letter. **Rationale:** to
+  minimize conflicts with existing
+  commands.
+
+- Use the standard POSIX parentheses
+  syntax to define functions; avoid the
+  Bash-only [function keyword].
+
+``` shell
+   Example ()
+   {
+	  # POSIX
+   }
+
+   function Example ()
+   {
+	  # Bash only
+   }
+```
 
 - Prefer including a space before the
   function parentheses `()` to match the
@@ -517,7 +531,7 @@ Option|Long Option|Description
         # implementations.
 
         local file
-        file="$1"
+        file="${1:-}"
     }
 ```
 
