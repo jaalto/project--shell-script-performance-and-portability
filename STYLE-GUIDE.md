@@ -135,12 +135,34 @@ MISCELLANEOUS
 ```
 
 - Set a exit status: Scripts should exit
-  with 0 for success and a non-zero value
-  to indicate a failure
-  or specific error condition.
+  with 0 for success and a non-zero
+  value to indicate a failure or
+  specific error condition.
+
+- Check status of commands and
+  exit early.
+
+``` shell
+    # in case you do not use
+	# set -o errexit
+
+	cd "$dir" || exit $?
+```
+
+- Use safe temporary files and
+  directories with `mktemp'.
+  **Rationale:** Prevent symlink attacks
+  and race conditions in multi-user
+  environments. See [Bash FAQ/062].
+
+``` shell
+	tmpfile=$(mktemp -t tmp.file.XXX)
+	tmpdir=$(mktemp --directory -t tmp.dir.XXX)
+```
 
 - Use a [trap] to ensure proper cleanup
   of temporary files on script exit.
+  See [Bash Guide/SignalTrap].
 
 ``` shell
 
@@ -239,7 +261,30 @@ MISCELLANEOUS
         ...
     fi
 ```
+
 ### 2.4 Input/Output and File Handling
+
+- Send error messages to stderr.
+
+``` bash
+	echo "ERROR: message" >&2
+
+	# Not like this
+	echo >&2 "ERROR: message"
+```
+
+- Display help to stdout. Displaying
+  help, program version etc. are not an
+  errors conditions.
+
+``` bash
+    arg=${1:-}
+
+	if [ "$arg" = "--help" ]; then
+		echo "Synopsis: ...."
+		exit 0
+	fi
+```
 
 - Use `read -r`. **Rationale:** When
   reading input with read, always use the
@@ -414,6 +459,26 @@ with shell shorthands.
     }
 ```
 
+**Mathematical Calculations**
+
+The POSIX `$((...))` only handles
+integers. For decimals, use `bc` or
+`awk`.
+
+``` shell
+    i=0.5
+    j=0.1
+
+    # No leading zero: .6
+	k=$(echo "$i + $j" | bc)
+
+    # With leading zero: 0.6
+	printf -v k "%g" "$(echo "$i + $j" | bc)"
+
+    # GNU awk. With leading zero: 0.6
+    k=$(awk -v i="$i" -v j="$j" '{BEGIN print i + j}'
+```
+
 ## 3. Bash Notes
 
 ### 3.1 Bash shebang
@@ -429,8 +494,8 @@ Use the portable `env` [shebang] line.
 ### 3.2 Limit Bashism
 
 Even in Bash, default to POSIX syntax
-  unless Bash-specific features
-are explicitly required.
+unless Bash-specific features are
+explicitly required.
 
 **Rationale:** This ensures broader
   system portability and later
@@ -525,8 +590,11 @@ Google search help:
 
 [Bash FAQ/001]: https://mywiki.wooledge.org/BashFAQ/001
 [Bash FAQ/082]: https://mywiki.wooledge.org/BashFAQ/082
+[Bash FAQ/062]: https://mywiki.wooledge.org/BashFAQ/062
 [Bash FAQ/105]: https://mywiki.wooledge.org/BashFAQ/105
 [Bash Pitfalls/60]: https://mywiki.wooledge.org/BashPitfalls#set_-euo_pipefail
+[Bash Guide/SignalTrap]: https://mywiki.wooledge.org/SignalTrap
+
 
 <!-- ------- REF:POSIX ------- -->
 
