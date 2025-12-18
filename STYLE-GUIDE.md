@@ -220,9 +220,9 @@ Option| Long Option |Description
 
     Help ()
     {
-		# See sections and
-		# formatting ideas from
-		# in the manual pages.
+        # See sections and
+		# formatting ideas in
+		# the manual pages.
 
         echo "\
     SYNOPSIS
