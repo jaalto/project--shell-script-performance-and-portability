@@ -218,8 +218,12 @@ Option| Long Option |Description
     #
     #       GNU utilities: grep, gawk etc.
 
-    Help ()  # See formatting ideas from manual pages
+    Help ()
     {
+		# See sections and formatting
+		# ideas from in the manual
+		# pages.
+
         echo "\
     SYNOPSIS
         $0 [options]
