@@ -96,7 +96,7 @@ MISCELLANEOUS
   regardless of the OS, ensuring
   improved interoperability.
 
-- **utilities trade-off to the POSIX
+- **Utilities trade-off to the POSIX
   portability focus**: In calling
   utilities (e.g. `grep`), use readable
   GNU `--long` options where possible.
@@ -113,21 +113,24 @@ MISCELLANEOUS
   best met by providing standardized
   interface.
 
-Option|Long Option|Description
----|---|---
--h|--help|Display usage instructions and exit
--v|--verbose|Increase output detail for monitoring.
--V|--version|Print version information and exit.
--D|--debug|(Optional) Enable tracing output.
+Option| Long Option |Description
+---   | ---         | ---
+-h    | --help      |Display usage instructions and exit
+-v    | --verbose   |Increase output detail for monitoring.
+-V    | --version   |Print version information and exit.
+-D    | --debug     |(Optional) Enable tracing output.
 
 ``` shell
    # Code for option handling
    #
-   # NOTE: POSIX `getopts` utility does
-   # not support long options. The
-   # Limitation of the code is that it
-   # does not provide stacked short
-   # options in form of "-l -x" => "-lx"
+   # NOTE: POSIX `getopts`
+   # utility does not support
+   # long options. The
+   # Limitation of the code
+   # is that it does not
+   # provide stacked short
+   # options in form of "-l
+   # -x" => "-lx"
 
    while :
    do
