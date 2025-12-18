@@ -167,7 +167,8 @@ Option|Long Option|Description
 
 - Documentation. Every script must have
   a top-level comment block including:
-  **License:** GPL, MIT etc.
+  **License:** Consult [SPDX License List].
+  Prefer known licences like GPL, MIT etc.
   **Description:** What the script does.
   **Usage:** Example of how to call it.
   The easiest is to provide
@@ -776,5 +777,6 @@ Google search help:
 [Powershell scrict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
 [Perl]: //www.perl.org
+[SPDX License List]: https://spdx.org/licenses/
 
 <!-- END OF FILE -->
