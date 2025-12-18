@@ -525,10 +525,12 @@ Option| Long Option |Description
 ``` shell
     Example ()
     {
-        # arguments in $1, $2, etc., not the parens
+        # arguments in $1, $2,
+		# etc., not the parens
     }
 
-    # Behaves like a system command
+    # Behaves like a system
+	# command
     Example "arg"
 ```
 
