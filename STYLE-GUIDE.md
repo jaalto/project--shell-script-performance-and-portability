@@ -144,7 +144,8 @@ Option| Long Option |Description
                 ;;
             -V | --version)
                 shift
-                Version  # Calls exit 0
+				# Calls exit 0
+                Version
                 ;;
             -D | --debug)
                 shift
@@ -152,10 +153,11 @@ Option| Long Option |Description
                 ;;
             -h | --help)
                 shift
-                Help # Calls exit 0
+				# Calls exit 0
+                Help
                 ;;
-            --)
-                shift  # End of options
+            --) # End of options
+                shift
                 break
                 ;;
             -*)
