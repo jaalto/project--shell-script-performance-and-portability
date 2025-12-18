@@ -347,12 +347,15 @@ Option| Long Option |Description
 - Prefer simple `$var` by default. Use the
   braces only when necessary for boundary
   conditions (e.g., `${var}suffix`).
+  **Rationale:** minimalism in the spirit
+  of Keep It Short and Simple
+  design principle.
 
 ``` shell
     path="$dir/$to/$file"
 
     # Not like this
-    path="${dir}/$[to}/$[file}"
+    path="${dir}/${to}/${file}"
 ```
 
 - In variable tests, use simple
@@ -777,6 +780,7 @@ Google search help:
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [special parameters]: https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html
 [command substitution]: https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html
+[parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
@@ -806,5 +810,6 @@ Google search help:
 
 [Perl]: //www.perl.org
 [SPDX License List]: https://spdx.org/licenses/
+[Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
 
 <!-- END OF FILE -->
