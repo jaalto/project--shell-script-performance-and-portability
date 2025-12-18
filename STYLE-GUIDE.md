@@ -348,7 +348,7 @@ Option| Long Option |Description
   braces only when necessary for boundary
   conditions (e.g., `${var}suffix`) or
   when utilizing shell
-  [parameter expansion} (e.g.,
+  [parameter expansion] (e.g.,
   `${var:-default}`). **Rationale:**
   minimalism in the spirit of Keep It
   Short and Simple design principle.
