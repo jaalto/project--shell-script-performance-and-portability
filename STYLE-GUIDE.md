@@ -113,12 +113,12 @@ MISCELLANEOUS
   best met by providing standardized
   interface.
 
-Option|Long Option|Description
----|---|---
--h|--help|Display usage instructions and exit
--v|--verbose|Increase output detail for monitoring.
--V|--version|Print version information and exit.
--D|--debug|(Optional) Enable tracing output.
+Option| Long Option |Description
+---   | ---         | ---
+`-h`  | `--help`    |Display usage instructions and exit
+`-v`  | `--verbose` |Increase output detail for monitoring.
+`-V`  | `--version` |Print version information and exit.
+`-D`  | `--debug`   |(Optional) Enable tracing output.
 
 ``` shell
    # Code for option handling
