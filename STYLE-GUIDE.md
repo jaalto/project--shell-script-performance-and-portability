@@ -407,8 +407,10 @@ Option| Long Option |Description
   action blocks stand out.
 
 ```
-    # Note: according to POSIX, $var does
-    # need quoting
+    # Note: POSIX case statements
+    # require no quotes for $var
+	# because it does not undergo
+    # word splitting or globbing.
     case $var in
         pattern1)
             ...
