@@ -290,11 +290,9 @@ Option| Long Option |Description
     #
     #       Visit <http://www.gnu.org/copyleft/gpl.html>
     #
-    #   Description
+    #   Usage
     #
-    #       See option:
-    #
-    #           --help
+    #       See the --help option.
     #
     #   Dependecies
     #
