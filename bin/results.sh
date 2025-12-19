@@ -28,7 +28,9 @@
 set -o errexit   # Exit on error
 set -o nounset   # Treat unused variables as errors
 
-VERSION="2025.1219.0931"
+# is used
+# shellcheck disable=SC2034
+VERSION="2025.1219.1004"
 
 PROGRAM=${0##*/}
 AWK=${AWK:-awk}   # GNU version
@@ -37,7 +39,7 @@ pwd=$(cd "$(dirname "$0")" && pwd)
 LIB="t-lib.sh"
 
 # ignore follow
-# shellcheck disable=SC1091
+# shellcheck disable=SC1090,SC1091
 
 source="source-only" . "$pwd/$LIB"
 
