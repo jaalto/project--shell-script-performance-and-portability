@@ -26,6 +26,8 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
+VERSION="2025.1219.0925"
+
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
 
@@ -114,6 +116,9 @@ OPTIONS
 
     -v, --verbose
         Display verbose messages.
+
+    -V, --version
+        Display version, license etc. and exit.
 
     --help-pbosh
         Display pbosh shell install help.
@@ -566,6 +571,10 @@ Main ()
                 # shellcheck disable=SC2034
                 VERBOSE="verbose"
                 shift
+                ;;
+            -V | --version)
+                shift
+                Version
                 ;;
             --help-pbosh)
                 shift
