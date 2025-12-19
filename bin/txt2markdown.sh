@@ -26,7 +26,7 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
-VERSION="2025.1219.0916"
+VERSION="2025.1219.0921"
 
 pwd=$(cd "$(dirname "$0")" && pwd)
 PROGRAM=${0##*/}
@@ -52,6 +52,9 @@ SYNOPSIS
     $program FILE
 
 OPTIONS
+    -V, --version
+        Display version, license etc. and exit.
+
     -h, --help
         Display help.
 
