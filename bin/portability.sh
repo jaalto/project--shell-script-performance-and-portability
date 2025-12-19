@@ -26,7 +26,9 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
-VERSION="2025.1219.0925"
+# is used
+# shellcheck disable=SC2034
+VERSION="2025.1219.1002"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
