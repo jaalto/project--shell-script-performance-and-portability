@@ -942,32 +942,19 @@ arithmetic expression `((...))`
 Examples:
 
 ``` shell
-  # Instead of ...
-  [[ $var = $value ]]
+	# Instead of ...
+	for ((i=1; i <= 10; i++))
+	do
+		...
+	done
 
-  # Use portable POSIX-style
-  # with quoting
-  [ "$var" = "$value" ]
-
-  # Apply quoting consistently
-  file="$path/$conf"
-  result=$(command "$file")
-
-  # - - - - - - - - - - - - -
-
-  # Instead of ...
-  for ((i=1; i <= 10; i++))
-  do
-      ...
-  done
-
-  # Use portable POSIX.
-  # No real performance
-  # difference
-  for i in $(seq 10)
-  do
-      ...
-  done
+	# Use portable POSIX.
+	# No real performance
+	# difference
+	for i in $(seq 10)
+	do
+		...
+	done
 ```
 
 3.2.3 TEST CONDITIONS
@@ -982,12 +969,16 @@ ensures safety, correctness, and
 portability.
 
 ``` shell
-  # Instead of ...
-  [[ $var = $value ]]
+	# Instead of ...
+	if [[ $var = $value ]]; then
+	    ...
+	fi
 
-  # Use portable POSIX-style
-  # with quoting
-  [ "$var" = "$value" ]
+	# Use portable POSIX-style
+	# with quoting
+	if [ "$var" = "$value" ]; then
+	    ...
+	fi
 ```
 
 ## 4. REFERENCES
