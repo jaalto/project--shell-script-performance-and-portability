@@ -29,12 +29,12 @@ INFORMATION FOR EDITING
   The maximum column limits are:
 
   col type
-  ---------------------------------------
+  --- -----------------------------
   35  Code: bullet: ``` ... ``´)
   41  Regular text and paragraphs.
       Github line limit to support
       editing.
-  ---------------------------------------
+  --- -----------------------------------
 
   Emacs editor settings:
 
@@ -657,6 +657,15 @@ with shell shorthands.
 
 **Mathematical Calculations**
 
+Less is more: omit the `$` in POSIX
+arithmetic expansions. The shell
+automatically treats names as variables
+and evaluates their values and Using the
+`$` inside the parenthese is redundant.
+
+	result=$((n + m))   # OK
+	result=$(($n + $m)) # NOK
+
 The POSIX `$((...))` only handles
 integers. For decimals, use `bc` or
 `awk`.
@@ -673,6 +682,28 @@ integers. For decimals, use `bc` or
 
     # POSIX awk
 	k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+```
+
+**Suggested global variables**
+
+Here is list of suggested global
+variables at the top of for distributed
+shell scripts.
+
+``` shell
+	PROGRAM=${0##*/}
+	AUTHOR="John doe <jdoe@example.com>"
+	URL="http://example.com/project/homepage"
+
+    # see https://spdx.org/licenses
+	# for correct short names
+	LICENCE="GPL-3-or-later"
+
+	# Date based is useful for
+	# infrequent releases.
+	# Use machine readable
+	# format N.N[.N]
+    VERSION="YYYY.MMDD.HHMM"
 ```
 
 ## 3. Bash Notes
