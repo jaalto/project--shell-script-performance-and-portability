@@ -28,7 +28,7 @@
 set -o errexit   # Exit on error
 set -o nounset   # Treat unused variables as errors
 
-VERSION="2025.1219.0930"
+VERSION="2025.1219.0931"
 
 PROGRAM=${0##*/}
 AWK=${AWK:-awk}   # GNU version
@@ -58,17 +58,6 @@ DESCRIPTION
     Show results (extract commentatry) from <test case>."
 
     exit 0
-}
-
-Warn ()
-{
-    echo "$*" >&2
-}
-
-Die ()
-{
-    Warn "$PROGRAM: $*"
-    exit 1
 }
 
 Result ()
