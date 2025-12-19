@@ -28,7 +28,7 @@
 set -o errexit   # Exit on error
 set -o nounset   # Treat unused variables as errors
 
-VERSION="2025.1219.0928"
+VERSION="2025.1219.0930"
 
 PROGRAM=${0##*/}
 AWK=${AWK:-awk}   # GNU version
@@ -116,11 +116,14 @@ Main ()
 
     while :
     do
+        local opt
+        opt="${1:-}"
+
         # Unused, but useful during debug
         # shellcheck disable=SC2034
-        dummy="OPT: $1"
+        dummy="OPT: $opt"
 
-        case ${1:-} in
+        case $opt in
             -V | --version)
                 shift
                 Version
