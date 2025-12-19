@@ -26,6 +26,8 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
+VERSION="2025.1219.0918"
+
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
 
@@ -430,10 +432,13 @@ Main ()
                 loop_max=$2   # GLOBAL. Used in t-lib.sh
                 shift ; shift
                 ;;
-
             -v | --verbose)
                 VERBOSE="verbose"
                 shift
+                ;;
+            -V | --version)
+                shift
+                Version
                 ;;
             -h | --help)
                 shift
