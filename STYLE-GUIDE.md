@@ -63,7 +63,7 @@ MISCELLANEOUS
 - Use conventions that maximize
   simplicity and clarity. Embrace
   minimalism in the spirit of the
-  [Less Is More] philisophy,
+  [Less Is More] philisophy (LIM),
   similar to KISS
   [Keep It Short and Simple].
 
@@ -753,6 +753,64 @@ variable.
     curdir=$PWD    # PREFERRED
     curdir=$(pwd)
 
+**Long commands**
+
+To improve readability, split commands
+and options in their own lines according
+to clean code priciple: one line does
+one thing.
+
+    sed -e 's/^ +//'   \
+	    -e 's/ +$//'   \
+	    -e 's/  +/ /g' \
+	    file
+
+**Pipes and long commands**
+
+In the [Google Bash Style Guide] section
+on "pipelines," there is an example of
+how to split a long pipe chain across
+separate lines.
+
+While aligning the pipe (|) at the start
+of lines is visually pleasing, it
+requires redundant backslashes (\) at
+the end of each preceding line. In the
+spirit of "Less is More" (LIM), a
+trailing pipe naturally indicates that
+the command continues on the next line,
+making the backslash redundant. This
+reduces visual noise and eliminates the
+risk of "trailing space" syntax errors,
+as indentation alone is sufficient to
+express the separation of commands.
+
+``` shell
+	# Google
+	command1 \
+	  | command2 \
+	  | command4
+
+	# LIM
+	command1   |
+	  command2 |
+	  command3
+```
+
+The same LIM priciple applies (no
+backslash needed) to also other
+operators:
+
+``` shell
+	command1	 &&
+		command2 &&
+		command3 &&
+
+	command1	 ||
+		command2 ||
+		command3 ||
+```
+
 **Keep it simple.**
 
 Use standard `if..fi`. Avoid clever
@@ -997,7 +1055,7 @@ Google search help:
 [Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
 [Less Is More]: https://en.wikipedia.org/wiki/Less_is_more
 
-
+[Google Bash Style Guide]: https://google.github.io/styleguide/shellguide.html
 
 <!-- ------- REF:LANG -------- -->
 
