@@ -25,15 +25,21 @@
 #
 # Extract results from test files
 
+set -o errexit   # Exit on error
+set -o nounset   # Treat unused variables as errors
+
+VERSION="2025.1219.0928"
+
 PROGRAM=${0##*/}
 AWK=${AWK:-awk}   # GNU version
 
 pwd=$(cd "$(dirname "$0")" && pwd)
+LIB="t-lib.sh"
 
 # ignore follow
 # shellcheck disable=SC1091
 
-. "$pwd/t-lib.sh"   # Common library
+source="source-only" . "$pwd/$LIB"
 
 Help ()
 {
@@ -42,6 +48,9 @@ SYNOPSIS
     $PROGRAM [options] <test case> [<test case> ...]
 
 OPTIONS
+    -V, --version
+        Display version, license etc. and exit.
+
     -h, --help
         Display help.
 
@@ -112,6 +121,10 @@ Main ()
         dummy="OPT: $1"
 
         case ${1:-} in
+            -V | --version)
+                shift
+                Version
+                ;;
             -h | --help)
                 shift
                 Help
