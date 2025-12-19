@@ -63,7 +63,7 @@ MISCELLANEOUS
 - Use conventions that maximize
   simplicity and clarity. Embrace
   minimalism in the spirit of the
-  [Less Is More] design principle,
+  [Less Is More] philisophy,
   similar to KISS
   [Keep It Short and Simple].
 
@@ -80,7 +80,83 @@ MISCELLANEOUS
   variable quoting, to prevent unexpected
   behavior.
 
-### 1.2 Script Preamble and Dependencies
+### 1.2 Code Organization and Modularity
+
+For best practises, divide shell script
+into sections. They are:
+
+- The shebang
+- The comment block
+- Constants
+- Functions
+- Program body in Main()
+
+In order to easily find the start of the
+program, put the entry point in a
+function called `Main` as the bottom-most
+function. This provides consistency with
+the existing programming languages and
+allows readers to find the start of the
+program immediately. Using a function
+also enables the use of local variables
+for the main logic.
+
+A template for entry point:
+```shell
+Main ()
+{
+    local arg
+	arg=${1:-}
+
+	echo "Arg from command line: $arg"
+}
+
+Main "$@"
+```
+
+
+### 1.3 Consistent Naming Conventions
+
+Shell scripts can be written in a variety
+of styles. To make scripts easier to read
+and understand, use consistent naming
+conventions and style.
+
+Commonly used conventions include
+[Snake case] (e.g., my_variable) or
+[Camel case] (e.g., myVariable). Follow a
+consistent code style, such as indenting
+with spaces or tabs, using spaces around
+operators, and placing blocks and braces
+on the same line or a new line.
+
+This guide adopts the following conventions:
+
+  
+- Functions use [CamelCase]: Start with
+  an uppercase letter. **Rationale:**
+  Uppercase function names minimize
+  conflicts with existing lowercase shell
+  commands.
+- Variables start with a lowercase
+  letter. **Rationale:** Underscore
+  characters increase visual noise.
+  Compare `thisVar="$hasVal $likeThis"` vs
+  `this_var="$has_val $like_this"`.
+- Indentation: Spaces are used over TAB
+  characters. **Rationale:** The layout
+  remains uniform across editors,
+  terminals, and tools like diff(1),
+  where TAB widths vary. Additionally,
+  copy-pasting code preserves the exact
+  formatting.
+- Blocks use primarily [Allman] style
+  over [K&R]. **Rationale:** To maximize
+  clarity; placing braces on their own
+  lines reduces "noise" in the logical
+  lines of code.
+
+### 1.4 Script Preamble and Dependencies
 
 - Prefer `/bin/sh`. This ensures maximum
   portability and execution speed.
@@ -500,12 +576,6 @@ Option| Long Option |Description
 
 ### 2.5 Functions and Scope
 
-- Prefer function names using
-  [CamelCase]. Start identifier with an
-  uppercase letter. **Rationale:** to
-  minimize conflicts with existing
-  commands.
-
 - Use the standard POSIX parentheses
   syntax to define functions; avoid the
   Bash-only [function keyword].
@@ -730,16 +800,27 @@ explicitly required.
   scripts to benefit from faster startup
   and fewer forks.
 
-**Practical Guidance:** Avoid
-  Bash-specific constructs like the
-  arithmetic expression `((...))` and the
-  [double bracket] conditional `[[...]]`.
-  Instead, use the portable POSIX [test]
-  command `[...]` and always quote
-  variable expansions. Developing a
-  consistent quoting habit ensures
-  safety, correctness, and portability.
-  Examples:
+**Practical Guidance:**
+
+3.2.1 VARIABLES
+
+Favor `local` for variable scoping within
+functions. Avoid the Bash-specific
+[declare] built-in. **Rationale:** Less
+is more.
+
+3.2.2 ARITHMETIC
+
+Avoid Bash-specific constructs like the
+arithmetic expression `((...))` and the
+[double bracket] conditional `[[...]]`.
+Instead, use the portable POSIX [test]
+command `[...]` and always quote variable
+expansions. Developing a consistent
+quoting habit ensures safety,
+correctness, and portability.
+
+Examples:
 
 ``` shell
   # Instead of ...
@@ -761,8 +842,9 @@ explicitly required.
       ...
   done
 
-  # Use portable POSIX
-  # No performance difference
+  # Use portable POSIX.
+  # No real performance
+  # difference
   for i in $(seq 10)
   do
       ...
@@ -811,6 +893,7 @@ Google search help:
 [functions]: https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html
 [function keyword]: https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html
 [bash type]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-type
+[declare]: https://www.gnu.org/software/bash/manual/bash.html#index-declare
 
 [Bash FAQ/001]: https://mywiki.wooledge.org/BashFAQ/001
 [Bash FAQ/082]: https://mywiki.wooledge.org/BashFAQ/082
@@ -841,6 +924,8 @@ Google search help:
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [shellcheck]: https://www.shellcheck.net
 [CamelCase]: https://en.wikipedia.org/wiki/Camel_case
+[Camel case]: https://en.wikipedia.org/wiki/Camel_case
+[Snake case]: https://en.wikipedia.org/wiki/Snake_case
 [Allman]: https://en.wikipedia.org/wiki/Indentation_style#Allman_style
 [K&R]: https://en.wikipedia.org/wiki/Indentation_style#K&R
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
@@ -856,6 +941,8 @@ Google search help:
 [SPDX License List]: https://spdx.org/licenses/
 [Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
 [Less Is More]: https://en.wikipedia.org/wiki/Less_is_more
+
+
 
 <!-- ------- REF:LANG -------- -->
 
