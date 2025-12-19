@@ -817,7 +817,7 @@ operators:
 		command3 ||
 ```
 
-**Keep it simple**
+**Keep It Simple**
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||`. Complex blocks
@@ -843,8 +843,8 @@ automatically treats names as variables
 and evaluates their values and Using the
 `$` inside the parenthese is redundant.
 
-    result=$((n + m))   # OK
-    result=$(($n + $m)) # NOK
+    result=$((n + m))   # preferred
+    result=$(($n + $m))
 
 The POSIX `$((...))` only handles
 integers. For decimals, use `bc` or
