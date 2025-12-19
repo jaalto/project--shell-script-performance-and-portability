@@ -742,6 +742,17 @@ would lead to less readable code.
     printf "%s\n" "display this"
     printf "%s\n" "and more of that"
 
+**$PWD vs $(pwd)**
+
+POSIX defines variable [PWD]. You can
+use it in place of command [pwd]. For
+shell where `pwd` is not buiöt-in is,
+it's a little more efficien to use the
+variable.
+
+    curdir=$PWD    # PREFERRED
+    curdir=$(pwd)
+
 **Keep it simple.**
 
 Use standard `if..fi`. Avoid clever
@@ -949,9 +960,11 @@ Google search help:
 [special parameters]: https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html
 [command substitution]: https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html
 [parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
+[PWD]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=PWD
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
+[pwd]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html
 [sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
 [trap]: https://www.gnu.org/software/bash/manual/bash.html#index-trap
