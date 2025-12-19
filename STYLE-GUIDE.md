@@ -877,7 +877,7 @@ shell scripts.
 
     # see https://spdx.org/licenses
     # for correct short names
-    LICENCE="GPL-3-or-later"
+    LICENSE="GPL-3-or-later"
 
 	# Use machine
     # readable format N.N[.N]
