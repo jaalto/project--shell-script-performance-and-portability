@@ -879,10 +879,16 @@ shell scripts.
     # for correct short names
     LICENCE="GPL-3-or-later"
 
-    # Date based is useful for
-    # infrequent releases.
-    # Use machine readable
-    # format N.N[.N]
+	# Use machine
+    # readable format N.N[.N]
+	#
+	# For proction code,
+	# use standard X.Y.Z
+	#
+    # Date based version may
+    # be useful for small
+	# projects or infrequent
+	# releases.
     VERSION="YYYY.MMDD.HHMM"
 ```
 
