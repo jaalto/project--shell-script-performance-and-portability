@@ -470,6 +470,9 @@ Option| Long Option |Description
 
 - Use 4 spaces for indentation.
 
+- Use blank lines between blocks to
+  improve readability.
+
 - Use the [Allman] "line up" style in
   `do..done`
 
