@@ -22,27 +22,57 @@
 # Usage
 #
 #       See the --help option.
-#
-# Description
-#
-#       Convert result text file into markdown format.
-#
-#       This is not a general utility but a
-#       specific program for the project.
 
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
+VERSION="2025.1219.0916"
+
 pwd=$(cd "$(dirname "$0")" && pwd)
+PROGRAM=${0##*/}
+LIB="t-lib.sh"
 
 # ignore follow
 # shellcheck disable=SC1091
 
-. "$pwd/t-lib.sh"
+source="source-only" . "$pwd/$LIB"
+
+Help ()
+{
+    program=$PROGRAM
+
+    case $program in
+        */*) ;;
+          *) program="./$program"
+             ;;
+    esac
+
+    echo "\
+SYNOPSIS
+    $program FILE
+
+OPTIONS
+    -h, --help
+        Display help.
+
+DESCRIPTION
+    Convert file into markdown format.
+
+    This is not a general utility but a specific program for
+    the project to process top level comments extracted from
+    test case files.
+
+EXAMPLES
+    ./results.sh <test case>.sh > doc.txt
+    $program doc.txt"
+
+    exit 0
+}
 
 Convert ()
 {
-    local file="${1:?ERROR: Convert(): missing arg}"
+    local file
+    file="${1:?ERROR: Convert(): missing arg}"
 
     awk '
         /FILE:/ {
@@ -92,6 +122,22 @@ Convert ()
 Main ()
 {
     local file
+    local arg
+    arg="${1:-}"
+
+    case $arg in
+        -V | --version)
+            Version
+            ;;
+        -h | --help)
+            Help
+            ;;
+    esac
+
+    if [ ! "$arg" ]; then
+        Warn "WARN no files. See --help."
+        return 0
+    fi
 
     for file in "$@"
     do
