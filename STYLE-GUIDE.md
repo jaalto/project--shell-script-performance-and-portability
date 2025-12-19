@@ -726,7 +726,7 @@ Option| Long Option |Description
 
 POSIX [echo] does not have any options.
 Use it for statiuc strings. Use
-[printf} when you require options.
+[printf] when you require options.
 Arbitrary rules like 'use printf for
 everyting' is not sound advice as it
 would lead to less readable code.
