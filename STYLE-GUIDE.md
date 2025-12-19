@@ -747,14 +747,17 @@ would lead to less readable code.
 
 **$PWD vs $(pwd)**
 
-POSIX defines variable [PWD]. You can
-use it in place of command [pwd]. For
-shell where `pwd` is not buiöt-in is,
-it's a little more efficien to use the
-variable.
+POSIX defines the variable [PWD]. You
+can use it in place of the command
+[pwd]. For shells where `pwd` is not a
+built-in, it is slightly more efficient
+to use the variable, as it avoids a
+subshell fork.
 
+``` shell
     curdir=$PWD    # PREFERRED
     curdir=$(pwd)
+```
 
 **Long commands**
 
