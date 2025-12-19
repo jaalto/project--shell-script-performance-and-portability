@@ -26,7 +26,7 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
-VERSION="2025.1219.0918"
+VERSION="2025.1219.0921"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
@@ -68,8 +68,11 @@ OPTIONS
         Display <test case> header before
         running the tests.
 
+    -V, --version
+        Display version, license etc. and exit.
+
     -h, --help
-        Display help.
+        Display help and exit.
 
 DESCRIPTION
     Run <test case> file(s) using bash or other shell.
