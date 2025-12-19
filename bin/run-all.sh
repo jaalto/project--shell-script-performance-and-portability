@@ -26,16 +26,19 @@
 set -o errexit   # Exit on error
 set -o nounset   # Treat unused variables as errors
 
-SHELL_DEFAULT="dash,ksh,bash"
+VERSION="2025.1219.0922"
 
+pwd=$(cd "$(dirname "$0")" && pwd)
+PROGRAM=${0##*/}
+
+SHELL_DEFAULT="dash,ksh,bash"
 PARALLEL="parallel"
-PROGRAM="$0"
 LIB="t-lib.sh"
 
 # ignore follow
 # shellcheck disable=SC1090
 
-source="source-only" . "$LIB"
+source="source-only" . "$pwd/$LIB"
 
 Help ()
 {
@@ -59,6 +62,9 @@ OPTIONS
         'busybox ash' etc.
         Default is: SHELL_DEFAULT
 
+    -V, --version
+        Display version, license etc. and exit.
+
     -h, --help
         Display help.
 
@@ -66,7 +72,6 @@ DESCRIPTION
     Run all test cases under --shell SHELL-LIST
 
 EXAMPLES
-
     $program # use defaults
     $program dash,ksh93,bash"
 
@@ -96,6 +101,10 @@ Main ()
                 [ "${1:-}" ] || Die "ERROR: missing --shell ARG"
                 shlist=$1
                 shift
+                ;;
+            -V | --version)
+                shift
+                Version
                 ;;
             -h | --help)
                 shift
