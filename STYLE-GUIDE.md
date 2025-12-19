@@ -106,16 +106,15 @@ A template for entry point:
 Main ()
 {
     local arg
-	arg=${1:-}
+    arg=${1:-}
 
-	echo "Arg from command line: $arg"
+    echo "Arg from command line: $arg"
 }
 
 Main "$@"
 ```
 
-
-### 1.3 Consistent Naming Conventions
+### 1.3 Consistent Conventions
 
 Shell scripts can be written in a variety
 of styles. To make scripts easier to read
@@ -132,7 +131,6 @@ on the same line or a new line.
 
 This guide adopts the following conventions:
 
-  
 - Functions use [CamelCase]: Start with
   an uppercase letter. **Rationale:**
   Uppercase function names minimize
@@ -224,7 +222,7 @@ Option| Long Option |Description
                 ;;
             -V | --version)
                 shift
-				# Calls exit 0
+                # Calls exit 0
                 Version
                 ;;
             -D | --debug)
@@ -233,7 +231,7 @@ Option| Long Option |Description
                 ;;
             -h | --help)
                 shift
-				# Calls exit 0
+                # Calls exit 0
                 Help
                 ;;
             --) # End of options
@@ -301,8 +299,8 @@ Option| Long Option |Description
     Help ()
     {
         # See sections and
-		# formatting ideas in
-		# the manual pages.
+        # formatting ideas in
+        # the manual pages.
 
         echo "\
     SYNOPSIS
@@ -458,6 +456,18 @@ Option| Long Option |Description
 
 ### 2.3 Formatting and Syntax
 
+- The Maximum line length is 80
+  characters. **Rationale:** this limit
+  is a deliberate constraint based on
+  human physiology and complexity
+  management. Human eyes scan vertical
+  text much faster than horizontal text
+  (C.f. newspaper columns and
+  speed-reading). With limited space,
+  complex logic must be broken out, or
+  refactored into more manageable parts
+  Less code per line is better than more.
+
 - Use 4 spaces for indentation.
 
 - Use the [Allman] "line up" style in
@@ -483,7 +493,7 @@ Option| Long Option |Description
 ```
     # Note: POSIX case statements
     # require no quotes for $var
-	# because it does not undergo
+    # because it does not undergo
     # word splitting or globbing.
     case $var in
         pattern1)
@@ -581,12 +591,12 @@ Option| Long Option |Description
 ``` shell
    Example ()
    {
-	  # POSIX
+      # POSIX
    }
 
    function Example ()
    {
-	  # Bash only
+      # Bash only
    }
 ```
 
@@ -608,11 +618,11 @@ Option| Long Option |Description
     Example ()
     {
         # arguments in $1, $2,
-		# etc., not the parens
+        # etc., not the parens
     }
 
     # Behaves like a system
-	# command
+    # command
     Example "arg"
 ```
 
@@ -677,19 +687,19 @@ Option| Long Option |Description
 ``` shell
     IsCommand ()
     {
-		[ "${1:-}" ] || return 1
+        [ "${1:-}" ] || return 1
         command -v "${1:-}" > /dev/null 2>&1
     }
 
     if ! IsCommand local; then
         if IsCommand typeset; then
             # Use 'eval' to
-			# hide statement.
+            # hide statement.
             # Would otherwise
             # cause program
-			# to exit due to
-			# parse error at
-			# 'local' keyword.
+            # to exit due to
+            # parse error at
+            # 'local' keyword.
 
             eval 'local () { typeset "$@"; }'
         fi
@@ -698,7 +708,7 @@ Option| Long Option |Description
     PortableLocal ()
     {
         # Portable use of local.
-		# On its own lines:
+        # On its own lines:
         # - Declaration
         # - Assignment
 
@@ -708,6 +718,29 @@ Option| Long Option |Description
 ```
 
 ### 2.7 Other notes
+
+**echo vs printf**
+
+POSIX [echo] does not have any options.
+Use it for statiuc strings. Use
+[printf} when you require options.
+Arbitrary rules like 'use printf for
+everyting' is not sound advice as it
+would lead to less readable code.
+
+    # Simple
+
+    echo "display this"
+    echo "and more of that"
+
+    # vs
+    #
+    # Tthe proper safe way to use
+    # printf is to *always*
+    # include "%s"
+
+    printf "%s\n" "display this"
+    printf "%s\n" "and more of that"
 
 **Keep it simple.**
 
@@ -731,8 +764,8 @@ automatically treats names as variables
 and evaluates their values and Using the
 `$` inside the parenthese is redundant.
 
-	result=$((n + m))   # OK
-	result=$(($n + $m)) # NOK
+    result=$((n + m))   # OK
+    result=$(($n + $m)) # NOK
 
 The POSIX `$((...))` only handles
 integers. For decimals, use `bc` or
@@ -749,7 +782,7 @@ integers. For decimals, use `bc` or
     k=$(printf "%g" "$(echo "$i + $j" | bc)")
 
     # POSIX awk
-	k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+    k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
 **Suggested global variables**
@@ -759,18 +792,18 @@ variables at the top of for distributed
 shell scripts.
 
 ``` shell
-	PROGRAM=${0##*/}
-	AUTHOR="John doe <jdoe@example.com>"
-	URL="http://example.com/project/homepage"
+    PROGRAM=${0##*/}
+    AUTHOR="John doe <jdoe@example.com>"
+    URL="http://example.com/project/homepage"
 
     # see https://spdx.org/licenses
-	# for correct short names
-	LICENCE="GPL-3-or-later"
+    # for correct short names
+    LICENCE="GPL-3-or-later"
 
-	# Date based is useful for
-	# infrequent releases.
-	# Use machine readable
-	# format N.N[.N]
+    # Date based is useful for
+    # infrequent releases.
+    # Use machine readable
+    # format N.N[.N]
     VERSION="YYYY.MMDD.HHMM"
 ```
 
@@ -792,6 +825,10 @@ Even in Bash, default to POSIX syntax
 unless Bash-specific features are
 explicitly required.
 
+Consult https://mywiki.wooledge.org/Bashism
+for more ideas how to reduce Bash specific
+features.
+
 **Rationale:** This ensures broader
   system portability and later
   compatibility with `/bin/sh`, allowing
@@ -800,7 +837,12 @@ explicitly required.
 
 **Practical Guidance:**
 
-3.2.1 VARIABLES
+3.3.1. STATEMENT TO BE AVOIDED
+
+Avoid `$[...]` syntax and the the `let` built-in.
+They have no uses.
+
+3.2.2 VARIABLES
 
 Favor `local` for variable scoping within
 functions. Avoid the Bash-specific
@@ -907,7 +949,9 @@ Google search help:
 [special parameters]: https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html
 [command substitution]: https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html
 [parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
+[echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
+[printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
 [sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
 [trap]: https://www.gnu.org/software/bash/manual/bash.html#index-trap
