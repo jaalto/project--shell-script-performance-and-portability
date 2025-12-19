@@ -576,7 +576,7 @@ Option| Long Option |Description
 
 ``` bash
     # Use
-    dirname=$(basename $(pwd))
+    dirname="$(basename "$(pwd)")"
 
     # Instead of ...
     dirname=`basename \`pwd\``
