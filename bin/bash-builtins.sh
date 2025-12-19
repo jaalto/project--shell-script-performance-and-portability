@@ -33,6 +33,8 @@ fi
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
+VERSION="2025.1219.0926"
+
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
 
@@ -58,6 +60,9 @@ SYNOPSIS
     $PROGRAM [options]
 
 OPTIONS
+    -V, --version
+        Display version, license etc. and exit.
+
     -h, --help
         Display help.
 
@@ -95,6 +100,10 @@ Main ()
         dummy="OPT: ${1:-}"
 
         case ${1:-} in
+            -V | --version)
+                shift
+                Version
+                ;;
             -h | --help)
                 shift
                 Help
