@@ -26,14 +26,16 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
-VERSION="2025.1219.0921"
+# is used
+# shellcheck disable=SC2034
+VERSION="2025.1219.1005"
 
 pwd=$(cd "$(dirname "$0")" && pwd)
 PROGRAM=${0##*/}
 LIB="t-lib.sh"
 
 # ignore follow
-# shellcheck disable=SC1091
+# shellcheck disable=SC1090,SC1091
 
 source="source-only" . "$pwd/$LIB"
 
