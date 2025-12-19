@@ -937,13 +937,7 @@ is more.
 3.2.2 ARITHMETIC
 
 Avoid Bash-specific constructs like the
-arithmetic expression `((...))` and the
-[double bracket] conditional `[[...]]`.
-Instead, use the portable POSIX [test]
-command `[...]` and always quote variable
-expansions. Developing a consistent
-quoting habit ensures safety,
-correctness, and portability.
+arithmetic expression `((...))`
 
 Examples:
 
@@ -974,6 +968,26 @@ Examples:
   do
       ...
   done
+```
+
+3.2.3 TEST CONDITIONS
+
+For simple tests, avoid
+[double bracket] conditional `[[...]]`.
+Instead, use the portable POSIX [test]
+command `[...]` and always quote
+variable expansions. Develop a
+consistent quoting habit
+ensures safety, correctness, and
+portability.
+
+``` shell
+  # Instead of ...
+  [[ $var = $value ]]
+
+  # Use portable POSIX-style
+  # with quoting
+  [ "$var" = "$value" ]
 ```
 
 ## 4. REFERENCES
