@@ -817,7 +817,7 @@ operators:
 		command3 ||
 ```
 
-**Keep it simple.**
+**Keep it simple**
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||`. Complex blocks
@@ -825,9 +825,13 @@ sacrifice clarity for readers unfamiliar
 with shell shorthands.
 
 ``` shell
+    if <statement>; then
+        # Preferred.
+		# Clear to all readers
+    fi
+
     <statement> && {
-        <code>
-        <...>
+        # Not like this
     }
 ```
 
