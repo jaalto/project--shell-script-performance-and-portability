@@ -63,7 +63,7 @@ MISCELLANEOUS
 - Use conventions that maximize
   simplicity and clarity. Embrace
   minimalism in the spirit of the
-  [Less Is More] philisophy (LIM),
+  [Less Is More] philosophy (LIM),
   similar to KISS
   [Keep It Short and Simple].
 
