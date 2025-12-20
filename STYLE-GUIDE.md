@@ -599,7 +599,7 @@ Option| Long Option |Description
 
 - Use the standard POSIX parentheses
   syntax to define functions; avoid the
-  Bash-only [function keyword].
+  non-standard [function keyword].
 
 ``` shell
    Example ()
@@ -609,7 +609,7 @@ Option| Long Option |Description
 
    function Example ()
    {
-      # Bash only
+      # Bash, Zsh only
    }
 ```
 
