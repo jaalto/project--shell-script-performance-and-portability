@@ -442,21 +442,25 @@ Option| Long Option |Description
     path="${dir}/${to}/${file}"
 ```
 
-- In boolean variable tests, use
-  simple notations, similar to
-  [Python], [Ruby] or [Perl]. Omit
-  explicit [test] options `-n`
-  (length is non-zero) or `-z`
-  (length is zero). **Rationale:**
-  [Less Is More]. Redundant options
-  don't add functional value when
-  values are in double-quotes.
+- Rule: Use simple truth tests for
+  boolean checks. Omit explicit `-n`
+  (non-zero length) or `-z` (zero length)
+  options. Always wrap the variable in
+  double quotes. **Rationale:**
+  [Less is More]. For programmers coming
+  from Python, Ruby, or Perl, simple
+  truth tests are intuitive and familiar.
+  Explicit flags don't add functional
+  value when values are in double-quotes.
+  Minimizing these options reduces
+  cognitive load to promote to use more
+  universal programming logic.
 
 ``` bash
     [ "$var" ]    # Has value
     [ ! "$var" ]  # No value
 
-    # Redundant tests.
+    # Not preferrered
     [ -n "$var" ]
     [ -z "$var" ]
 ```
