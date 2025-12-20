@@ -29,12 +29,12 @@ INFORMATION FOR EDITING
   The maximum column limits are:
 
   col type
-  --- -----------------------------
-  35  Code: bullet: ``` ... ``´)
+  --- -------------------------
+  31  Code: bullet: ``` ... ``´)
   41  Regular text and paragraphs.
       Github line limit to support
       editing.
-  --- -----------------------------------
+  --- ------------------------------
 
   Emacs editor settings:
 
@@ -108,7 +108,7 @@ Main ()
     local arg
     arg=${1:-}
 
-    echo "Arg from command line: $arg"
+    echo "command line: $arg"
 }
 
 Main "$@"
@@ -361,12 +361,16 @@ Option| Long Option |Description
     # instead of 'set -eu'
 
     # Recommended
-    set -o errexit   # Exit on error
-    set -o nounset   # unused vars
+    # - Exit on error
+    # - unused vars
+    set -o errexit
+    set -o nounset
 
     # Optional
-    set -o errtrace  # fail on $()
-    set -o pipefail  # fail cmd on pipe
+	# - fail on $()
+	# - fail cmd on pipe
+    set -o errtrace
+    set -o pipefail
 ```
 
 - Set a exit status: Scripts should exit
@@ -429,8 +433,7 @@ Option| Long Option |Description
   [parameter expansion] (e.g.,
   `${var:-default}`). **Rationale:**
   minimalism in the spirit of
-  [Keep It Short and Simple]
-  design principle.
+  [Less Is More].
 
 ``` shell
     path="$dir/$to/$file"
@@ -445,13 +448,17 @@ Option| Long Option |Description
   explicit [test] options `-n`
   (length is non-zero) or `-z`
   (length is zero). **Rationale:**
-  Less is more. Redundant options
+  [Less Is More]. Redundant options
   don't add functional value when
   values are in double-quotes.
 
 ``` bash
     [ "$var" ]    # Has value
     [ ! "$var" ]  # No value
+
+    # Redundant tests.
+    [ -n "$var" ]
+    [ -z "$var" ]
 ```
 
 ### 2.3 Formatting and Syntax
@@ -494,10 +501,13 @@ Option| Long Option |Description
   action blocks stand out.
 
 ```
-    # Note: POSIX case statements
-    # require no quotes for $var
-    # because it does not undergo
-    # word splitting or globbing.
+
+    # Note: POSIX case require
+    # no quotes for $var
+    # because it does not
+    # undergo word splitting or
+    # globbing.
+
     case $var in
         pattern1)
             ...
@@ -548,7 +558,7 @@ Option| Long Option |Description
 ``` bash
     arg=${1:-}
 
-    if [ "$arg" = "--help" ]; then
+    if [ "$arg" = "-h" ]; then
         echo "Synopsis: ...."
         exit 0
     fi
@@ -640,10 +650,11 @@ Option| Long Option |Description
 ``` shell
     Example ()
     {
-        # Use 'local' though not
-        # strictly POSIX. It's
-        # widely supported in
-        # modern /bin/sh
+
+        # Use 'local' though
+        # not strictly POSIX.
+        # It's widely supported
+        # in modern /bin/sh
         # implementations.
 
         local file
@@ -738,8 +749,8 @@ would lead to less readable code.
 
     # vs
     #
-    # Tthe proper safe way to use
-    # printf is to *always*
+    # Tthe proper safe way to
+    # use printf is to *always*
     # include "%s"
 
     printf "%s\n" "display this"
@@ -767,9 +778,9 @@ to clean code priciple: one line does
 one thing.
 
     sed -e 's/^ +//'   \
-	    -e 's/ +$//'   \
-	    -e 's/  +/ /g' \
-	    file
+        -e 's/ +$//'   \
+        -e 's/  +/ /g' \
+        file
 
 **Pipes and long commands**
 
@@ -792,15 +803,15 @@ as indentation alone is sufficient to
 express the separation of commands.
 
 ``` shell
-	# Google
-	command1 \
-	  | command2 \
-	  | command4
+    # Google
+    command1 \
+      | command2 \
+      | command4
 
-	# LIM
-	command1   |
-	  command2 |
-	  command3
+    # LIM
+    command1   |
+      command2 |
+      command3
 ```
 
 The same LIM priciple applies (no
@@ -808,13 +819,13 @@ backslash needed) to also other
 operators:
 
 ``` shell
-	command1	 &&
-		command2 &&
-		command3 &&
+    command1     &&
+        command2 &&
+        command3 &&
 
-	command1	 ||
-		command2 ||
-		command3 ||
+    command1     ||
+        command2 ||
+        command3 ||
 ```
 
 **Keep It Simple**
@@ -827,7 +838,7 @@ with shell shorthands.
 ``` shell
     if <statement>; then
         # Preferred.
-		# Clear to all readers
+        # Clear to all readers
     fi
 
     <statement> && {
@@ -875,20 +886,21 @@ shell scripts.
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/project/homepage"
 
-    # see https://spdx.org/licenses
+    # See
+    # https://spdx.org/licenses
     # for correct short names
     LICENSE="GPL-3-or-later"
 
-	# Use machine
+    # Use machine
     # readable format N.N[.N]
-	#
-	# For proction code,
-	# use standard X.Y.Z
-	#
+    #
+    # For proction code,
+    # use standard X.Y.Z
+    #
     # Date based version may
     # be useful for small
-	# projects or infrequent
-	# releases.
+    # projects or infrequent
+    # releases.
     VERSION="YYYY.MMDD.HHMM"
 ```
 
@@ -942,19 +954,19 @@ arithmetic expression `((...))`
 Examples:
 
 ``` shell
-	# Instead of ...
-	for ((i=1; i <= 10; i++))
-	do
-		...
-	done
+    # Instead of ...
+    for ((i=1; i <= 10; i++))
+    do
+        ...
+    done
 
-	# Use portable POSIX.
-	# No real performance
-	# difference
-	for i in $(seq 10)
-	do
-		...
-	done
+    # Use portable POSIX. No
+    # real performance
+    # difference
+    for i in $(seq 10)
+    do
+        ...
+    done
 ```
 
 3.2.3 TEST CONDITIONS
@@ -969,16 +981,16 @@ ensures safety, correctness, and
 portability.
 
 ``` shell
-	# Instead of ...
-	if [[ $var = $value ]]; then
-	    ...
-	fi
+    # Instead of ...
+    if [[ $a = $b ]]; then
+        ...
+    fi
 
-	# Use portable POSIX-style
-	# with quoting
-	if [ "$var" = "$value" ]; then
-	    ...
-	fi
+    # Use portable POSIX-style
+    # with quoting
+    if [ "$a" = "$b" ]; then
+        ...
+    fi
 ```
 
 ## 4. REFERENCES
