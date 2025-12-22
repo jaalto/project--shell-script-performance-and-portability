@@ -442,21 +442,25 @@ Option| Long Option |Description
     path="${dir}/${to}/${file}"
 ```
 
-- In boolean variable tests, use
-  simple notations, similar to
-  [Python], [Ruby] or [Perl]. Omit
-  explicit [test] options `-n`
-  (length is non-zero) or `-z`
-  (length is zero). **Rationale:**
-  [Less Is More]. Redundant options
-  don't add functional value when
-  values are in double-quotes.
+- Rule: Use simple truth tests for
+  boolean checks. Omit explicit `-n`
+  (non-zero length) or `-z` (zero length)
+  options. Always wrap the variable in
+  double quotes. **Rationale:**
+  [Less is More]. For programmers coming
+  from Python, Ruby, or Perl, simple
+  truth tests are intuitive and familiar.
+  Explicit flags don't add functional
+  value when values are in double-quotes.
+  Minimizing these options reduces
+  cognitive load to promote to use more
+  universal programming logic.
 
 ``` bash
     [ "$var" ]    # Has value
     [ ! "$var" ]  # No value
 
-    # Redundant tests.
+    # Not preferrered
     [ -n "$var" ]
     [ -z "$var" ]
 ```
@@ -500,8 +504,7 @@ Option| Long Option |Description
   Improves the visual flow and make the
   action blocks stand out.
 
-```
-
+``` shell
     # Note: POSIX case require
     # no quotes for $var
     # because it does not
@@ -599,7 +602,7 @@ Option| Long Option |Description
 
 - Use the standard POSIX parentheses
   syntax to define functions; avoid the
-  Bash-only [function keyword].
+  non-standard [function keyword].
 
 ``` shell
    Example ()
@@ -609,7 +612,7 @@ Option| Long Option |Description
 
    function Example ()
    {
-      # Bash only
+      # Bash, Zsh only
    }
 ```
 
@@ -625,7 +628,6 @@ Option| Long Option |Description
   emphasized by the `Name ()` notation,
   rather than a subroutine with a fixed
   signature.
-
 
 ``` shell
     Example ()
@@ -645,7 +647,6 @@ Option| Long Option |Description
   immediately to meaningful, local
   variables to improve readability within
   the function.
-
 
 ``` shell
     Example ()
@@ -672,7 +673,6 @@ Option| Long Option |Description
   defined not just inside itself, but
   also variables defined by any other
   function that called it.
-
 
 ``` shell
     Two ()
@@ -736,12 +736,13 @@ Option| Long Option |Description
 **echo vs printf**
 
 POSIX [echo] does not have any options.
-Use it for statiuc strings. Use
+Use it for static strings. Use
 [printf] when you require options.
 Arbitrary rules like 'use printf for
 everyting' is not sound advice as it
 would lead to less readable code.
 
+``` shell
     # Simple
 
     echo "display this"
@@ -755,6 +756,7 @@ would lead to less readable code.
 
     printf "%s\n" "display this"
     printf "%s\n" "and more of that"
+```
 
 **$PWD vs $(pwd)**
 
@@ -777,10 +779,12 @@ and options in their own lines according
 to clean code priciple: one line does
 one thing.
 
+``` shell
     sed -e 's/^ +//'   \
         -e 's/ +$//'   \
         -e 's/  +/ /g' \
         file
+```
 
 **Pipes and long commands**
 
@@ -793,7 +797,7 @@ While aligning the pipe (|) at the start
 of lines is visually pleasing, it
 requires redundant backslashes (\) at
 the end of each preceding line. In the
-spirit of "Less is More" (LIM), a
+spirit of [Less is More] (LIM), a
 trailing pipe naturally indicates that
 the command continues on the next line,
 making the backslash redundant. This
@@ -803,15 +807,15 @@ as indentation alone is sufficient to
 express the separation of commands.
 
 ``` shell
+    # LIM, lean, simpler
+    command1   |
+      command2 |
+      command3
+
     # Google
     command1 \
       | command2 \
       | command4
-
-    # LIM
-    command1   |
-      command2 |
-      command3
 ```
 
 The same LIM priciple applies (no
@@ -851,11 +855,13 @@ with shell shorthands.
 Less is more: omit the `$` in POSIX
 arithmetic expansions. The shell
 automatically treats names as variables
-and evaluates their values and Using the
+and evaluates their values and using the
 `$` inside the parenthese is redundant.
 
+``` shell
     result=$((n + m))   # preferred
     result=$(($n + $m))
+```
 
 The POSIX `$((...))` only handles
 integers. For decimals, use `bc` or
@@ -927,26 +933,25 @@ for more ideas how to reduce Bash specific
 features.
 
 **Rationale:** This ensures broader
-  system portability and later
-  compatibility with `/bin/sh`, allowing
-  scripts to benefit from faster startup
-  and fewer forks.
+system portability and later
+compatibility with `/bin/sh`, allowing
+scripts to benefit from faster startup
+and fewer forks.
 
-**Practical Guidance:**
 
-3.3.1. STATEMENT TO BE AVOIDED
+## 3.3 STATEMENT TO BE AVOIDED
 
 Avoid `$[...]` syntax and the the `let` built-in.
 They have no uses.
 
-3.2.2 VARIABLES
+## 3.4 VARIABLES
 
 Favor `local` for variable scoping within
 functions. Avoid the Bash-specific
 [declare] built-in. **Rationale:** Less
 is more.
 
-3.2.2 ARITHMETIC
+## 3.5 ARITHMETIC
 
 Avoid Bash-specific constructs like the
 arithmetic expression `((...))`
@@ -969,7 +974,7 @@ Examples:
     done
 ```
 
-3.2.3 TEST CONDITIONS
+## 3.6 TEST CONDITIONS
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
