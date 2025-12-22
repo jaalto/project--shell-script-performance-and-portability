@@ -82,26 +82,30 @@ MISCELLANEOUS
 
 ### 1.2 Code Organization and Modularity
 
-For best practises, divide shell script
+For best practises, divide program
 into sections. They are:
 
-- The shebang
 - The comment block
 - Constants
 - Functions
 - Program body in Main()
 
 In order to easily find the start of the
-program, put the entry point in a
-function called `Main` as the bottom-most
-function. This provides consistency with
-the existing programming languages and
-allows readers to find the start of the
-program immediately. Using a function
-also enables the use of local variables
-for the main logic.
+program, put the entry point in `Main` as
+the bottom-most function. This provides
+consistency with the existing programming
+languages and allows readers to find the
+start of the program immediately.
 
-A template for entry point:
+Relying on functions is a core design
+principle that modularizes logic from the
+outset. It ensures variable localization,
+encourages thinking in discrete execution
+blocks, and keeps code segments concise
+and visible. This 'one-task-per-function'
+makes the program significantly easier to
+extend and maintain as it evolves.
+
 ```shell
 Main ()
 {
@@ -116,7 +120,7 @@ Main "$@"
 
 ### 1.3 Consistent Conventions
 
-Shell scripts can be written in a variety
+Programs can be written in a variety
 of styles. To make scripts easier to read
 and understand, use consistent naming
 conventions and style.
@@ -129,7 +133,8 @@ with spaces or tabs, using spaces around
 operators, and placing blocks and braces
 on the same line or a new line.
 
-This guide adopts the following conventions:
+This style guide adopts the following
+conventions:
 
 - Functions use [CamelCase]: Start with
   an uppercase letter. **Rationale:**
@@ -139,8 +144,8 @@ This guide adopts the following conventions:
 - Variables start with a lowercase
   letter. **Rationale:** Underscore
   characters increase visual noise.
-  Compare `thisVar="$hasVal $likeThis"` vs
-  `this_var="$has_val $like_this"`.
+  Compare `thisVar="$hasVal $likeThis"`
+  vs `this_var="$has_val $like_this"`.
 - Indentation: Spaces are used over TAB
   characters. **Rationale:** The layout
   remains uniform across editors,
@@ -438,21 +443,21 @@ Option| Long Option |Description
 ``` shell
     path="$dir/$to/$file"
 
-    # Not like this
+    # Avoid
     path="${dir}/${to}/${file}"
 ```
 
-- Rule: Use simple truth tests for
-  boolean checks. Omit explicit `-n`
-  (non-zero length) or `-z` (zero length)
-  options. Always wrap the variable in
-  double quotes. **Rationale:**
-  [Less is More]. For programmers coming
-  from Python, Ruby, or Perl, simple
-  truth tests are intuitive and familiar.
-  Explicit flags don't add functional
-  value when values are in double-quotes.
-  Minimizing these options reduces
+- Use simple truth tests for boolean
+  checks. Omit explicit `-n` (non-zero
+  length) or `-z` (zero length) options.
+  Always wrap the variable in double
+  quotes. **Rationale:** [Less is More].
+  For programmers coming from [Python],
+  ]Ruby], or ]Perl], simple truth tests
+  are intuitive and familiar. Explicit
+  flags don't add functional value when
+  values are in double-quotes. Minimizing
+  these options reduces shell specific
   cognitive load to promote to use more
   universal programming logic.
 
@@ -545,12 +550,16 @@ Option| Long Option |Description
 
 ### 2.4 Input/Output and File Handling
 
-- Send error messages to stderr.
+- Send error messages to stderr. Put
+  `>&2' at the end of line.
 
 ``` bash
+	# Preferred
+    echo "message"
     echo "ERROR: message" >&2
 
-    # Not like this
+    # Avoid
+    echo "message"
     echo >&2 "ERROR: message"
 ```
 
@@ -733,7 +742,7 @@ Option| Long Option |Description
 
 ### 2.7 Other notes
 
-**echo vs printf**
+### 2.7.1 echo vs printf
 
 POSIX [echo] does not have any options.
 Use it for static strings. Use
@@ -743,22 +752,22 @@ everyting' is not sound advice as it
 would lead to less readable code.
 
 ``` shell
-    # Simple
+    # Preferred. Simple
 
-    echo "display this"
-    echo "and more of that"
+    echo "this"
+    echo "and that"
 
-    # vs
+    # Avoid. Not needed.
     #
-    # Tthe proper safe way to
-    # use printf is to *always*
-    # include "%s"
+    # Note: The proper safe way
+    # to use printf is to
+    # always include "%s"
 
-    printf "%s\n" "display this"
-    printf "%s\n" "and more of that"
+    printf "%s\n" "this"
+    printf "%s\n" "and that"
 ```
 
-**$PWD vs $(pwd)**
+## 2.7.2 PWD vs pwd
 
 POSIX defines the variable [PWD]. You
 can use it in place of the command
@@ -768,11 +777,14 @@ to use the variable, as it avoids a
 subshell fork.
 
 ``` shell
-    curdir=$PWD    # PREFERRED
+    # Preferred
+    curdir=$PWD
+
+    # Avoid
     curdir=$(pwd)
 ```
 
-**Long commands**
+### 2.7.3 Long commands
 
 To improve readability, split commands
 and options in their own lines according
@@ -780,13 +792,18 @@ to clean code priciple: one line does
 one thing.
 
 ``` shell
-    sed -e 's/^ +//'   \
-        -e 's/ +$//'   \
-        -e 's/  +/ /g' \
+    # Canonicalize whitepaces:
+	# - at the beginning
+	# - at the end
+	# - in between
+
+    sed -e 's/^[ \t]+//' \
+        -e 's/[ \t]+$//' \
+        -e 's/  +/ /g'   \
         file
 ```
 
-**Pipes and long commands**
+### 2.7.4 Pipes and long commands
 
 In the [Google Bash Style Guide] section
 on "pipelines," there is an example of
@@ -795,16 +812,15 @@ separate lines.
 
 While aligning the pipe (|) at the start
 of lines is visually pleasing, it
-requires redundant backslashes (\) at
+requires redundant backslashes (\\) at
 the end of each preceding line. In the
 spirit of [Less is More] (LIM), a
 trailing pipe naturally indicates that
 the command continues on the next line,
 making the backslash redundant. This
-reduces visual noise and eliminates the
-risk of "trailing space" syntax errors,
-as indentation alone is sufficient to
-express the separation of commands.
+reduces visual noise as indentation
+alone is sufficient to express the
+separation of commands.
 
 ``` shell
     # LIM, lean, simpler
@@ -832,25 +848,27 @@ operators:
         command3 ||
 ```
 
-**Keep It Simple**
+### 2.7.5 Use standard if..fi
 
 Use standard `if..fi`. Avoid clever
-logical `&&` or `||`. Complex blocks
-sacrifice clarity for readers unfamiliar
-with shell shorthands.
+logical `&&` or `||` with blocks.
+Complex Shell-only blocks sacrifice
+clarity for readers unfamiliar with
+shell shorthands.
 
 ``` shell
+    # Preferred
     if <statement>; then
         # Preferred.
         # Clear to all readers
     fi
 
     <statement> && {
-        # Not like this
+        # Avoid
     }
 ```
 
-**Mathematical Calculations**
+### 2.7.6 Mathematical Calculations
 
 Less is more: omit the `$` in POSIX
 arithmetic expansions. The shell
@@ -881,7 +899,7 @@ integers. For decimals, use `bc` or
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
-**Suggested global variables**
+### 2.7.7 Suggested global variables
 
 Here is list of suggested global
 variables at the top of for distributed
@@ -895,18 +913,21 @@ shell scripts.
     # See
     # https://spdx.org/licenses
     # for correct short names
+
     LICENSE="GPL-3-or-later"
 
     # Use machine
     # readable format N.N[.N]
     #
-    # For proction code,
-    # use standard X.Y.Z
+    # In production code,
+    # use standard https://semver.org
+	# X.Y.Z numbering
     #
     # Date based version may
     # be useful for small
     # projects or infrequent
     # releases.
+
     VERSION="YYYY.MMDD.HHMM"
 ```
 
@@ -941,15 +962,24 @@ and fewer forks.
 
 ## 3.3 STATEMENT TO BE AVOIDED
 
-Avoid `$[...]` syntax and the the `let` built-in.
-They have no uses.
+Avoid artihmetic expressions `$[...]` and
+the the [let] built-in. They have no uses
+as better and more portable POSIX
+compound command altenatives exist.
+
+Avoid             | Alternative
+---------         | ----------------
+archaic `$[...}`  | POSIX `$((...))`
+`let ...`         | POSIX `$((...))`
 
 ## 3.4 VARIABLES
 
 Favor `local` for variable scoping within
 functions. Avoid the Bash-specific
 [declare] built-in. **Rationale:** Less
-is more.
+is more. The `local` is better for future
+portability in case the script is
+converted to run under `/bin/sh`.
 
 ## 3.5 ARITHMETIC
 
@@ -959,16 +989,15 @@ arithmetic expression `((...))`
 Examples:
 
 ``` shell
-    # Instead of ...
-    for ((i=1; i <= 10; i++))
-    do
-        ...
-    done
-
     # Use portable POSIX. No
     # real performance
     # difference
     for i in $(seq 10)
+    do
+        ...
+    done
+    # Instead of ...
+    for ((i=1; i <= 10; i++))
     do
         ...
     done
@@ -1041,6 +1070,7 @@ Google search help:
 [function keyword]: https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html
 [bash type]: https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-type
 [declare]: https://www.gnu.org/software/bash/manual/bash.html#index-declare
+[let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 
 [Bash FAQ/001]: https://mywiki.wooledge.org/BashFAQ/001
 [Bash FAQ/082]: https://mywiki.wooledge.org/BashFAQ/082
