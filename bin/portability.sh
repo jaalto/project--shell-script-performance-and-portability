@@ -28,7 +28,7 @@ set -o nounset # Treat unused variables as errors
 
 # is used
 # shellcheck disable=SC2034
-VERSION="2025.1219.1002"
+VERSION="2025.1222.1645"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
@@ -309,8 +309,13 @@ ResultsData ()
     separator="${1:-}"
     list="${2:-}"
     lsep="${3:-}"
+    file="${4:-}"
 
     shift $#
+
+    if [ ! "$file" ]; then
+        Die "ResultsData(): no file"
+    fi
 
     [ "$lsep" ] || return 1
 
@@ -358,7 +363,7 @@ ResultsData ()
     list="$list" \
     sep="$lsep" \
     width="$WIDTH" \
-    "${1:-}"
+    "$file"
 
     unset separator list lsep
 }
@@ -504,7 +509,7 @@ RunShells ()
     done
 
     IFS="$saved"
-    unset shell result env ifs shresult ifs saved
+    unset shell result env ifs ifs saved
 
     echo "$shresult"
 }
