@@ -414,13 +414,17 @@ IsShellModern ()
     IsShellZsh
 }
 
+IsShellModernPlus ()
+{
+    IsShellModern || IsShellMksh
+}
+
 IsFeatureConditionalExpression ()
 {
     # Shells that support:
     # [[ ... ]]
 
-    IsShellModern ||
-    IsShellMksh
+    IsShellModernPlus
 }
 
 IsFeatureMatchPattern ()
@@ -444,10 +448,15 @@ IsFeatureDictionary ()
     [ -e "$DICTIONARY_FILE" ]
 }
 
+IsFeaturePrintfOptionV ()
+{
+    # TODO: also: busybox, posh
+    IsShellModernPlus
+}
+
 IsFeatureArrays ()
 {
-    IsShellModern ||
-    IsShellMksh
+    IsShellModernPlus
 }
 
 IsFeatureProcessSubstitution ()
@@ -475,8 +484,7 @@ IsFeatureMatchGlob ()
     # Shells that support:
     # [[ string = *str* ]]
 
-    IsShellModern ||
-    IsShellMksh
+    IsShellModernPlus
 }
 
 IsFeatureHereString ()
@@ -486,8 +494,7 @@ IsFeatureHereString ()
     #
     # https://mywiki.wooledge.org/BashFAQ/061
 
-    IsShellModern ||
-    IsShellMksh
+    IsShellModernPlus
 }
 
 IsFeatureArray ()
