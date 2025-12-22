@@ -82,26 +82,30 @@ MISCELLANEOUS
 
 ### 1.2 Code Organization and Modularity
 
-For best practises, divide shell script
+For best practises, divide program
 into sections. They are:
 
-- The shebang
 - The comment block
 - Constants
 - Functions
 - Program body in Main()
 
 In order to easily find the start of the
-program, put the entry point in a
-function called `Main` as the bottom-most
-function. This provides consistency with
-the existing programming languages and
-allows readers to find the start of the
-program immediately. Using a function
-also enables the use of local variables
-for the main logic.
+program, put the entry point in `Main` as
+the bottom-most function. This provides
+consistency with the existing programming
+languages and allows readers to find the
+start of the program immediately.
 
-A template for entry point:
+Relying on functions is a core design
+principle that modularizes logic from the
+outset. It ensures variable localization,
+encourages thinking in discrete execution
+blocks, and keeps code segments concise
+and visible. This 'one-task-per-function'
+makes the program significantly easier to
+extend and maintain as it evolves.
+
 ```shell
 Main ()
 {
