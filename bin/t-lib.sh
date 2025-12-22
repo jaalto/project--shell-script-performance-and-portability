@@ -78,11 +78,15 @@
 # -- Exported variables
 # -- ------------------------------------
 
-PROGRAM=$0
 TMPBASE=${LOGNAME:-$USER}.$$.test
 
 VERBOSE=${VERBOSE:-}
 T_LIB_CACHE_GNU=""
+
+URL="https://github.com/jaalto/project--shell-script-performance-and-portability"
+AUTHOR="Jari Aalto"
+# see https://spdx.org/licenses
+LICENSE="GPL-2-or-later"
 
 # -- ------------------------------------
 # -- Public. User settable env variables
@@ -267,6 +271,17 @@ Verbose ()
 {
     IsVerbose || return 0
     "$@"
+}
+
+Version ()
+{
+    [ "${VERSION:-}" ] || exit 1
+    [ "${LICENSE:-}" ] || exit 1
+    [ "${AUTHOR:-}" ] || exit 1
+    [ "${URL:-}" ] || exit 1
+
+    echo "${VERSION:-} ${LICENSE:-} ${AUTHOR:-} ${URL:-}"
+    exit 0
 }
 
 IsOsWinCygwin ()
