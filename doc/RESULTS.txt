@@ -752,3 +752,24 @@ FILE: t-variable-array-split-string.sh
 #
 #     local - set -f
 
+FILE: t-variable-assignment-printf-bash.sh
+#! /usr/bin/env bash
+#
+# Q: var=$(printf...) vs Bash printf -v var
+# A: It is about 10x faster to use Bash specific -v option to assign value
+#
+#     t1 real  0.035 Dash var=$(printf ...)
+#     t2 real  0.003 Bash print -v ...
+#
+# Code:
+#
+#     t1  var=$(printf "%s" "abc")
+#     t2  printf -v var "%s" "abc"
+#
+# Notes:
+#
+#     ./run.sh --shell dash,ksh,bash ./t-variable-assignment-printf-bash.sh
+#
+#
+#
+

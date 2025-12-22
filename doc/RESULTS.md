@@ -752,3 +752,24 @@ expansion inside function, by disabling it with:
 
     local - set -f
 
+
+# t-variable-assignment-printf-bash.sh
+
+**Q: var=$(printf...) vs Bash printf -v var**<br/>
+*A: It is about 10x faster to use Bash specific -v option to assign value*<br/>
+
+    t1 real  0.035 Dash var=$(printf ...)
+    t2 real  0.003 Bash print -v ...
+
+## Code
+
+    t1  var=$(printf "%s" "abc")
+    t2  printf -v var "%s" "abc"
+
+## Notes
+
+    ./run.sh --shell dash,ksh,bash ./t-variable-assignment-printf-bash.sh
+
+
+
+

@@ -118,3 +118,7 @@ FILE: t-variable-array-split-string.sh
 # Q: Split string into an array by IFS?
 # A: It is about 10x faster to use IFS+array than to use Bash array `<<<` HERE STRING
 
+FILE: t-variable-assignment-printf-bash.sh
+# Q: var=$(printf...) vs Bash printf -v var
+# A: It is about 10x faster to use Bash specific -v option to assign value
+
