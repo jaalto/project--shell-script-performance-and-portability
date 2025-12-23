@@ -64,8 +64,8 @@ MISCELLANEOUS
   simplicity and clarity. Embrace
   minimalism in the spirit of the
   [Less Is More] philosophy (LIM),
-  similar to KISS
-  [Keep It Short and Simple].
+  similar to
+  [Keep It Short and Simple] (KISS).
 
 - Utilize [ShellCheck] or other [linting]
   tools to improve code quality.
