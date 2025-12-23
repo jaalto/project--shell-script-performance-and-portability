@@ -876,22 +876,25 @@ shell shorthands.
 ``` shell
     # Preferred
     if <statement>; then
-        # Preferred.
         # Clear to all readers
     fi
 
+    # Avoid
     <statement> && {
-        # Avoid
+        # many
+		# statements
+		# here
     }
 ```
 
 ### 2.13 Mathematical Calculations
 
-Less is more: omit the `$` in POSIX
-arithmetic expansions. The shell
-automatically treats names as variables
-and evaluates their values and using the
-`$` inside the parenthese is redundant.
+Omit the `$` in POSIX arithmetic
+expansions. The shell automatically
+treats names as variables and evaluates
+their values. **Rationale:** Less is
+more. Using the `$` inside the parenthese
+is redundant.
 
 ``` shell
     result=$((n + m))   # preferred
