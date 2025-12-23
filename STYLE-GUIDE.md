@@ -1014,7 +1014,7 @@ archaic `$[...]`  | POSIX `$((...))`
 
 ## 3.4 VARIABLES
 
-Favor `local` for variable scoping within
+Use `local` for variable scoping within
 functions. Avoid the Bash-specific
 [declare] built-in. **Rationale:** Less
 is more. The `local` is better for future
@@ -1078,19 +1078,18 @@ portability.
 - Shellcheck - static shell script code
   analysis
   https://www.shellcheck.net
-- The "Unofficial Bash strict mode" blog
-  post by Aaron Maxwell introduced on a
-  concept similar to 'use strict'
-  (warning: the blog contains few serious
-  errors, like not quoting `"$@"`). This
-  concept was first introduced in 1990s
-  in the [Perl] programming language and
-  later adopted by others, like
-  [Javascript strict mode],
-  [[C# struct mode],
-  [Haskell -Xstrict extension], Nodejs
-  library [react strict mode],
-  [Powershell scrict mode], etc.
+- The "Unofficial Bash Strict Mode" blog
+  post by Aaron Maxwell. Warning: The
+  post contains a few serious errors,
+  such as failing to quote "$@". The "use
+  strict" concept originated in the 1990s
+  with the [Perl] programming language.
+  It was later adopted by others,
+  including [JavaScript strict mode],
+  [C# strict mode], the
+  [Haskell -XStrict extension], the
+  [React Strict Mode] library for
+  Node.js, and [PowerShell strict mode].
 
 <!-- links -->
 
@@ -1156,9 +1155,9 @@ Google search help:
 [unofficial bash strict mode]: http://redsymbol.net/articles/unofficial-bash-strict-mode/
 [Javascript strict mode]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 [Haskell -Xstrict extension]: https://gitlab.haskell.org/ghc/ghc/-/wikis/strict-pragma
-[react strict mode]: https://react.dev/reference/react/StrictMode
-[C# struct mode]: https://www.meziantou.net/csharp-compiler-strict-mode.htm
-[Powershell scrict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
+[React Strict Mode]: https://react.dev/reference/react/StrictMode
+[C# strict mode]: https://www.meziantou.net/csharp-compiler-strict-mode.htm
+[Powershell strict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
 [SPDX License List]: https://spdx.org/licenses/
 [Semantic Versioning]: https://semver.org
