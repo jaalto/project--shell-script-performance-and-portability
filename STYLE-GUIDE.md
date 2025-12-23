@@ -604,10 +604,10 @@ Option| Long Option |Description
   preferred. See [Bash FAQ/082].
 
 ``` bash
-    # Use
+    # Preferred
     dirname="$(basename "$(pwd)")"
 
-    # Instead of ...
+    # Avoid
     dirname=`basename \`pwd\``
 ```
 
