@@ -26,8 +26,8 @@ let                                      -  -  -  +  +  +  +  +  +
 [[ ... ]]                                -  -  -  +  +  +  +  +  +
 [[ STRING = PATTERN ]]                   -  -  -  -  +  +  +  +  +
 [[ STRING =~ REGEXP ]]                   -  -  -  +  -  +  +  +  +
-local                                    +  +  +  +  +  +  +  +  +
-local IFS                                +  +  +  +  +  +  +  +  +
+local                                    +  +  -  +  +  -  +  +  +
+local IFS                                +  +  -  +  +  -  +  +  +
 non-POSIX printf -v                      +  -  -  +  +  +  +  +  +
 read (-N)                                -  -  -  -  +  +  +  +  -
 read (REPLY)                             -  -  -  +  +  +  +  +  +
