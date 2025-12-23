@@ -80,7 +80,7 @@ MISCELLANEOUS
   variable quoting, to prevent unexpected
   behavior.
 
-### 1.2 Code Organization and Modularity
+### 1.2 Code Organization
 
 For best practises, divide program
 into sections. They are:
