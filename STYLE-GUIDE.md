@@ -696,11 +696,11 @@ Option| Long Option |Description
 > bash	| yes
 > zsh		| yes
 
-- **Note: Dynamic scope:** The shell uses
-  dynamic scoping to control a variable’s
-  visibility within functions. See
-  [functions] in Bash manual. This means
-  that a function can see variables
+- **Note about Dynamic scope:** The shell
+  uses dynamic scoping to control a
+  variable’s visibility within functions.
+  See [functions] in Bash manual. This
+  means that a function can see variables
   defined not just inside itself, but
   also variables defined by any other
   function that called it.
