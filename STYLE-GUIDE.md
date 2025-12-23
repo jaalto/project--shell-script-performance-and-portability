@@ -636,17 +636,16 @@ Option| Long Option |Description
   are treated as internal commands rather
   than traditional programming functions.
   Because `()` is not used for argument
-  passing in shell functions, a new
-  command—behaving similarly to `ls`-—is
-  emphasized by the `Name ()` notation,
-  rather than a subroutine with a fixed
-  signature.
+  passing in shell functions, introducing
+  a new **command** is emphasized by the
+  `Name ()` notation, rather than a
+  subroutine with a fixed signature.
 
 ``` shell
     Example ()
     {
         # arguments in $1, $2,
-        # etc., not the parens
+        # etc., not in the parens
     }
 
     # Behaves like a system
