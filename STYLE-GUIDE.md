@@ -677,6 +677,26 @@ Option| Long Option |Description
 
 ### 2.7 Use of local keyword
 
+- The keyword `local` isn't defined in
+  the [POSIX] standard, but it is 99%
+  supported by all the best-effort
+  POSIX-compatible `sh` shells. The
+  `local` keyword is "portable enough" to
+  be used in modern shell scripts.
+
+
+> Shell	| local supported
+> -----	| ---------------
+> posh	| yes
+> dash	| yes
+> pbosh 2023/01/12 | no (old ksh derivate)
+> busybox ash 1.37.0 | yes
+> mksh	| yes
+> ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
+> bash --posix 3.2 | yes (macOS)
+> bash	| yes
+> zsh		| yes
+
 - **Note: Dynamic scope:** The shell uses
   dynamic scoping to control a variable’s
   visibility within functions. See
