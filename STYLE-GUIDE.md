@@ -836,11 +836,9 @@ requires redundant backslashes (\\) at
 the end of each preceding line. In the
 spirit of [Less is More] (LIM), a
 trailing pipe naturally indicates that
-the command continues on the next line,
-making the backslash redundant. This
-reduces visual noise as indentation
-alone is sufficient to express the
-separation of commands.
+the command continues on the next line.
+Indentation alone is sufficient to
+express the separation of commands.
 
 ``` shell
     # LIM, lean, simpler
