@@ -1000,17 +1000,16 @@ compatibility with `/bin/sh`, allowing
 scripts to benefit from faster startup
 and fewer forks.
 
-
 ## 3.3 STATEMENT TO BE AVOIDED
 
-Avoid artihmetic expressions `$[...]` and
-the the [let] built-in. They have no uses
-as better and more portable POSIX
-compound command altenatives exist.
+Avoid obsolete artihmetic expressions
+`$[...]` and the the [let] built-in. They
+have no uses as better and more portable
+POSIX compound command altenatives exist.
 
 Avoid             | Alternative
 ---------         | ----------------
-archaic `$[...}`  | POSIX `$((...))`
+archaic `$[...]`  | POSIX `$((...))`
 `let ...`         | POSIX `$((...))`
 
 ## 3.4 VARIABLES
