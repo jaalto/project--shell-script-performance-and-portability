@@ -4,11 +4,11 @@
 
 fn ()
 {
-    local a=0
+    local i
+    i=2
 }
 
 i=1
 fn
-var=${i:-0}
 
-[ "$var" = 1 ]
+[ "$i" = 1 ]
