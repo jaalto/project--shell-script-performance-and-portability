@@ -852,8 +852,7 @@ express the separation of commands.
       | command4
 ```
 
-The same LIM priciple applies (no
-backslash needed) to also other
+The same priciple applies to also other
 operators:
 
 ``` shell
