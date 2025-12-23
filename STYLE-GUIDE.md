@@ -696,7 +696,7 @@ Option| Long Option |Description
 > bash	| yes
 > zsh		| yes
 
-- **Note about Dynamic scope:** The shell
+- **Note about Dynamic Scope:** The shell
   uses dynamic scoping to control a
   variable’s visibility within functions.
   See [functions] in Bash manual. This
