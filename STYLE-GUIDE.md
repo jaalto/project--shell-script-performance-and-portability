@@ -465,10 +465,11 @@ Option| Long Option |Description
   programming logic.
 
 ``` bash
+    # Preferred, universal
     [ "$var" ]    # Has value
     [ ! "$var" ]  # No value
 
-    # Not preferrered
+    # Avoid
     [ -n "$var" ]
     [ -z "$var" ]
 ```
