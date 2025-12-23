@@ -433,10 +433,10 @@ Option| Long Option |Description
   variable. This is mandatory to keep
   each argument distinct and uncorrupted.
 
-- Prefer simple `$var` by default. Use the
-  braces only when necessary for boundary
-  conditions (e.g., `${var}suffix`) or
-  when utilizing shell
+- Prefer simple `$var` by default. Use
+  the braces only when necessary for
+  boundary conditions (e.g.,
+  `${var}suffix`) or when utilizing shell
   [parameter expansion] (e.g.,
   `${var:-default}`). **Rationale:**
   minimalism in the spirit of
@@ -450,18 +450,19 @@ Option| Long Option |Description
 ```
 
 - Use simple truth tests for boolean
-  checks. Omit explicit `-n` (non-zero
-  length) or `-z` (zero length) options.
-  Always wrap the variable in double
-  quotes. **Rationale:** [Less is More].
-  For programmers coming from [Python],
-  [Ruby], or [Perl], simple truth tests
-  are intuitive and familiar. Explicit
-  flags don't add functional value when
-  values are in double-quotes. Minimizing
-  these options reduces shell specific
-  cognitive load to promote to use more
-  universal programming logic.
+  variable checks. Omit explicit `-n`
+  (non-zero length) or `-z` (zero length)
+  options. Always wrap the variable in
+  double quotes. **Rationale:**
+  [Less is More]. For programmers coming
+  from [Python], [Ruby], or [Perl],
+  simple truth tests are intuitive and
+  familiar. Explicit flags don't add
+  functional value when values are in
+  double-quotes. Minimizing these options
+  reduces shell specific cognitive load
+  to promote to use more universal
+  programming logic.
 
 ``` bash
     [ "$var" ]    # Has value
