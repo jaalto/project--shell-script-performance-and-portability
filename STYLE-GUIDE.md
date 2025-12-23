@@ -620,12 +620,12 @@ Option| Long Option |Description
 ``` shell
    Example ()
    {
-      # POSIX
+      # Preferred. POSIX, universal.
    }
 
    function Example ()
    {
-      # Bash, Zsh only
+      # Avoid. Bash, Zsh only
    }
 ```
 
