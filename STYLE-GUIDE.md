@@ -347,6 +347,11 @@ Option| Long Option |Description
 
 ### 2.1 Error Handling
 
+- Set a exit status: Scripts should exit
+  with 0 for success and a non-zero
+  value to indicate a failure or
+  specific error condition.
+
 - At the beginning of file, explicitly
   set shell options for early exit and
   error checking. Use variations of the
@@ -378,11 +383,6 @@ Option| Long Option |Description
     set -o pipefail
 ```
 
-- Set a exit status: Scripts should exit
-  with 0 for success and a non-zero
-  value to indicate a failure or
-  specific error condition.
-
 - Check status of commands and
   exit early.
 
@@ -392,6 +392,8 @@ Option| Long Option |Description
 
     cd "$dir" || exit $?
 ```
+
+### 2.2 Temporary files
 
 - Use safe temporary files and
   directories with `mktemp`.
@@ -418,7 +420,7 @@ Option| Long Option |Description
   trap 'AtExit' EXIT HUP INT QUIT TERM
 ```
 
-### 2.2 Variables and Quoting
+### 2.3 Variables and Quoting
 
 - Global Variables: Use `ALL_CAPS` for
   global, environmental, or read-only
@@ -470,7 +472,7 @@ Option| Long Option |Description
     [ -z "$var" ]
 ```
 
-### 2.3 Formatting and Syntax
+### 2.4 Formatting and Syntax
 
 - The Maximum line length is 80
   characters. **Rationale:** this limit
@@ -548,7 +550,7 @@ Option| Long Option |Description
     fi
 ```
 
-### 2.4 Input/Output and File Handling
+### 2.5 Input/Output and File Handling
 
 - Send error messages to stderr. Put
   `>&2' at the end of line.
@@ -607,7 +609,7 @@ Option| Long Option |Description
     dirname=`basename \`pwd\``
 ```
 
-### 2.5 Functions and Scope
+### 2.6 Functions and Scope
 
 - Use the standard POSIX parentheses
   syntax to define functions; avoid the
@@ -672,7 +674,7 @@ Option| Long Option |Description
     }
 ```
 
-### 2.6 Notes on local keyword
+### 2.7 Use of local keyword
 
 - **Note: Dynamic scope:** The shell uses
   dynamic scoping to control a variable’s
@@ -740,9 +742,7 @@ Option| Long Option |Description
     }
 ```
 
-### 2.7 Other notes
-
-### 2.7.1 echo vs printf
+### 2.8 echo vs printf
 
 POSIX [echo] does not have any options.
 Use it for static strings. Use
@@ -767,7 +767,7 @@ would lead to less readable code.
     printf "%s\n" "and that"
 ```
 
-## 2.7.2 PWD vs pwd
+## 2.9 PWD vs pwd
 
 POSIX defines the variable [PWD]. You
 can use it in place of the command
@@ -784,7 +784,7 @@ subshell fork.
     curdir=$(pwd)
 ```
 
-### 2.7.3 Long commands
+### 2.10 Long commands
 
 To improve readability, split commands
 and options in their own lines according
@@ -803,7 +803,7 @@ one thing.
         file
 ```
 
-### 2.7.4 Pipes and long commands
+### 2.11 Pipes and long commands
 
 In the [Google Bash Style Guide] section
 on "pipelines," there is an example of
@@ -848,7 +848,7 @@ operators:
         command3 ||
 ```
 
-### 2.7.5 Use standard if..fi
+### 2.12 Use standard if..fi
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||` with blocks.
@@ -868,7 +868,7 @@ shell shorthands.
     }
 ```
 
-### 2.7.6 Mathematical Calculations
+### 2.13 Mathematical Calculations
 
 Less is more: omit the `$` in POSIX
 arithmetic expansions. The shell
@@ -899,7 +899,7 @@ integers. For decimals, use `bc` or
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
-### 2.7.7 Suggested global variables
+### 2.14 Suggested global variables
 
 Here is list of suggested global
 variables at the top of for distributed
