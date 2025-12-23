@@ -455,7 +455,7 @@ Option| Long Option |Description
   Always wrap the variable in double
   quotes. **Rationale:** [Less is More].
   For programmers coming from [Python],
-  ]Ruby], or ]Perl], simple truth tests
+  [Ruby], or [Perl], simple truth tests
   are intuitive and familiar. Explicit
   flags don't add functional value when
   values are in double-quotes. Minimizing
