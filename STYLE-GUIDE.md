@@ -555,7 +555,7 @@ Option| Long Option |Description
 ### 2.5 Input/Output and File Handling
 
 - Send error messages to stderr. Put
-  `>&2' at the end of line.
+  `>&2` at the end of line.
 
 ``` bash
 	# Preferred
