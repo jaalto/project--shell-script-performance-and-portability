@@ -681,9 +681,8 @@ Option| Long Option |Description
   the [POSIX] standard, but it is 99%
   supported by all the best-effort
   POSIX-compatible `sh` shells. The
-  `local` keyword is "portable enough" to
+  `local` keyword is portable enough to
   be used in modern shell scripts.
-
 
 > Shell	| local supported
 > -----	| ---------------
