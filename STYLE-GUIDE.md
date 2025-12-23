@@ -919,49 +919,70 @@ integers. For decimals, use `bc` or
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
-### 2.14 Suggested global variables
+### 2.14 Global variables and metadata
 
-Here is list of suggested global
-variables at the top of for distributed
-shell scripts.
+Place global variables at the top of the
+script for visibility. Refer to the
+[SPDX License List] for the correct
+short-identifier names (e.g., MIT,
+Apache-2.0).
+
+Use a machine-readable version format:
+N.N[.N]. For production code, follow the
+[Semantic Versioning] (X.Y.Z) scheme.
+
+**Tip:** Date-based versioning (e.g.,
+YYYY.MMDD.HHMM) is often more practical
+for small projects with infrequent
+releases, as a date provides immediate
+context regarding the release's age
+compared to an arbitrary number like 1.5.
 
 ``` shell
     PROGRAM=${0##*/}
+	VERSION="YYYY.MMDD.HHMM"
+
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/project/homepage"
-
-    # See
-    # https://spdx.org/licenses
-    # for correct short names
-
     LICENSE="GPL-3-or-later"
-
-    # Use machine
-    # readable format N.N[.N]
-    #
-    # In production code,
-    # use standard https://semver.org
-	# X.Y.Z numbering
-    #
-    # Date based version may
-    # be useful for small
-    # projects or infrequent
-    # releases.
-
-    VERSION="YYYY.MMDD.HHMM"
 ```
 
 ## 3. Bash Notes
 
 ### 3.1 Bash shebang
 
-Use the portable `env` [shebang] line.
-  Improve readability by adding a space
-  after the interpreter path.
+Use the portable env [shebang] line.
+Improve readability by adding a space
+after the interpreter path.
+
+**Rationale:** The path `/bin/bash` is
+unfortunately not portable across all
+operating systems. For example, in macOS,
+`/bin/bash` is hard-coded to Bash version
+3.2.x (from 2006). Even the root user
+cannot upgrade this version without
+disabling System Integrity Protection
+(SIP). Using the [env] command allows the
+script to use a newer version of Bash by
+searching the current PATH.
 
 ``` shell
   #! /usr/bin/env bash
 ```
+
+The [env] utility is defined as a
+standard POSIX command, but its exact
+path is not mandated by the POSIX
+specification.
+
+However, in nearly all operational
+environments, the de facto standard and
+highly portable location for this
+utility is `/usr/bin/env`. It is
+currently considered a safe and robust
+assumption that virtually all modern
+systems provide [env] utility at this
+specific path.
 
 ### 3.2 Limit Bashism
 
@@ -1108,6 +1129,7 @@ Google search help:
 [parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
 [PWD]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=PWD
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
+[env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
 [pwd]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html
@@ -1140,6 +1162,7 @@ Google search help:
 [Powershell scrict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
 [SPDX License List]: https://spdx.org/licenses/
+[Semantic Versioning]: https://semver.org
 [Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
 [Less Is More]: https://en.wikipedia.org/wiki/Less_is_more
 
