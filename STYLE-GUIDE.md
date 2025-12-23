@@ -772,12 +772,12 @@ everyting' is not sound advice as it
 would lead to less readable code.
 
 ``` shell
-    # Preferred. Simple
+    # Preferred. Simple code.
 
     echo "this"
     echo "and that"
 
-    # Avoid. Not needed.
+    # Avoid. More complex code
     #
     # Note: The proper safe way
     # to use printf is to
