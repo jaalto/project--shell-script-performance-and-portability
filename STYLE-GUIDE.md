@@ -787,7 +787,7 @@ would lead to less readable code.
     printf "%s\n" "and that"
 ```
 
-## 2.9 PWD vs pwd
+### 2.9 PWD vs pwd
 
 POSIX defines the variable [PWD]. You
 can use it in place of the command
@@ -804,7 +804,7 @@ subshell fork.
     curdir=$(pwd)
 ```
 
-### 2.10 Long Commands
+## #2.10 Long Commands
 
 To improve readability, split commands
 and options in their own lines according
