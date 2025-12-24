@@ -707,7 +707,7 @@ logic.
 ``` shell
    Example ()
    {
-      # Preferred. POSIX, universal.
+      # Preferred. POSIX
    }
 
    function Example ()
