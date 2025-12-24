@@ -676,12 +676,19 @@ logic.
 
 - [Command Substitution]: Use POSIX
   `$(command)` instead of archaic
-  \`backticks\` for command
-  substitution. **Rationale:** it allows
-  for cleaner nesting and is generally
-  easier to read. Both are POSIX, but
-  the dollar-parentheses form is
-  preferred. See [Bash FAQ/082].
+  \`backticks\` for command substitution.
+  **Rationale:** it allows for cleaner
+  nesting and is generally easier to
+  read. Both are POSIX, but the
+  dollar-parentheses form is preferred.
+  See [Bash FAQ/082]. A side note: On
+  many non-US keyboard layouts (such as
+  German, French, or Nordic), the
+  backtick is a dead key or requires a
+  complex modifier combination (AltGr).
+  This makes the character harder to type
+  and often leads to accidental character
+  combinations.
 
 ``` bash
     # Preferred
