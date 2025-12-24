@@ -1027,6 +1027,10 @@ Use the portable env [shebang] line.
 Improve readability by adding a space
 after the interpreter path.
 
+``` shell
+  #! /usr/bin/env bash
+```
+
 **Rationale:** The path `/bin/bash` is
 unfortunately not portable across all
 operating systems. For example, in macOS,
@@ -1038,9 +1042,7 @@ disabling System Integrity Protection
 script to use a newer version of Bash by
 searching the current PATH.
 
-``` shell
-  #! /usr/bin/env bash
-```
+**Discussion:**
 
 The [env] utility is defined as a
 standard POSIX command, but its exact
@@ -1084,14 +1086,38 @@ Avoid             | Alternative
 archaic `$[...]`  | POSIX `$((...))`
 `let ...`         | POSIX `$((...))`
 
-### 3.4 Variables
+### 3.4 Function Local Variables
 
 Use `local` for variable scoping within
 functions. Avoid the Bash-specific
-[declare] built-in. **Rationale:** Less
-is more. The `local` is better for future
-portability in case the script is
-converted to run under `/bin/sh`.
+[declare] built-in. 
+
+**Rationale:*
+
+- Simplicity (LIM): In favor of the
+  simplest tool that does the job. The
+  `declare` built-in often "brings
+  nothing additional to the table." While
+  it offers advanced features like
+  type-casting (integers, arrays), these
+  are rarely necessary in well-structured
+  scripts. The primary goal—localizing
+  variables—is fully achieved with the
+  simpler `local` keyword.
+- Portability: Using `local` facilitates
+  future portability. While not strictly
+  part of the POSIX standard, local is
+  supported by almost all modern shells
+  (including dash, ash, and ksh93). In
+  contrast, `declare` is a heavy,
+  Bash-specific built-in that makes
+  converting a script much more
+  difficult.
+- Readability: `local` is semantically
+  clear; it tells the reader exactly what
+  is happening (scoping) without the
+  overhead of declare's various flags and
+  attributes.
 
 ### 3.5 Arithmetic
 
