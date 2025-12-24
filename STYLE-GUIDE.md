@@ -55,7 +55,25 @@ MISCELLANEOUS
 
 ## 1. Core Principles
 
-### 1.1 General
+### 1.1 Target Audience
+
+This guide is designed for developers
+targeting modern most POSIX compliant
+`/bin/sh` environments, including Linux,
+macOS, BSD systems using the [ksh93]
+shell, Windows Subsystem for Linux
+([WSL]), Windows [Cygwin] and Windows
+[MSYS2].
+
+It does not target legacy UNIX systems or
+ancient Bourne shells. If your
+project requires compatibility with
+systems older than 15 years, please
+consult the
+[GNU Autoconf/Portable Shell Programming]
+manual instead.
+
+### 1.2 General
 
 - Use [POSIX] conventions where possible
   to improve portability.
@@ -80,7 +98,7 @@ MISCELLANEOUS
   variable quoting, to prevent unexpected
   behavior.
 
-### 1.2 Code Organization
+### 1.3 Code Organization
 
 For best practises, divide program
 into sections. They are:
@@ -118,7 +136,7 @@ Main ()
 Main "$@"
 ```
 
-### 1.3 Consistent Conventions
+### 1.4 Consistent Conventions
 
 Programs can be written in a variety
 of styles. To make scripts easier to read
@@ -159,7 +177,7 @@ conventions:
   lines reduces "noise" in the logical
   lines of code.
 
-### 1.4 Metadata and Configuration
+### 1.5 Metadata and Configuration
 
 - Prefer `/bin/sh`. This ensures maximum
   portability and execution speed.
@@ -191,7 +209,7 @@ conventions:
 
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/homepage"
-    LICENSE="GPL-3-or-later"
+    LICENSE="GPL-3-or-later")
 ```
 
 - **Standard options in scripts:** A
@@ -350,7 +368,7 @@ Option| Long Option |Description
     }
 ```
 
-### 1.5 Dependencies
+### 1.6 Dependencies
 
 - Assume [GNU coreutils] and require
   their installation in the README. GNU
@@ -1094,6 +1112,7 @@ portability.
 
 [Korn Shell]: https://en.wikipedia.org/wiki/KornShell
 [ksh]: https://en.wikipedia.org/wiki/KornShell
+[ksh93]: https://tracker.debian.org/pkg/ksh93u+m
 
 <!-- ------- REF:BASH -------
 Google search help:
@@ -1136,6 +1155,7 @@ Google search help:
 <!-- ------- REF:GNU --------- -->
 
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
+[GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
 
 <!-- ------- REF:MISC ------- -->
 
@@ -1162,6 +1182,10 @@ Google search help:
 [Less Is More]: https://en.wikipedia.org/wiki/Less_is_more
 
 [Google Bash Style Guide]: https://google.github.io/styleguide/shellguide.html
+
+[WSL]: https://learn.microsoft.com/en-us/windows/wsl/
+[Cygwin]: https://cygwin.com
+[MSYS2]: https://www.msys2.org
 
 <!-- ------- REF:LANG -------- -->
 
