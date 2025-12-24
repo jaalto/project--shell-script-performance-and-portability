@@ -870,12 +870,15 @@ would lead to less readable code.
 
 ### 2.9 PWD vs pwd
 
-POSIX defines the variable [PWD]. You
-can use it in place of the command
-[pwd]. For shells where `pwd` is not a
-built-in, it is slightly more efficient
-to use the variable, as it avoids a
-subshell fork.
+Use the [PWD] environment variable
+instead of the [pwd] command.
+**Rationale:** POSIX requires the shell
+to maintain the PWD variable, making it a
+reliable and portable choice across
+modern systems. In addition, for shells
+where [pwd] is not a built-in, it is
+slightly more efficient to use the
+variable, as it avoids a subshell fork.
 
 ``` shell
     # Preferred
@@ -884,6 +887,11 @@ subshell fork.
     # Avoid
     curdir=$(pwd)
 ```
+
+**Pro Tip:** In rare cases, if the
+program needs the physical path
+(resolving all symlinks), then `pwd -P`
+is the correct way to read the path name.
 
 ## #2.10 Long Commands
 
