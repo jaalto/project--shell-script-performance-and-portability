@@ -136,7 +136,25 @@ Main ()
 Main "$@"
 ```
 
-### 1.4 Consistent Conventions
+### 1.4 Dependencies
+
+- Assume [GNU coreutils] and require
+  their installation in the README. GNU
+  utilities are more capable and
+  generally optimized for speed. They
+  also provide standardized behavior
+  regardless of the OS, ensuring
+  improved interoperability.
+
+- **Utilities trade-off to the POSIX
+  portability focus**: In calling
+  utilities (e.g. `grep`), use readable
+  GNU `--long` options where possible.
+  **Rationale:** `--long` options make
+  scripts easier to read and maintain in
+  the long term.
+
+### 1.5 Consistent Conventions
 
 Programs can be written in a variety
 of styles. To make scripts easier to read
@@ -210,7 +228,7 @@ layout issues because the width is
 treated as a constant standard rather
 than a user-configurable preference.
 
-### 1.5 Metadata and Configuration
+### 1.6 Metadata and Configuration
 
 - Prefer `/bin/sh`. This ensures maximum
   portability and execution speed.
@@ -245,14 +263,16 @@ than a user-configurable preference.
     LICENSE="GPL-3-or-later")
 ```
 
-- **Standard options in scripts:** A
-  standard set of options should be
-  utilized by every script to ensure a
-  uniform user interface. At a minimum,
-  `-h` (help) must be implemented.
-  **Rationale:** User expectations are
-  best met by providing standardized
-  interface.
+### 1.7 Standard Options
+
+**Standard options in scripts:** A
+standard set of options should be
+utilized by every script to ensure a
+uniform user interface. At a minimum,
+`-h` (help) must be implemented.
+**Rationale:** User expectations are
+best met by providing standardized
+interface.
 
 Option| Long Option |Description
 ---   | ---         | ---
@@ -312,16 +332,18 @@ Option| Long Option |Description
     done
 ```
 
-- Documentation. Add a top-level
-  comment block including:
-  **License:** Consult
-  [SPDX License List]. Prefer known
-  licences like GPL, MIT etc.
-  **Description:** What the script
-  does. **Usage:** Example of how
-  to call it. The easiest is to
-  provide `Help` near the top of
-  the script.
+### 1.8 Documentation and Help
+
+Documentation. Add a top-level
+comment block including:
+**License:** Consult
+[SPDX License List]. Prefer known
+licences like GPL, MIT etc.
+**Description:** What the script
+does. **Usage:** Example of how
+to call it. The easiest is to
+provide `Help` near the top of
+the script.
 
 ``` shell
     #! /bin/sh
@@ -400,24 +422,6 @@ Option| Long Option |Description
         exit 0
     }
 ```
-
-### 1.6 Dependencies
-
-- Assume [GNU coreutils] and require
-  their installation in the README. GNU
-  utilities are more capable and
-  generally optimized for speed. They
-  also provide standardized behavior
-  regardless of the OS, ensuring
-  improved interoperability.
-
-- **Utilities trade-off to the POSIX
-  portability focus**: In calling
-  utilities (e.g. `grep`), use readable
-  GNU `--long` options where possible.
-  **Rationale:** `--long` options make
-  scripts easier to read and maintain in
-  the long term.
 
 ## 2. Rules
 
