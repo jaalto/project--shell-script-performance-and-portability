@@ -1002,8 +1002,8 @@ is redundant.
 ```
 
 The POSIX `$((...))` only handles
-integers. For decimals, use `bc` or
-`awk`.
+integers. For decimals, use [bc] or
+[awk].
 
 ``` shell
     i=0.5
@@ -1199,6 +1199,8 @@ Google search help:
 [command substitution]: https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html
 [parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
 [PWD]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=PWD
+[awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
+[bc]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
 [env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
