@@ -751,13 +751,6 @@ logic.
 ``` shell
     Example ()
     {
-
-        # Use 'local' though
-        # not strictly POSIX.
-        # It's widely supported
-        # in modern /bin/sh
-        # implementations.
-
         local file
         file="${1:-}"
     }
@@ -812,7 +805,7 @@ logic.
 
 - **About [Korn Shell]
   compatibility**. If supporting BSD or
-  UNIX systems that may use `ksh` as
+  UNIX systems that may use `ksh93` as
   `/bin/sh` is required, include the
   necessary code at the script's start to
   emulate the `local` keyword.
