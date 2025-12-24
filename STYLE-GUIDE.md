@@ -171,6 +171,29 @@ conventions:
   #! /bin/sh
 ```
 
+- Place global variables at the top of
+  the script for visibility. Refer to the
+  [SPDX License List] for the correct
+  short-identifier names. Use a
+  machine-readable version format:
+  N.N[.N]. For production code, follow
+  the [Semantic Versioning] (X.Y.Z)
+  scheme. **Tip:** Date-based versioning
+  may be practical for small projects
+  with infrequent releases, as a date
+  provides immediate context regarding
+  the release's age compared to an
+  arbitrary number like 1.5.
+
+``` shell
+    PROGRAM=${0##*/}
+	VERSION="YYYY.mmdd.HHMM"
+
+    AUTHOR="John doe <jdoe@example.com>"
+    URL="http://example.com/homepage"
+    LICENSE="GPL-3-or-later"
+```
+
 - **Standard options in scripts:** A
   standard set of options should be
   utilized by every script to ensure a
@@ -919,34 +942,6 @@ integers. For decimals, use `bc` or
 
     # POSIX awk
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
-```
-
-### 2.14 Global Variables and Metadata
-
-Place global variables at the top of the
-script for visibility. Refer to the
-[SPDX License List] for the correct
-short-identifier names (e.g., MIT,
-Apache-2.0).
-
-Use a machine-readable version format:
-N.N[.N]. For production code, follow the
-[Semantic Versioning] (X.Y.Z) scheme.
-
-**Tip:** Date-based versioning (e.g.,
-YYYY.MMDD.HHMM) is often more practical
-for small projects with infrequent
-releases, as a date provides immediate
-context regarding the release's age
-compared to an arbitrary number like 1.5.
-
-``` shell
-    PROGRAM=${0##*/}
-	VERSION="YYYY.MMDD.HHMM"
-
-    AUTHOR="John doe <jdoe@example.com>"
-    URL="http://example.com/project/homepage"
-    LICENSE="GPL-3-or-later"
 ```
 
 ## 3. Bash Notes
