@@ -159,7 +159,7 @@ conventions:
   lines reduces "noise" in the logical
   lines of code.
 
-### 1.4 Script Preamble and Dependencies
+### 1.4 Preamble and Dependencies
 
 - Prefer `/bin/sh`. This ensures maximum
   portability and execution speed.
@@ -393,7 +393,7 @@ Option| Long Option |Description
     cd "$dir" || exit $?
 ```
 
-### 2.2 Temporary files
+### 2.2 Temporary Files
 
 - Use safe temporary files and
   directories with `mktemp`.
@@ -675,7 +675,7 @@ Option| Long Option |Description
     }
 ```
 
-### 2.7 Use of local keyword
+### 2.7 Function Local Variables
 
 - The keyword `local` isn't defined in
   the [POSIX] standard, but it is 99%
@@ -804,7 +804,7 @@ subshell fork.
     curdir=$(pwd)
 ```
 
-### 2.10 Long commands
+### 2.10 Long Commands
 
 To improve readability, split commands
 and options in their own lines according
@@ -823,7 +823,7 @@ one thing.
         file
 ```
 
-### 2.11 Pipes and long commands
+### 2.11 Pipes
 
 In the [Google Bash Style Guide] section
 on "pipelines," there is an example of
@@ -865,7 +865,7 @@ operators:
         command3 ||
 ```
 
-### 2.12 Use standard if..fi
+### 2.12 Use Standard if..fi
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||` with blocks.
@@ -919,7 +919,7 @@ integers. For decimals, use `bc` or
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
-### 2.14 Global variables and metadata
+### 2.14 Global Variables and Metadata
 
 Place global variables at the top of the
 script for visibility. Refer to the
@@ -984,7 +984,7 @@ assumption that virtually all modern
 systems provide [env] utility at this
 specific path.
 
-### 3.2 Limit Bashism
+### 3.2 Limiting Bashism
 
 Even in Bash, default to POSIX syntax
 unless Bash-specific features are
@@ -1000,7 +1000,7 @@ compatibility with `/bin/sh`, allowing
 scripts to benefit from faster startup
 and fewer forks.
 
-## 3.3 STATEMENT TO BE AVOIDED
+### 3.3 Statement To Be Avoided
 
 Avoid obsolete artihmetic expressions
 `$[...]` and the the [let] built-in. They
@@ -1012,7 +1012,7 @@ Avoid             | Alternative
 archaic `$[...]`  | POSIX `$((...))`
 `let ...`         | POSIX `$((...))`
 
-## 3.4 VARIABLES
+### 3.4 Variables
 
 Use `local` for variable scoping within
 functions. Avoid the Bash-specific
@@ -1021,7 +1021,7 @@ is more. The `local` is better for future
 portability in case the script is
 converted to run under `/bin/sh`.
 
-## 3.5 ARITHMETIC
+### 3.5 Arithmetic
 
 Avoid Bash-specific constructs like the
 arithmetic expression `((...))`
@@ -1043,7 +1043,7 @@ Examples:
     done
 ```
 
-## 3.6 TEST CONDITIONS
+### 3.6 Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
@@ -1067,7 +1067,7 @@ portability.
     fi
 ```
 
-## 4. REFERENCES
+## 4. References
 
 - Allman style (aka BSD style)
   https://en.wikipedia.org/wiki/Indentation_style#Allman_style
