@@ -732,11 +732,12 @@ logic.
     Example ()
     {
         # arguments in $1, $2,
-        # etc., not in the parens
+        # etc., not in the
+		# parens
     }
 
     # Behaves like a system
-    # command
+    # command. E.g. ls(1).
     Example "arg"
 ```
 
