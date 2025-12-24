@@ -159,7 +159,7 @@ conventions:
   lines reduces "noise" in the logical
   lines of code.
 
-### 1.4 Preamble and Dependencies
+### 1.4 Metadata and Configuration
 
 - Prefer `/bin/sh`. This ensures maximum
   portability and execution speed.
@@ -170,22 +170,6 @@ conventions:
 ``` bash
   #! /bin/sh
 ```
-
-- Assume [GNU coreutils] and require
-  their installation in the README. GNU
-  utilities are more capable and
-  generally optimized for speed. They
-  also provide standardized behavior
-  regardless of the OS, ensuring
-  improved interoperability.
-
-- **Utilities trade-off to the POSIX
-  portability focus**: In calling
-  utilities (e.g. `grep`), use readable
-  GNU `--long` options where possible.
-  **Rationale:** `--long` options make
-  scripts easier to read and maintain in
-  the long term.
 
 - **Standard options in scripts:** A
   standard set of options should be
@@ -342,6 +326,24 @@ Option| Long Option |Description
         exit 0
     }
 ```
+
+### 1.5 Dependencies
+
+- Assume [GNU coreutils] and require
+  their installation in the README. GNU
+  utilities are more capable and
+  generally optimized for speed. They
+  also provide standardized behavior
+  regardless of the OS, ensuring
+  improved interoperability.
+
+- **Utilities trade-off to the POSIX
+  portability focus**: In calling
+  utilities (e.g. `grep`), use readable
+  GNU `--long` options where possible.
+  **Rationale:** `--long` options make
+  scripts easier to read and maintain in
+  the long term.
 
 ## 2. Rules
 
