@@ -914,31 +914,19 @@ one thing.
 
 ### 2.11 Pipes
 
-In the [Google Bash Style Guide] section
-on "pipelines," there is an example of
-how to split a long pipe chain across
-separate lines.
-
-While aligning the pipe (|) at the start
-of lines is visually pleasing, it
-requires redundant backslashes (\\) at
-the end of each preceding line. In the
-spirit of [Less is More] (LIM), a
-trailing pipe naturally indicates that
-the command continues on the next line.
-Indentation alone is sufficient to
-express the separation of commands.
+Use a trailing pipe (|) at the end of a
+line to indicate that a command continues
+onto the next. Do not use backslashes
+(\\) for line continuation when using
+pipes. The pipe character itself is a
+natural line-continuation indicator in
+shell syntax. Indent subsequent lines to
+visually group the pipeline.
 
 ``` shell
-    # LIM, lean, simpler
     command1   |
       command2 |
       command3
-
-    # Google
-    command1 \
-      | command2 \
-      | command4
 ```
 
 The same priciple applies to also other
@@ -953,6 +941,29 @@ operators:
         command2 ||
         command3 ||
 ```
+
+**Discussion:** The
+[Google Bash Style Guide] recommends
+placing the pipe operator (|) at the
+start of the following line. While this
+makes the "action" (the pipe) vertically
+aligned and visually prominent, it
+requires redundant backslashes (\\) at
+the end of every preceding line to
+prevent the shell from terminating the
+command early.
+
+This approach does not allign with the
+[Less is More] (LIM) principle. A
+trailing pipe is already a valid
+line-continuation marker in POSIX shells;
+therefore, the backslash serves no
+functional purpose.
+
+# Google
+    command1 \
+      | command2 \
+      | command4
 
 ### 2.12 Use Standard if..fi
 
