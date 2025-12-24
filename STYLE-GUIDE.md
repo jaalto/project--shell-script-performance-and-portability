@@ -164,6 +164,11 @@ conventions:
   characters increase visual noise.
   Compare `thisVar="$hasVal $likeThis"`
   vs `this_var="$has_val $like_this"`.
+- Blocks use primarily [Allman] style
+  over [K&R]. **Rationale:** To maximize
+  clarity; placing braces on their own
+  lines reduces "noise" in the logical
+  lines of code.
 - Indentation: Spaces are used over TAB
   characters. **Rationale:** The layout
   remains uniform across editors,
@@ -171,11 +176,39 @@ conventions:
   where TAB widths vary. Additionally,
   copy-pasting code preserves the exact
   formatting.
-- Blocks use primarily [Allman] style
-  over [K&R]. **Rationale:** To maximize
-  clarity; placing braces on their own
-  lines reduces "noise" in the logical
-  lines of code.
+
+**Discussion: About using TAB for
+indentation:** While the ability to
+customize TAB width in editors is often
+cited as a benefit, it is detrimental to
+a standardized codebase for the following
+reasons:
+
+False Sense of Line Length: Indentation
+levels should contribute to the hard
+limit of 80 characters per line. If
+Developer A sets their TAB width to 2,
+they may write deeply nested code that
+appears to fit within 80 columns.
+However, for Developer B (using a TAB
+width of 8), that same code will break
+the line limit and become unreadable.
+
+Visual Fragmentation: Relying on
+editor-side TAB scaling means the "shape"
+of the logic changes from person to
+person. Using fixed spaces ensures that
+what you see is exactly what your
+teammates see.
+
+Note on Hard TABs: The Linux Kernel
+Project is a notable example of uniform
+TAB usage. In that project, a TAB is
+strictly defined as a Hard TAB with a
+fixed width of 8 spaces. This avoids
+layout issues because the width is
+treated as a constant standard rather
+than a user-configurable preference.
 
 ### 1.5 Metadata and Configuration
 
