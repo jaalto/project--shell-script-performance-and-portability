@@ -441,7 +441,7 @@ the script.
   settings (*errexit, nounset*) treat
   errors and unset variables as fatal,
   preventing unexpected behavior. Be sure
-  to also Learn their caveats from
+  to also learn their caveats from
   [Bash FAQ/105] and [Bash Pitfalls/60].
 
 ``` shell
@@ -537,7 +537,7 @@ the script.
   [Less is More]. For programmers coming
   from [Python], [Ruby], or [Perl],
   simple truth tests are intuitive and
-  familiar. Explicit flags don't add
+  familiar. Explicit optons don't add
   functional value when values are in
   double-quotes. Minimizing these options
   reduces shell specific cognitive load
