@@ -556,7 +556,7 @@ logic.
 
 ### 2.4 Formatting and Syntax
 
-- The Maximum line length is 80
+- The maximum line length is 80
   characters. **Rationale:** this limit
   is a deliberate constraint based on
   human physiology and complexity
