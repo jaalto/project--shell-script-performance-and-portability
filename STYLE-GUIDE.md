@@ -530,19 +530,19 @@ the script.
 ```
 
 - Use simple truth tests for boolean
-  variable checks. Omit explicit `-n`
-  (non-zero length) or `-z` (zero length)
-  options. Always wrap the variable in
-  double quotes. **Rationale:**
-  [Less is More]. For programmers coming
-  from [Python], [Ruby], or [Perl],
-  simple truth tests are intuitive and
-  familiar. Explicit optons don't add
-  functional value when values are in
-  double-quotes. Minimizing these options
-  reduces shell specific cognitive load
-  to promote to use more universal
-  programming logic.
+variable checks. Omit explicit `-n`
+(non-zero length) or `-z` (zero length)
+options. Always wrap the variable in
+double quotes. **Rationale:**
+[Less is More]. For programmers coming
+from [GNU Awk], [Python], [Ruby], or [Perl],
+simple truth tests are intuitive and
+familiar. Explicit optons don't add
+functional value when values are in
+double-quotes. Minimizing these options
+reduces shell specific cognitive load to
+promote to use more universal programming
+logic.
 
 ``` bash
     # Preferred, universal
@@ -1193,6 +1193,7 @@ Google search help:
 
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
 [GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
+[GNU awk]: https://tracker.debian.org/pkg/gawk
 
 <!-- ------- REF:MISC ------- -->
 
