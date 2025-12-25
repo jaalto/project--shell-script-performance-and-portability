@@ -509,25 +509,33 @@ the script.
 
 ### 2.3 Variables and Quoting
 
-- Global Variables: Use `ALL_CAPS` for
-  global, environmental, or read-only
-  constants.
+#### 2.3.1 Global Variables
 
-- Use `"$quoted"` variables.
+Global Variables: Use `ALL_CAPS` for
+global, environmental, or read-only
+constants.
 
-- Use `"$@"`, that is, quote the "all
-  arguments" [special parameters]
-  variable. This is mandatory to keep
-  each argument distinct and uncorrupted.
+#### 2.3.2 Quote Variables
 
-- Prefer simple `$var` by default. Use
-  the braces only when necessary for
-  boundary conditions (e.g.,
-  `${var}suffix`) or when utilizing shell
-  [parameter expansion] (e.g.,
-  `${var:-default}`). **Rationale:**
-  minimalism in the spirit of
-  [Less Is More].
+Use `"$quoted"` variables.
+
+#### 2.3.3 Variable "$@"
+
+Use `"$@"`, that is, quote the "all
+arguments" [special parameters]
+variable. This is mandatory to keep
+each argument distinct and uncorrupted.
+
+#### 2.3.4 Simple Variable Expansion
+
+Use simple `$var` by default. Use
+the braces only when necessary for
+boundary conditions (e.g.,
+`${var}suffix`) or when utilizing shell
+[parameter expansion] (e.g.,
+`${var:-default}`). **Rationale:**
+minimalism in the spirit of
+[Less Is More].
 
 ``` shell
     path="$dir/$to/$file"
@@ -536,7 +544,9 @@ the script.
     path="${dir}/${to}/${file}"
 ```
 
-- Use simple truth tests for boolean
+#### 2.3.4 Variables and Truth Tests
+
+Use simple truth tests for boolean
 variable checks. Omit explicit `-n`
 (non-zero length) or `-z` (zero length)
 options. Always wrap the variable in
