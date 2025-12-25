@@ -900,7 +900,7 @@ program needs the physical path
 (resolving all symlinks), then `pwd -P`
 is the correct way to read the path name.
 
-## #2.10 Long Commands
+### 2.10 Long Commands
 
 To improve readability, split commands
 and options in their own lines according
