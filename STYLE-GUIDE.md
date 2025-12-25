@@ -1224,7 +1224,17 @@ effort while gaining full compatibility.
 Examples:
 
 ``` shell
-    # POSIX. Simple, portable.
+    # POSIX, portable
+    if [ 1 -gt 0 ]; then
+	   ...
+	fi
+
+    # Bash only
+    if (( 1 > 0 )); then
+		...
+	fi
+
+    # POSIX, portable.
     # No noticeable
     # performance difference
     for i in $(seq 10)
