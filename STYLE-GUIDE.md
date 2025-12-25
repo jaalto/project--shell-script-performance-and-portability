@@ -154,7 +154,9 @@ Main "$@"
 
 ### 1.4 Dependencies and Utility Usage
 
-1. Favor [GNU coreutils] and require
+## 1.4.1 Use GNU Utilities
+
+Use [GNU coreutils] and require
 their installation in the README.
 
 **Rationale:** GNU utilities are more
@@ -165,9 +167,11 @@ standardized behavior across different
 operating systems (Linux, macOS, BSD),
 ensuring improved interoperability.
 
-2. Long-form Options: In calling
-utilities (e.g. `grep`), use readable
-GNU `--long` options where possible.
+## 1.4.1 Favor Long options
+
+Use readable `--long` form options in
+calling utilities (e.g. `grep`) where
+possible.
 
 **Rationale:* `--long` options make a
 command's intent clear, making it easier
