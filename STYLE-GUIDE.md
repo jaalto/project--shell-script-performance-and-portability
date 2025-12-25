@@ -154,7 +154,7 @@ Main "$@"
 
 ### 1.4 Dependencies and Utility Usage
 
-## 1.4.1 Use GNU Utilities
+#### 1.4.1 Use GNU Utilities
 
 Use [GNU coreutils] and require
 their installation in the README.
@@ -167,7 +167,7 @@ standardized behavior across different
 operating systems (Linux, macOS, BSD),
 ensuring improved interoperability.
 
-## 1.4.1 Favor Long options
+#### 1.4.1 Favor Long options
 
 Use readable `--long` form options in
 calling utilities (e.g. `grep`) where
@@ -183,7 +183,7 @@ understand their meaning.
 
 ### 1.5 Consistent Conventions
 
-### 1.5.1 Stylistic Philosophy
+#### 1.5.1 Stylistic Philosophy
 
 Programs can be written in a variety
 of styles. To make scripts easier to read
@@ -215,7 +215,7 @@ settings.
 This style guide adopts the following
 conventions explained below.
 
-### 1.5.2 Line Length
+#### 1.5.2 Line Length
 
 Use a maximum line length of 80
 characters.
@@ -231,7 +231,7 @@ complex logic must be broken out, or
 refactored into more manageable parts
 Less code per line is better than more.
 
-### 1.5.3 Indentation with Spaces
+#### 1.5.3 Indentation with Spaces
 
 Use spaces for indentation. A standard
 width is 4 spaces.
@@ -242,7 +242,7 @@ across editors, terminals, and tools like
 Additionally, copy-pasting code preserves
 the exact formatting.
 
-### 1.5.4 Use of Camel and Mixed Case
+#### 1.5.4 Use of Camel and Mixed Case
 
 Use [CamelCase] for functions starting
 with an uppercase letter (e.g.,
@@ -276,7 +276,7 @@ outside of functions,
 	}
 ```
 
-### 1.5.5 Use of Allman style blocks
+#### 1.5.5 Use of Allman style blocks
 
 Use primarily the [Allman] style for
 functions and control structures.
@@ -546,7 +546,7 @@ exit early.
 
 ### 2.2 Temporary Files
 
-## 2.2.1 Using mktemp
+#### 2.2.1 Using mktemp
 
 Use safe temporary files and
 directories with `mktemp`.
@@ -559,7 +559,7 @@ environments. See [Bash FAQ/062].
     tmpdir=$(mktemp --directory -t tmp.dir.XXX)
 ```
 
-## 2.2.2 Using trap
+#### 2.2.2 Using trap
 
 Use a [trap] to ensure proper cleanup
 of temporary files on script exit.
@@ -641,7 +641,7 @@ logic.
 
 ### 2.4 Formatting and Syntax
 
-### 2.4.1 Logical Grouping
+#### 2.4.1 Logical Grouping
 
 Use blank lines between blocks to improve
 readability. **Rationale:** In the spirit
@@ -652,7 +652,7 @@ a story, blank lines group related
 commands together, allowing the reader to
 process the code more easily.
 
-### 2.4.2 Loops
+#### 2.4.2 Loops
 
 Use the [Allman] "line up" style in
 `do..done`.
@@ -669,7 +669,7 @@ Use the [Allman] "line up" style in
     done
 ```
 
-### 2.4.3 Conditional Statements
+#### 2.4.3 Conditional Statements
 
 Use [K&R] style for placing `then`
 keyword provided that `<statement>` is
@@ -691,7 +691,7 @@ better).
     fi
 ```
 
-### 2.4.4 Case Statements
+#### 2.4.4 Case Statements
 
 Place pattern case terminators `;;` in
 their own lines. **Rationale:**
