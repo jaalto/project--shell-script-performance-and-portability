@@ -434,22 +434,26 @@ the script.
 
 ### 2.1 Error Handling
 
-- Set a exit status: Scripts should exit
-  with 0 for success and a non-zero
-  value to indicate a failure or
-  specific error condition.
+### 2.1.1 Exit Status
 
-- At the beginning of file, explicitly
-  set shell options for early exit and
-  error checking. Use variations of the
-  [unofficial bash strict mode]. For
-  robustness, include at least the first
-  two options. **Rationale:** These
-  settings (*errexit, nounset*) treat
-  errors and unset variables as fatal,
-  preventing unexpected behavior. Be sure
-  to also learn their caveats from
-  [Bash FAQ/105] and [Bash Pitfalls/60].
+Set a exit status: Scripts should exit
+with 0 for success and a non-zero
+value to indicate a failure or
+specific error condition.
+
+### 2.1.2 Execution Safety
+
+At the beginning of file, explicitly
+set shell options for early exit and
+error checking. Use variations of the
+[unofficial bash strict mode]. For
+robustness, include at least the first
+two options. **Rationale:** These
+settings (*errexit, nounset*) treat
+errors and unset variables as fatal,
+preventing unexpected behavior. Be sure
+to also learn their caveats from
+[Bash FAQ/105] and [Bash Pitfalls/60].
 
 ``` shell
     #! /bin/sh
@@ -470,11 +474,13 @@ the script.
     set -o pipefail
 ```
 
-- Check status of commands and
-  exit early.
+### 2.1.3 Explicit Error Checking
+
+Check status of commands and
+exit early.
 
 ``` shell
-    # in case you do not use
+    # In case you do not use
     # set -o errexit
 
     cd "$dir" || exit $?
