@@ -967,10 +967,12 @@ line-continuation marker in POSIX shells;
 therefore, the backslash serves no
 functional purpose.
 
-# Google
+``` shell
+    # Google
     command1 \
       | command2 \
       | command4
+```
 
 ### 2.12 Use Standard if..fi
 
