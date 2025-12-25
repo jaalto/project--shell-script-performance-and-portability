@@ -263,7 +263,7 @@ than a user-configurable preference.
 
 ``` shell
     PROGRAM=${0##*/}
-	VERSION="YYYY.mmdd.HHMM"
+    VERSION="YYYY.mmdd.HHMM"
 
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/homepage"
@@ -464,8 +464,8 @@ the script.
     set -o nounset
 
     # Optional
-	# - fail on $()
-	# - fail cmd on pipe
+    # - fail on $()
+    # - fail cmd on pipe
     set -o errtrace
     set -o pipefail
 ```
@@ -645,7 +645,7 @@ logic.
   `>&2` at the end of line.
 
 ``` bash
-	# Preferred
+    # Preferred
     echo "message"
     echo "ERROR: message" >&2
 
@@ -740,7 +740,7 @@ logic.
     {
         # arguments in $1, $2,
         # etc., not in the
-		# parens
+        # parens
     }
 
     # Behaves like a system
@@ -772,17 +772,17 @@ logic.
   `local` keyword is portable enough to
   be used in modern shell scripts.
 
-> Shell	| local supported
-> -----	| ---------------
-> posh	| yes
-> dash	| yes
+> Shell | local supported
+> ----- | ---------------
+> posh  | yes
+> dash  | yes
 > pbosh 2023/01/12 | no (old ksh derivate)
 > busybox ash 1.37.0 | yes
-> mksh	| yes
+> mksh  | yes
 > ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
 > bash --posix 3.2 | yes (macOS)
-> bash	| yes
-> zsh		| yes
+> bash  | yes
+> zsh       | yes
 
 - **Note about Dynamic Scope:** The shell
   uses dynamic scoping to control a
@@ -909,9 +909,9 @@ one thing.
 
 ``` shell
     # Canonicalize whitepaces:
-	# - at the beginning
-	# - at the end
-	# - in between
+    # - at the beginning
+    # - at the end
+    # - in between
 
     sed -e 's/^[ \t]+//' \
         -e 's/[ \t]+$//' \
@@ -989,8 +989,8 @@ shell shorthands.
     # Avoid
     <statement> && {
         # many
-		# statements
-		# here
+        # statements
+        # here
     }
 ```
 
@@ -1097,9 +1097,9 @@ archaic `$[...]`  | POSIX `$((...))`
 
 Use `local` for variable scoping within
 functions. Avoid the Bash-specific
-[declare] built-in. 
+[declare] built-in.
 
-**Rationale:*
+**Rationale:**
 
 - Simplicity (LIM): In favor of the
   simplest tool that does the job. The
