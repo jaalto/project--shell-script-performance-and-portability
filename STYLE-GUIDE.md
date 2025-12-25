@@ -100,29 +100,45 @@ manual instead.
 
 ### 1.3 Code Organization
 
-For best practises, divide program
-into sections. They are:
+#### 1.3.1 General Layout
 
-- The comment block
-- Constants
-- Functions
-- Program body in Main()
+1.3.1 General Layout
 
-In order to easily find the start of the
-program, put the entry point in `Main` as
-the bottom-most function. This provides
-consistency with the existing programming
-languages and allows readers to find the
-start of the program immediately.
+Use best practices by dividing the
+program into logical sections to improve
+scannability and structure. This
+structure ensures that dependencies
+(functions and constants) are defined
+before they are executed.
 
-Relying on functions is a core design
-principle that modularizes logic from the
-outset. It ensures variable localization,
-encourages thinking in discrete execution
-blocks, and keeps code segments concise
-and visible. This 'one-task-per-function'
-makes the program significantly easier to
-extend and maintain as it evolves.
+- The Comment Block: Script description,
+  usage, and dependencies.
+- Constants: Global variables.
+- Functions: Modular logic blocks.
+- program entry point at the bottom of
+  the file.
+
+**Rationale:** Relying on functions is a
+core design principle that modularizes
+logic from the outset. It ensures
+variable localization, encourages
+thinking in discrete execution blocks,
+and keeps code segments concise and
+visible. This 'one-task-per-function'
+makes the program easier to extend and
+maintain as it evolves.
+
+#### 1.3.2 The Main Function
+
+To easily identify the program's starting
+point, encapsulate the entry logic in a
+function named `Main` and place it as the
+bottom-most function in the script.
+
+**Rationale:** This provides consistency
+with the other programming languages
+allowing readers to find the start of
+the program in a quickly and intuitively.
 
 ```shell
 Main ()
