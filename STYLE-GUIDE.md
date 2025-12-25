@@ -573,25 +573,39 @@ logic.
 
 ### 2.4 Formatting and Syntax
 
-- The maximum line length is 80
-  characters. **Rationale:** this limit
-  is a deliberate constraint based on
-  human physiology and complexity
-  management. Human eyes scan vertical
-  text much faster than horizontal text
-  (C.f. newspaper columns and
-  speed-reading). With limited space,
-  complex logic must be broken out, or
-  refactored into more manageable parts
-  Less code per line is better than more.
+### 2.4.1 Line Length
 
-- Use 4 spaces for indentation.
+The maximum line length is 80
+characters. **Rationale:** this limit
+is a deliberate constraint based on
+human physiology and complexity
+management. Human eyes scan vertical
+text much faster than horizontal text
+(C.f. newspaper columns and
+speed-reading). With limited space,
+complex logic must be broken out, or
+refactored into more manageable parts
+Less code per line is better than more.
 
-- Use blank lines between blocks to
-  improve readability.
+### 2.4.2 Indentation
 
-- Use the [Allman] "line up" style in
-  `do..done`
+Use 4 spaces for indentation.
+
+### 2.4.3 Logical Grouping
+
+Use blank lines between blocks to improve
+readability. **Rationale:** In the spirit
+of [Less is More], white space is not
+empty; it is a tool to improve
+scannability. Just as paragraphs break up
+a story, blank lines group related
+commands together, allowing the reader to
+process the code more easily.
+
+### 2.4.4 Loops
+
+Use the [Allman] "line up" style in
+`do..done`.
 
 ``` shell
     for item in 1 2 3
@@ -604,11 +618,34 @@ logic.
         ...
     done
 ```
+### 2.4.5 Conditional Statements
 
-- Place pattern case terminators `;;` in
-  their own lines. **Rationale:**
-  Improves the visual flow and make the
-  action blocks stand out.
+Use [K&R] style for placing `then`
+keyword provided that `<statement>` is
+short and simple enough.
+
+``` shell
+    if <statement>; then
+        ...
+    fi
+
+In longer statements, switch to [Allman]
+style for more clarity. Command is more
+visually prominent (it stands out
+better).
+
+    if <this is an example of a very long statement>
+    then
+        ...
+    fi
+```
+
+### 2.4.5 Case Statements
+
+Place pattern case terminators `;;` in
+their own lines. **Rationale:**
+Improves the visual flow and make the
+action blocks stand out.
 
 ``` shell
     # Note: POSIX case require
@@ -625,28 +662,6 @@ logic.
             ...
             ;;
     esac
-```
-
-- Use [K&R] style for placing `then`
-  keyword provided that `<statement>` is
-  short and simple enough.
-
-``` shell
-    if <statement>; then
-        ...
-    fi
-
-    # In longer statements,
-    # switch to Allman style
-    # for more clarity. Command
-    # is more visually
-    # prominent (it stands out
-    # better).
-
-    if <this is an example of a very long statement>
-    then
-        ...
-    fi
 ```
 
 ### 2.5 Input/Output and File Handling
