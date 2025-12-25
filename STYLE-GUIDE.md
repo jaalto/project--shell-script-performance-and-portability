@@ -248,7 +248,7 @@ Use [CamelCase] for functions starting
 with an uppercase letter (e.g.,
 `IsNumber`). **Rationale:** Uppercase
 function names minimize conflicts with
-existing lowercase utlility commands.
+existing lowercase utility commands.
 
 Use [camelCase] for function local
 variables. Start with a lowercase letter
@@ -256,7 +256,7 @@ variables. Start with a lowercase letter
 Compared to [Snake Case], underscore
 characters can increase visual noise.
 
-Prefer UPPERCES for global variables
+Prefer UPPERCASE for global variables
 outside of functions,
 
 ``` shell
@@ -327,75 +327,6 @@ and automated tools.
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/homepage"
     LICENSE="GPL-3-or-later"
-```
-
-### 1.7 Standard Options
-
-**Standard options in scripts:** A
-standard set of options should be
-utilized by every script to ensure a
-uniform user interface. At a minimum,
-`-h` (help) must be implemented.
-**Rationale:** User expectations are
-best met by providing standardized
-interface.
-
-Option| Long Option |Description
----   | ---         | ---
--h    | --help      |Display usage instructions and exit
--v    | --verbose   |Increase output detail for monitoring.
--V    | --version   |Print version information and exit.
--D    | --debug     |(Optional) Enable tracing output.
-
-``` shell
-   # Code for option handling
-   #
-   # NOTE: POSIX `getopts`
-   # utility does not support
-   # long options. The
-   # Limitation of the code
-   # is that it does not
-   # provide stacked short
-   # options in form of "-l
-   # -x" => "-lx"
-
-   while :
-   do
-        local opt
-        opt="${1:-none}"
-
-        case $opt in
-            -v | --verbose)
-                shift
-                VERBOSE="verbose"
-                ;;
-            -V | --version)
-                shift
-                # Calls exit 0
-                Version
-                ;;
-            -D | --debug)
-                shift
-                DEBUG="debug"
-                ;;
-            -h | --help)
-                shift
-                # Calls exit 0
-                Help
-                ;;
-            --) # End of options
-                shift
-                break
-                ;;
-            -*)
-                shift
-                echo "$0: WARN Unknown option: $opt" >&2
-                ;;
-            *)
-                break
-                ;;
-        esac
-    done
 ```
 
 ### 1.8 Documentation and Help
@@ -487,6 +418,74 @@ the script.
     "
         exit 0
     }
+```
+
+### 1.7 Inteface and Standard Options
+
+**Standard options in scripts:** A
+standard set of options should be
+utilized by every script to ensure a
+uniform user interface. At a minimum,
+`-h` (help) must be implemented.
+**Rationale:** User expectations are
+best met by providing standardized
+interface.
+
+Option| Long Option |Description
+---   | ---         | ---
+-h    | --help      |Display usage instructions and exit
+-v    | --verbose   |Increase output detail for monitoring.
+-V    | --version   |Print version information and exit.
+-D    | --debug     |(Optional) Enable tracing output.
+
+Template code for option handling below.
+NOTE: POSIX [getopts] utility does not
+support long options. The Limitation of
+the code is that it does not support
+stacked short options in form of "-l -x"
+=> "-lx"
+
+``` shell
+Main ()
+{
+   while :
+   do
+        local opt
+        opt="${1:-none}"
+
+        case $opt in
+            -v | --verbose)
+                shift
+                VERBOSE="verbose"
+                ;;
+            -V | --version)
+                shift
+                # Calls exit 0
+                Version
+                ;;
+            -D | --debug)
+                shift
+                DEBUG="debug"
+                ;;
+            -h | --help)
+                shift
+                # Calls exit 0
+                Help
+                ;;
+            --) # End of options
+                shift
+                break
+                ;;
+            -*)
+                shift
+                echo "$0: WARN Unknown option: $opt" >&2
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+}
 ```
 
 ## 2. Rules
@@ -718,8 +717,10 @@ action blocks stand out.
 
 ### 2.5 Input/Output and File Handling
 
-- Send error messages to stderr. Put
-  `>&2` at the end of line.
+#### 2.5.1 Errors to Stderr
+
+Send error messages to stderr. Put
+`>&2` at the end of line.
 
 ``` bash
     # Preferred
@@ -731,9 +732,11 @@ action blocks stand out.
     echo >&2 "ERROR: message"
 ```
 
-- Display help to stdout. Displaying
-  help, program version etc. are not
-  error conditions.
+#### 2.5.2 Help to Stdout
+
+Display help to stdout. Displaying
+help, program version etc. are not
+error conditions.
 
 ``` bash
     arg=${1:-}
@@ -744,12 +747,14 @@ action blocks stand out.
     fi
 ```
 
-- Use `read -r`. **Rationale:** When
-  reading input with read, always use the
-  `-r` option to prevent backslash
-  interpretation, which can lead to
-  unexpected behavior. See
-  [Bash FAQ/001].
+#### 2.5.3 Reading Input
+
+Use `read -r`. **Rationale:** When
+reading input with read, always use the
+`-r` option to prevent backslash
+interpretation, which can lead to
+unexpected behavior. See
+[Bash FAQ/001].
 
 ``` bash
     while read -r item
@@ -758,21 +763,23 @@ action blocks stand out.
     done < file
 ```
 
-- [Command Substitution]: Use POSIX
-  `$(command)` instead of archaic
-  \`backticks\` for command substitution.
-  **Rationale:** it allows for cleaner
-  nesting and is generally easier to
-  read. Both are POSIX, but the
-  dollar-parentheses form is preferred.
-  See [Bash FAQ/082]. A side note: On
-  many non-US keyboard layouts (such as
-  German, French, or Nordic), the
-  backtick is a dead key or requires a
-  complex modifier combination (AltGr).
-  This makes the character harder to type
-  and often leads to accidental character
-  combinations.
+#### 2.5.4 Command Substitution
+
+[Command Substitution]: Use POSIX
+`$(command)` instead of archaic
+\`backticks\` for command substitution.
+**Rationale:** it allows for cleaner
+nesting and is generally easier to
+read. Both are POSIX, but the
+dollar-parentheses form is preferred.
+See [Bash FAQ/082]. A side note: On
+many non-US keyboard layouts (such as
+German, French, or Nordic), the
+backtick is a dead key or requires a
+complex modifier combination (AltGr).
+This makes the character harder to type
+and often leads to accidental character
+combinations.
 
 ``` bash
     # Preferred
@@ -1346,6 +1353,7 @@ Google search help:
 [bc]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
 [env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
+[getopts]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getopts.html
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
 [pwd]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html
