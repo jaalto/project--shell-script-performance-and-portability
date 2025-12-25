@@ -791,9 +791,25 @@ combinations.
 
 ### 2.6 Functions and Scope
 
-- Use the standard POSIX parentheses
-  syntax to define functions; avoid the
-  non-standard [function keyword].
+#### 2.6.1 Function syntax
+
+Use the standard POSIX parentheses
+syntax to define functions; avoid the
+non-standard [function keyword].
+
+**Stylistic Note:** Prefer including a
+space before the function parentheses to
+align with the output of the Bash `type`
+command's output. **Rationale:** In
+shell, functions act as internal commands
+rather than traditional programming
+subroutines. Since the parentheses `()`
+are merely syntax markers and not used
+for argument passing, the `Name ()`
+notation reinforces that you are defining
+a new command. This distinction helps
+avoid the false assumption that arguments
+should be defined within the parentheses.
 
 ``` shell
    Example ()
@@ -805,39 +821,22 @@ combinations.
    {
       # Avoid. Bash, Zsh only
    }
-```
-
-- Prefer including a space before the
-  function parentheses `()` to match the
-  output style of the [Bash type]
-  command. **Rationale:** Shell functions
-  are treated as internal commands rather
-  than traditional programming functions.
-  Because `()` is not used for argument
-  passing in shell functions, introducing
-  a new **command** is emphasized by the
-  `Name ()` notation, rather than a
-  subroutine with a fixed signature.
-
-``` shell
-    Example ()
-    {
-        # arguments in $1, $2,
-        # etc., not in the
-        # parens
-    }
 
     # Behaves like a system
     # command. E.g. ls(1).
     Example "arg"
 ```
 
-- **Function Argument Handling:** in
-  longer functions prefer assigning
-  positional arguments (`$1`, `$2` etc.)
-  immediately to meaningful, local
-  variables to improve readability within
-  the function.
+#### 2.6.3 Function Argument Handling
+
+Use meaningful local variables for
+function arguments. **Rationale:** In
+longer functions, prefer assigning
+positional arguments (`$1`, `$2`, etc.)
+immediately to local variables. This
+improves code readability and makes the
+logic within the function easier to
+follow and maintain.
 
 ``` shell
     Example ()
@@ -847,14 +846,14 @@ combinations.
     }
 ```
 
-### 2.7 Function Local Variables
+#### 2.6.4 Function Local Variables
 
-- The keyword `local` isn't defined in
-  the [POSIX] standard, but it is 99%
-  supported by all the best-effort
-  POSIX-compatible `sh` shells. The
-  `local` keyword is portable enough to
-  be used in modern shell scripts.
+The keyword `local` isn't defined in
+the [POSIX] standard, but it is 99%
+supported by all the best-effort
+POSIX-compatible `sh` shells. The
+`local` keyword is portable enough to
+be used in modern shell scripts.
 
 > Shell | local supported
 > ----- | ---------------
@@ -868,14 +867,14 @@ combinations.
 > bash  | yes
 > zsh       | yes
 
-- **Note about Dynamic Scope:** The shell
-  uses dynamic scoping to control a
-  variable’s visibility within functions.
-  See [functions] in Bash manual. This
-  means that a function can see variables
-  defined not just inside itself, but
-  also variables defined by any other
-  function that called it.
+**Note about Dynamic Scope:** The shell
+uses dynamic scoping to control a
+variable’s visibility within functions.
+See [functions] in Bash manual. This
+means that a function can see variables
+defined not just inside itself, but
+also variables defined by any other
+function that called it.
 
 ``` shell
     Two ()
@@ -894,12 +893,13 @@ combinations.
     One
 ```
 
-- **About [Korn Shell]
-  compatibility**. If supporting BSD or
-  UNIX systems that may use `ksh93` as
-  `/bin/sh` is required, include the
-  necessary code at the script's start to
-  emulate the `local` keyword.
+#### 2.6.4 Function Local Variables in Ksh
+
+If supporting BSD or UNIX systems that
+may use `ksh93` as `/bin/sh` is required,
+include the necessary code at the
+script's start to emulate the `local`
+keyword.
 
 ``` shell
     IsCommand ()
@@ -934,7 +934,7 @@ combinations.
     }
 ```
 
-### 2.8 echo vs printf
+### 2.7 echo vs printf
 
 POSIX [echo] does not have any options.
 Use it for static strings. Use
@@ -959,7 +959,7 @@ would lead to less readable code.
     printf "%s\n" "and that"
 ```
 
-### 2.9 PWD vs pwd
+### 2.8 PWD vs pwd
 
 Use the [PWD] environment variable
 instead of the [pwd] command.
@@ -984,7 +984,7 @@ program needs the physical path
 (resolving all symlinks), then `pwd -P`
 is the correct way to read the path name.
 
-### 2.10 Long Commands
+### 2.9 Long Commands
 
 Use multiple lines to split long commands
 and their options. **Rationale:** To
@@ -1004,7 +1004,7 @@ action.
         file
 ```
 
-### 2.11 Pipes
+### 2.10 Pipes
 
 Use a trailing pipe (|) at the end of a
 line to indicate that a command continues
@@ -1059,7 +1059,7 @@ functional purpose.
       | command4
 ```
 
-### 2.12 Use Standard if..fi
+### 2.11 Use Standard if..fi
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||` with blocks.
@@ -1081,7 +1081,7 @@ shell shorthands.
     }
 ```
 
-### 2.13 Mathematical Calculations
+### 2.12 Mathematical Calculations
 
 Omit the `$` in POSIX arithmetic
 expansions. The shell automatically
@@ -1359,6 +1359,7 @@ Google search help:
 [pwd]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html
 [sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
+[type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
 [trap]: https://www.gnu.org/software/bash/manual/bash.html#index-trap
 [type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
 
