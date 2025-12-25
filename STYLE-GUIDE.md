@@ -136,23 +136,30 @@ Main ()
 Main "$@"
 ```
 
-### 1.4 Dependencies
+### 1.4 Dependencies and Utility Usage
 
-- Assume [GNU coreutils] and require
-  their installation in the README. GNU
-  utilities are more capable and
-  generally optimized for speed. They
-  also provide standardized behavior
-  regardless of the OS, ensuring
-  improved interoperability.
+1. Favor [GNU coreutils] and require
+their installation in the README.
 
-- **Utilities trade-off to the POSIX
-  portability focus**: In calling
-  utilities (e.g. `grep`), use readable
-  GNU `--long` options where possible.
-  **Rationale:** `--long` options make
-  scripts easier to read and maintain in
-  the long term.
+**Rationale:** GNU utilities are more
+capable and generally optimized for speed
+compared to their minimal POSIX
+counterparts. They also provide
+standardized behavior across different
+operating systems (Linux, macOS, BSD),
+ensuring improved interoperability.
+
+2. Long-form Options: In calling
+utilities (e.g. `grep`), use readable
+GNU `--long` options where possible.
+
+**Rationale:* `--long` options make a
+command's intent clear, making it easier
+to read and maintain in the long term.
+Long options act as self-documenting
+code, whereas short options frequently
+require consulting man pages to
+understand their meaning.
 
 ### 1.5 Consistent Conventions
 
