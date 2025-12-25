@@ -902,10 +902,11 @@ is the correct way to read the path name.
 
 ### 2.10 Long Commands
 
-To improve readability, split commands
-and options in their own lines according
-to clean code priciple: one line does
-one thing.
+Use multiple lines to split long commands
+and their options. **Rationale:** To
+improve readability by following the
+"Clean Code" principle: one line, one
+action.
 
 ``` shell
     # Canonicalize whitepaces:
