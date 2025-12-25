@@ -183,6 +183,8 @@ understand their meaning.
 
 ### 1.5 Consistent Conventions
 
+### 1.5.1 Stylistic Philosophy
+
 Programs can be written in a variety
 of styles. To make scripts easier to read
 and understand, use consistent naming
@@ -196,90 +198,127 @@ with spaces or tabs, using spaces around
 operators, and placing blocks and braces
 on the same line or a new line.
 
+About using TAB for indentation: While
+TABs allow for personal preference in
+editors where TAB can be configured for
+display, they can also create a "false
+sense of line length." Variable TAB
+widths (e.g., 2 vs. 8 spaces) cause code
+that fits on one screen to overflow and
+become unreadable on another. Conversely,
+fixed spaces ensure the logic's "shape"
+remains identical across all
+environments, whereas TABs cause the
+structure to shift based on local editor
+settings.
+
 This style guide adopts the following
-conventions:
+conventions explained below.
 
-- Functions use [CamelCase]: Start with
-  an uppercase letter. **Rationale:**
-  Uppercase function names minimize
-  conflicts with existing lowercase shell
-  commands.
-- Variables start with a lowercase
-  letter. **Rationale:** Underscore
-  characters increase visual noise.
-  Compare `thisVar="$hasVal $likeThis"`
-  vs `this_var="$has_val $like_this"`.
-- Blocks use primarily [Allman] style
-  over [K&R]. **Rationale:** To maximize
-  clarity; placing braces on their own
-  lines reduces "noise" in the logical
-  lines of code.
-- Indentation: Spaces are used over TAB
-  characters. **Rationale:** The layout
-  remains uniform across editors,
-  terminals, and tools like diff(1),
-  where TAB widths vary. Additionally,
-  copy-pasting code preserves the exact
-  formatting.
+### 1.5.2 Line Length
 
-**Discussion: About using TAB for
-indentation:** While the ability to
-customize TAB width in editors is often
-cited as a benefit, it is detrimental to
-a standardized codebase for the following
-reasons:
+Use a maximum line length of 80
+characters.
 
-False Sense of Line Length: Indentation
-levels should contribute to the hard
-limit of 80 characters per line. If
-Developer A sets their TAB width to 2,
-they may write deeply nested code that
-appears to fit within 80 columns.
-However, for Developer B (using a TAB
-width of 8), that same code will break
-the line limit and become unreadable.
+**Rationale:** this limit
+is a deliberate constraint based on
+human physiology and complexity
+management. Human eyes scan vertical
+text much faster than horizontal text
+(C.f. newspaper columns and
+speed-reading). With limited space,
+complex logic must be broken out, or
+refactored into more manageable parts
+Less code per line is better than more.
 
-Visual Fragmentation: Relying on
-editor-side TAB scaling means the "shape"
-of the logic changes from person to
-person. Using fixed spaces ensures that
-what you see is exactly what your
-teammates see.
+### 1.5.3 Indentation with Spaces
 
-Note on Hard TABs: The Linux Kernel
-Project is a notable example of uniform
-TAB usage. In that project, a TAB is
-strictly defined as a Hard TAB with a
-fixed width of 8 spaces. This avoids
-layout issues because the width is
-treated as a constant standard rather
-than a user-configurable preference.
+Use spaces for indentation. A standard
+width is 4 spaces.
+
+**Rationale:** The layout remains uniform
+across editors, terminals, and tools like
+[diff], where TAB widths vary.
+Additionally, copy-pasting code preserves
+the exact formatting.
+
+### 1.5.4 Use of Camel and Mixed Case
+
+Use [CamelCase] for functions starting
+with an uppercase letter (e.g.,
+`IsNumber`). **Rationale:** Uppercase
+function names minimize conflicts with
+existing lowercase utlility commands.
+
+Use [camelCase] for function local
+variables. Start with a lowercase letter
+(e.g., `maxLength`). **Rationale:**
+Compared to [Snake Case], underscore
+characters can increase visual noise.
+
+Prefer UPPERCES for global variables
+outside of functions,
+
+``` shell
+	# Global variables
+	URL_HOMEPAGE="http://example.com"
+
+	Example ()
+	{
+	    # local variables
+		...
+
+	    # Preferred
+		thisResult=$(hasVar + andAnother)
+
+		# Avoid
+		this_result=$(has_var + and_another)
+	}
+```
+
+### 1.5.5 Use of Allman style blocks
+
+Use primarily the [Allman] style for
+functions and control structures.
+**Rationale:** To maximize clarity,
+placing block-defining keywords and
+braces on their own lines reduces "noise"
+on logical lines of code. This makes
+block boundaries visually distinct and
+improves scannability.
 
 ### 1.6 Metadata and Configuration
 
-- Prefer `/bin/sh`. This ensures maximum
-  portability and execution speed.
-  Improve readability by adding a space
-  after the interpreter path in [shebang]
-  line:
+#### 1.6.1 Shebang line
+
+Prefer `/bin/sh`. This ensures maximum
+portability across POSIX-compliant
+systems and optimizes execution speed.
+**Note:** Improve readability by adding a
+single space after the interpreter path
+in [shebang] line:
 
 ``` bash
   #! /bin/sh
 ```
 
-- Place global variables at the top of
-  the script for visibility. Refer to the
-  [SPDX License List] for the correct
-  short-identifier names. Use a
-  machine-readable version format:
-  N.N[.N]. For production code, follow
-  the [Semantic Versioning] (X.Y.Z)
-  scheme. **Tip:** Date-based versioning
-  may be practical for small projects
-  with infrequent releases, as a date
-  provides immediate context regarding
-  the release's age compared to an
-  arbitrary number like 1.5.
+#### 1.6.2 Metadata Variables
+
+Define global metadata at the top of the
+script for immediate visibility. These
+variables provide context for both users
+and automated tools.
+
+- Licensing: Use the
+  [SPDX License List] short-identifiers.
+- Versioning: Use a machine-readable
+  format (N.N[.N]). Follow
+  [Semantic Versioning] for production,
+  or use date-based versioning (e.g.,
+  YYYY.mmdd.HHMM) for small projects to
+  provide immediate context regarding the
+  script's age compared to an arbitrary
+  version like 1.5.
 
 ``` shell
     PROGRAM=${0##*/}
@@ -287,7 +326,7 @@ than a user-configurable preference.
 
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/homepage"
-    LICENSE="GPL-3-or-later")
+    LICENSE="GPL-3-or-later"
 ```
 
 ### 1.7 Standard Options
@@ -603,25 +642,7 @@ logic.
 
 ### 2.4 Formatting and Syntax
 
-### 2.4.1 Line Length
-
-The maximum line length is 80
-characters. **Rationale:** this limit
-is a deliberate constraint based on
-human physiology and complexity
-management. Human eyes scan vertical
-text much faster than horizontal text
-(C.f. newspaper columns and
-speed-reading). With limited space,
-complex logic must be broken out, or
-refactored into more manageable parts
-Less code per line is better than more.
-
-### 2.4.2 Indentation
-
-Use 4 spaces for indentation.
-
-### 2.4.3 Logical Grouping
+### 2.4.1 Logical Grouping
 
 Use blank lines between blocks to improve
 readability. **Rationale:** In the spirit
@@ -632,7 +653,7 @@ a story, blank lines group related
 commands together, allowing the reader to
 process the code more easily.
 
-### 2.4.4 Loops
+### 2.4.2 Loops
 
 Use the [Allman] "line up" style in
 `do..done`.
@@ -648,7 +669,8 @@ Use the [Allman] "line up" style in
         ...
     done
 ```
-### 2.4.5 Conditional Statements
+
+### 2.4.3 Conditional Statements
 
 Use [K&R] style for placing `then`
 keyword provided that `<statement>` is
@@ -670,7 +692,7 @@ better).
     fi
 ```
 
-### 2.4.5 Case Statements
+### 2.4.4 Case Statements
 
 Place pattern case terminators `;;` in
 their own lines. **Rationale:**
@@ -1327,6 +1349,8 @@ Google search help:
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
 [GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
 [GNU awk]: https://tracker.debian.org/pkg/gawk
+[GNU diffutils]: https://www.gnu.org/software/diffutils/
+[diff]: https://en.wikipedia.org/wiki/Diff
 
 <!-- ------- REF:MISC ------- -->
 
