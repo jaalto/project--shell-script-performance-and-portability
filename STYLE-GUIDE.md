@@ -488,20 +488,24 @@ exit early.
 
 ### 2.2 Temporary Files
 
-- Use safe temporary files and
-  directories with `mktemp`.
-  **Rationale:** Prevent symlink attacks
-  and race conditions in multi-user
-  environments. See [Bash FAQ/062].
+## 2.2.1 Using mktemp
+
+Use safe temporary files and
+directories with `mktemp`.
+**Rationale:** Prevent symlink attacks
+and race conditions in multi-user
+environments. See [Bash FAQ/062].
 
 ``` shell
     tmpfile=$(mktemp -t tmp.file.XXX)
     tmpdir=$(mktemp --directory -t tmp.dir.XXX)
 ```
 
-- Use a [trap] to ensure proper cleanup
-  of temporary files on script exit.
-  See [Bash Guide/SignalTrap].
+## 2.2.2 Using trap
+
+Use a [trap] to ensure proper cleanup
+of temporary files on script exit.
+See [Bash Guide/SignalTrap].
 
 ``` shell
 
