@@ -102,8 +102,6 @@ manual instead.
 
 #### 1.3.1 General Layout
 
-1.3.1 General Layout
-
 Use best practices by dividing the
 program into logical sections to improve
 scannability and structure. This
