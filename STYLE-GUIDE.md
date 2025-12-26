@@ -492,14 +492,14 @@ Main ()
 
 ### 2.1 Error Handling
 
-### 2.1.1 Exit Status
+#### 2.1.1 Exit Status
 
 Set a exit status: Scripts should exit
 with 0 for success and a non-zero
 value to indicate a failure or
 specific error condition.
 
-### 2.1.2 Execution Safety
+#### 2.1.2 Execution Safety
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -532,7 +532,7 @@ to also learn their caveats from
     set -o pipefail
 ```
 
-### 2.1.3 Explicit Error Checking
+#### 2.1.3 Explicit Error Checking
 
 Check status of commands and
 exit early.
@@ -1212,7 +1212,7 @@ functions. Avoid the Bash-specific
   overhead of declare's various flags and
   attributes.
 
-### 3.4 Arithmetic
+### 3.4 Arithmetic expression
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
