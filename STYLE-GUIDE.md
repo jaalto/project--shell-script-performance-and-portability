@@ -242,7 +242,7 @@ across editors, terminals, and tools like
 Additionally, copy-pasting code preserves
 the exact formatting.
 
-#### 1.5.4 Use of Camel and Mixed Case
+#### 1.5.4 Use of Camel Case
 
 Use [CamelCase] for functions starting
 with an uppercase letter (e.g.,
@@ -276,7 +276,7 @@ outside of functions,
 	}
 ```
 
-#### 1.5.5 Use of Allman style blocks
+#### 1.5.5 Use of Allman style
 
 Use primarily the [Allman] style for
 functions and control structures.
@@ -1179,8 +1179,7 @@ Avoid             | Alternative
 ---------         | ----------------
 archaic `$[...]`  | POSIX `$((...))`
 `let ...`         | POSIX `$((...))`
-
-### 3.4 Function Local Variables
+`declare`         | `local`
 
 Use `local` for variable scoping within
 functions. Avoid the Bash-specific
@@ -1213,7 +1212,7 @@ functions. Avoid the Bash-specific
   overhead of declare's various flags and
   attributes.
 
-### 3.5 Arithmetic
+### 3.4 Arithmetic
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
@@ -1265,7 +1264,7 @@ Bash seq          | 0.010
 ksh93 seq         | 0.004
 /bin/sh seq (dash)| 0.004
 
-### 3.6 Variable Tests
+### 3.5 Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
