@@ -1783,7 +1783,7 @@ highly portable location for this
 utility is `/usr/bin/env`. It is
 currently considered a safe and robust
 assumption that virtually all modern
-systems provide `env` utility at this
+systems provide [env] utility at this
 specific path.
 
 Compatibility and Legacy Caveat: While
@@ -2027,7 +2027,7 @@ operands without any files:
 - The shell's null command
   [`:`](https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html)
   might be slightly preferrable than
-  utlity [true]. But's that's
+  utility [true]. But's that's
   mostly due to tradition.
   According to GNU autoconf's manual
 ["11.14 Limitations of Shell Builtins"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Limitations-of-Builtins)
