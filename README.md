@@ -1658,30 +1658,27 @@ improve shell scripts even more.
 
 ## 4.4 SHEBANG LINE IN SCRIPTS
 
-Note that POSIX does not define the
-[shebang]
-— the traditional first line that
-indicates which interpreter to use. See
-POSIX C language's section "exec family
-of functions". From
-[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)\:
+When a script is executed directly
+within a Linux or Unix terminal, the
+specific program required to read
+and process the code must be
+identified by the system.
 
-> (...) Another way that some
-> historical implementations handle
-> shell scripts is by recognizing the
-> first two bytes of the file as the
-> character string "#!" and using the
-> remainder of the first line of the
-> file as the name of the command
-> interpreter to execute.
+If the very first line is started
+with `#!` (known as a shebang), the
+path immediately following those
+symbols is examined by the kernel.
+This path is used to locate the
+"interpreter"—the software by which
+the code is understood—and the
+remainder of the file is then handed
+over to that interpreter to be
+processed.
 
-The first bytes of a script typically
-contain two special ASCII codes, a
-special comment `#!` if you wish, which
-is read by the kernel. Note that this
-is a de facto convention, universally
-supported even though it is not defined
-by POSIX.
+Note that this is a de facto
+convention, universally supported
+even though it is not defined by
+POSIX.
 
     #! <interpreter> [word]
     #
@@ -1703,6 +1700,23 @@ by POSIX.
     #    #! /usr/bin/awk -f
     #    #! /usr/bin/env bash
     #    #! /usr/bin/env python3
+
+Note that POSIX does not define the
+[shebang]
+— the traditional first line that
+indicates which interpreter to use. See
+POSIX C language's section "exec family
+of functions". From
+[RATIONALE](https://pubs.opengroup.org/onlinepubs/9799919799/functions/exec.html#:~:text=RATIONALE)\:
+
+> (...) Another way that some
+> historical implementations handle
+> shell scripts is by recognizing the
+> first two bytes of the file as the
+> character string "#!" and using the
+> remainder of the first line of the
+> file as the name of the command
+> interpreter to execute.
 
 ### 4.4.1 About Bash and Shebang
 
