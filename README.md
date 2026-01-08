@@ -1177,22 +1177,23 @@ t-statement-arithmetic-increment.sh
     # t2b real 0.063 : $((i++))
     # t3  real 0.039 ((i++))
     # t4  real 0.053 let i++
-
 ```
 
 - In Bash, there is no practical
   performance difference between a
   regular while loop and a
-  [process substitution] loop. However,
-  the latter is more general, as any
-  variable set during the loop will
-  persist after *and* there is no need to
-  clean up temporary files like in POSIX
-  (1) solution. The POSIX loop is
-  marginally faster, but the speed gain
-  is lost by the extra `rm` command call
-  (Note: the added time is not included
-  in the test results). See
+  [process substitution] loop.
+  However, the latter is more
+  general, as any variable set
+  during the loop will persist after
+  *and* there is no need to clean up
+  temporary files like in POSIX (1)
+  solution. The POSIX loop is
+  marginally faster, but the speed
+  gain is lost by the extra `rm`
+  command call (Note: the added time
+  is not included in the test
+  results). See
   [code](./bin/t-command-output-vs-process-substitution.sh).
 
 ```bash
@@ -1247,6 +1248,7 @@ t-statement-arithmetic-increment.sh
   regular nested if cases vs logical
   short circuit if cases.
 
+```bash
     # (t1)
 
     if [...]; then
@@ -1277,6 +1279,7 @@ t-statement-arithmetic-increment.sh
     Run shell: bash
     # t1  real 0.157
     # t2  real 0.139
+```
 
 - With [GNU grep], the use of
   [GNU parallel],
