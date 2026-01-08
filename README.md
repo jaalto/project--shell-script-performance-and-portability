@@ -2118,11 +2118,11 @@ operands without any files:
   [version history](https://www.liquisearch.com/solaris_operating_system/version_history)).
 
 ```bash
-        # Easily nested
-        lastdir=$(basename $(pwd))
+    # Easily nested
+    lastdir=$(basename $(pwd))
 
-        # Readabilty problems
-        lastdir=`basename \`pwd\``
+    # Readabilty problems
+    lastdir=`basename \`pwd\``
 ```
 
 <!--
