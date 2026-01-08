@@ -1085,7 +1085,8 @@ these offer practical benefits.
 
 ## 3.6 NO PERFORMANCE GAINS
 
-None of these offer any advantages to speed up shell scripts.
+None of these offer any advantages to
+speed up shell scripts.
 
 - The Bash-specific expression
   [double bracket] expression `[[...]]`
