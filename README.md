@@ -2141,12 +2141,16 @@ as a reserved word permits the
 timing of shell builtins, shell
 functions, and pipelines.
 
+```bash
     TIMEFORMAT='real: %R'  # '%R %U %S'
+```
 
 You could also drop kernel cache
 before testing:
 
+```bash
     echo 3 > /proc/sys/vm/drop_caches
+```
 
 # 6.0 FURTHER READING
 
