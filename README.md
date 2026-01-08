@@ -325,40 +325,44 @@ the following factors:
 
 ### Overall: POSIX sh scripts are fast
 
-Regarding shell performance, looking at the
-test cases in this project, the order is quite clear:
+Regarding shell performance, looking at
+the test cases in this project, the order
+is quite clear:
 
-- [sh] is the fastest, as any minimalistic
-  shell like [dash] tends to be.
-- [ksh93] is also fast and close to [dash] in
-  many cases.
-- [bash] is slower by many factors.
+- [sh] is the fastest, as any
+  minimalistic shell like [dash] tends to
+  be.
+- [ksh93] is also fast and close to
+  [dash] in many cases. - [bash] is
+  slower by many factors.
 
-It all comes down to two major things
+It all comes down to one major thing
 typically found in shell scripts:
 
-- Calling external processes, e.g., external
-  commands or functions using process
-  substitution: `result=$(<process or function>)`
-- Looping
+- Calling external processes, e.g.,
+  external commands or functions using
+  process substitution:
+  `result=$(<process or function>)`
 
 Both of these are considerably slower in
-Bash. From pure metrics, [ksh93] looks like a
-winner for shell scripts, offering both speed
-and many programming features. The trouble is
-that it cannot be considered for portable
-scripts, however. Linux ([dash], [bash])
-significantly dominates BSD ([ksh]) in market
-share across servers, while BSD holds a much
-smaller niche, somewhere under 1% in general
-desktop and server stats.
+Bash. From pure metrics, [ksh93] looks
+like a winner for shell scripts, offering
+both speed and many programming features.
+The trouble is that it cannot be
+considered for portable scripts, however.
+Linux ([dash], [bash]) significantly
+dominates BSD ([ksh]) in market share
+across servers, while BSD holds a much
+smaller niche, somewhere under 1% in
+general desktop and server stats.
 
-The `sh` and `bash` are portable, can be found
-everywhere, whereas `ksh` isn't.
+The `sh` and `bash` are portable, can be
+found everywhere, whereas `ksh` isn't.
 
-**Conclusion:** POSIX `sh` is fast but often
-the features provided in `bash` may make it more
-suitable for complex shell scripts.
+**Conclusion:** POSIX `sh` is fast but
+often the features provided in `bash` may
+make it more suitable for complex shell
+scripts.
 
 ### CASE STUDY: CI testing pipeline
 
