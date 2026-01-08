@@ -2010,6 +2010,7 @@ StackOverflow [1](https://stackoverflow.com/q/48712373),
 StackOverflow [2](https://stackoverflow.com/q/16745988),
 StackOverflow [3](https://stackoverflow.com/q/7573368).
 
+```shell
     # Linux (works)
     #
     # GNU sed(1). Replace 'this'
@@ -2044,6 +2045,7 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     sed 's/this/that/g' file > "$tmp" &&
     mv "$tmp" file &&
     rm -f "$tmp"
+```
 
 ### 4.5.2 Case Study: awk
 
