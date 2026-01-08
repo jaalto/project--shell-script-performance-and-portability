@@ -1131,7 +1131,6 @@ None of these offer any advantages to speed up shell scripts.
     # t4  real 0.061
 ```
 
-t-statement-arithmetic-increment.sh
 - There are no practical differences
   between these. The POSIX
   [arithmetic expansion]
