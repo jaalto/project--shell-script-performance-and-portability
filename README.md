@@ -1,8 +1,11 @@
 <!--
 INFORMATION FOR EDITING
 
-- Github Markdown Guide:
+- Github Markdown Guide
   https://is.gd/nqSonp
+
+- GitHub Flavored Markdown Spec
+  https://github.github.com/gfm/
 
 - View markdown in VSCode:
   Command Palette (C-S-p)
@@ -1250,7 +1253,6 @@ t-statement-arithmetic-increment.sh
 
 ```bash
     # (t1)
-
     if [...]; then
         if [...]; then
             if [...]; then
@@ -1282,27 +1284,25 @@ t-statement-arithmetic-increment.sh
 ```
 
 - With [GNU grep], the use of
-  [GNU parallel],
-  a [Perl] program, makes things
-  notably slower for typical file
+  [GNU parallel], a [Perl] program, makes
+  things notably slower for typical file
   sizes. The idea of splitting a file
   into chunks of lines and running the
   search in parallel is intriguing, but
   the overhead of starting Perl
-  interpreter with
-  [GNU parallel] is orders of magnitude
-  more expensive compared to running
-  already optimized [grep] only once.
-  Usually the limiting factor when
-  grepping a file is the disk's I/O
-  speed. Otherwise, `parallel` is
-  excellent for making full use of
-  multiple cores. Based on
+  interpreter with [GNU parallel] is
+  orders of magnitude more expensive
+  compared to running already optimized
+  [GNU grep] only once. Usually the
+  limiting factor when grepping a file is
+  the disk's I/O speed. Otherwise,
+  `parallel` is excellent for making full
+  use of multiple cores. Based on
   StackOverflow discussions, if file
   sizes are in the several hundreds of
-  megabytes or larger, [GNU parallel]
-  can help speed things up.
-  See [code](./bin/t-command-grep-parallel.sh).
+  megabytes or larger, [GNU parallel] can
+  help speed things up. See
+  [code](./bin/t-command-grep-parallel.sh).
 
 ```bash
     # Possibly add: --block -1
@@ -2274,6 +2274,7 @@ optimizing, performance, profiling,
 portability
 
 <!-- ------- REF:LANG -------- -->
+<!-- Link Reference Definitions -->
 
 [Perl]: //www.perl.org
 [Python]: https://www.python.org
