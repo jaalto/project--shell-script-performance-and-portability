@@ -1763,7 +1763,7 @@ standard system location
 If the script starts with `#!
 /bin/bash`, the user cannot arrange it
 to run under different Bash version
-without modifying the script itself, ot
+without modifying the script itself, or
 run it inconveniently with
 `bash <script>`.
 
