@@ -1957,22 +1957,26 @@ Notable observations:
   In Bash manual, see in depth details
   how the
   [`read`](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#index-read)
-  command does not reads characters and
+  command reads characters and
   not lines in StackExchange discussion
   [Understanding "IFS= read -r line"](https://unix.stackexchange.com/a/209184).
 
-
 ```bash
    # POSIX
-   REPLY=$(cat file)
+   printf "continue (y/N): "
+   read REPLY
 
-   # Bash, Ksh
+   # Bash, Ksh. Implicit REPLY var
    # Read max 100 KiB to $REPLY
-   read -rN $((100 * 1024)) < file
+   printf "continue (y/N): "
+   read
 
    case $REPLY in
-        *pattern*)
-            # match
+        [yY]*)
+            :  # no-op
+            ;;
+        *)
+            exit 1
             ;;
    esac
 ```
