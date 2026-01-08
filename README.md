@@ -1720,33 +1720,51 @@ of functions". From
 
 ### 4.4.1 About Bash and Shebang
 
-Note that on Apple macOS, `/bin/bash` is
-hard-coded to Bash version 3.2.x (from 2006)
-where lastest Bash is
-[5.x](https://tracker.debian.org/pkg/bash).
-You cannot uninstall it, even with root
-access, without disabling System
-Integrity Protection. If you install a
-newer Bash version with `brew install
-bash`, it will be located in
-`/usr/local/bin/bash`.
+In Linux-like systems, the Bash
+shell is one of the most widely used
+shells for both interactive sessions
+and task automation due to its
+feature set.
 
-On macOS, to use the latest Bash, the
-user must arrange `/usr/local/bin`
-first in
-[PATH](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes).
+While Linux distributions typically
+provide Bash 5.x at /bin/bash, macOS
+remains hard-coded to Bash version
+3.2.x (dating back to 2006). This
+restriction exists because Apple
+avoids including GPLv3-licensed
+programs within the Operating System
+core, adhering to stricter licensing
+policies. Despite the availability
+of newer Bash
+[5.x](https://tracker.debian.org/pkg/bash)
+versions, the system-provided
+version cannot be uninstalled, even
+with root access, unless System
+Integrity Protection (SIP) is
+disabled. If a more recent version
+of Bash is installed via Homebrew
+(`brew install bash`), the new
+binary is located at
+`/usr/local/bin/bash` instead of the
+standard system location
+`/bin/bash`.
+
 If the script starts with `#!
-/bin/bash`, the user cannot arrange it
-to run under different Bash version
-without modifying the script itself, or
-after modifying `PATH`, run it
-inconveniently with `bash <script>`.
+/bin/bash`, the user cannot arrange
+it to run under different Bash
+version without modifying the script
+itself, or after modifying [PATH],
+run it inconveniently with `bash
+<script>`.
+
+For these reasons, the portable
+shebang is recommended:
 
     ... portable
 
     #! /usr/bin/env bash
 
-    ... traditional
+    ... not portable
 
     #! /bin/bash
 
@@ -2280,6 +2298,7 @@ portability
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX.1-2024]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX parameter expansions]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
+[PATH]: https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes
 [awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
 [cut]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
