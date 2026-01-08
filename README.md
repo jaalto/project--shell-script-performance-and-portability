@@ -1966,8 +1966,8 @@ Notable observations:
    printf "continue (y/N): "
    read REPLY
 
-   # Bash, Ksh. Implicit REPLY var
-   # Read max 100 KiB to $REPLY
+   # Bash, Ksh
+   # Stored to implicit REPLY variable
    printf "continue (y/N): "
    read
 
