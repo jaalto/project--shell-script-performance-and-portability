@@ -1812,11 +1812,11 @@ better portability, the following would
 allow user to use his active Python
 environment:
 
-```
+```bash
     ... portable
 
     #! /usr/bin/env python3
-```bash
+```
 
 ### 4.4.3 The fine print of /usr/bin/env in shebang
 
