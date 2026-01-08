@@ -2054,11 +2054,13 @@ GNU option `-v` option to define
 variables. You can use assignments
 after the program instead.
 
+```shell
     # POSIX
     awk '{print var}' var=1 file
 
     # GNU awk
     awk -v var=1 '{print var}' file
+```
 
 However, don't forget that such
 assignments are not evaluated until
@@ -2066,11 +2068,13 @@ they are encountered, that is, after
 any `BEGIN` action. To use awk for
 operands without any files:
 
+```shell
     # POSIX
     var=1 awk 'BEGIN {print ENVIRON["var"] + 1}' < /dev/null
 
     # GNU awk
     awk -v var=1 'BEGIN {print var + 1; exit}'
+```
 
 ## 4.6 MISCELLANEOUS NOTES
 
