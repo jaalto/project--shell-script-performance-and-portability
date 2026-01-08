@@ -448,10 +448,11 @@ to the mix did not seem relevant enough
 for the whole.
 
 **Conclusion:** Interestingly, the shell
-scripts were quite capable even in a context
-like a CI testing pipeline. Going from Bash
-to POSIX shell scripts provided a little
-extra performance boost at the end.
+scripts were quite capable even in a
+context like a CI testing pipeline. Going
+from Bash to POSIX shell scripts provided
+a little extra performance boost at the
+end.
 
 ## 3.3 MAJOR PERFORMANCE GAINS
 
