@@ -1333,15 +1333,15 @@ Examples of pre-2000 shell scripting
 practises:
 
 ```bash
-    # Test if variable's lenght is non-zero
+    # If variable's lenght is non-zero
     if [ -n "$a" ] ...
 
-    # Test of variable's lenght is zero
+    # If variable's lenght is zero
     if [ -z "$a" ] ...
 
     # Deprecated in next POSIX
     # version. Operands are
-    # not portable.
+    # not portable:
     # -o (OR)
     # -a (AND)
 
@@ -1355,7 +1355,6 @@ practises:
         (*)  false
              ;;
     esac
-
 ```
 
 Modern equivalents:
@@ -1364,8 +1363,7 @@ Modern equivalents:
     # Variable has something
     if [ "$a" ] ...
 
-    # Variable does not have something,
-    # that is: variable is empty
+    # Variable is empty
     if [ ! "$a" ] ...
 
     # Logical OR between statements
@@ -1382,7 +1380,6 @@ Modern equivalents:
          *)  false
              ;;
     esac
-
 ```
 
 ## 4.2 REQUIREMENTS AND SHELL SCRIPTS
