@@ -1,7 +1,7 @@
 <!--
 INFORMATION FOR EDITING
 
-- Github Markdown Guide
+- Github Markdown Guide:
   https://is.gd/nqSonp
 
 - GitHub Flavored Markdown Spec
@@ -1180,6 +1180,7 @@ t-statement-arithmetic-increment.sh
     # t2b real 0.063 : $((i++))
     # t3  real 0.039 ((i++))
     # t4  real 0.053 let i++
+
 ```
 
 - In Bash, there is no practical
@@ -1284,25 +1285,27 @@ t-statement-arithmetic-increment.sh
 ```
 
 - With [GNU grep], the use of
-  [GNU parallel], a [Perl] program, makes
-  things notably slower for typical file
+  [GNU parallel],
+  a [Perl] program, makes things
+  notably slower for typical file
   sizes. The idea of splitting a file
   into chunks of lines and running the
   search in parallel is intriguing, but
   the overhead of starting Perl
-  interpreter with [GNU parallel] is
-  orders of magnitude more expensive
-  compared to running already optimized
-  [GNU grep] only once. Usually the
-  limiting factor when grepping a file is
-  the disk's I/O speed. Otherwise,
-  `parallel` is excellent for making full
-  use of multiple cores. Based on
+  interpreter with
+  [GNU parallel] is orders of magnitude
+  more expensive compared to running
+  already optimized [grep] only once.
+  Usually the limiting factor when
+  grepping a file is the disk's I/O
+  speed. Otherwise, `parallel` is
+  excellent for making full use of
+  multiple cores. Based on
   StackOverflow discussions, if file
   sizes are in the several hundreds of
-  megabytes or larger, [GNU parallel] can
-  help speed things up. See
-  [code](./bin/t-command-grep-parallel.sh).
+  megabytes or larger, [GNU parallel]
+  can help speed things up.
+  See [code](./bin/t-command-grep-parallel.sh).
 
 ```bash
     # Possibly add: --block -1
@@ -1752,17 +1755,30 @@ binary is located at
 standard system location
 `/bin/bash`.
 
+
+Note that on Apple macOS, `/bin/bash` is
+hard-coded to Bash version 3.2.x (from 2006)
+where lastest Bash is
+[5.x](https://tracker.debian.org/pkg/bash).
+You cannot uninstall it, even with root
+access, without disabling System
+Integrity Protection. If you install a
+newer Bash version with `brew install
+bash`, it will be located in
+`/usr/local/bin/bash`.
+
 If the script starts with `#!
-/bin/bash`, the user cannot arrange
-it to run under different Bash
-version without modifying the script
-itself, or after modifying [PATH],
-run it inconveniently with `bash
-<script>`.
+/bin/bash`, the user cannot arrange it
+to run under different Bash version
+without modifying the script itself, or
+after modifying [PATH],
+run it inconveniently with
+`bash <script>`.
 
 For these reasons, the portable
 shebang is recommended:
 
+```bash
     ... portable
 
     #! /usr/bin/env bash
@@ -1770,6 +1786,7 @@ shebang is recommended:
     ... not portable
 
     #! /bin/bash
+```
 
 ### 4.4.2 About Python and Shebang
 
@@ -2273,8 +2290,8 @@ ksh, ksh93, programming,
 optimizing, performance, profiling,
 portability
 
-<!-- ------- REF:LANG -------- -->
 <!-- Link Reference Definitions -->
+<!-- ------- REF:LANG --------- -->
 
 [Perl]: //www.perl.org
 [Python]: https://www.python.org
@@ -2302,7 +2319,7 @@ portability
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX.1-2024]: https://pubs.opengroup.org/onlinepubs/9799919799/
 [POSIX parameter expansions]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
-[PATH]: https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes
+[PATH]: <https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes>
 [awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
 [cut]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
