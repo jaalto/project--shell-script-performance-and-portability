@@ -1435,25 +1435,23 @@ involves considering several factors.
 
 [\*] "Git Bash" is available with the
 popular native Windows installation of
-[Git for Windows]
-Under the hood, the installation is based on
-[MSYS2], which in turn is based on
-[Cygwin]. The common denominator of
-all native Windows Linux-like
-environments is the [Cygwin]
-base which, in all
-practical terms, provides the usual
-command-line utilities,
-including Bash. For curious readers,
-Windows software
+[Git for Windows] Under the hood, the
+installation is based on [MSYS2], which
+in turn is based on [Cygwin]. The common
+denominator of all native Windows
+Linux-like environments is the [Cygwin]
+base which, in all practical terms,
+provides the usual command-line
+utilities, including Bash. For curious
+readers, Windows software
+
 [MobaXterm](https://mobaxterm.mobatek.net),
-offers X server, terminals
-and other connectivity features, but also
-comes with Cygwin-based
-Bash shell with its own
+offers X server, terminals and other
+connectivity features, but also comes
+with Cygwin-based Bash shell with its own
 [Debian-style](https://www.debian.org/doc/manuals/debian-faq/pkgtools.en.html)
-`apt` package manager which allows installing
-additional Linux utilities.
+`apt` package manager which allows
+installing additional Linux utilities.
 
 [\*\*] In Windows, there is also the
 Windows Subsystem for Linux ([WSL]),
