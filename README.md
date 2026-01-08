@@ -374,7 +374,7 @@ compliance testing. The server used for
 this process was a modest 2012-era laptop
 equipped with 4 cores, 12 GB of RAM, and
 an SSD—an old but reliable workhorse
-running Debian GNU/Linux 12.
+running Debian GNU/Linux.
 
 Input:
 
