@@ -1686,6 +1686,7 @@ convention, universally supported
 even though it is not defined by
 POSIX.
 
+```bash
     #! <interpreter> [word]
     #
     # 1. whitespace is allowed in
@@ -1706,6 +1707,7 @@ POSIX.
     #    #! /usr/bin/awk -f
     #    #! /usr/bin/env bash
     #    #! /usr/bin/env python3
+```
 
 Note that POSIX does not define the
 [shebang]
