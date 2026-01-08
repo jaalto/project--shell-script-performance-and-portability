@@ -1733,7 +1733,7 @@ and task automation due to its
 feature set.
 
 While Linux distributions typically
-provide Bash 5.x at /bin/bash, macOS
+provide Bash at `/bin/bash`, macOS
 remains hard-coded to Bash version
 3.2.x (dating back to 2006). This
 restriction exists because Apple
@@ -1756,27 +1756,17 @@ standard system location
 `/bin/bash`.
 
 
-Note that on Apple macOS, `/bin/bash` is
-hard-coded to Bash version 3.2.x (from 2006)
-where lastest Bash is
-[5.x](https://tracker.debian.org/pkg/bash).
-You cannot uninstall it, even with root
-access, without disabling System
-Integrity Protection. If you install a
-newer Bash version with `brew install
-bash`, it will be located in
-`/usr/local/bin/bash`.
-
 If the script starts with `#!
 /bin/bash`, the user cannot arrange it
 to run under different Bash version
-without modifying the script itself, or
-after modifying [PATH],
+without modifying the script itself, ot
 run it inconveniently with
 `bash <script>`.
 
-For these reasons, the portable
-shebang is recommended:
+To enable users to modify the [PATH] and
+utilize a more recent version of Bash,
+the use of a portable shebang is
+recommended:
 
 ```bash
     ... portable
