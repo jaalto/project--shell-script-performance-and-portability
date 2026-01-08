@@ -1790,6 +1790,7 @@ programs, the shebang should specify
 the Python version explicitly, either
 with `python` (2.x) or `python3`.
 
+```bash
     ... The de facto interpreters
 
     #! /usr/bin/python
@@ -1799,6 +1800,7 @@ with `python` (2.x) or `python3`.
 
     #! /usr/bin/python2
     #! /usr/bin/python3.13.2
+```
 
 But this is not all. Python is one of
 those languages which might require
@@ -1810,9 +1812,11 @@ better portability, the following would
 allow user to use his active Python
 environment:
 
+```
     ... portable
 
     #! /usr/bin/env python3
+```bash
 
 ### 4.4.3 The fine print of /usr/bin/env in shebang
 
