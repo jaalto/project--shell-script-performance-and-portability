@@ -248,12 +248,11 @@ the following factors:
   In Linux, see
   [vmtouch](https://hoytech.com/vmtouch/).
 
-- If you have tasks that can be run concurrently,
-  use [Perl] based [GNU parallel] for
-  dramatic gains in performance. See also
-  how to use
-  [semaphores](https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore)
-  ([tutorial](https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore))
+- If you have tasks that can be run
+  concurrently, use [Perl] based
+  [GNU parallel] for dramatic gains in
+  performance. See also how to use
+  [semaphores] in [semaphores tutorial]
   to wait for all concurrent tasks to
   finish before continuing with the rest
   of the tasks in the pipeline. In some
@@ -2374,6 +2373,8 @@ Google search help:
 <!-- ------- REF:GNU --------- -->
 
 [GNU parallel]: https://www.gnu.org/software/parallel/
+[semaphores]: https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore
+[semaphores tutorial]: <https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore>
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
 [GNU grep]: https://tracker.debian.org/pkg/grep
 [GNU awk]: https://tracker.debian.org/pkg/gawk
