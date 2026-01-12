@@ -1738,37 +1738,44 @@ remains hard-coded to Bash version
 restriction exists because Apple
 avoids including GPLv3-licensed
 programs within the Operating System
-core, adhering to stricter licensing
-policies. Despite the availability
-of newer Bash
-[5.x](https://tracker.debian.org/pkg/bash)
-versions, the system-provided
+core. Despite the availability
+of newer Bash versions
+(see [Debian Bash tracker]),
+the system-provided
 version cannot be uninstalled, even
 with root access, unless System
 Integrity Protection (SIP) is
-disabled. If a more recent version
-of Bash is installed via Homebrew
-(`brew install bash`), the new
-binary is located at
-`/usr/local/bin/bash` instead of the
-standard system location
-`/bin/bash`.
+disabled. 
 
+If a more recent version of Bash is
+installed via Homebrew (brew install
+bash), the new binary is stored in a
+separate directory rather than the
+standard system location (/bin/bash). You
+can verify this location using the
+command `brew --prefix bash`, which
+returns different paths depending on the
+CPU architecture—specifically, Apple
+Silicon (M-series) versus Intel.
 
-If the script starts with `#!
+Therefore, if the script starts with `#!
 /bin/bash`, the user cannot arrange it
 to run under different Bash version
 without modifying the script itself, or
 run it inconveniently with
 `bash <script>`.
 
-To enable users to modify the [PATH] and
+To enable users to arrange the [PATH] and
 utilize a more recent version of Bash,
 the use of a portable shebang is
 recommended:
 
 ```bash
-    ... portable
+    # In macOS, to use latest Bash,
+    # set in shell startup file ~/.zshrc
+    PATH="$(brew --prefix bash):$PATH"
+
+    ... in scripts, portable
 
     #! /usr/bin/env bash
 
@@ -2348,6 +2355,7 @@ Google search help:
 -->
 
 [Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
+[Debian Bash tarcker]: https://tracker.debian.org/pkg/bash)
 [TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
 [parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
 [brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
