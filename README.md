@@ -2355,7 +2355,7 @@ Google search help:
 -->
 
 [Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
-[Debian Bash tarcker]: https://tracker.debian.org/pkg/bash)
+[Debian Bash tracker]: https://tracker.debian.org/pkg/bash)
 [TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
 [parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
 [brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
