@@ -1982,7 +1982,7 @@ Notable observations:
             ;;
    esac
 
-   # POSIX, passwor read
+   # POSIX, read password
    printf "Password: "
    stty -echo # Disable output
    read -r password
@@ -1991,7 +1991,7 @@ Notable observations:
    printf '\n'
 
    # Bash, can use option -p to read
-   # passwords without displaying.
+   # password without displaying.
    read -p "Password: "
 ```
 
