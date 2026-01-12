@@ -1966,12 +1966,12 @@ Notable observations:
 ```bash
    # POSIX
    printf "continue (y/N): "
-   read REPLY
+   read -r REPLY
 
    # Bash, Ksh
    # Stored to implicit REPLY variable
    printf "continue (y/N): "
-   read
+   read -r
 
    case $REPLY in
         [yY]*)
@@ -1981,6 +1981,18 @@ Notable observations:
             exit 1
             ;;
    esac
+
+   # POSIX, passwor read
+   printf "Password: "
+   stty -echo # Disable output
+   read -r password
+   stty echo
+   # ENTER wasn't echoed by read
+   printf '\n'
+
+   # Bash, can use option -p to read
+   # passwords without displaying.
+   read -p "Password: "
 ```
 
 - Always use [shift]
