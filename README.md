@@ -1969,7 +1969,8 @@ Notable observations:
    read -r REPLY
 
    # Bash, Ksh
-   # Stored to implicit REPLY variable
+   # If no var, stored to implicit
+   # variable REPLY
    printf "continue (y/N): "
    read -r
 
@@ -1990,8 +1991,8 @@ Notable observations:
    # ENTER wasn't echoed by read
    printf '\n'
 
-   # Bash, can use option -p to read
-   # password without displaying.
+   # Bash, can use option -p to
+   # read password without display.
    read -p "Password: "
 ```
 
