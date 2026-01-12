@@ -1748,8 +1748,8 @@ Integrity Protection (SIP) is
 disabled. 
 
 If a more recent version of Bash is
-installed via Homebrew (brew install
-bash), the new binary is stored in a
+installed via Homebrew (`brew install
+bash`), the new binary is stored in a
 separate directory rather than the
 standard system location (/bin/bash). You
 can verify this location using the
@@ -2355,7 +2355,7 @@ Google search help:
 -->
 
 [Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
-[Debian Bash tracker]: https://tracker.debian.org/pkg/bash)
+[Debian Bash tracker]: https://tracker.debian.org/pkg/bash
 [TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
 [parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
 [brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
