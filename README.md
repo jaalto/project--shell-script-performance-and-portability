@@ -332,7 +332,7 @@ is quite clear:
   minimalistic shell like [dash] tends to
   be.
 - [ksh93] is also fast and close to
-  [dash] in many cases. - [bash] is
+  [dash] in many cases. [bash] is
   slower by many factors.
 
 It all comes down to one major thing
@@ -343,17 +343,18 @@ typically found in shell scripts:
   process substitution:
   `result=$(<process or function>)`
 
-Both of these are considerably slower in
-Bash. From pure metrics, [ksh93] looks
-like a winner for shell scripts, offering
-both speed and many programming features.
-The trouble is that it cannot be
-considered for portable scripts, however.
-Linux ([dash], [bash]) significantly
-dominates BSD ([ksh]) in market share
-across servers, while BSD holds a much
-smaller niche, somewhere under 1% in
-general desktop and server stats.
+Using [process substitution] is
+considerably slower in Bash. From pure
+metrics, [ksh93] looks like a winner for
+shell scripts, offering both speed and
+many programming features. The trouble is
+that it cannot be considered for portable
+scripts, however. Linux ([dash], [bash])
+significantly dominates BSD ([ksh]) in
+market share across servers, while BSD
+holds a much smaller niche, somewhere
+under 1% in general desktop and server
+stats.
 
 The `sh` and `bash` are portable, can be
 found everywhere, whereas `ksh` isn't.
@@ -2211,16 +2212,17 @@ before testing:
   interface where you can upload
   the script at
   https://www.shellcheck.net. In
-  Debian, see package "shellcheck".
-  The manual page is at
-  https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html
+  Debian, see package shellcheck at
+  [Debian devscripts tracker].
+  See also the
+  [manual page](https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html).
 - `checkbashisms` can help to
   improve and write portable POSIX
-  scripts. In Debian, the command
-  is available in package
-  "devscripts". The manual page is
-  at
-  https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html
+  scripts. In Debian, see package
+  devscripts at
+  [Debian devscripts tracker].
+  See also the
+  [manual page](https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html)
 
 ## 6.3 STANDARDS
 
@@ -2368,7 +2370,6 @@ Google search help:
 -->
 
 [Bash manual]: https://www.gnu.org/software/bash/manual/bash.html
-[Debian Bash tracker]: https://tracker.debian.org/pkg/bash
 [TIMEFORMAT]: https://www.gnu.org/software/bash/manual/bash.html#index-TIMEFORMAT
 [parameter expansions]: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
 [brace expansion]: https://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion
@@ -2391,6 +2392,14 @@ Google search help:
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [HERE STRING]: https://www.gnu.org/software/bash/manual/bash.html#Here-Strings
 
+<!-- ------- REF:Debian ------ -->
+
+[Debian Bash tracker]: https://tracker.debian.org/pkg/bash
+[Debian shellcheck tracker]: https://tracker.debian.org/pkg/shellcheck
+[Debian devscripts tracker]: https://tracker.debian.org/pkg/decscripts
+[Debian GNU grep tracker]: https://tracker.debian.org/pkg/grep
+[Debian GNU awk tracker]: https://tracker.debian.org/pkg/gawk
+
 <!-- ------- REF:GNU --------- -->
 
 [GNU parallel]: https://www.gnu.org/software/parallel/
@@ -2398,7 +2407,7 @@ Google search help:
 [semaphores tutorial]: <https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore>
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
 [GNU grep]: https://tracker.debian.org/pkg/grep
-[GNU awk]: https://tracker.debian.org/pkg/gawk
+[GNU awk]: https://www.gnu.org/software/gawk/
 [GNU sed]: https://www.gnu.org/software/sed/
 [GNU cut]: https://www.gnu.org/software/coreutils/manual/html_node/cut-invocation.html
 [GNU xargs]: https://www.gnu.org/software/findutils/manual/html_node/find_html/xargs-options.html
