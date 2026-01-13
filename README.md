@@ -2211,15 +2211,14 @@ before testing:
   mistakes. There is also a web
   interface where you can upload
   the script at
-  https://www.shellcheck.net. In
-  Debian, see package shellcheck at
+  https://www.shellcheck.net. See
+  package shellcheck at
   [Debian shellcheck tracker].
   See also the
   [manual page](https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html).
 - `checkbashisms` can help to
   improve and write portable POSIX
-  scripts. In Debian, see package
-  devscripts at
+  scripts. See package devscripts at
   [Debian devscripts tracker].
   See also the
   [manual page](https://manpages.debian.org/testing/devscripts/checkbashisms.1.en.html)
