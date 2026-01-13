@@ -61,7 +61,9 @@ Table of Contents
   - [1.2 THE PROJECT DETAILS](#12-the-project-details)
 - [3.0 ABOUT PERFORMANCE](#30-about-performance)
   - [3.1 GENERAL PERFORMANCE ADVICE](#31-general-performance-advice)
-  - [3.2 SHELLS AND PERFORMANCE](#32-shells-and-performance).
+  - [3.2 SHELLS AND PERFORMANCE](#32-shells-and-performance)
+    - [3.2.1 POSIX sh, ksh and bash](#321-posix-sh-ksh-and-bash)
+    - [3.2.2 Case Study: CI Testing Pipeline](#322-case-study-ci-testing-pipeline)
   - [3.3 MAJOR PERFORMANCE GAINS](#33-major-performance-gains)
   - [3.4 MODERATE PERFORMANCE GAINS](#34-moderate-performance-gains)
   - [3.5 MINOR PERFORMANCE GAINS](#35-minor-performance-gains)
@@ -322,7 +324,7 @@ the following factors:
 
 ## 3.2 SHELLS AND PERFORMANCE
 
-### Overall: POSIX sh scripts are fast
+### 3.2.1 POSIX sh, ksh and bash
 
 Regarding shell performance, looking at
 the test cases in this project, the order
@@ -364,7 +366,7 @@ often the features provided in `bash` may
 make it more suitable for complex shell
 scripts.
 
-### CASE STUDY: CI testing pipeline
+### 3.2.2 Case Study: CI Testing Pipeline
 
 **The following is a personal
 observation**. I ran a CI testing
