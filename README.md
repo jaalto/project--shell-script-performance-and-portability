@@ -2213,7 +2213,7 @@ before testing:
   the script at
   https://www.shellcheck.net. In
   Debian, see package shellcheck at
-  [Debian devscripts tracker].
+  [Debian shellcheck tracker].
   See also the
   [manual page](https://manpages.debian.org/testing/shellcheck/shellcheck.1.en.html).
 - `checkbashisms` can help to
