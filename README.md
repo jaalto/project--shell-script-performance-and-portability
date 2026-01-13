@@ -2314,6 +2314,9 @@ along with these programs. If not, see <http://www.gnu.org/licenses/>.
 License-tag: GPL-2.0-or-later<br>
 See https://spdx.org/licenses
 
+Documentation is also licensed under
+GPL-2.0-or-later<br>
+
 Keywords: shell, sh, POSIX, bash,
 ksh, ksh93, programming,
 optimizing, performance, profiling,
