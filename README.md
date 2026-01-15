@@ -1089,11 +1089,11 @@ these offer practical benefits.
     ----------------------
 
     GNU grep is very efficient.
-    Increasing the file size from 10 KB
-    to 10 MB exhibits no significant
-    speed difference, as the time
-    variations remain within the margin
-    of error.
+    Increasing the file size from
+    10 KB to 10 MB exhibits no
+    significant speed difference,
+    as the time variations remain
+    within the margin of error.
 
     size=10M ./run.sh --shell dash,ksh93,bash t-command-grep.sh
 
