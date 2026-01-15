@@ -1034,8 +1034,7 @@ these offer practical benefits.
 
 - One might think that choosing optimized
   [grep] options would make a difference.
-  In practice, for typical file sizes
-  (probably below few Gigabytes),
+  In practice, for typical file sizes,
   performance is nearly identical even
   with the ignore case option included.
   Nonetheless, there may be cases where
