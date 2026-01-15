@@ -488,9 +488,9 @@ end.
     ./run.sh --shell dash,ksh93,bash t-string-match-regexp.sh
 
     Run shell: dash
-    # t1  <skip>       [[ =~ ]]
-    # t2  real 0.117s  expr
-    # t3  real 0.188s  grep
+    # t1  <skip>      [[ =~ ]]
+    # t2  real 0.117s expr
+    # t3  real 0.188s grep
     Run shell: ksh93
     # t1  real 0.001s [[ =~ ]]
     # t2  real 0.139s expr
