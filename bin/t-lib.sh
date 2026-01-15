@@ -666,7 +666,34 @@ RandomWordsDictionary ()
     local _tmp
     _tmp=$(mktemp -t "$TMPBASE.random.dictionary.$size.XXX.tmp")
 
-    ${SHUF:-shuf} --head-count=200000 "$DICTIONARY_FILE" > "$_tmp"
+    # In Debian, dictionary file is only 1M
+    # /usr/share/dict/american-english
+
+    case $size in
+        *[0-9][Kk])
+            ${SHUF:-shuf} --head-count=1000000 "$DICTIONARY_FILE" > "$_tmp"
+            ;;
+        [2-9]M | [1-9][0-9]M)
+            local max
+            max=${size%M}
+            max=$((max + 1))  # one more
+
+            local i list
+            list=""
+
+            for i in $(seq 1 $max)
+            do
+                list="$list $DICTIONARY_FILE"
+            done
+
+            local dict="$_tmp.dict"
+
+            cat $list > "$dict"
+            ${SHUF:-shuf} --head-count=1000000 "$dict" > "$_tmp"
+            ;;
+        *)  Warn "ERROR: RandomWordsDictionary(): only sizes below 100M are implemented"
+            return 1
+    esac
 
     # ignore AWK single quote
     # shellcheck disable=SC2016
@@ -701,7 +728,7 @@ RandomWordsDictionary ()
         }' "$_tmp" |
     ${HEAD:-head} --bytes="${1:-100k}"
 
-    ${RM:-rm} --force "$_tmp"
+    ${RM:-rm} --force "$_tmp"*
     unset _tmp
 }
 
