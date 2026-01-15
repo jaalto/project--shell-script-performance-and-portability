@@ -918,9 +918,10 @@ end.
   file into a string using Bash
   [command substitution]
   `$(< file)`.
-  Note: In POSIX `sh`, like
-  [dash], the `$(cat file)` is
-  also extremely fast.
+  Note: In POSIX `sh`, like [dash], the
+  `$(cat file)` syntax does not provide
+  any built-in optimizations. It forks a
+  subshell and executes the [cat] binary.
   See [code](./bin/t-file-read-into-string.sh).
 
 ```bash
@@ -2354,6 +2355,7 @@ portability
 [POSIX parameter expansions]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
 [PATH]: <https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes>
 [awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
+[cat]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cat.html
 [cut]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
 [env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
