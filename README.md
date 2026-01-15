@@ -966,11 +966,12 @@ these offer practical benefits.
   neglible advantage. However it may be
   impractical because `N..M` cannot be
   parameterized. Surprisingly, the
-  simple `$(seq N M)` is
-  fast, even though
-  [command substitution]
-  uses a subshell. The POSIX
-  `while` loop was also ok.
+  simple, concise and syntactically
+  elegant `$(seq N M)` is fast, even
+  though [command substitution] uses a
+  subshell. The POSIX `while` loop was
+  also good, but it is aesthetically
+  cluttered due to its verbose syntax.
   See [code](./bin/t-statement-arithmetic-for-loop.sh).
 
 ```bash
