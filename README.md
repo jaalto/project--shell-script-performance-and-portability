@@ -1032,10 +1032,10 @@ these offer practical benefits.
     # t4  real 0.012 POSIX while
 ```
 
-- One might think that choosing
-  optimized [grep] options would make a
-  difference. In practice, for typical
-  file sizes (below few Megabytes),
+- One might think that choosing optimized
+  [grep] options would make a difference.
+  In practice, for typical file sizes
+  (probably below few Gigabytes),
   performance is nearly identical even
   with the ignore case option included.
   Nonetheless, there may be cases where
@@ -1119,7 +1119,6 @@ these offer practical benefits.
     # t1perl     real 0.156
     # t2icasef   real 0.185
     # t2icasee   real 0.234
-
 ```
 
 ## 3.6 NO PERFORMANCE GAINS
