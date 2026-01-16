@@ -1615,9 +1615,10 @@ discussion on StackExchange.
 
     PortableLocal ()
     {
-        # Portable use of local:
-        # - Declaraton on its own line
-        # - Assignment on its own line
+        # To ensure portability,
+        # declare and assign
+        # local variables on
+        # separate lines.
 
         local var
         var="value"
