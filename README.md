@@ -1494,7 +1494,7 @@ like [Debian], [Ubuntu], [OpenSUSE] and
 [Oracle Linux]. Bash is the obvious
 choice for shell scripts in the WSL
 environment. See the command `wsl --list
---onllne`.
+--online`.
 
 ## 4.3 WRITING PORTABLE SHELL SCRIPS
 
