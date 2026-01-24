@@ -111,7 +111,7 @@ systems. Learn more about POSIX on
 > See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
 
 > **About variables in functions**:
-> The keyword `local` isn't defined in
+> The `local` command isn't defined in
 > the [POSIX] standard, but it is 99%
 > supported by all the best-effort
 > POSIX-compatible `sh` shells. The
@@ -124,8 +124,8 @@ systems. Learn more about POSIX on
 > cross-platform compatibility, even
 > with BSD and UNIX systems where
 > `/bin/sh` might be a symbolic link to
-> `ksh`, which doesn't natively support
-> the `local` keyword.
+> `ksh`, which doesn't have built-in
+> `local` command.
 
 > **About [Z shell]**. From a
 > shell scripting and portability point
@@ -1522,21 +1522,17 @@ POSIX:
 - [posh]. Minimal `sh`.
   Policy-compliant Ordinary SHell,
   Very close to POSIX. Stricter than
-  [dash]. Supports `local` keyword to
-  define function local variables. The
-  keyword `local` is not defined in
-  POSIX.
-
+  [dash]. Supports `local` command.
 - [dash]. Minimal `sh`, The
   Debian Almquish Shell.
   Close to POSIX. Supports `local`
-  keyword. The shell aims to meet the
+  command. The shell aims to meet the
   requirements of the Debian Linux
   distribution.
 - [busybox ash]
   shell is based on [dash] with
   some more features added. Supports
-  `local` keyword. See ServerFault
+  `local` command. See ServerFault
   ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
 
 Let's also consider what the `/bin/sh`
@@ -1576,15 +1572,15 @@ discussion on StackExchange.
   capable, often implemented as a
   modern KornShell [ksh93]. The key
   compatibility challenge with
-  `ksh` is that it uses the keyword
-  `typeset` for defining
+  `ksh` is that it uses the
+  `typeset` command for defining
   function-local variables, rather
-  than the `local` keyword
+  than the `local` command
   available in most other common
   shell derivatives. If you want to
   ensure wider cross-platform
   compatibility, use the `local`
-  keyword. To make scripts function
+  command. To make scripts function
   correctly even when `ksh` is used
   as `/bin/sh`, include the
   following compatibility code at
