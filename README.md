@@ -464,7 +464,7 @@ end.
   [`=~`](https://www.gnu.org/software/bash/manual/bash.html#index-_005b_005b)
   rather than to calling external
   POSIX utilities
-  [expr] or [grep].
+  [expr] or [grep]. See
   [code](./bin/t-string-match-regexp.sh)
 
 ```bash
