@@ -572,10 +572,10 @@ end.
     # (t2) POSIX
     case $string in
         $pattern)
-            # true
+            true
             ;;
         *)
-            # false
+            false
             ;;
     esac
 
@@ -1779,7 +1779,7 @@ the system-provided
 version cannot be uninstalled, even
 with root access, unless System
 Integrity Protection (SIP) is
-disabled. 
+disabled.
 
 If a more recent version of Bash is
 installed via Homebrew (`brew install
