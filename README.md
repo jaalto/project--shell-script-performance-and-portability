@@ -574,8 +574,7 @@ end.
         $pattern)
             true
             ;;
-        *)
-            false
+        *)  false
             ;;
     esac
 
