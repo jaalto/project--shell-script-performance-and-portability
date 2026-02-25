@@ -89,6 +89,30 @@ Table of Contents
 - [COPYRIGHT](#copyright)
 - [LICENSE](#license)
 
+Is Shell scripting is only useful for
+couple a quick scripts and should you
+turn to higher level langauges like
+Python for anyting complicated?
+
+Well, in the right hands, shell scripts
+can be highly performant, feature-rich,
+modular, and maintainable—provided they
+are authored with a professional software
+engineering approach rather than a
+"throwaway" mindset. This document was
+prompted by a practical need to analyze
+the capabilities of an existing codebase
+following the implementation of a modular
+CI Linting and text based reporting
+system comprising, among other things,
+approximately 25 000 lines of modular
+shell code. While the initial goal was to
+explore how to harness greater
+performance, the resulting insights into
+POSIX standards and portability
+considerations proved to be an invaluable
+secondary benefit.
+
 The tests reflect results under Linux
 using GNU utilities. The focus is on the
 features found in [Bash] and
@@ -169,11 +193,13 @@ additional installation. [Perl],
 respective fields where the requirements
 differ from those of the shell.
 
-Certain features in Bash are slow, but
-knowing the bottlenecks and using faster
-alternatives helps. On the other hand,
-small POSIX `sh` scripts, are much faster
-at calling external processes and
+Bash is not inherently inefficient,
+considering all its features, if used
+correctly. Certain features in Bash are
+slow, but knowing the bottlenecks and
+using faster alternatives helps. On the
+other hand, small POSIX `sh` scripts, are
+fast at calling external processes and
 functions. More about this in section
 [SHELLS AND PERFORMANCE](#32-shells-and-performance).
 
@@ -424,7 +450,7 @@ The optimizations:
 **If we analyze the performance gains:**
 
 Optimization  | secs | percent
-------------- | ---: | ------:
+:------------ | ---: | ------:
 ...none...    | 600  |   0%
 Running in RAM| 300  | -50%
 GNU parallel  | 120  | -80%
