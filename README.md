@@ -361,37 +361,38 @@ is quite clear:
   minimalistic shell like [dash] tends to
   be.
 - [ksh93] is also fast and close to
-  [dash] in many cases. [bash] is
-  slower by many factors.
+  [dash] in many cases.
+- [bash] is slower in many areas.
+  Especially [process substitution] is
+  considerably slower in Bash.
 
 It all comes down to one major thing
-typically found in shell scripts:
+typically found in shell scripts: Calling
+external processes, e.g., external
+commands or functions using process
+substitution:
 
-- Calling external processes, e.g.,
-  external commands or functions using
-  process substitution:
-  `result=$(<process or function>)`
+`result=$(<call process or function>)`
 
-Using [process substitution] is
-considerably slower in Bash. From pure
-metrics, [ksh93] looks like a winner for
-shell scripts, offering both speed and
-many programming features. The trouble is
-that it cannot be considered for portable
-scripts, however. Linux ([dash], [bash])
-significantly dominates BSD ([ksh]) in
-market share across servers, while BSD
-holds a much smaller niche, somewhere
-under 1% in general desktop and server
-stats.
+Based on pure metrics, [ksh93] appears to
+be a winner for shell scripts, offering
+both speed and numerous programming
+features. The trouble is that it cannot
+be considered for portable scripts. On
+Linux, [dash] and [bash] significantly
+dominate BSD [ksh]. In terms of market
+share across servers, BSD holds a much
+smaller niche, accounting for under 1% in
+general server statistics.
 
-The `sh` and `bash` are portable, can be
-found everywhere, whereas `ksh` isn't.
-
-**Conclusion:** POSIX `sh` is fast but
-often the features provided in `bash` may
-make it more suitable for complex shell
-scripts.
+**Conclusion:** The `sh` and `bash` are
+portable and ubiquitous, whereas `ksh` is
+often unavailable or cannot be installed;
+e.g., the popular Windows Git
+installation includes only "Git Bash".
+POSIX sh is fast, but the features
+provided in [bash] often make it more
+suitable for complex shell scripts.
 
 ### 3.2.2 Case Study: CI Testing Pipeline
 
