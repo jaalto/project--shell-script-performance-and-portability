@@ -221,7 +221,7 @@ case produced the fastest results.
 - The test cases and code in [bin/](./bin/)
 - [USAGE](./USAGE.md)
 - [CONTRIBUTING](./CONTRIBUTING.md)
-- [SHELL SCRIPT STYLE STYLE](./STYLE-STYLE.md)
+- [SHELL SCRIPT STYLE GUIDE](./STYLE-STYLE.md)
 
 
 ```
