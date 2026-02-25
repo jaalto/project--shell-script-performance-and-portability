@@ -34,7 +34,7 @@ INFORMATION FOR EDITING
   41  Regular text and paragraphs.
       Github line limit to support
       editing.
-  --- ------------------------------
+  --- -----------------------------------
 
   Emacs editor settings:
 
@@ -48,14 +48,21 @@ MISCELLANEOUS
 - To search POSIX.1-2024 in Google
   site:pubs.opengroup.org inurl:9799919799 <search>
 
+FORMAT
+
+- Rule
+- Rationale
+- Discussion that serves as the philosophical
+  deep dive to support Rationale.
+
 -->
 
 
 # SHELL SCRIPT STYLE GUIDE
 
-## 1. Core Principles
+## 1. Foundations and Standards
 
-### 1.1 Target Audience
+### 1.1 Context
 
 This guide is designed for developers
 targeting modern most POSIX compliant
@@ -66,14 +73,13 @@ shell, Windows Subsystem for Linux
 [MSYS2].
 
 It does not target legacy UNIX systems or
-ancient Bourne shells. If your
-project requires compatibility with
-systems older than 15 years, please
-consult the
-[GNU Autoconf/Portable Shell Programming]
+ancient Bourne shells. If the project
+requires compatibility with systems older
+than 15 years, please consult the [GNU
+Autoconf/Portable Shell Programming]
 manual instead.
 
-### 1.2 General
+### 1.2 Design Philosophy
 
 - Use [POSIX] conventions where possible
   to improve portability.
@@ -85,9 +91,6 @@ manual instead.
   similar to
   [Keep It Short and Simple] (KISS).
 
-- Utilize [ShellCheck] or other [linting]
-  tools to improve code quality.
-
 - Prioritize minimum effort over rigorous
   standards for small controlled scripts.
 
@@ -98,61 +101,19 @@ manual instead.
   variable quoting, to prevent unexpected
   behavior.
 
-### 1.3 Code Organization
+### 1.3 Tooling
 
-#### 1.3.1 General Layout
+Use [ShellCheck] or other [linting]
+tools to improve code quality.
 
-Use best practices by dividing the
-program into logical sections to improve
-scannability and structure. This
-structure ensures that dependencies
-(functions and constants) are defined
-before they are executed.
+**Rationale:** programs are prone to
+subtle syntax errors—such as improper
+quoting or word splitting—that often go
+unnoticed during development. Specific
+tools provide help ensuring
+best practices.
 
-- The Comment Block: Script description,
-  usage, and dependencies.
-- Constants: Global variables.
-- Functions: Modular logic blocks.
-- program entry point at the bottom of
-  the file.
-
-**Rationale:** Relying on functions is a
-core design principle that modularizes
-logic from the outset. It ensures
-variable localization, encourages
-thinking in discrete execution blocks,
-and keeps code segments concise and
-visible. This 'one-task-per-function'
-makes the program easier to extend and
-maintain as it evolves.
-
-#### 1.3.2 The Main Function
-
-To easily identify the program's starting
-point, encapsulate the entry logic in a
-function named `Main` and place it as the
-bottom-most function in the script.
-
-**Rationale:** This provides consistency
-with the other programming languages
-allowing readers to find the start of
-the program in a quickly and intuitively.
-
-```shell
-Main ()
-{
-    local arg
-    arg=${1:-}
-
-    echo "command line: $arg"
-}
-
-Main "$@"
-```
-
-### 1.4 Dependencies and Utility Usage
-
-#### 1.4.1 Use GNU Utilities
+### 1.4 Environment and Dependencies
 
 Use [GNU coreutils] and require
 their installation in the README.
@@ -165,13 +126,11 @@ standardized behavior across different
 operating systems (Linux, macOS, BSD),
 ensuring improved interoperability.
 
-#### 1.4.1 Favor Long options
-
 Use readable `--long` form options in
 calling utilities (e.g. `grep`) where
 possible.
 
-**Rationale:* `--long` options make a
+**Rationale:** `--long` options make a
 command's intent clear, making it easier
 to read and maintain in the long term.
 Long options act as self-documenting
@@ -179,144 +138,86 @@ code, whereas short options frequently
 require consulting man pages to
 understand their meaning.
 
-### 1.5 Consistent Conventions
+### 1.5 Code Organization
 
-#### 1.5.1 Stylistic Philosophy
+Use best practices by dividing the
+program into logical sections to improve
+scannability and structure. This
+structure ensures that dependencies
+(functions and constants) are defined
+before they are executed.
 
-Programs can be written in a variety
-of styles. To make scripts easier to read
-and understand, use consistent naming
-conventions and style.
+- The Comment Block: Script description,
+  usage, and dependencies.
+- Constants: Global variables.
+- Functions: Modular logic blocks.
+- Main: program entry point at the bottom of
+  the file.
 
-Commonly used conventions include
-[Snake case] (e.g., my_variable) or
-[Camel case] (e.g., myVariable). Follow a
-consistent code style, such as indenting
-with spaces or tabs, using spaces around
-operators, and placing blocks and braces
-on the same line or a new line.
+**Rationale:** Relying on functions is a
+core design principle that modularizes
+logic from the outset. It ensures
+variable localization, encourages
+thinking in discrete execution blocks,
+and keeps code segments concise and
+visible. This 'one-task-per-function'
+makes the program easier to extend and
+maintain as it evolves.
 
-About using TAB for indentation: While
-TABs allow for personal preference in
-editors where TAB can be configured for
-display, they can also create a "false
-sense of line length." Variable TAB
-widths (e.g., 2 vs. 8 spaces) cause code
-that fits on one screen to overflow and
-become unreadable on another. Conversely,
-fixed spaces ensure the logic's "shape"
-remains identical across all
-environments, whereas TABs cause the
-structure to shift based on local editor
-settings.
+An example:
 
-This style guide adopts the following
-conventions explained below.
+```shell
+    #! /bin/sh
+    #  <comment block>
 
-#### 1.5.2 Line Length
+    GLOBAL_VAR="value"
 
-Use a maximum line length of 80
-characters.
+    # Function definitions
+    Help ()
+    {
+         # Display help
+         exit 0
+    }
 
-**Rationale:** this limit
-is a deliberate constraint based on
-human physiology and complexity
-management. Human eyes scan vertical
-text much faster than horizontal text
-(C.f. newspaper columns and
-speed-reading). With limited space,
-complex logic must be broken out, or
-refactored into more manageable parts
-Less code per line is better than more.
+    Main ()
+    {
+        Help # Main controller
+    }
 
-#### 1.5.3 Indentation with Spaces
+    Main "$@" # Send command line args forward
 
-Use spaces for indentation. A standard
-width is 4 spaces.
-
-**Rationale:** The layout remains uniform
-across editors, terminals, and tools like
-[diff], where TAB widths vary.
-Additionally, copy-pasting code preserves
-the exact formatting.
-
-#### 1.5.4 Use of Camel Case
-
-Use [CamelCase] for functions starting
-with an uppercase letter (e.g.,
-`IsNumber`). **Rationale:** Uppercase
-function names minimize conflicts with
-existing lowercase utility commands.
-
-Use [camelCase] for function local
-variables. Start with a lowercase letter
-(e.g., `maxLength`). **Rationale:**
-Compared to [Snake Case], underscore
-characters can increase visual noise.
-
-Prefer UPPERCASE for global variables
-outside of functions,
-
-``` shell
-	# Global variables
-	URL_HOMEPAGE="http://example.com"
-
-	Example ()
-	{
-	    # local variables
-		...
-
-	    # Preferred
-		thisResult=$(hasVar + andAnother)
-
-		# Avoid
-		this_result=$(has_var + and_another)
-	}
+    # End of file
 ```
 
-#### 1.5.5 Use of Allman style
+## 2. Structure and Layout
 
-Use primarily the [Allman] style for
-functions and control structures.
-**Rationale:** To maximize clarity,
-placing block-defining keywords and
-braces on their own lines reduces "noise"
-on logical lines of code. This makes
-block boundaries visually distinct and
-improves scannability.
+### 2.1 POSIX sh Shebang Line
 
-### 1.6 Metadata and Configuration
-
-#### 1.6.1 Shebang line
-
-Prefer `/bin/sh`. This ensures maximum
-portability across POSIX-compliant
-systems and optimizes execution speed.
-**Note:** Improve readability by adding a
-single space after the interpreter path
-in [shebang] line:
+Use `/bin/sh` in the first line, the
+[shebang] line.
 
 ``` bash
   #! /bin/sh
 ```
 
-#### 1.6.2 Metadata Variables
+**Rationale:** The shebang is the de
+facto standard that ensures portability
+across POSIX-compliant systems. The
+system's POSIX-compliant shell
+implementation is located at `/bin/sh`.
 
-Define global metadata at the top of the
-script for immediate visibility. These
-variables provide context for both users
-and automated tools.
+Note: To improve readability, add a
+single space after the [shebang] and
+before the interpreter path.
 
-- Licensing: Use the
-  [SPDX License List] short-identifiers.
-- Versioning: Use a machine-readable
-  format (N.N[.N]). Follow
-  [Semantic Versioning] for production,
-  or use date-based versioning (e.g.,
-  YYYY.mmdd.HHMM) for small projects to
-  provide immediate context regarding the
-  script's age compared to an arbitrary
-  version like 1.5.
+### 2.2 Project Metadata
+
+Use global variables defined at the top
+of the script to specify project metadata
+for immediate visibility. These variables
+should provide essential context, such as
+versioning or author information, for
+both users and automated tools.
 
 ``` shell
     PROGRAM=${0##*/}
@@ -327,18 +228,81 @@ and automated tools.
     LICENSE="GPL-3-or-later"
 ```
 
-### 1.8 Documentation and Help
+**Rationale:** Centralizing metadata at
+the beginning of the file ensures that
+key information is easily discoverable
+without searching through the logic. This
+practice also simplifies maintenance and
+allows external scripts or build systems
+to parse script information consistently.
 
-Documentation. Add a top-level
-comment block including:
-**License:** Consult
-[SPDX License List]. Prefer known
-licences like GPL, MIT etc.
-**Description:** What the script
-does. **Usage:** Example of how
-to call it. The easiest is to
-provide `Help` near the top of
-the script.
+- Licensing: Use the
+  [SPDX License List] short-identifiers.
+- Versioning: Use a machine-readable
+  format (N.N[.N]). Follow
+  [Semantic Versioning] for production,
+  or use dotted date-based versioning (e.g.,
+  YYYY.mmdd\[.HHMM\]) for small projects to
+  provide immediate context regarding the
+  script's age compared to an arbitrary
+  version like 1.5.
+
+### 2.3 File Header and Help
+
+Use a top-level comment block to document
+the script’s purpose and licensing, and
+provide a `Help` function near the top of
+the file for quick reference. This block
+should include a:
+
+- **License** using
+  standard identifiers from the [SPDX
+  License List] like [GPL-3.0-or-later],
+  [MIT], [ISC] or [BSD-2-Clause]
+- **Description** of the script's
+  functionality
+- **Usage** section
+  providing clear examples of how to invoke
+  the command.
+
+**Discussion:** The proliferation of
+licenses is a major problem in the
+open-source ecosystem. To ensure that
+code and components can be combined
+seamlessly within a project, it is
+preferable to standardize on major
+licenses that are both [FSF] (Free Software
+Foundation) and [OSI] (Open Source
+Initiative) compliant.
+
+TABLE: The major open source licences
+
+License Type | Compatibility | Legal Impact
+:---         | :---      | :---
+Permissive (MIT/ISC/BSD) | High       | For Code. Minimum restrictions; allows for broad integration. Allows proprietary redistribution; that is, closing the source code for commercial use.
+Weak Copyleft (LGPL)     |  Medium    | For libraries. Allows linking while requiring library modifications to remain open.
+Strong Copyleft (GPLv3)  | Restricted | Requires the derivative work to adopt the same license. Mandates reciprocal licensing for all derivative works.
+
+**The Problem of License
+Incompatibility**: The primary issue is
+that differing licenses may prohibit the
+combining and sharing of code. License
+incompatibility occurs when the terms of
+two different licenses contradict each
+other, making it legally impossible to
+distribute a work that incorporates code
+from both sources. For example, if one
+license requires the entire combined work
+to be under that specific license; this
+creates a direct conflict if another
+component carries a different, equally
+strict license. This "license
+fragmentation" results in legal barriers
+that hinder collaborative innovation and
+the reuse of existing work.
+
+
+An example:
 
 ``` shell
     #! /bin/sh
@@ -376,6 +340,13 @@ the script.
     #
     #       GNU utilities: grep, gawk etc.
 
+    PROGRAM=${0##*/}
+    VERSION="YYYY.mmdd.HHMM"
+
+    AUTHOR="John doe <jdoe@example.com>"
+    URL="http://example.com/homepage"
+    LICENSE="GPL-3-or-later"
+
     Help ()
     {
         # See sections and
@@ -384,7 +355,7 @@ the script.
 
         echo "\
     SYNOPSIS
-        ${0##*/} [options]
+        $PROGRAM [options]
 
     OPTIONS
         -f, --file FILE
@@ -413,35 +384,86 @@ the script.
 
     ENVIRONMENT
         <...>
+
+    AUTHOR
+        <...>
+
+    LICENSE
+        <...>
     "
         exit 0
     }
+
+    Main ()
+    {
+        local arg
+        arg=${1:-}
+
+        echo "command line: $arg"
+    }
+
+    Main "$@"
 ```
 
-### 1.7 Inteface and Standard Options
+### 2.4 Execution Flow and Main
 
-**Standard options in scripts:** A
-standard set of options should be
-utilized by every script to ensure a
-uniform user interface. At a minimum,
-`-h` (help) must be implemented.
-**Rationale:** User expectations are
-best met by providing standardized
+Use a function named `Main` to
+encapsulate the entry logic of the
+script, and place it as the bottom-most
+function to ensure the program's starting
+point is easily identifiable.
+
+**Rationale:** Main provides consistency
+with other programming languages,
+allowing readers to find the start of the
+program quickly and intuitively.
+
+```shell
+    Main ()
+    {
+        local arg
+        arg=${1:-}
+
+        echo "command line: $arg"
+    }
+
+    Main "$@"
+```
+
+### 2.5 User Interface
+
+Use a standard set of options in every
+script to ensure a uniform user
+interface. At a minimum, the `-h` (help)
+option must be implemented.
+
+**Rationale:** User expectations are best
+met by providing a standardized
 interface.
 
+TABLE: suggested standard options
+
 Option| Long Option |Description
----   | ---         | ---
+:---  | :---        | :---
 -h    | --help      |Display usage instructions and exit
 -v    | --verbose   |Increase output detail for monitoring.
 -V    | --version   |Print version information and exit.
 -D    | --debug     |(Optional) Enable tracing output.
 
-Template code for option handling below.
-NOTE: POSIX [getopts] utility does not
-support long options. The Limitation of
-the code is that it does not support
-stacked short options in form of "-l -x"
-=> "-lx"
+TABLE: other common option names
+
+Option| Long Option |Description
+:---       | :---        | :---
+-c FILE    | --config    |Configuration file
+-d DIR     | --dir       |Directory
+-f FILE    | --file      |file
+
+Template code for option handling is
+below. Note: The POSIX [getopts] utility
+does not support long options. A
+limitation of this code is that it does
+not support stacked short options (e.g.,
+accepting `-lx` for `-l -x`).
 
 ``` shell
 Main ()
@@ -486,18 +508,142 @@ Main ()
 }
 ```
 
-## 2. Rules
+## 3. Style and Naming
 
-### 2.1 Error Handling
+### 3.1 Style Considerations
 
-#### 2.1.1 Exit Status
+Programs can be written in a variety
+of styles. To make scripts easier to read
+and understand, use consistent naming
+conventions and style.
+
+Commonly used conventions include
+[Snake case] (e.g., `my_variable`) or
+[Camel case] (e.g., `myVariable`). Follow a
+consistent code style, such as indenting
+with spaces or tabs, using spaces around
+operators, and placing blocks and braces
+on the same line or a new line.
+
+Comment about using TAB for indentation:
+While TABs allow for personal preference
+in editors where TAB can be configured
+for display, they can also create a
+"false sense of line length." Variable
+TAB widths (e.g., 2 vs. 8 spaces) cause
+code that fits on one screen to overflow
+and become unreadable on another.
+Conversely, fixed spaces ensure the
+logic's "shape" remains identical across
+all environments, whereas TABs cause the
+structure to shift based on local editor
+settings.
+
+This style guide adopts the following
+conventions explained below.
+
+### 3.2 Line Length
+
+Use a maximum line length of 80
+characters.
+
+**Rationale:** this limit
+is a deliberate constraint based on
+human physiology and complexity
+management. Human eyes scan vertical
+text much faster than horizontal text
+(C.f. newspaper columns and
+speed-reading). With limited space,
+complex logic must be broken out, or
+refactored into more manageable parts.
+Less code per line is better than more.
+
+### 3.3 Indentation
+
+Use 4 spaces for indentation.
+
+**Rationale:** The layout remains uniform
+across editors, terminals, and tools like
+[diff], where TAB widths vary.
+Additionally, copy-pasting code preserves
+the exact formatting.
+
+Note: Providing users with individual
+control over tab width via hard TABs is
+considered secondary to maintaining a
+consistent, predictable codebase across
+automated tooling and version control
+systems.
+
+### 3.4 Naming Conventions
+
+
+- Functions: Use [CamelCase] for
+  functions starting with an uppercase
+  letter (e.g., `IsNumber`).
+  **Rationale:** Uppercase function names
+  minimize conflicts with existing
+  lowercase utility commands.
+
+- Local Variables: Use [camelCase] for
+  variables. Start with a lowercase
+  letter (e.g., `maxLength`).
+  **Rationale:** Less visual noise
+  compared to [Snake Case], underscore
+  characters `in_variable_names`.
+
+- Global Variables: Use uppercase for
+  global variables outside of functions.
+  **Rationale**: Using UPPERCASE is a
+  widely adopted standard across
+  programming languages to denote
+  constants or global state. In shell
+  scripting, it mirrors the convention
+  for system environment variables, such
+  as $PATH and $HOME.
+
+Examples:
+
+``` shell
+    # Global variables
+    URL_HOMEPAGE="http://example.com"
+
+    # Preferred
+    thisResult=$(usesVar + andAnother)
+
+    # Avoid
+    this_result=$(uses_var + and_another)
+```
+
+### 3.5 Visual Layout (Allman style)
+
+Use primarily the top-down [Allman] style
+for functions and control structures.
+
+```
+do        {         case     if then
+    ...       ...       ...      ...
+    ...       ...       ...      ...
+done      }         esac     fi
+```
+
+**Rationale:** To maximize clarity,
+placing block-defining keywords and
+braces on their own lines reduces "noise"
+on logical lines of code. This makes
+block boundaries visually distinct and
+improves scannability.
+
+# 2.0 Error Handling
+
+## 2.1 Exit Status
 
 Set a exit status: Scripts should exit
 with 0 for success and a non-zero
 value to indicate a failure or
 specific error condition.
 
-#### 2.1.2 Execution Safety
+## 2.2 Execution Safety
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -530,7 +676,7 @@ to also learn their caveats from
     set -o pipefail
 ```
 
-#### 2.1.3 Explicit Error Checking
+## 2.3 Explicit Error Checking
 
 Check status of commands and
 exit early.
@@ -542,9 +688,9 @@ exit early.
     cd "$dir" || exit $?
 ```
 
-### 2.2 Temporary Files
+# 3.0 Temporary Files
 
-#### 2.2.1 Using mktemp
+## 3.1 Using mktemp
 
 Use safe temporary files and
 directories with `mktemp`.
@@ -557,7 +703,7 @@ environments. See [Bash FAQ/062].
     tmpdir=$(mktemp --directory -t tmp.dir.XXX)
 ```
 
-#### 2.2.2 Using trap
+## 3.2 Using trap
 
 Use a [trap] to ensure proper cleanup
 of temporary files on script exit.
@@ -573,35 +719,33 @@ See [Bash Guide/SignalTrap].
   trap 'AtExit' EXIT HUP INT QUIT TERM
 ```
 
-### 2.3 Variables and Quoting
+# 4.0 Variables and Quoting
 
-#### 2.3.1 Global Variables
+## 4.1 Global Variables
 
 Global Variables: Use `ALL_CAPS` for
 global, environmental, or read-only
 constants.
 
-#### 2.3.2 Quote Variables
+## 4.2 Quote Variables
 
 Use `"$quoted"` variables.
 
-#### 2.3.3 Variable "$@"
+## 4.3 Variable "$@"
 
 Use `"$@"`, that is, quote the "all
 arguments" [special parameters]
 variable. This is mandatory to keep
 each argument distinct and uncorrupted.
 
-#### 2.3.4 Simple Variable Expansion
+## 4.4 Simple Variable Expansion
 
 Use simple `$var` by default. Use
 the braces only when necessary for
 boundary conditions (e.g.,
 `${var}suffix`) or when utilizing shell
 [parameter expansion] (e.g.,
-`${var:-default}`). **Rationale:**
-minimalism in the spirit of
-[Less Is More].
+`${var:-default}`).
 
 ``` shell
     path="$dir/$to/$file"
@@ -610,25 +754,56 @@ minimalism in the spirit of
     path="${dir}/${to}/${file}"
 ```
 
-#### 2.3.4 Variables and Truth Tests
+**Rationale:** Minimalism in the spirit
+of [Less Is More]. Simple expansions
+allow the developer to identify variables
+at a glance without extra punctuation. In
+genral, the fewer characters there are to
+scan, the faster and more readable the
+line is. In cognitive psychology, this is
+often referred to as reducing
+[Cognitive Load] minimizing the mental
+effort required for a developer to
+understand, maintain, and modify code.
+One of the Clean Code rules of thumb is:
+remove anything that might distract the
+reader.
+
+**Discussion**: Modern engineering often
+requires jumping between disparate
+codebases, each with its own unique
+patterns, naming conventions, and mental
+models. This constant context switching
+is computationally expensive for the
+human brain; every shift requires
+reloading an entirely different set of
+assumptions.
+
+Style  | Example          | Cognitive Effort
+:---   | :---             | :---
+Simple | \$dir/\$file     | Low (Instant recognition)
+Braced | \${dir}/\${file} | Medium (Braces must be checked for expansion logic)
+
+## 4.5 Variables and Truth Tests
 
 Use simple truth tests for boolean
 variable checks. Omit explicit `-n`
 (non-zero length) or `-z` (zero length)
 options. Always wrap the variable in
-double quotes. **Rationale:**
-[Less is More]. For programmers coming
-from [GNU Awk], [Python], [Ruby], or [Perl],
-simple truth tests are intuitive and
-familiar. Explicit optons don't add
-functional value when values are in
-double-quotes. Minimizing these options
-reduces shell specific cognitive load to
-promote to use more universal programming
-logic.
+double quotes.
+
+**Rationale:** [Less is More]. For
+programmers coming from C, C++, [Python],
+[Perl], or [GNU Awk], simple truth tests
+are intuitive and familiar. In shell,
+explicit options don't add functional
+value when values are in double-quotes.
+Minimizing extra options reduces also
+shell-specific Cognitive Load when
+switching from one language to another.
 
 ``` bash
-    # Preferred, universal
+    # Preferred
     [ "$var" ]    # Has value
     [ ! "$var" ]  # No value
 
@@ -637,20 +812,74 @@ logic.
     [ -z "$var" ]
 ```
 
-### 2.4 Formatting and Syntax
+**Discussion**: Examples of programming
+languages that allow simple boolean
+tests, where a variable can be evaluated
+directly without an explicit comparison
+operator (e.g., `if (x)` instead of `if
+(x != 0)`).
 
-#### 2.4.1 Logical Grouping
+TABLE: lanaguages and simple truth tests
 
-Use blank lines between blocks to improve
-readability. **Rationale:** In the spirit
-of [Less is More], white space is not
-empty; it is a tool to improve
-scannability. Just as paragraphs break up
-a story, blank lines group related
-commands together, allowing the reader to
-process the code more easily.
+Language    |  Syntax example         | Truthiness logic |
+:---        | :---                    | :---
+C           |  if (var) { ... }       | 0 is false; any non-zero is true. |
+C++         |  if (var) { ... }       | Handles pointers and numerics as C. |
+Python      |  if var:                | None, 0, and empty collections are false. |
+JavaScript  |  if (var) { ... }       | 0, "", null, undefined, and NaN are false. |
+PHP         |  if ($var) { ... }      | Similar to JS; "0" (string) is also false. |
+Perl        |  if ($var) { ... }      | 0, '0', "", and undef are false. |
+Objective-C |  if (var) { ... }       | nil and 0 are false. |
+Swift       |  if let x = var { ... } | Apple iOS (mobile). Used specifically to test for non-nil. |
 
-#### 2.4.2 Loops
+Notes: Languages like Java, C#, Ruby, and
+Rust are excluded from the list because
+they require an explicit boolean
+expression. In those languages, `if (x)`
+will fail to compile if `x` is an integer
+or a pointer/reference or similar.
+
+# 5.0 Formatting and Syntax
+
+## 5.1 Logical Grouping
+
+Use blank lines between logical blocks
+and groups if code to improve
+readability.
+
+**Rationale:** In the spirit of [Less is
+More], white space is not empty; it is a
+tool to improve scannability. Just as
+paragraphs break up a story, blank lines
+group related commands together, allowing
+the reader to process the code more
+easily.
+
+```shell
+    # Preferred
+    list="1 2 3"
+
+    for i in $list
+    do
+        item=$$((i + 1))
+
+        if [...]; then
+            ...
+        fi
+    done
+
+    # Avoid
+    list="1 2 3"
+    for i in $list
+    do
+        item=$$((i + 1))
+        if [...]; then
+            ...
+        fi
+    done
+```
+
+## 5.2 Loops
 
 Use the [Allman] "line up" style in
 `do..done`.
@@ -667,7 +896,7 @@ Use the [Allman] "line up" style in
     done
 ```
 
-#### 2.4.3 Conditional Statements
+## 5.3 Conditional Statements
 
 Use [K&R] style for placing `then`
 keyword provided that `<statement>` is
@@ -677,19 +906,22 @@ short and simple enough.
     if <statement>; then
         ...
     fi
+```
 
-In longer statements, switch to [Allman]
-style for more clarity. Command is more
-visually prominent (it stands out
-better).
+In longer statements, switch to the
+[Allman] style for better clarity. The
+command becomes more visually prominent
+and stands out better compared to keeping
+the `; then` on the same line.
 
-    if <this is an example of a very long statement>
+```shell
+    if <this is an example of a very long command statement>
     then
         ...
     fi
 ```
 
-#### 2.4.4 Case Statements
+## 5.4 Case Statements
 
 Place pattern case terminators `;;` in
 their own lines. **Rationale:**
@@ -713,31 +945,32 @@ action blocks stand out.
     esac
 ```
 
-### 2.5 Input/Output and File Handling
+# 6.0 Input/Output and File Handling
 
-#### 2.5.1 Errors to Stderr
+## 6.1 Errors to Stderr
 
 Send error messages to stderr. Put
 `>&2` at the end of line.
 
 ``` bash
     # Preferred
-    echo "message"
-    echo "ERROR: message" >&2
+    echo "Normal output to stdout"
+    echo "ERROR: message to stderr" >&2
 
     # Avoid
-    echo "message"
-    echo >&2 "ERROR: message"
+    echo "Normal output to stdout"
+    echo >&2 "ERROR: message to stderr"
 ```
 
-#### 2.5.2 Help to Stdout
+## 6.2 Help to Stdout
 
-Display help to stdout. Displaying
-help, program version etc. are not
-error conditions.
+Display help to stdout.
+
+**Rationale**: Displaying help, program
+version etc. are not error conditions.
 
 ``` bash
-    arg=${1:-}
+    arg="${1:-}"
 
     if [ "$arg" = "-h" ]; then
         echo "Synopsis: ...."
@@ -745,14 +978,16 @@ error conditions.
     fi
 ```
 
-#### 2.5.3 Reading Input
+## 6.3 Reading Input
 
-Use `read -r`. **Rationale:** When
-reading input with read, always use the
-`-r` option to prevent backslash
-interpretation, which can lead to
-unexpected behavior. See
-[Bash FAQ/001].
+Always use `read` with option `-r`.
+
+**Rationale:** When reading input with
+read, always use the `-r` option to
+prevent backslash interpretation, which
+can lead to unexpected behavior. See
+[Bash FAQ/001] and
+shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162).
 
 ``` bash
     while read -r item
@@ -761,23 +996,21 @@ unexpected behavior. See
     done < file
 ```
 
-#### 2.5.4 Command Substitution
+## 6.4 Command Substitution
 
-[Command Substitution]: Use POSIX
-`$(command)` instead of archaic
-\`backticks\` for command substitution.
-**Rationale:** it allows for cleaner
-nesting and is generally easier to
-read. Both are POSIX, but the
-dollar-parentheses form is preferred.
-See [Bash FAQ/082]. A side note: On
-many non-US keyboard layouts (such as
-German, French, or Nordic), the
-backtick is a dead key or requires a
-complex modifier combination (AltGr).
-This makes the character harder to type
-and often leads to accidental character
-combinations.
+Use POSIX `$(command)`
+instead of archaic \`backticks\` for
+[Command Substitution].
+
+**Rationale:** It is more readable and
+allows for cleaner nesting. All modern
+shells support $(). See [Bash FAQ/082].
+Side note: On many non-US keyboard
+layouts (such as German, French, or
+Nordic), the backtick is an
+inconveniently located dead key, or
+access to it requires a complex modifier
+combination (AltGr).
 
 ``` bash
     # Preferred
@@ -787,92 +1020,106 @@ combinations.
     dirname=`basename \`pwd\``
 ```
 
-### 2.6 Functions and Scope
+# 7.0 Functions and Scope
 
-#### 2.6.1 Function syntax
+## 7.1 Function syntax
 
-Use the standard POSIX parentheses
-syntax to define functions; avoid the
-non-standard [function keyword].
+Use the standard POSIX parentheses syntax
+to define functions. Avoid the
+non-standard `function` keyword.
 
-**Stylistic Note:** Prefer including a
-space before the function parentheses to
-align with the output of the Bash `type`
-command's output. **Rationale:** In
-shell, functions act as internal commands
+**Note:** Shell scripts define commands
 rather than traditional programming
-subroutines. Since the parentheses `()`
-are merely syntax markers and not used
-for argument passing, the `Name ()`
-notation reinforces that you are defining
-a new command. This distinction helps
-avoid the false assumption that arguments
-should be defined within the parentheses.
+language functions. Prefer defining
+function names using leading Uppercase
+letters to minimize conflicts with
+existing lowercase utility commands.
 
 ``` shell
+   # Preferred. Standard POSIX syntax.
    Example ()
    {
-      # Preferred. POSIX
+      ...
    }
 
+   # Avoid
    function Example ()
    {
-      # Avoid. Bash, Zsh only
+      # non-POSIX Bash, Zsh syntax
    }
 
-    # Behaves like a system
-    # command. E.g. ls(1).
+    # Call command
     Example "arg"
 ```
 
-#### 2.6.3 Function Argument Handling
+**Stylistic Note:** Prefer including a
+space before the function parentheses to
+align with the output of the Bash [type]
+command. In shell scripting, functions
+act as internal commands rather than
+traditional programming subroutines.
+Since the parentheses `()` are merely
+syntax markers and are not used for
+passing arguments, the `Example ()`
+notation reinforces that commands are
+being deined (cf. call: `Example arg`).
+This distinction helps to deter the
+assumption that arguments should be
+defined within the parentheses.
 
-Use meaningful local variables for
-function arguments. **Rationale:** In
-longer functions, prefer assigning
-positional arguments (`$1`, `$2`, etc.)
-immediately to local variables. This
-improves code readability and makes the
-logic within the function easier to
-follow and maintain.
+## 7.2 Function Local Variables
+
+Use local command to define variables in
+functions.
+
+**Rationale:** Using local variables
+variable leakage into the global scope,
+ensuring that variables don't leak
+elsewhere. This practice promotes
+encapsulation and modularity, making
+scripts easier to debug and maintain.
+
 
 ``` shell
     Example ()
     {
         local file
-        file="${1:-}"
     }
 ```
 
-#### 2.6.4 Function Local Variables
+**Discussion:** The keyword `local` isn't
+defined in the [POSIX] standard, but it
+is 99% supported by all the best-effort
+POSIX-compatible `sh` shells. The `local`
+keyword is portable enough to be used in
+modern shell scripts.
 
-The keyword `local` isn't defined in
-the [POSIX] standard, but it is 99%
-supported by all the best-effort
-POSIX-compatible `sh` shells. The
-`local` keyword is portable enough to
-be used in modern shell scripts.
-
-> Shell | local supported
-> ----- | ---------------
-> posh  | yes
-> dash  | yes
-> pbosh 2023/01/12 | no (old ksh derivate)
-> busybox ash 1.37.0 | yes
-> mksh  | yes
-> ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
-> bash --posix 3.2 | yes (macOS)
-> bash  | yes
-> zsh       | yes
+Shell | local supported
+:---  | :---
+posh  | yes
+dash  | yes
+busybox ash 1.37.0 | yes
+mksh  | yes
+ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
+bash --posix 3.2 | yes (macOS /bin/sh)
+bash  | yes
+zsh   | yes
 
 **Note about Dynamic Scope:** The shell
 uses dynamic scoping to control a
 variable’s visibility within functions.
-See [functions] in Bash manual. This
-means that a function can see variables
-defined not just inside itself, but
-also variables defined by any other
-function that called it.
+See the [functions] section in Bash
+manual. This means that a function can
+see variables defined not just inside its
+own scope, but also variables defined by
+any other function that called it.
+
+Recommendation: Avoid relying on dynamic
+scoping; functions should be decoupled
+according to industry best practices.
+Instead, pass necessary data explicitly
+via arguments to ensure each function
+remains a self-contained unit.
 
 ``` shell
     Two ()
@@ -891,7 +1138,27 @@ function that called it.
     One
 ```
 
-#### 2.6.4 Function Local Variables in Ksh
+## 7.3 Function Argument Handling
+
+Use meaningful local variables for
+function arguments. In longer functions,
+prefer assigning positional arguments
+(`$1`, `$2`, etc.) immediately to local
+variables.
+
+**Rationale:** Improves code readability
+and makes the logic within the function
+easier to follow and maintain.
+
+``` shell
+    Example ()
+    {
+        local file
+        file="${1:-}"
+    }
+```
+
+## 7.4 Function Local Variables in Ksh
 
 If supporting BSD or UNIX systems that
 may use `ksh93` as `/bin/sh` is required,
@@ -932,32 +1199,37 @@ keyword.
     }
 ```
 
-### 2.7 echo vs printf
+# 8.0 Other
 
-POSIX [echo] does not have any options.
-Use it for static strings. Use
-[printf] when you require options.
-Arbitrary rules like 'use printf for
-everyting' is not sound advice as it
-would lead to less readable code.
+## 8.1 echo vs printf
+
+Use POSIX [echo] without any options for
+regular output. Reserve [printf] for more
+complex handling.
 
 ``` shell
     # Preferred. Simple code.
 
-    echo "this"
-    echo "and that"
+    var="message"
+    echo "$var"
 
-    # Avoid. More complex code
-    #
-    # Note: The proper safe way
-    # to use printf is to
-    # always include "%s"
-
-    printf "%s\n" "this"
-    printf "%s\n" "and that"
+    # Avoid. Code is more complex.
+    printf '%s\n' "$var"
 ```
 
-### 2.8 PWD vs pwd
+**Discussion:** In the spirit of [Less Is
+More], arbitrary rules like "use printf
+for everything" would not be a sound
+advice; they lead to less readable code
+in cases where a simple `echo` will
+suffice.
+
+**Note:** For safety and predictability,
+always use the `%s` format specifier when
+printing variables with `printf`.
+See [Bash Pitfalls/32](https://mywiki.wooledge.org/BashPitfalls#printf_.22.24foo.22).
+
+## 8.2 PWD vs pwd
 
 Use the [PWD] environment variable
 instead of the [pwd] command.
@@ -982,7 +1254,7 @@ program needs the physical path
 (resolving all symlinks), then `pwd -P`
 is the correct way to read the path name.
 
-### 2.9 Long Commands
+## 8.3 Long Commands
 
 Use multiple lines to split long commands
 and their options. **Rationale:** To
@@ -1002,7 +1274,7 @@ action.
         file
 ```
 
-### 2.10 Pipes
+## 8.4 Pipes
 
 Use a trailing pipe (|) at the end of a
 line to indicate that a command continues
@@ -1057,7 +1329,7 @@ functional purpose.
       | command4
 ```
 
-### 2.11 Use Standard if..fi
+## 8.5 Use Standard if..fi
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||` with blocks.
@@ -1079,7 +1351,7 @@ shell shorthands.
     }
 ```
 
-### 2.12 Mathematical Calculations
+## 8.6 Mathematical Calculations
 
 Omit the `$` in POSIX arithmetic
 expansions. The shell automatically
@@ -1111,9 +1383,9 @@ integers. For decimals, use [bc] or
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
-## 3. Bash Notes
+## 9.0 Bash Notes
 
-### 3.1 Bash shebang
+### 9.1 Bash Shebang
 
 Use the portable env [shebang] line.
 Improve readability by adding a space
@@ -1150,7 +1422,7 @@ assumption that virtually all modern
 systems provide [env] utility at this
 specific path.
 
-### 3.2 Limiting Bashism
+### 9.2 Limiting Bashism
 
 Even in Bash, default to POSIX syntax
 unless Bash-specific features are
@@ -1166,7 +1438,7 @@ compatibility with `/bin/sh`, allowing
 scripts to benefit from faster startup
 and fewer forks.
 
-### 3.3 Statement To Be Avoided
+### 9.3 Bash Statements To Be Avoided
 
 Avoid obsolete artihmetic expressions
 `$[...]` and the the [let] built-in. They
@@ -1199,8 +1471,8 @@ functions. Avoid the Bash-specific
   future portability. While not strictly
   part of the POSIX standard, local is
   supported by almost all modern shells
-  (including dash, ash, and ksh93). In
-  contrast, `declare` is a heavy,
+  (including [dash], [ash], and [ksh93]).
+  In contrast, `declare` is a heavy,
   Bash-specific built-in that makes
   converting a script much more
   difficult.
@@ -1210,33 +1482,35 @@ functions. Avoid the Bash-specific
   overhead of declare's various flags and
   attributes.
 
-### 3.4 Arithmetic expression
+### 9.4 Bash Arithmetic expression
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
-`((...))`. **Rationale:** POSIX defines
-the arithmetic expansion syntax
-`$((...))`, which is supported by all
-modern shells. The `((...))` construct is
-a non-standard extension. Alternatives to
-Bash-specific "C-style" for-loops are
-easily implemented with standard POSIX
-tools like seq or simple while
-increments, requiring almost no extra
-effort while gaining full compatibility.
+`((...))`.
+
+**Rationale:** POSIX defines the
+arithmetic expansion syntax `$((...))`,
+which is supported by all modern shells.
+The `((...))` construct is a non-standard
+extension. Alternatives to Bash-specific
+"C-style" for-loops are easily
+implemented with standard POSIX tools
+like seq or simple while increments,
+requiring almost no extra effort while
+gaining full compatibility.
 
 Examples:
 
 ``` shell
     # POSIX, portable
     if [ 1 -gt 0 ]; then
-	   ...
-	fi
+       ...
+    fi
 
     # Bash only
     if (( 1 > 0 )); then
-		...
-	fi
+        ...
+    fi
 
     # POSIX, portable.
     # No noticeable
@@ -1257,12 +1531,12 @@ Performance results for 100 loop rounds:
 
 Loop              | real time (ms)
 -----------       | ----------
+/bin/sh seq (dash)| 0.004
 Bash ((..))       | 0.006
 Bash seq          | 0.010
 ksh93 seq         | 0.004
-/bin/sh seq (dash)| 0.004
 
-### 3.5 Variable Tests
+### 9.5 Bash Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
@@ -1286,7 +1560,7 @@ portability.
     fi
 ```
 
-## 4. References
+## 10.0 References
 
 - Allman style (aka BSD style)
   https://en.wikipedia.org/wiki/Indentation_style#Allman_style
@@ -1314,9 +1588,14 @@ portability.
 
 <!-- ------- REF:LANG -------- -->
 
+[bash]: https://www.gnu.org/software/bash
+[sh]: https://tracker.debian.org/pkg/dash
+[dash]: https://tracker.debian.org/pkg/dash
+[ash]: https://en.wikipedia.org/wiki/Almquist_shell
 [Korn Shell]: https://en.wikipedia.org/wiki/KornShell
 [ksh]: https://en.wikipedia.org/wiki/KornShell
 [ksh93]: https://tracker.debian.org/pkg/ksh93u+m
+
 
 <!-- ------- REF:BASH -------
 Google search help:
@@ -1388,7 +1667,16 @@ Google search help:
 [Powershell strict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
 [SPDX License List]: https://spdx.org/licenses/
+[MIT]: https://spdx.org/licenses/MIT.html
+[ISC]: https://spdx.org/licenses/ISC.html
+[GPL]: https://www.gnu.org/licenses/licenses.html
+[BSD-2-clause]: https://spdx.org/licenses/BSD-2-Clause.html
+[GPL-3.0-or-later]: https://www.gnu.org/licenses/licenses.html
+[FSF]: https://en.wikipedia.org/wiki/Free_Software_Foundation
+[OSI]: https://en.wikipedia.org/wiki/Open_Source_Initiative
+
 [Semantic Versioning]: https://semver.org
+
 [Keep It Short and Simple]: https://en.wikipedia.org/wiki/KISS_principle
 [Less Is More]: https://en.wikipedia.org/wiki/Less_is_more
 
@@ -1403,5 +1691,10 @@ Google search help:
 [Perl]: //www.perl.org
 [Python]: https://www.python.org
 [Ruby]: https://www.ruby-lang.org
+
+
+<!-- ------- REF:OTHER ------- -->
+
+[cognitive load]: https://testing.googleblog.com/2023/11/write-clean-code-to-reduce-cognitive.html
 
 <!-- END OF FILE -->
