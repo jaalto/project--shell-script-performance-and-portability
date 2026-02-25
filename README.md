@@ -105,7 +105,7 @@ the capabilities of an existing codebase
 following the implementation of a modular
 CI Linting and text based reporting
 system comprising, among other things,
-approximately 25 000 lines of modular
+separate modules of 20 000+ lines of
 shell code. While the initial goal was to
 explore how to harness greater
 performance, the resulting insights into
@@ -399,10 +399,9 @@ observation**. I ran a CI testing
 pipeline consisting of SQL files that
 required both static analysis and SQLite
 compliance testing. The server used for
-this process was a modest 2012-era laptop
+this process was a modest Debian GNU/Linux
 equipped with 4 cores, 12 GB of RAM, and
-an SSD—an old but reliable workhorse
-running Debian GNU/Linux.
+an SSD.
 
 Input:
 
@@ -415,9 +414,9 @@ The process consisted of:
 - GNU Makefile: 2,000 lines of code
 - Battery of shell scripts: about 50
 
-The shell scripts had:
+The shell scripts had about:
 
-- 11,000 lines of code
+- 10 000 lines of code
 - 500 functions
 - 100 process substitution calls `$(...)`.
 - 200 loops (`while`, `for`)
@@ -429,7 +428,7 @@ The optimizations:
 - All files were moved to a Linux RAM
   disk [tmpfs] for processing. Total time
   dropped to **5 minutes.**
-- All Bash scripts were converted to use
+- All scripts were converted to use
   [GNU parallel] as much as possible.
   Total time dropped to **2 minutes.**
 - All Bash scripts that could, were
@@ -460,14 +459,14 @@ sh to Perl    |  40  | -93%
 Most of the performance gains came from
 factors **other than the shell itself.**
 In the end, rewriting Bash to POSIX shell
-scripts did gain additional 10%
-performance. This proved to be valuable
-in debugging situations: having to wait 2
-minutes versus 1 minute (50% speed up)
-for a finished job made the iterations to
-add features faster. However, the time
-that would have been required to convert
-some of the scripts into higher-level,
+scripts did gain additional performance.
+This proved to be valuable in debugging
+situations: having to wait 2 minutes
+versus 1 minute (50% speed up) for a
+finished job made the iterations to add
+features faster. However, the time that
+would have been required to convert some
+of the scripts into higher-level,
 speedier text processing languages like
 [Perl] or [Python] didn't justify the
 effort. The code base was all shell
