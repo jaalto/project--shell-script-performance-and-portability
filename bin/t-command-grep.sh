@@ -39,6 +39,7 @@ f=$(mktemp -t $TMPBASE.random.dictionary.$size.XXX)
 Setup ()
 {
     RandomWordsDictionary $size > $f
+    cp $f $HOME/1.tmp
 }
 
 Info ()

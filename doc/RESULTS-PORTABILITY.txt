@@ -18,6 +18,7 @@ $(< file)                                -  -  -  -  +  +  +  +  +
 < <(cmd)                                 -  -  -  +  -  +  +  +  +
 non-POSIX export -f (parsed ok)          +  +  +  +  +  +  +  +  +
 non-POSIX export -f                      +  -  -  -  -  -  +  +  +
+POSIX unset -f                           +  +  +  +  +  +  +  +  +
 (( ... ))                                -  -  -  -  +  +  +  +  +
 $((i = $i + 1))                          +  +  +  +  +  +  +  +  +
 $((i = i + 1))                           +  +  +  +  +  +  +  +  +
@@ -36,7 +37,7 @@ read (REPLY)                             -  -  -  +  +  +  +  +  +
 02 dash 0.5.12-12
 03 pbosh 2023/01/12 a+ (--)
 04 busybox ash 1.37.0
-05 mksh R59 2025-04-26
+05 mksh R59 2025-12-23
 06 ksh 93u+m/1.0.10 2024-08-01
 07 bash --posix 3.2
 08 bash 5.3.3
