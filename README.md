@@ -231,6 +231,7 @@ case produced the fastest results.
     INSTALL         Install instructions
     USAGE.md        How to run the tests
     CONTRIBUTING.md Writing test cases
+    STYLE-GUIDE.md  POSIX sh and Bash
 ```
 
 ## 1.2 THE PROJECT DETAILS
