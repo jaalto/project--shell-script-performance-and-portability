@@ -1406,11 +1406,10 @@ complex handling.
 
 ``` shell
     # Preferred. Simple code.
-
     var="message"
     echo "$var"
 
-    # Avoid. Code is more complex.
+    # Avoid. Code is more complex to read
     printf '%s\n' "$var"
 ```
 
