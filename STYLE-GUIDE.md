@@ -852,6 +852,33 @@ arguments" [special parameters]
 variable. This is mandatory to keep
 each argument distinct and uncorrupted.
 
+```
+    # Set positional parameters
+    set -- 1 2 3
+
+    for item in "$@"
+    do
+        echo "$item"
+    done
+```
+
+**Rationale:** The quoted form "$@"
+ensures that each positional parameter
+is passed as a separate, distinct
+string. This is critical for handling
+arguments that contain spaces, tabs, or
+newlines.
+
+Without quotes, the shell performs Word
+Splitting and Globbing on the arguments.
+This causes a single argument like "New
+Folder" to be split into two separate
+arguments ("New" and "Folder"), often
+leading to script failure or data
+corruption.
+
+See [Bash Pitfalls/24] and [Bash Sheet].
+
 ## 4.4 Simple Variable Expansion
 
 Use simple `$var` by default. Use
@@ -1729,8 +1756,9 @@ Google search help:
 [Bash FAQ/062]: https://mywiki.wooledge.org/BashFAQ/062
 [Bash FAQ/105]: https://mywiki.wooledge.org/BashFAQ/105
 [Bash Pitfalls/60]: https://mywiki.wooledge.org/BashPitfalls#set_-euo_pipefail
+[Bash Pitfalls/24]: https://mywiki.wooledge.org/BashPitfalls#for_arg_in_.24.2A
 [Bash Guide/SignalTrap]: https://mywiki.wooledge.org/SignalTrap
-
+[Bash Sheet]: https://mywiki.wooledge.org/BashSheet
 
 <!-- ------- REF:POSIX ------- -->
 
