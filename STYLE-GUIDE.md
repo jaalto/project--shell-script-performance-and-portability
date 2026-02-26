@@ -580,26 +580,32 @@ with spaces or tabs, using spaces around
 operators, and placing blocks and braces
 on the same line or a new line.
 
-**Discussions:** About using TAB for indentation:
-While TABs allow for personal preference
-in editors where TAB can be configured
-for display, they can also create a
-"false sense of line length." Variable
-TAB widths (e.g., 2 vs. 8 spaces) cause
-code that fits on one screen to overflow
-and become unreadable on another.
-Conversely, fixed spaces ensure the
-logic's "shape" remains identical across
-all environments, whereas TABs cause the
-structure to shift based on local editor
-settings.
+**Discussion:** Tabs vs. Spaces.
 
-Providing users with individual
-control over tab width via hard TABs is
+While Tabs allow for personal display
+preferences in local editors, they
+often create a "false sense of line
+length." Because tab widths vary
+across environments (e.g., 2 vs. 8
+spaces), code that fits on one screen
+may overflow and become unreadable on
+another.
+
+Conversely, fixed spaces ensure the
+"shape" of the logic remains identical
+across all environments. Tabs cause
+the structure to shift based on local
+settings, whereas spaces maintain
+absolute consistency. Providing
+individual control over tab width is
 considered secondary to maintaining a
-consistent, predictable codebase across
-automated tooling and version control
-systems.
+predictable codebase across automated
+tooling, git diffs, and version
+control systems.
+
+The system-wide predictability is
+prioritized over individual
+preference.
 
 This style guide adopts the following
 conventions explained below.
