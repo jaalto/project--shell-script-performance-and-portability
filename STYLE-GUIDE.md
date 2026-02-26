@@ -184,7 +184,7 @@ An example:
         Help # Main controller
     }
 
-    Main "$@" # Send command line args forward
+    Main "$@" # Send command line args
 
     # End of file
 ```
