@@ -1181,13 +1181,6 @@ Use the standard POSIX parentheses syntax
 to define functions. Avoid the
 non-standard `function` keyword.
 
-**Note:** Shell scripts define commands
-rather than traditional programming
-language functions. Prefer defining
-function names using leading Uppercase
-letters to minimize conflicts with
-existing lowercase utility commands.
-
 ``` shell
    # Preferred. Standard POSIX syntax.
    Example ()
@@ -1204,6 +1197,13 @@ existing lowercase utility commands.
     # Call command
     Example "arg"
 ```
+
+**Note:** Shell scripts define commands
+rather than traditional programming
+language functions. Prefer defining
+function names using leading Uppercase
+letters to minimize conflicts with
+existing lowercase utility commands.
 
 **Stylistic Note:** Prefer including a
 space before the function parentheses to
