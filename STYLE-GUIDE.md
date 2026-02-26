@@ -820,10 +820,9 @@ See [Bash Guide/SignalTrap].
         # Capture trigger status.
         ret=$?
 
-        # Calling 'exit' is safe
-        # here as the EXIT trap is
-        # internally disabled during
-        # execution.
+        # Calling 'exit' is safe here as
+        # the EXIT trap is internally
+        # disabled during  execution.
 
         [ "${TMPBASE:-}" ] || exit $ret
 
