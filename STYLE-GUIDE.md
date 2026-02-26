@@ -789,8 +789,8 @@ Use safe temporary files and
 directories with [mktemp].
 
 ``` shell
-    tmpfile=$(mktemp -t tmp.file.XXX)
-    tmpdir=$(mktemp -d -t tmp.dir.XXX)
+    tmpfile=$(mktemp -t tmp.file.XXXXX)
+    tmpdir=$(mktemp -d -t tmp.dir.XXXXX)
 ```
 
 **Rationale:** Prevent symlink attacks
