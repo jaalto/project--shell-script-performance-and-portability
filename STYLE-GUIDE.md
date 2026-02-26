@@ -246,7 +246,7 @@ Notes:
   YYYY.mmdd\[.HHMM\]) for small projects to
   provide immediate context regarding the
   script's age compared to an arbitrary
-  version like 1.5.
+  version like 1.5.0.
 
 ### 2.3 File Header and Help
 
