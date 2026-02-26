@@ -1065,9 +1065,7 @@ the `; then` on the same line.
 ## 5.4 Case Statements
 
 Place pattern case terminators `;;` in
-their own lines. **Rationale:**
-Improves the visual flow and make the
-action blocks stand out.
+their own lines.
 
 ``` shell
     # Note: POSIX case require
@@ -1085,6 +1083,9 @@ action blocks stand out.
             ;;
     esac
 ```
+
+**Rationale:** Improves the visual flow
+and make the action blocks stand out.
 
 # 6.0 Input/Output and File Handling
 
