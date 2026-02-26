@@ -1114,10 +1114,7 @@ the script easier to scan.
 
 ## 6.2 Help to Stdout
 
-Display help to stdout.
-
-**Rationale**: Displaying help, program
-version etc. are not error conditions.
+Display help to stdout and exit with status 0.
 
 ``` bash
     arg="${1:-}"
@@ -1127,6 +1124,9 @@ version etc. are not error conditions.
         exit 0
     fi
 ```
+
+**Rationale**: Displaying help, program
+version etc. are not error conditions.
 
 ## 6.3 Reading Input
 
