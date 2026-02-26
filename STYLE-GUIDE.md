@@ -409,7 +409,7 @@ Ruby     | main()      | customary __FILE__, best practices
 Javascript| await ... main() | customary, best practices
 Swift    | @main, main.swift | customary, best practices
 PowerShell | Main     | customary, best practices
-PHP	 | main() for CLI | customary, best practices
+PHP      | main() for CLI | customary, best practices
 
 ### 2.5 User Interface and Help
 
@@ -689,26 +689,52 @@ for functions and control structures.
 
 ```
 do        {         case     if then
-    ...       ...       ...      ...
-    ...       ...       ...      ...
+.         .         .        .
+.         .         .        .
 done      }         esac     fi
 ```
 
 **Rationale:** To maximize clarity,
-placing block-defining keywords and
-braces on their own lines reduces "noise"
-on logical lines of code. This makes
-block boundaries visually distinct and
+placing block-defining braces on
+their own lines makes boundaries
+visually distinct and significantly
 improves scannability.
+
+**Discussion:** While the [K&R]
+(Kernighan & Ritchie) style is more
+compact, the [Allman] style is
+adopted for its focus on structural
+clarity and vertical alignment. This
+approach prioritizes the ease of
+scanning nested blocks; by placing
+the opening and closing braces in
+the same column, the code block
+forms a clear, symmetrical "box."
+This symmetry allows the eye to
+quickly identify the scope of a
+logical block without searching for
+trailing characters.
 
 # 2.0 Error Handling
 
 ## 2.1 Exit Status
 
-Set a exit status: Scripts should exit
-with 0 for success and a non-zero
-value to indicate a failure or
-specific error condition.
+**Set a exit status:** Scripts
+should exit with 0 for success and a
+non-zero value to indicate a failure
+or specific error condition. Use the
+standard special parameter 
+[$?](https://www.gnu.org/software/bash/manual/bash.html#index-_003f)
+to retrieve exit status of the most
+recently executed command.
+
+```
+    cd "$dir" || exit $?
+
+    ...
+    exit 0
+
+```
 
 ## 2.2 Execution Safety
 
