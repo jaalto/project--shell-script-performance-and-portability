@@ -1152,6 +1152,14 @@ Use POSIX `$(command)`
 instead of archaic \`backticks\` for
 [Command Substitution].
 
+``` bash
+    # Preferred
+    dirname="$(basename "$(pwd)")"
+
+    # Avoid
+    dirname=`basename \`pwd\``
+```
+
 **Rationale:** It is more readable and
 allows for cleaner nesting. All modern
 shells support $(). See [Bash FAQ/082].
@@ -1161,14 +1169,6 @@ Nordic), the backtick is an
 inconveniently located dead key, or
 access to it requires a complex modifier
 combination (AltGr).
-
-``` bash
-    # Preferred
-    dirname="$(basename "$(pwd)")"
-
-    # Avoid
-    dirname=`basename \`pwd\``
-```
 
 # 7.0 Functions and Scope
 
