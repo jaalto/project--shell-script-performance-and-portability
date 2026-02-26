@@ -1222,16 +1222,8 @@ defined within the parentheses.
 
 ## 7.2 Function Local Variables
 
-Use local command to define variables in
+Use `local` command to define variables in
 functions.
-
-**Rationale:** Using local variables
-variable leakage into the global scope,
-ensuring that variables don't leak
-elsewhere. This practice promotes
-encapsulation and modularity, making
-scripts easier to debug and maintain.
-
 
 ``` shell
     Example ()
@@ -1239,6 +1231,13 @@ scripts easier to debug and maintain.
         local file
     }
 ```
+
+**Rationale:** Using local variables
+variable leakage into the global scope,
+ensuring that variables don't leak
+elsewhere. This practice promotes
+encapsulation and modularity, making
+scripts easier to debug and maintain.
 
 **Discussion:** The keyword `local` isn't
 defined in the [POSIX] standard, but it
