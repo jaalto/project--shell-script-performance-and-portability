@@ -1180,7 +1180,7 @@ instead of archaic \`backticks\` for
 
 **Rationale:** It is more readable and
 allows for cleaner nesting. All modern
-shells support $(). In addition, on many
+shells support `$()`. In addition, on many
 non-US keyboard layouts (such as German,
 French, or Nordic), the backtick is an
 inconveniently located dead key, or
