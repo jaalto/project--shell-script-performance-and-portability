@@ -256,14 +256,14 @@ provide a `Help` function near the top of
 the file for quick reference. This block
 should include a:
 
-- **License** using
+- **License:** use
   standard identifiers from the [SPDX
   License List] like [GPL-3.0-or-later],
   [MIT], [ISC] or [BSD-2-Clause]
-- **Description** of the script's
-  functionality
-- **Usage** section
-  providing clear examples of how to invoke
+- **Description:** script's
+  functionality.
+- **Usage:**
+  provide clear examples of how to invoke
   the command.
 
 **Discussion:** The proliferation of
