@@ -403,9 +403,9 @@ Rust     | main()      | mandatory
 Zig      | main()      | mandatory
 Go       | main()      | mandatory
 Haskell  | main()      | mandatory
-Python   | main()      | customary __main__, best practices
+Python   | main()      | customary \_\_main\_\_, best practices
 Perl     | main()      | customary, best practices
-Ruby     | main()      | customary __FILE__, best practices
+Ruby     | main()      | customary \_\_FILE\_\_, best practices
 Javascript| await ... main() | customary, best practices
 Swift    | @main, main.swift | customary, best practices
 PowerShell | Main     | customary, best practices
