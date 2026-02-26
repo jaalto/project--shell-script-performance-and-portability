@@ -816,7 +816,7 @@ directories with [mktemp].
 and race conditions in multi-user
 environments. See [Bash FAQ/062].
 
-**Discussion:** The mktemp utility is
+**Discussion:** The `mktemp` utility is
 not part of the POSIX standard. It
 originated in BSD and was later enhanced
 in GNU Coreutils. For maximum
