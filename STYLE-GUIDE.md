@@ -580,7 +580,7 @@ with spaces or tabs, using spaces around
 operators, and placing blocks and braces
 on the same line or a new line.
 
-Comment about using TAB for indentation:
+**Discussions:** About using TAB for indentation:
 While TABs allow for personal preference
 in editors where TAB can be configured
 for display, they can also create a
@@ -593,6 +593,13 @@ logic's "shape" remains identical across
 all environments, whereas TABs cause the
 structure to shift based on local editor
 settings.
+
+Providing users with individual
+control over tab width via hard TABs is
+considered secondary to maintaining a
+consistent, predictable codebase across
+automated tooling and version control
+systems.
 
 This style guide adopts the following
 conventions explained below.
@@ -622,13 +629,6 @@ across editors, terminals, and tools like
 [diff], where TAB widths vary.
 Additionally, copy-pasting code preserves
 the exact formatting.
-
-Note: Providing users with individual
-control over tab width via hard TABs is
-considered secondary to maintaining a
-consistent, predictable codebase across
-automated tooling and version control
-systems.
 
 ### 3.4 Naming Conventions
 
