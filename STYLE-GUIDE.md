@@ -877,7 +877,8 @@ arguments ("New" and "Folder"), often
 leading to script failure or data
 corruption.
 
-See [Bash Pitfalls/24] and [Bash Sheet].
+See [Bash Pitfalls/24], [Bash Sheet]
+and shellcheck [SC2086]
 
 ## 4.4 Simple Variable Expansion
 
