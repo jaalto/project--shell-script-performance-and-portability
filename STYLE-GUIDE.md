@@ -377,22 +377,16 @@ point is easily identifiable.
 
 **Rationale:** Main provides consistency
 with other programming languages,
-allowing readers to find the start of the
-program quickly and intuitively.
-
-The formal entry point provides a
-clear starting location for execution
-and prevents global variables from
+allowing readers to find the start of
+the program quickly and intuitively. The
+formal entry point provides a clear
+starting location for execution and
+prevents global variables from
 cluttering the namespace. This
 separation allows individual functions
 to be tested in isolation without
 triggering the primary application
 logic.
-
-See list of popular programing
-laguages at [PLrank] (most accurate),
-[PLrankings] and [TIOBE index] (search
-results based, the least objective).
 
 TABLE: Programming languages and their entry points
 
@@ -417,6 +411,11 @@ Javascript| await ... main() | customary, best practices
 Swift    | @main, main.swift | customary, best practices
 PowerShell | Main     | customary, best practices
 PHP      | main() for CLI | customary, best practices
+
+See list of popular programing
+laguages at [PLrank] (most accurate),
+[PLrankings] and [TIOBE index] (search
+results based, the least objective).
 
 ### 2.5 User Interface and Help
 
