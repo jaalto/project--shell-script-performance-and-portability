@@ -413,7 +413,7 @@ PHP	 | main() for CLI | customary, best practices
 
 ### 2.5 User Interface and Help
 
-provide a `Help()` function near the
+Provide a `Help()` function near the
 top of the file for quick reference.
 Use a standard set of options in every
 script to ensure a uniform user
