@@ -360,7 +360,7 @@ point is easily identifiable.
     Main ()
     {
         local arg
-        arg=${1:-}
+        arg="${1:-}"
 
         echo "command line: $arg"
     }
