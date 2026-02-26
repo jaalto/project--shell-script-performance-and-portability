@@ -415,10 +415,10 @@ PHP	 | main() for CLI | customary, best practices
 
 Provide a `Help()` function near the
 top of the file for quick reference.
-Use a standard set of options in every
-script to ensure a uniform user
-interface. At a minimum, the `-h`
-(help) option must be implemented.
+Use a standard set of options to
+ensure a uniform user interface. At a
+minimum, the `-h` (help) option must
+be implemented.
 
 **Rationale:** User expectations are best
 met by providing a standardized
