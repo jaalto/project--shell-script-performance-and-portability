@@ -1050,7 +1050,7 @@ short and simple enough.
 ```
 
 In longer statements, switch to the
-[Allman] style for better clarity. The
+full [Allman] style for better clarity. The
 command becomes more visually prominent
 and stands out better compared to keeping
 the `; then` on the same line.
