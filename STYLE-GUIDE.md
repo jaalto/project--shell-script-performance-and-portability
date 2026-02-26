@@ -60,7 +60,7 @@ FORMAT
 
 # SHELL SCRIPT STYLE GUIDE
 
-## 1. Foundations and Standards
+## 1.0 Foundations and Standards
 
 ### 1.1 Context
 
@@ -114,6 +114,8 @@ best practices.
 
 ### 1.4 Environment and Dependencies
 
+**A. Dependencies**
+
 Use GNU tooling and require their
 installation in the project's README.
 
@@ -124,10 +126,11 @@ counterparts. They also provide
 standardized behavior across different
 operating systems (Linux, macOS, BSD),
 ensuring improved interoperability.
-
 See [GNU coreutils], [GNU findutils],
 [GNU diffutils] [GNU grep], [GNU sed],
 [GNU awk] etc.
+
+**B. Long options**
 
 Use readable `--long` form options in
 calling utilities (e.g. `grep`) where
@@ -157,16 +160,6 @@ before they are executed.
 - Main: program entry point at the bottom of
   the file.
 
-**Rationale:** Relying on functions is a
-core design principle that modularizes
-logic from the outset. It ensures
-variable localization, encourages
-thinking in discrete execution blocks,
-and keeps code segments concise and
-visible. This 'one-task-per-function'
-makes the program easier to extend and
-maintain as it evolves.
-
 An example:
 
 ```shell
@@ -192,7 +185,17 @@ An example:
     # End of file
 ```
 
-## 2. Structure and Layout
+**Rationale:** Relying on functions is a
+core design principle that modularizes
+logic from the outset. It ensures
+variable localization, encourages
+thinking in discrete execution blocks,
+and keeps code segments concise and
+visible. This 'one-task-per-function'
+makes the program easier to extend and
+maintain as it evolves.
+
+## 2.0 Structure and Layout
 
 ### 2.1 POSIX sh Shebang Line
 
