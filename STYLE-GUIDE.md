@@ -1132,19 +1132,19 @@ version etc. are not error conditions.
 
 Always use `read` with option `-r`.
 
-**Rationale:** When reading input with
-read, always use the `-r` option to
-prevent backslash interpretation, which
-can lead to unexpected behavior. See
-[Bash FAQ/001] and
-shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162).
-
 ``` bash
     while read -r item
     do
         ...
     done < file
 ```
+
+**Rationale:** When reading input with
+read, always use the `-r` option to
+prevent backslash interpretation, which
+can lead to unexpected behavior. See
+[Bash FAQ/001] and
+shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162).
 
 ## 6.4 Command Substitution
 
