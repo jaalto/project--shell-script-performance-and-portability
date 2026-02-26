@@ -790,7 +790,7 @@ directories with [mktemp].
 
 ``` shell
     tmpfile=$(mktemp -t tmp.file.XXX)
-    tmpdir=$(mktemp --directory -t tmp.dir.XXX)
+    tmpdir=$(mktemp -d -t tmp.dir.XXX)
 ```
 
 **Rationale:** Prevent symlink attacks
