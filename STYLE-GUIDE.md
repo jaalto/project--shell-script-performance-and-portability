@@ -448,12 +448,17 @@ Option| Long Option |Description
 -f FILE    | --file      |file
 -t         | --test, --dry-run |Run in test mode (also -n, --no-op)
 
-Template code for option handling is
-below. Note: The POSIX [getopts] utility
-does not support long options. A
-limitation of this code is that it does
-not support stacked short options (e.g.,
-accepting `-lx` for `-l -x`).
+An example code for option handling.
+Note that the POSIX [getopts] utility is
+not used here as it does not natively
+support readable long options. A minor
+limitation of this pattern is that it
+does not support stacked short options
+(e.g., accepting `-lx` for `-l -x`).
+Mentioning this in the BUGS section of
+the Help() page will manage user
+expectations and provide transparency
+regarding the script's CLI limitations.
 
 ``` shell
     Help ()
@@ -492,6 +497,12 @@ accepting `-lx` for `-l -x`).
 
     ENVIRONMENT
         <...>
+
+    BUGS
+        Short options cannot be stacked:
+        Options must be provided
+        separately (e.g., -v -t) rather
+        than combined (e.g., -vt).
 
     AUTHOR
         <...>
