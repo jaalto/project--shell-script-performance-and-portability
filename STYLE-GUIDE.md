@@ -224,7 +224,7 @@ both users and automated tools.
 
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/homepage"
-    LICENSE="GPL-3-or-later"
+    LICENSE="GPL-3.0-or-later"
 ```
 
 **Rationale:** Centralizing metadata at
@@ -238,7 +238,9 @@ to parse script information consistently.
 Notes:
 
 - Licensing: Use the
-  [SPDX License List] short-identifiers.
+  [SPDX License List] short-identifiers,
+  like [GPL-3.0-or-later],
+  [MIT], [ISC] or [BSD-2-Clause].
 - Versioning: Use a machine-readable
   format (N.N[.N]). Follow
   [Semantic Versioning] for production,
@@ -248,62 +250,30 @@ Notes:
   script's age compared to an arbitrary
   version like 1.5.0.
 
-### 2.3 File Header and Help
+### 2.3 File Header and License
 
-Use a top-level comment block to document
-the script’s purpose and licensing, and
-provide a `Help` function near the top of
-the file for quick reference. This block
-should include a:
+Use a top-level comment block to
+document the script’s purpose and
+licensing. This block should include
+a:
 
-- **License:** use
-  standard identifiers from the [SPDX
-  License List] like [GPL-3.0-or-later],
-  [MIT], [ISC] or [BSD-2-Clause]
-- **Description:** script's
-  functionality.
-- **Usage:**
-  provide clear examples of how to invoke
-  the command.
+- **Copyright:** add Copyright holder.
+- **License:** add
+  standard license text.
+- **Description:** Optional if
+  included in `--help`.
+  Describe script's functionality.
+- **Usage:** Optional if included
+  in `--help`. Provide clear examples of
+  how to invoke the command.
+- **Dependencies:** List required
+  external requirements.
 
-**Discussion:** The proliferation of
-licenses is a major problem in the
-open-source ecosystem. To ensure that
-code and components can be combined
-seamlessly within a project, it is
-preferable to standardize on major
-licenses that are both [FSF] (Free Software
-Foundation) and [OSI] (Open Source
-Initiative) compliant.
-
-TABLE: The major open source licences
-
-License Type | Compatibility | Legal Impact
-:---         | :---      | :---
-Permissive (MIT / ISC / BSD-2-clause) | High       | For Code. Minimum restrictions; allows for broad integration. Allows proprietary redistribution; that is, closing the source code for commercial use.
-Weak Copyleft (LGPL)     |  Medium    | For libraries. Allows linking while requiring library modifications to remain open.
-Strong Copyleft (GPLv3)  | Restricted | For Code. Requires the derivative work to adopt the same license. Mandates reciprocal licensing for all derivative works.
-
-**The Problem of License
-Incompatibility**: The primary issue is
-that differing licenses may prohibit the
-combining and sharing of code. License
-incompatibility occurs when the terms of
-two different licenses contradict each
-other, making it legally impossible to
-distribute a work that incorporates code
-from both sources. For example, if one
-license requires the entire combined work
-to be under that specific license; this
-creates a direct conflict if another
-component carries a different, equally
-strict license. This "license
-fragmentation" results in legal barriers
-that hinder collaborative innovation and
-the reuse of existing work.
-
-
-An example:
+An example. Add the license text
+according to the instructions provided
+by the issuer; for example, for the
+GNU GPL
+https://www.gnu.org/licenses/gpl-howto.en.html
 
 ``` shell
     #! /bin/sh
@@ -339,15 +309,108 @@ An example:
     #
     #   Dependecies
     #
-    #       GNU utilities: grep, gawk etc.
+    #       GNU utilities: grep, awk etc.
+```
 
-    PROGRAM=${0##*/}
-    VERSION="YYYY.mmdd.HHMM"
+TABLE: The major Free Software and Open Source licences
 
-    AUTHOR="John doe <jdoe@example.com>"
-    URL="http://example.com/homepage"
-    LICENSE="GPL-3-or-later"
+License Type | Compatibility | Legal Impact
+:---         | :---      | :---
+Permissive (MIT / ISC / BSD-2-clause) | High       | For Code. Permissive license with minimal restrictions. Allows for broad integration and proprietary redistribution, meaning modifications may be kept private and incorporated into closed-source commercial products.
+Weak Copyleft (LGPL)     |  Medium    | For libraries. Allows linking while requiring library modifications to remain open.
+Strong Copyleft (GPLv3)  | Restricted | For Code. Requires derivative works to be licensed under the same GPL terms. Commercial use is permitted, provided that the source code for all distributed modifications is made available.
 
+**Discussion:** The proliferation of
+licenses is a major problem in the
+open-source ecosystem. To ensure that
+code and components can be combined
+seamlessly within a project, it is
+preferable to standardize on major
+licenses that are both [FSF] (Free Software
+Foundation) and [OSI] (Open Source
+Initiative) compliant.
+
+**The Problem of License
+Incompatibility**: The primary issue is
+that differing licenses may prohibit the
+combining and sharing of code. License
+incompatibility occurs when the terms of
+two different licenses contradict each
+other, making it legally impossible to
+distribute a work that incorporates code
+from both sources. For example, if one
+license requires the entire combined work
+to be under that specific license; this
+creates a direct conflict if another
+component carries a different, equally
+strict license. This "license
+fragmentation" results in legal barriers
+that hinder collaborative innovation and
+the reuse of existing work.
+
+### 2.4 Execution Flow and Main
+
+Use a function named `Main` to
+encapsulate the entry logic of the
+script, and place it as the bottom-most
+function to ensure the program's starting
+point is easily identifiable.
+
+```shell
+    Main ()
+    {
+        local arg
+        arg=${1:-}
+
+        echo "command line: $arg"
+    }
+
+    Main "$@"
+```
+
+**Rationale:** Main provides consistency
+with other programming languages,
+allowing readers to find the start of the
+program quickly and intuitively.
+
+### 2.5 User Interface and Help
+
+provide a `Help()` function near the
+top of the file for quick reference.
+Use a standard set of options in every
+script to ensure a uniform user
+interface. At a minimum, the `-h`
+(help) option must be implemented.
+
+**Rationale:** User expectations are best
+met by providing a standardized
+interface.
+
+TABLE: suggested standard options
+
+Option| Long Option |Description
+:---  | :---        | :---
+-h    | --help      |Display usage instructions and exit
+-v    | --verbose   |Increase output detail for monitoring.
+-V    | --version   |Print version information and exit.
+-D    | --debug     |(Optional) Enable tracing output.
+
+TABLE: other common option names
+
+Option| Long Option |Description
+:---       | :---        | :---
+-c FILE    | --config    |Configuration file
+-d DIR     | --dir       |Directory
+-f FILE    | --file      |file
+
+Template code for option handling is
+below. Note: The POSIX [getopts] utility
+does not support long options. A
+limitation of this code is that it does
+not support stacked short options (e.g.,
+accepting `-lx` for `-l -x`).
+
+``` shell
     Help ()
     {
         # See sections and formatting
@@ -396,116 +459,46 @@ An example:
 
     Main ()
     {
-        local arg
-        arg=${1:-}
+       while :
+       do
+            local opt
+            opt="${1:-none}"
 
-        echo "command line: $arg"
+            case $opt in
+                -v | --verbose)
+                    shift
+                    VERBOSE="verbose"
+                    ;;
+                -V | --version)
+                    shift
+                    # Calls exit 0
+                    Version
+                    ;;
+                -D | --debug)
+                    shift
+                    DEBUG="debug"
+                    ;;
+                -h | --help)
+                    shift
+                    # Calls exit 0
+                    Help
+                    ;;
+                --) # End of options
+                    shift
+                    break
+                    ;;
+                -*)
+                    shift
+                    echo "$0: WARN Unknown option: $opt" >&2
+                    ;;
+                *)
+                    break
+                    ;;
+            esac
+        done
     }
 
     Main "$@"
-```
-
-### 2.4 Execution Flow and Main
-
-Use a function named `Main` to
-encapsulate the entry logic of the
-script, and place it as the bottom-most
-function to ensure the program's starting
-point is easily identifiable.
-
-```shell
-    Main ()
-    {
-        local arg
-        arg=${1:-}
-
-        echo "command line: $arg"
-    }
-
-    Main "$@"
-```
-
-**Rationale:** Main provides consistency
-with other programming languages,
-allowing readers to find the start of the
-program quickly and intuitively.
-
-### 2.5 User Interface
-
-Use a standard set of options in every
-script to ensure a uniform user
-interface. At a minimum, the `-h` (help)
-option must be implemented.
-
-**Rationale:** User expectations are best
-met by providing a standardized
-interface.
-
-TABLE: suggested standard options
-
-Option| Long Option |Description
-:---  | :---        | :---
--h    | --help      |Display usage instructions and exit
--v    | --verbose   |Increase output detail for monitoring.
--V    | --version   |Print version information and exit.
--D    | --debug     |(Optional) Enable tracing output.
-
-TABLE: other common option names
-
-Option| Long Option |Description
-:---       | :---        | :---
--c FILE    | --config    |Configuration file
--d DIR     | --dir       |Directory
--f FILE    | --file      |file
-
-Template code for option handling is
-below. Note: The POSIX [getopts] utility
-does not support long options. A
-limitation of this code is that it does
-not support stacked short options (e.g.,
-accepting `-lx` for `-l -x`).
-
-``` shell
-Main ()
-{
-   while :
-   do
-        local opt
-        opt="${1:-none}"
-
-        case $opt in
-            -v | --verbose)
-                shift
-                VERBOSE="verbose"
-                ;;
-            -V | --version)
-                shift
-                # Calls exit 0
-                Version
-                ;;
-            -D | --debug)
-                shift
-                DEBUG="debug"
-                ;;
-            -h | --help)
-                shift
-                # Calls exit 0
-                Help
-                ;;
-            --) # End of options
-                shift
-                break
-                ;;
-            -*)
-                shift
-                echo "$0: WARN Unknown option: $opt" >&2
-                ;;
-            *)
-                break
-                ;;
-        esac
-    done
-}
 ```
 
 ## 3. Style and Naming
