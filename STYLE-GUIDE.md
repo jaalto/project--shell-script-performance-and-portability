@@ -373,6 +373,39 @@ with other programming languages,
 allowing readers to find the start of the
 program quickly and intuitively.
 
+The formal entry point provides a
+clear starting location for execution
+and prevents global variables from
+cluttering the namespace. This
+separation allows individual functions
+to be tested in isolation without
+triggering the primary application
+logic.
+
+TABLE: Programming languages and their entry points
+
+Language | Entry Point | Comment
+-------- | ---         | ---
+C        | main()      | mandatory
+C++      | main()      | mandatory
+Objective-C | main()   | mandatory
+C#       | main()      | (mandatory)
+D        | main()      | mandatory
+Java     | Main()      | mandatory
+Kotlin   | main()      | mandatory
+Scala    | main()      | mandatory
+Rust     | main()      | mandatory
+Zig      | main()      | mandatory
+Go       | main()      | mandatory
+Haskell  | main()      | mandatory
+Python   | main()      | customary __main__, best practices
+Perl     | main()      | customary, best practices
+Ruby     | main()      | customary __FILE__, best practices
+Javascript| await ... main() | customary, best practices
+Swift    | @main, main.swift | customary, best practices
+PowerShell | Main     | customary, best practices
+PHP	 | main() for CLI | customary, best practices
+
 ### 2.5 User Interface and Help
 
 provide a `Help()` function near the
