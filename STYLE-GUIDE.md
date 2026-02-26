@@ -675,6 +675,11 @@ Examples:
 
     # Avoid
     this_result=$(uses_var + and_another)
+
+    Ls () # initial Uppercase, not ls()
+    {
+        ...
+    }
 ```
 
 ### 3.5 Visual Layout (Allman style)
