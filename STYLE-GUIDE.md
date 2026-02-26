@@ -570,7 +570,7 @@ accepting `-lx` for `-l -x`).
     Main "$@"
 ```
 
-## 3. Style and Naming
+## 3.0 Style and Naming
 
 ### 3.1 Style Considerations
 
