@@ -369,7 +369,7 @@ point is easily identifiable.
         local arg
         arg="${1:-}"
 
-        echo "command line: $arg"
+        echo "1st command line arg: $arg"
     }
 
     Main "$@"
