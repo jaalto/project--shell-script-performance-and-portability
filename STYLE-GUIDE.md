@@ -96,7 +96,7 @@ standards for small controlled scripts.
 When sharing code intended for a wider
 audience, or for deployment in a
 production or operational environment,
-strictly adhere to best pactises, like
+strictly adhere to best practices, like
 variable quoting, to prevent unexpected
 behavior.
 
