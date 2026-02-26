@@ -382,6 +382,11 @@ to be tested in isolation without
 triggering the primary application
 logic.
 
+See list of popular programing
+laguages at [PLrank] (most accurate),
+[PLrankings] and [TIOBE index] (search
+results based, the least objective).
+
 TABLE: Programming languages and their entry points
 
 Language | Entry Point | Comment
@@ -1722,5 +1727,8 @@ Google search help:
 <!-- ------- REF:OTHER ------- -->
 
 [cognitive load]: https://testing.googleblog.com/2023/11/write-clean-code-to-reduce-cognitive.html
+[TIOBE index]: https://www.tiobe.com/tiobe-index/
+[PLrank]: https://plrank.com
+[PLrankings]: https://plrankings.github.io
 
 <!-- END OF FILE -->
