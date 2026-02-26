@@ -802,7 +802,7 @@ not part of the POSIX standard. It
 originated in BSD and was later enhanced
 in GNU Coreutils. For maximum
 portability across Linux, BSD, and
-macOS, always use the -t option and
+macOS, always use the `-t` option and
 provide a template
 
 ## 3.2 Using trap
