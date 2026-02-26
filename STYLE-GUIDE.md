@@ -114,8 +114,8 @@ best practices.
 
 ### 1.4 Environment and Dependencies
 
-Use [GNU coreutils] and require
-their installation in the README.
+Use GNU tooling and require their
+installation in the project's README.
 
 **Rationale:** GNU utilities are more
 capable and generally optimized for speed
@@ -124,6 +124,10 @@ counterparts. They also provide
 standardized behavior across different
 operating systems (Linux, macOS, BSD),
 ensuring improved interoperability.
+
+See [GNU coreutils], [GNU findutils],
+[GNU diffutils] [GNU grep], [GNU sed],
+[GNU awk] etc.
 
 Use readable `--long` form options in
 calling utilities (e.g. `grep`) where
@@ -1797,9 +1801,13 @@ Google search help:
 <!-- ------- REF:GNU --------- -->
 
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
-[GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
-[GNU awk]: https://tracker.debian.org/pkg/gawk
+[GNU findutils]: https://www.gnu.org/software/findutils/
 [GNU diffutils]: https://www.gnu.org/software/diffutils/
+[GNU grep]: https://tracker.debian.org/pkg/grep
+[GNU awk]: https://www.gnu.org/software/gawk/
+[GNU sed]: https://www.gnu.org/software/sed/
+
+[GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
 [diff]: https://en.wikipedia.org/wiki/Diff
 [mktemp]: https://www.gnu.org/software/coreutils/manual/html_node/mktemp-invocation.html
 
