@@ -1343,10 +1343,6 @@ prefer assigning positional arguments
 (`$1`, `$2`, etc.) immediately to local
 variables.
 
-**Rationale:** Improves code readability
-and makes the logic within the function
-easier to follow and maintain.
-
 ``` shell
     Example ()
     {
@@ -1354,6 +1350,10 @@ easier to follow and maintain.
         file="${1:-}"
     }
 ```
+
+**Rationale:** Improves code readability
+and makes the logic within the function
+easier to follow and maintain.
 
 ## 7.4 Function Local Variables in Ksh
 
