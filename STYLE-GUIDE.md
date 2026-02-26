@@ -235,6 +235,8 @@ practice also simplifies maintenance and
 allows external scripts or build systems
 to parse script information consistently.
 
+Notes:
+
 - Licensing: Use the
   [SPDX License List] short-identifiers.
 - Versioning: Use a machine-readable
