@@ -413,11 +413,6 @@ script, and place it as the bottom-most
 function to ensure the program's starting
 point is easily identifiable.
 
-**Rationale:** Main provides consistency
-with other programming languages,
-allowing readers to find the start of the
-program quickly and intuitively.
-
 ```shell
     Main ()
     {
@@ -429,6 +424,11 @@ program quickly and intuitively.
 
     Main "$@"
 ```
+
+**Rationale:** Main provides consistency
+with other programming languages,
+allowing readers to find the start of the
+program quickly and intuitively.
 
 ### 2.5 User Interface
 
