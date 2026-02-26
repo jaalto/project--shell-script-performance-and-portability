@@ -31,16 +31,16 @@ INFORMATION FOR EDITING
   col type
   --- -------------------------
   31  Code: bullet: ``` ... ``´)
-  41  Regular text and paragraphs.
+  40  Regular text and paragraphs.
       Github line limit to support
       editing.
-  --- -----------------------------------
+  --- ----------------------------------
 
   Emacs editor settings:
 
   ;; eval code with C-x C-e
   (progn
-    (setq fill-column 41)
+    (setq fill-column 40)
     (display-fill-column-indicator-mode 1))
 
 MISCELLANEOUS
@@ -1409,7 +1409,7 @@ complex handling.
     var="message"
     echo "$var"
 
-    # Avoid. Code is more complex to read
+    # Avoid. More complex to read
     printf '%s\n' "$var"
 ```
 
