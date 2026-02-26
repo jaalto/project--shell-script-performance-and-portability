@@ -817,7 +817,7 @@ See [Bash Guide/SignalTrap].
 
   AtExit ()
   {
-     # rm temporary files
+     rm -rf "$TMPBASE"* # see 3.1
   }
 
   trap 'AtExit' EXIT HUP INT QUIT TERM
