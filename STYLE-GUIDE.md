@@ -350,9 +350,8 @@ An example:
 
     Help ()
     {
-        # See sections and
-        # formatting ideas in
-        # the manual pages.
+        # See sections and formatting
+        # ideas in the manual pages.
 
         echo "\
     SYNOPSIS
