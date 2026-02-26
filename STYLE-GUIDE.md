@@ -815,12 +815,23 @@ See [Bash Guide/SignalTrap].
 
 ``` shell
 
-  AtExit ()
-  {
-     rm -rf "$TMPBASE"* # see 3.1
-  }
+    AtExit ()
+    {
+        # Capture trigger status.
+        ret=$?
 
-  trap 'AtExit' EXIT HUP INT QUIT TERM
+        # Calling 'exit' is safe
+        # here as the EXIT trap is
+        # internally disabled during
+        # execution.
+
+        [ "${TMPBASE:-}" ] || exit $ret
+
+        rm -rf "$TMPBASE"* # see 3.1
+        exit $ret
+    }
+
+    trap 'AtExit' EXIT HUP INT QUIT TERM
 ```
 
 # 4.0 Variables and Quoting
