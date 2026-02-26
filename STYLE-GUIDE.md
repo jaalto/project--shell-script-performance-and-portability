@@ -1251,19 +1251,21 @@ functions.
     }
 ```
 
-**Rationale:** Using local variables
-variable leakage into the global scope,
-ensuring that variables don't leak
-elsewhere. This practice promotes
+**Rationale:** Using the `local` command
+prevents variable leakage into the
+global scope. This practice promotes
 encapsulation and modularity, making
 scripts easier to debug and maintain.
 
-**Discussion:** The keyword `local` isn't
-defined in the [POSIX] standard, but it
-is 99% supported by all the best-effort
-POSIX-compatible `sh` shells. The `local`
-keyword is portable enough to be used in
-modern shell scripts.
+**Discussion**
+
+The `local` command
+isn't defined in the [POSIX] standard,
+but it is 99% supported by all the
+best-effort POSIX-compatible `sh`
+shells. The `local` keyword is portable
+enough to be used in modern shell
+scripts.
 
 Shell | local supported
 :---  | :---
@@ -1272,18 +1274,20 @@ dash  | yes
 busybox ash 1.37.0 | yes
 mksh  | yes
 ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
-bash --posix 3.2 | yes (macOS /bin/sh)
 bash  | yes
+bash --posix 3.2 | yes (macOS /bin/sh)
 zsh   | yes
 
-**Note about Dynamic Scope:** The shell
-uses dynamic scoping to control a
-variable’s visibility within functions.
-See the [functions] section in Bash
-manual. This means that a function can
-see variables defined not just inside its
-own scope, but also variables defined by
-any other function that called it.
+**Note about Dynamic Scope**
+
+The shell uses dynamic scoping to
+control a variable’s visibility within
+functions. See the [functions] section
+in Bash manual. This means that a
+function can see variables defined not
+just inside its own scope, but also
+variables defined by any other function
+that called it.
 
 Recommendation: Avoid relying on dynamic
 scoping; functions should be decoupled
@@ -1293,6 +1297,28 @@ via arguments to ensure each function
 remains a self-contained unit.
 
 ``` shell
+    # Preferred
+    Two ()
+    {
+        local arg
+        arg="${1:-}"
+
+        echo "$arg"
+    }
+
+    One ()
+    {
+        local var
+        var="hello"
+
+        Two "$var"   # Send args
+    }
+
+    One
+
+    # - - - - - - - - - - - - - - -
+    # Avoid
+
     Two ()
     {
         echo "$var" # "hello"
@@ -1303,7 +1329,7 @@ remains a self-contained unit.
         local var
         var="hello"
 
-        Two
+        Two # relies on dynamic scoping
     }
 
     One
