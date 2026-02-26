@@ -280,7 +280,7 @@ TABLE: The major open source licences
 
 License Type | Compatibility | Legal Impact
 :---         | :---      | :---
-Permissive (MIT/ISC/BSD-2-clause) | High       | For Code. Minimum restrictions; allows for broad integration. Allows proprietary redistribution; that is, closing the source code for commercial use.
+Permissive (MIT / ISC / BSD-2-clause) | High       | For Code. Minimum restrictions; allows for broad integration. Allows proprietary redistribution; that is, closing the source code for commercial use.
 Weak Copyleft (LGPL)     |  Medium    | For libraries. Allows linking while requiring library modifications to remain open.
 Strong Copyleft (GPLv3)  | Restricted | For Code. Requires the derivative work to adopt the same license. Mandates reciprocal licensing for all derivative works.
 
