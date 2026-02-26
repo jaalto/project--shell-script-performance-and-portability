@@ -634,35 +634,35 @@ Use 4 spaces for indentation.
 the layout remains uniform across
 editors, terminals, and tools like
 [diff], where TAB widths vary.
-Additionally, copy-pasting code preserves
-the exact formatting.
+Additionally, copy-pasting code
+preserves the exact formatting. Refer
+to 3.1
 
 ### 3.4 Naming Conventions
 
+**Functions:** Use [CamelCase] for
+functions starting with an uppercase
+letter (e.g., `IsNumber`).
+**Rationale:** Uppercase function
+names minimize conflicts with existing
+lowercase utility commands.
 
-- Functions: Use [CamelCase] for
-  functions starting with an uppercase
-  letter (e.g., `IsNumber`).
-  **Rationale:** Uppercase function names
-  minimize conflicts with existing
-  lowercase utility commands.
+**Local Variables:** Use [camelCase]
+for variables. Start with a lowercase
+letter (e.g., `maxLength`).
+**Rationale:** Less visual noise
+compared to [Snake Case], underscore
+characters `in_variable_names`.
 
-- Local Variables: Use [camelCase] for
-  variables. Start with a lowercase
-  letter (e.g., `maxLength`).
-  **Rationale:** Less visual noise
-  compared to [Snake Case], underscore
-  characters `in_variable_names`.
-
-- Global Variables: Use uppercase for
-  global variables outside of functions.
-  **Rationale**: Using UPPERCASE is a
-  widely adopted standard across
-  programming languages to denote
-  constants or global state. In shell
-  scripting, it mirrors the convention
-  for system environment variables, such
-  as $PATH and $HOME.
+**Global Variables:** Use uppercase
+for global variables outside of
+functions. **Rationale**: Using
+UPPERCASE is a widely adopted standard
+across programming languages to denote
+constants or global state. In shell
+scripting, it mirrors the convention
+for system environment variables, such
+as $PATH and $HOME.
 
 Examples:
 
