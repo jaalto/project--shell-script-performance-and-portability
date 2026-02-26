@@ -1203,7 +1203,9 @@ rather than traditional programming
 language functions. Prefer defining
 function names using leading Uppercase
 letters to minimize conflicts with
-existing lowercase utility commands.
+existing lowercase utility commands
+(consider: system `sort` vs your `Sort`,
+etc.)
 
 **Stylistic Note:** Prefer including a
 space before the function parentheses to
