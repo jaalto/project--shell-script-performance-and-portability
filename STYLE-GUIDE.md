@@ -787,14 +787,15 @@ exit early.
 
 Use safe temporary files and
 directories with [mktemp].
-**Rationale:** Prevent symlink attacks
-and race conditions in multi-user
-environments. See [Bash FAQ/062].
 
 ``` shell
     tmpfile=$(mktemp -t tmp.file.XXX)
     tmpdir=$(mktemp --directory -t tmp.dir.XXX)
 ```
+
+**Rationale:** Prevent symlink attacks
+and race conditions in multi-user
+environments. See [Bash FAQ/062].
 
 **Discussion:** The mktemp utility is
 not part of the POSIX standard. It
