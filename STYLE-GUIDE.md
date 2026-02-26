@@ -819,7 +819,7 @@ environments. See [Bash FAQ/062].
 **Discussion:** The `mktemp` utility is
 not part of the POSIX standard. It
 originated in BSD and was later enhanced
-in GNU Coreutils. For maximum
+in [GNU coreutils]. For maximum
 portability across Linux, BSD, and
 macOS, always use the `-t` option and
 provide a template
