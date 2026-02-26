@@ -786,7 +786,7 @@ exit early.
 ## 3.1 Using mktemp
 
 Use safe temporary files and
-directories with `mktemp`.
+directories with [mktemp].
 **Rationale:** Prevent symlink attacks
 and race conditions in multi-user
 environments. See [Bash FAQ/062].
@@ -795,6 +795,14 @@ environments. See [Bash FAQ/062].
     tmpfile=$(mktemp -t tmp.file.XXX)
     tmpdir=$(mktemp --directory -t tmp.dir.XXX)
 ```
+
+**Discussion:** The mktemp utility is
+not part of the POSIX standard. It
+originated in BSD and was later enhanced
+in GNU Coreutils. For maximum
+portability across Linux, BSD, and
+macOS, always use the -t option and
+provide a template
 
 ## 3.2 Using trap
 
@@ -1739,6 +1747,7 @@ Google search help:
 [GNU awk]: https://tracker.debian.org/pkg/gawk
 [GNU diffutils]: https://www.gnu.org/software/diffutils/
 [diff]: https://en.wikipedia.org/wiki/Diff
+[mktemp]: https://www.gnu.org/software/coreutils/manual/html_node/mktemp-invocation.html
 
 <!-- ------- REF:MISC ------- -->
 
