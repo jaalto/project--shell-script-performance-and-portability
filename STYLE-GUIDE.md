@@ -440,6 +440,7 @@ Option| Long Option |Description
 -c FILE    | --config    |Configuration file
 -d DIR     | --dir       |Directory
 -f FILE    | --file      |file
+-t         | --test, --dry-run |Run in test mode (also -n, --no-op)
 
 Template code for option handling is
 below. Note: The POSIX [getopts] utility
@@ -462,7 +463,7 @@ accepting `-lx` for `-l -x`).
         -f, --file FILE
             Use FILE.
 
-        -t, --test
+        -t, --test, --dry-run
             Run in test mode.
 
         -D, --debug
@@ -495,6 +496,22 @@ accepting `-lx` for `-l -x`).
         exit 0
     }
 
+    Verbose ()
+    {
+        [ "${VERBOSE:-}" ] || return 0
+        echo "$*"
+    }
+
+    Debug ()
+    {
+        [ "${DEBUG:-}" ] || return 0
+
+        # Eval for complex commands, like
+        # Debug "echo 'this $message' > file"
+
+        eval "$@" >&2
+    }
+
     Main ()
     {
        while :
@@ -516,6 +533,10 @@ accepting `-lx` for `-l -x`).
                     shift
                     DEBUG="debug"
                     ;;
+                -t | --test | --dry-run)
+                    shift
+                    TEST="test"
+                    ;;
                 -h | --help)
                     shift
                     # Calls exit 0
@@ -534,6 +555,9 @@ accepting `-lx` for `-l -x`).
                     ;;
             esac
         done
+
+        Verbose "Program started"
+        Debug echo "Debug is on"
     }
 
     Main "$@"
