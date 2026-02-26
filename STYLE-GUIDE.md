@@ -1145,7 +1145,7 @@ read, always use the `-r` option to
 prevent backslash interpretation, which
 can lead to unexpected behavior. See
 [Bash FAQ/001] and
-shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162).
+shellcheck [SC2162].
 
 ## 6.4 Command Substitution
 
@@ -1801,9 +1801,14 @@ Google search help:
 [mktemp]: https://www.gnu.org/software/coreutils/manual/html_node/mktemp-invocation.html
 
 <!-- ------- REF:MISC ------- -->
+<!-- https://www.shellcheck.net/wiki/ -->
 
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
+
 [shellcheck]: https://www.shellcheck.net
+[SC2162]: https://github.com/koalaman/shellcheck/wiki/SC2162
+[SC2086]: https://www.shellcheck.net/wiki/SC2086
+
 [CamelCase]: https://en.wikipedia.org/wiki/Camel_case
 [Camel case]: https://en.wikipedia.org/wiki/Camel_case
 [Snake case]: https://en.wikipedia.org/wiki/Snake_case
