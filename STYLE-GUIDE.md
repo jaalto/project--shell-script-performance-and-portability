@@ -1163,13 +1163,15 @@ instead of archaic \`backticks\` for
 
 **Rationale:** It is more readable and
 allows for cleaner nesting. All modern
-shells support $(). See [Bash FAQ/082].
-Side note: On many non-US keyboard
-layouts (such as German, French, or
-Nordic), the backtick is an
+shells support $(). In addition, on many
+non-US keyboard layouts (such as German,
+French, or Nordic), the backtick is an
 inconveniently located dead key, or
 access to it requires a complex modifier
 combination (AltGr).
+
+See also [Bash FAQ/082] and shellcheck
+[SC2006].
 
 # 7.0 Functions and Scope
 
@@ -1808,6 +1810,7 @@ Google search help:
 [shellcheck]: https://www.shellcheck.net
 [SC2162]: https://github.com/koalaman/shellcheck/wiki/SC2162
 [SC2086]: https://www.shellcheck.net/wiki/SC2086
+[SC2006]: https://www.shellcheck.net/wiki/SC2006
 
 [CamelCase]: https://en.wikipedia.org/wiki/Camel_case
 [Camel case]: https://en.wikipedia.org/wiki/Camel_case
