@@ -630,8 +630,9 @@ Less code per line is better than more.
 
 Use 4 spaces for indentation.
 
-**Rationale:** The layout remains uniform
-across editors, terminals, and tools like
+**Rationale:** No TABs. with spaces
+the layout remains uniform across
+editors, terminals, and tools like
 [diff], where TAB widths vary.
 Additionally, copy-pasting code preserves
 the exact formatting.
