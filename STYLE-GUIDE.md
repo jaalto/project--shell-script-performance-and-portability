@@ -1104,6 +1104,14 @@ Send error messages to stderr. Put
     echo >&2 "ERROR: message to stderr"
 ```
 
+**Rationale:** This keeps the `echo` and
+`printf` commands uniform and natural by
+ensuring the message remains the primary
+argument. Standard redirections (like `>
+file` or `>&2`) are traditionally
+appended to the end of the line, making
+the script easier to scan.
+
 ## 6.2 Help to Stdout
 
 Display help to stdout.
