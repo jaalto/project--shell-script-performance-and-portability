@@ -81,25 +81,24 @@ manual instead.
 
 ### 1.2 Design Philosophy
 
-- Use [POSIX] conventions where possible
-  to improve portability.
+Use [POSIX] conventions where possible
+to improve portability.
 
-- Use conventions that maximize
-  simplicity and clarity. Embrace
-  minimalism in the spirit of the
-  [Less Is More] philosophy (LIM),
-  similar to
-  [Keep It Short and Simple] (KISS).
+Use conventions that maximize simplicity
+and clarity. Embrace minimalism in the
+spirit of the [Less Is More] philosophy
+(LIM), similar to [Keep It Short and
+Simple] (KISS).
 
-- Prioritize minimum effort over rigorous
-  standards for small controlled scripts.
+Prioritize minimum effort over rigorous
+standards for small controlled scripts.
 
-- When sharing code intended for a wider
-  audience, or for deployment in a
-  production or operational environment,
-  strictly adhere to best pactises, like
-  variable quoting, to prevent unexpected
-  behavior.
+When sharing code intended for a wider
+audience, or for deployment in a
+production or operational environment,
+strictly adhere to best pactises, like
+variable quoting, to prevent unexpected
+behavior.
 
 ### 1.3 Tooling
 
