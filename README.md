@@ -2468,6 +2468,8 @@ Google search help:
 [semaphores]: https://www.gnu.org/software/parallel/sem.html#understanding-a-semaphore
 [semaphores tutorial]: <https://www.gnu.org/software/parallel/parallel_examples.html#example-working-as-mutex-and-counting-semaphore>
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
+[GNU findutils]: https://www.gnu.org/software/findutils/
+[GNU diffutils]: https://www.gnu.org/software/diffutils/
 [GNU grep]: https://tracker.debian.org/pkg/grep
 [GNU awk]: https://www.gnu.org/software/gawk/
 [GNU sed]: https://www.gnu.org/software/sed/
