@@ -1878,17 +1878,22 @@ Google search help:
 [OSI]: https://en.wikipedia.org/wiki/Open_Source_Initiative
 
 [SPDX License List]: https://spdx.org/licenses/
-[MIT]: https://spdx.org/licenses/MIT.html
-[ISC]: https://spdx.org/licenses/ISC.html
+<!-- professional Licenses -->
 [GPL]: https://www.gnu.org/licenses/licenses.html
+[LGPL]: https://www.gnu.org/licenses/licenses.html
+[GPL-3.0-or-later]: https://www.gnu.org/licenses/licenses.html
+[ISC]: https://spdx.org/licenses/ISC.html
+[MIT]: https://spdx.org/licenses/MIT.html
 [BSD-2-clause]: https://spdx.org/licenses/BSD-2-Clause.html
+<!-- non-professional Licenses -->
 [0BSD]: https://spdx.org/licenses/0BSD.html
 [Unlicense]: https://spdx.org/licenses/Unlicense.html
+<!-- Licenses to avoid: not suitable for software -->
 [CC0-1.0]: https://spdx.org/licenses/CC0-1.0.html
+<!-- Licenses to avoid: at all cost. Jokes are no good in Legal context -->
 [GLWTPL]: https://spdx.org/licenses/GLWTPL.html
 [WTFNMFPL]: https://spdx.org/licenses/WTFNMFPL.html
 [WTFPL]: https://spdx.org/licenses/WTFPL.html
-[GPL-3.0-or-later]: https://www.gnu.org/licenses/licenses.html
 
 [Semantic Versioning]: https://semver.org
 
