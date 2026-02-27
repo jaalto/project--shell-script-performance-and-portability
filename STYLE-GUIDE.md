@@ -401,7 +401,9 @@ developers. FSF is less fond of 0BSD
 over Unlicense due to Notice Removal.
 The FSF generally dislikes licenses that
 allow you to remove the copyright notice
-(which 0BSD does).
+(which 0BSD does). **Bottom Line:** 0BSD
+is real legal document most likely more
+easily defendable in all jurisdictions.
 
 **About Unlicense:** The FSF prefers the
 Unlicense over 0BSD for two primary
@@ -414,7 +416,11 @@ developers seeking to waive copyright
 entirely. The second is practical: it
 includes a more prominent No-Warranty
 disclaimer compared to the minimalist
-phrasing in 0BSD.
+phrasing in 0BSD. **Bottom Line:**
+Despite its "moral" stance, its
+waiver-based approach is often more
+difficult to uphold legally than the
+"grant-based" approach of 0BSD.
 
 TABLE: Problematic licenses to avoid
 
