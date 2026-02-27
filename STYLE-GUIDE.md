@@ -247,7 +247,7 @@ Notes:
 - Licensing: Use the
   [SPDX License List] short-identifiers,
   like [GPL-3.0-or-later],
-  [MIT], [ISC] or [BSD-2-Clause].
+  [ISC], [MIT] or [BSD-2-Clause].
 - Versioning: Use a machine-readable
   format (N.N[.N]). Follow
   [Semantic Versioning] for production,
@@ -1874,14 +1874,24 @@ Google search help:
 [C# strict mode]: https://www.meziantou.net/csharp-compiler-strict-mode.htm
 [Powershell strict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
+<!-- ------- REF:LICENSE ------- -->
+<!-- https://spdx.org/licenses/ --->
+
+[FSF]: https://en.wikipedia.org/wiki/Free_Software_Foundation
+[OSI]: https://en.wikipedia.org/wiki/Open_Source_Initiative
+
 [SPDX License List]: https://spdx.org/licenses/
 [MIT]: https://spdx.org/licenses/MIT.html
 [ISC]: https://spdx.org/licenses/ISC.html
 [GPL]: https://www.gnu.org/licenses/licenses.html
 [BSD-2-clause]: https://spdx.org/licenses/BSD-2-Clause.html
+[0BSD]: https://spdx.org/licenses/0BSD.html
+[Unlicense]: https://spdx.org/licenses/Unlicense.html
+[CC0-1.0]: https://spdx.org/licenses/CC0-1.0.html
+[GLWTPL]: https://spdx.org/licenses/GLWTPL.html
+[WTFNMFPL]: https://spdx.org/licenses/WTFNMFPL.html
+[WTFPL]: https://spdx.org/licenses/WTFPL.html
 [GPL-3.0-or-later]: https://www.gnu.org/licenses/licenses.html
-[FSF]: https://en.wikipedia.org/wiki/Free_Software_Foundation
-[OSI]: https://en.wikipedia.org/wiki/Open_Source_Initiative
 
 [Semantic Versioning]: https://semver.org
 
