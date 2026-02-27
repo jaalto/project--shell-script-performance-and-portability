@@ -333,8 +333,8 @@ TABLE: The *Unconditonal* major public domain dedication licenses
 
 License Type | Compatibility | Type | Complexity | Legal Impact
 :---         | :---          | :--- | :--- | :---
-[0BSD] aka Zero-BSD  | High | FSF approved (but not recommended) / OSI approved | Low (Single paragraph) | Professional. Uses standard contract law as it it essentially the ISC License with the requirement to include the copyright notice removed. Carries the standard warranty disclaimers that protect developer from liability. OSI considers 0BSD a real license with proper legal terminology.
-[Unlicense] | High | FSF approved / OSI approved (but with reservations) | High (Multi-paragraph waiver)| Problem: "Vagueness" in some jurisdictions. While approved, OSI considers its "dedication" approach legally sloppy for software and the whole idea of trying to use "Public Domain" a mess because it doesn't exist in many countries (like Germany).
+[0BSD] aka Zero-BSD  | High | FSF approved (but not recommended) / OSI approved | Low (Single paragraph; grant type) | Professional. Uses standard contract law as it it essentially the ISC License with the requirement to include the copyright notice removed. Carries the standard warranty disclaimers that protect developer from liability. OSI considers 0BSD a real license with proper legal terminology.
+[Unlicense] | High | FSF approved / OSI approved (but with reservations) | High (Multi-paragraph; waiver type)| Problem: "Vagueness" in some jurisdictions. While approved, OSI considers its "dedication" approach legally sloppy for software and the whole idea of trying to use "Public Domain" a mess because it doesn't exist in many countries (like Germany).
 
 **Why these are good for code snippets:** No attribution or "notice" requirement. Developers can copy-paste code directly into any project (proprietary or open) without carrying over license files or copyright headers.  The user has no obligation to mention creator's name or include the license file in their distribution.
 
