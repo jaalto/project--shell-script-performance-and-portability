@@ -319,23 +319,24 @@ https://www.gnu.org/licenses/gpl-howto.en.html
     #       GNU utilities: grep, awk etc.
 ```
 
-TABLE: The major Free Software and Open Source licences
+TABLE: The professional major Free Software and Open Source licences
 
 License Type | Compatibility | Legal Impact
 :---         | :---      | :---
-Permissive (MIT / ISC / BSD-2-clause) | High       | For Code. Permissive license with minimal restrictions. Allows for broad integration and proprietary redistribution, meaning modifications may be kept private and incorporated into closed-source commercial products.
-Weak Copyleft (LGPL)     |  Medium    | For libraries. Allows linking while requiring library modifications to remain open.
-Strong Copyleft (GPLv3)  | Restricted | For Code. Requires derivative works to be licensed under the same GPL terms. Commercial use is permitted, provided that the source code for all distributed modifications is made available.
+Permissive: [ISC], [MIT], [BSD-2-clause] | High       | For Code. **Pros:** Minimal restrictions; allows broad integration and proprietary redistribution. Code can be incorporated into closed-source commercial products. **Cons:** Downstream modifications may be kept private, potentially limiting community contributions.
+Weak Copyleft: [LGPL]     |  Medium    | For libraries. **Pros:** Allows linking with proprietary software while ensuring the library itself remains open. **Cons:** Requires library-specific modifications to be released under the same license.
+Strong Copyleft: [GPL] v3  | Restricted | For Code. **Pros:** Ensures code remains "forever free"; prevents the software from becoming closed-source. **Cons:** "Viral" nature requires derivative works to be licensed under the same GPL terms. Commercial use is allowed, but source code for all distributed modifications must be available.
 
-**Discussion:** The proliferation of
-licenses is a major problem in the
-open-source ecosystem. To ensure that
-code and components can be combined
-seamlessly within a project, it is
-preferable to standardize on major
-licenses that are both [FSF] (Free Software
-Foundation) and [OSI] (Open Source
-Initiative) compliant.
+**Discussion**
+
+The proliferation of licenses is a major
+problem in the open-source ecosystem. To
+ensure that code and components can be
+combined seamlessly within a project, it
+is preferable to standardize on major
+licenses that are both [FSF] (Free
+Software Foundation) and [OSI] (Open
+Source Initiative) compliant.
 
 **The Problem of License
 Incompatibility**: The primary issue is
