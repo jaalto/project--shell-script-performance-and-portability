@@ -346,15 +346,11 @@ incompatibility occurs when the terms of
 two different licenses contradict each
 other, making it legally impossible to
 distribute a work that incorporates code
-from both sources. For example, if one
-license requires the entire combined work
-to be under that specific license; this
-creates a direct conflict if another
-component carries a different, equally
-strict license. This "license
+from both sources. This "license
 fragmentation" results in legal barriers
 that hinder collaborative innovation and
 the reuse of existing work.
+
 
 ### 2.4 Execution Flow and Main
 
