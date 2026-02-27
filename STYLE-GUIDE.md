@@ -319,15 +319,26 @@ https://www.gnu.org/licenses/gpl-howto.en.html
     #       GNU utilities: grep, awk etc.
 ```
 
-TABLE: The professional major Free Software and Open Source licences
+TABLE: The *Conditional* major professional, Free Software and Open Source licences
 
-License Type | Compatibility | Legal Impact
-:---         | :---      | :---
-Permissive: [ISC], [MIT], [BSD-2-clause] | High       | For Code. **Pros:** Minimal restrictions; allows broad integration and proprietary redistribution. Code can be incorporated into closed-source commercial products. **Cons:** Downstream modifications may be kept private, potentially limiting community contributions.
-Weak Copyleft: [LGPL]     |  Medium    | For libraries. **Pros:** Allows linking with proprietary software while ensuring the library itself remains open. **Cons:** Requires library-specific modifications to be released under the same license.
-Strong Copyleft: [GPL] v3  | Restricted | For Code. **Pros:** Ensures code remains "forever free"; prevents the software from becoming closed-source. **Cons:** "Viral" nature requires derivative works to be licensed under the same GPL terms. Commercial use is allowed, but source code for all distributed modifications must be available.
+License Type | Compatibility | Type | Legal Impact
+:---         | :---          | :--- | :---
+Permissive: [ISC] (preferrable), [MIT], [BSD-2-clause] | High | FSF/OSI approved | For Code. **Pros:** Minimal restrictions; allows broad integration and proprietary redistribution. Code can be incorporated into closed-source commercial products. **Cons:** Downstream modifications may be kept private, potentially limiting community contributions.
+Weak Copyleft: [LGPL]     | Medium | FSF/OSI approved | For libraries. **Pros:** Allows linking with proprietary software while ensuring the library itself remains open. **Cons:** Requires library-specific modifications to be released under the same license.
+Strong Copyleft: [GPL] v3  | Restricted; license mixing it with proprietary code | FSF/OSI approved | For Code. **Pros:** Ensures code remains "forever free"; prevents the software from becoming closed-source. **Cons:** "Viral" nature requires derivative works to be licensed under the same GPL terms. Commercial use is allowed, but source code for all distributed modifications must be available.
 
-**Discussion**
+**Why these are good for software :** The are universally understood and tested licenses.
+
+TABLE: The *Unconditonal* major public domain dedication licenses
+
+License Type | Compatibility | Type | Complexity | Legal Impact
+:---         | :---          | :--- | :--- | :---
+[0BSD] aka Zero-BSD  | High | FSF approved (but not recommended) / OSI approved | Low (Single paragraph) | Professional. Uses standard contract law as it it essentially the ISC License with the requirement to include the copyright notice removed. Carries the standard warranty disclaimers that protect developer from liability. OSI considers 0BSD a real license with proper legal terminology.
+[Unlicense] | High | FSF approved / OSI approved (but with reservations) | High (Multi-paragraph waiver)| Problem: "Vagueness" in some jurisdictions. while approved, OSI considers its "dedication" approach legally sloppy for software and the whole idea of trying to use "Public Domain" a mess because it doesn't exist in many countries (like Germany).
+
+**Why these are good for code snippets:** No attribution or "notice" requirement. Developers can copy-paste code directly into any project (proprietary or open) without carrying over license files or copyright headers.  The user has no obligation to mention creator's name or include the license file in their distribution.
+
+**DISCUSSION**
 
 The proliferation of licenses is a major
 problem in the open-source ecosystem. To
@@ -351,6 +362,85 @@ fragmentation" results in legal barriers
 that hinder collaborative innovation and
 the reuse of existing work.
 
+**About the ISC:** Why is [ISC] often
+considered preferable over MIT and BSD?
+The ISC license is functionally
+identical to the MIT and Simplified BSD
+licenses but excels in legal brevity:
+ISC is approx. 100 words, whereas MIT is
+approx. 170. While established, the MIT
+license contains language specific to
+the Massachusetts Institute of
+Technology’s 1980s policies. It includes
+a specific grant for "sublicensing" that
+many legal scholars argue is redundant
+if the license already allows users to
+"deal in the software without
+restriction." The Internet Systems
+Consortium (ISC) removed this and other
+"unnecessary wording" made redundant by
+the global adoption of the Berne
+Convention. **Bottom Line:** ISC is
+essentially a stripped-down, modern
+refinement of the MIT and BSD-2-Clause
+licenses.
+
+**About 0BSD:** FSF considers 0BSD a
+Free Software license. However, they do
+not recommend or formally approve of it
+for general use. While 0BSD is legally
+valid and 'Free,' the FSF recommends
+classic licences like GPL or ISC instead
+to avoid "license sprawl," which
+complicates legal compliance for large
+projects. This ensures that copyright
+notices remain intact, preserving the
+history of the software and clearly
+communicating rights to future
+developers. FSF is less fond of 0BSD
+over Unlicense due to Notice Removal.
+The FSF generally dislikes licenses that
+allow you to remove the copyright notice
+(which 0BSD does).
+
+**About Unlicense:** The FSF prefers the
+Unlicense over 0BSD for two primary
+reasons. The first is moral: the FSF
+views the Unlicense as a bold statement
+of "Freedom." By explicitly "dedicating
+to the public domain," it represents a
+clearer ideological choice for
+developers seeking to waive copyright
+entirely. The second is practical: it
+includes a more prominent No-Warranty
+disclaimer compared to the minimalist
+phrasing in 0BSD.
+
+TABLE: Problematic licenses to avoid
+
+License      | Status    | Problems
+:---         | :---      | :---
+CC0-1.0      | avoid     | Creative Commons licences are not designed for software. Nnot fully approved by FSF and OSI. Possible use cases: for non-code assets and minimal code snippets.
+[WTFPL], [WTFNMFPL], [GLWTPL] etc. | avoid at all costs | These aren't just "informal"—they are considered toxic. While they are funny in a "hacker culture" way, they are the digital equivalent of a "Keep Out" sign written in crayon: they have zero legal weight and create massive headaches for anyone trying to use your code in a corporate or serious environment. They do not have proper and robust liability waivers to protect you from being sued. Most corporate legal departments (Microsoft, Google, Oracle, Red Hat) have blacklisted them for a reason. They even have automated scanners that auto-reject these licenses.
+
+**About CC0:** It is primarily designed
+for "works of creativity" (images,
+music, prose). While approved by the FSF
+for its "three-tiered" legal safety net
+(Public Domain dedication, fallback
+license, and non-assertion covenant),
+CC0 is disapproved by the OSI for
+software. It lacks specific definitions
+for binaries vs. source code and
+explicitly excludes patent grants,
+creating a potential legal trap.
+Furthermore, its liability disclaimer is
+lacking. **Bottom Line:** Suitable for
+documentation and assets. For "Public
+Domain-like" code, [0BSD] is more
+professional choice; it is written for
+software and approved by both the FSF
+and OSI.
 
 ### 2.4 Execution Flow and Main
 
@@ -510,6 +600,17 @@ regarding the script's CLI limitations.
         exit 0
     }
 
+    Warn ()
+    {
+        echo "$*" >&2
+    }
+
+    Die ()
+    {
+        Warn "$*"
+        exit 1
+    }
+
     Verbose ()
     {
         [ "${VERBOSE:-}" ] || return 0
@@ -534,6 +635,14 @@ regarding the script's CLI limitations.
             opt="${1:-none}"
 
             case $opt in
+                -f | --file)
+                    shift
+                    FILE="${1:-}"
+                    if [ ! -f "$FILE" ]; then
+                        Die "ERROR: No --file '$FILE'"
+                    fi
+                    shift
+                    ;;
                 -v | --verbose)
                     shift
                     VERBOSE="verbose"
@@ -562,7 +671,7 @@ regarding the script's CLI limitations.
                     ;;
                 -*)
                     shift
-                    echo "$0: WARN Unknown option: $opt" >&2
+                    Warn "WARN Unknown option: $opt"
                     ;;
                 *)
                     break
@@ -731,26 +840,7 @@ trailing characters.
 
 # 2.0 Error Handling
 
-## 2.1 Exit Status
-
-**Set a exit status:** Scripts
-should exit with 0 for success and a
-non-zero value to indicate a failure
-or specific error condition. Use the
-standard special parameter 
-[$?](https://www.gnu.org/software/bash/manual/bash.html#index-_003f)
-to retrieve exit status of the most
-recently executed command.
-
-```
-    cd "$dir" || exit $?
-
-    ...
-    exit 0
-
-```
-
-## 2.2 Execution Safety
+## 2.1 Execution Safety
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -783,16 +873,32 @@ to also learn their caveats from
     set -o pipefail
 ```
 
-## 2.3 Explicit Error Checking
+## 2.2 Explicit Error Checking
 
 Check status of commands and
-exit early.
+exit early. Use the
+standard special parameter 
+[$?](https://www.gnu.org/software/bash/manual/bash.html#index-_003f)
+to retrieve exit status of the most
+recently executed command.
 
 ``` shell
     # In case you do not use
     # set -o errexit
 
     cd "$dir" || exit $?
+```
+
+## 2.3 Exit Status
+
+**Set a exit status:** Scripts
+should exit with 0 for success and a
+non-zero value to indicate a failure
+or specific error condition.
+
+```
+    <...code...>
+    exit 0 # success
 ```
 
 # 3.0 Temporary Files
@@ -1107,7 +1213,7 @@ and make the action blocks stand out.
 ## 6.1 Errors to Stderr
 
 Send error messages to stderr. Put
-`>&2` at the end of line.
+stderr redirection `>&2` at the end of line.
 
 ``` bash
     # Preferred
@@ -1115,17 +1221,15 @@ Send error messages to stderr. Put
     echo "ERROR: message to stderr" >&2
 
     # Avoid
-    echo "Normal output to stdout"
     echo >&2 "ERROR: message to stderr"
 ```
 
-**Rationale:** This keeps the `echo` and
-`printf` commands uniform and natural by
-ensuring the message remains the primary
-argument. Standard redirections (like `>
-file` or `>&2`) are traditionally
-appended to the end of the line, making
-the script easier to scan.
+**Rationale:** To ensure the message
+remains the primary argument. Standard
+redirections (like `> file` or `>&2`)
+are traditionally appended to the end of
+the line, making the script easier to
+scan.
 
 ## 6.2 Help to Stdout
 
