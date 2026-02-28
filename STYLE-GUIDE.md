@@ -31,16 +31,16 @@ INFORMATION FOR EDITING
   col type
   --- -------------------------
   31  Code: bullet: ``` ... ``´)
-  41  Regular text and paragraphs.
+  40  Regular text and paragraphs.
       Github line limit to support
       editing.
-  --- -----------------------------------
+  --- ----------------------------------
 
   Emacs editor settings:
 
   ;; eval code with C-x C-e
   (progn
-    (setq fill-column 41)
+    (setq fill-column 40)
     (display-fill-column-indicator-mode 1))
 
 MISCELLANEOUS
@@ -60,7 +60,7 @@ FORMAT
 
 # SHELL SCRIPT STYLE GUIDE
 
-## 1. Foundations and Standards
+## 1.0 Foundations and Standards
 
 ### 1.1 Context
 
@@ -96,7 +96,7 @@ standards for small controlled scripts.
 When sharing code intended for a wider
 audience, or for deployment in a
 production or operational environment,
-strictly adhere to best pactises, like
+strictly adhere to best practices, like
 variable quoting, to prevent unexpected
 behavior.
 
@@ -114,8 +114,10 @@ best practices.
 
 ### 1.4 Environment and Dependencies
 
-Use [GNU coreutils] and require
-their installation in the README.
+**A. Dependencies**
+
+Use GNU tooling and require their
+installation in the project's README.
 
 **Rationale:** GNU utilities are more
 capable and generally optimized for speed
@@ -124,6 +126,11 @@ counterparts. They also provide
 standardized behavior across different
 operating systems (Linux, macOS, BSD),
 ensuring improved interoperability.
+See [GNU coreutils], [GNU findutils],
+[GNU diffutils] [GNU grep], [GNU sed],
+[GNU awk] etc.
+
+**B. Long options**
 
 Use readable `--long` form options in
 calling utilities (e.g. `grep`) where
@@ -153,16 +160,6 @@ before they are executed.
 - Main: program entry point at the bottom of
   the file.
 
-**Rationale:** Relying on functions is a
-core design principle that modularizes
-logic from the outset. It ensures
-variable localization, encourages
-thinking in discrete execution blocks,
-and keeps code segments concise and
-visible. This 'one-task-per-function'
-makes the program easier to extend and
-maintain as it evolves.
-
 An example:
 
 ```shell
@@ -188,7 +185,17 @@ An example:
     # End of file
 ```
 
-## 2. Structure and Layout
+**Rationale:** Relying on functions is a
+core design principle that modularizes
+logic from the outset. It ensures
+variable localization, encourages
+thinking in discrete execution blocks,
+and keeps code segments concise and
+visible. This 'one-task-per-function'
+makes the program easier to extend and
+maintain as it evolves.
+
+## 2.0 Structure and Layout
 
 ### 2.1 POSIX sh Shebang Line
 
@@ -224,7 +231,7 @@ both users and automated tools.
 
     AUTHOR="John doe <jdoe@example.com>"
     URL="http://example.com/homepage"
-    LICENSE="GPL-3-or-later"
+    LICENSE="GPL-3.0-or-later"
 ```
 
 **Rationale:** Centralizing metadata at
@@ -238,7 +245,9 @@ to parse script information consistently.
 Notes:
 
 - Licensing: Use the
-  [SPDX License List] short-identifiers.
+  [SPDX License List] short-identifiers,
+  like [GPL-3.0-or-later],
+  [ISC], [MIT] or [BSD-2-Clause].
 - Versioning: Use a machine-readable
   format (N.N[.N]). Follow
   [Semantic Versioning] for production,
@@ -248,62 +257,30 @@ Notes:
   script's age compared to an arbitrary
   version like 1.5.0.
 
-### 2.3 File Header and Help
+### 2.3 File Header and License
 
-Use a top-level comment block to document
-the script’s purpose and licensing, and
-provide a `Help` function near the top of
-the file for quick reference. This block
-should include a:
+Use a top-level comment block to
+document the script’s purpose and
+licensing. This block should include
+a:
 
-- **License:** use
-  standard identifiers from the [SPDX
-  License List] like [GPL-3.0-or-later],
-  [MIT], [ISC] or [BSD-2-Clause]
-- **Description:** script's
-  functionality.
-- **Usage:**
-  provide clear examples of how to invoke
-  the command.
+- **Copyright:** add Copyright holder.
+- **License:** add
+  standard license text.
+- **Description:** Optional if
+  included in `--help`.
+  Describe script's functionality.
+- **Usage:** Optional if included
+  in `--help`. Provide clear examples of
+  how to invoke the command.
+- **Dependencies:** List required
+  external requirements.
 
-**Discussion:** The proliferation of
-licenses is a major problem in the
-open-source ecosystem. To ensure that
-code and components can be combined
-seamlessly within a project, it is
-preferable to standardize on major
-licenses that are both [FSF] (Free Software
-Foundation) and [OSI] (Open Source
-Initiative) compliant.
-
-TABLE: The major open source licences
-
-License Type | Compatibility | Legal Impact
-:---         | :---      | :---
-Permissive (MIT / ISC / BSD-2-clause) | High       | For Code. Minimum restrictions; allows for broad integration. Allows proprietary redistribution; that is, closing the source code for commercial use.
-Weak Copyleft (LGPL)     |  Medium    | For libraries. Allows linking while requiring library modifications to remain open.
-Strong Copyleft (GPLv3)  | Restricted | For Code. Requires the derivative work to adopt the same license. Mandates reciprocal licensing for all derivative works.
-
-**The Problem of License
-Incompatibility**: The primary issue is
-that differing licenses may prohibit the
-combining and sharing of code. License
-incompatibility occurs when the terms of
-two different licenses contradict each
-other, making it legally impossible to
-distribute a work that incorporates code
-from both sources. For example, if one
-license requires the entire combined work
-to be under that specific license; this
-creates a direct conflict if another
-component carries a different, equally
-strict license. This "license
-fragmentation" results in legal barriers
-that hinder collaborative innovation and
-the reuse of existing work.
-
-
-An example:
+An example. Add the license text
+according to the instructions provided
+by the issuer; for example, for the
+GNU GPL
+https://www.gnu.org/licenses/gpl-howto.en.html
 
 ``` shell
     #! /bin/sh
@@ -339,15 +316,244 @@ An example:
     #
     #   Dependecies
     #
-    #       GNU utilities: grep, gawk etc.
+    #       GNU utilities: grep, awk etc.
+```
 
-    PROGRAM=${0##*/}
-    VERSION="YYYY.mmdd.HHMM"
+TABLE: The *Conditional* major professional, Free Software and Open Source licences
 
-    AUTHOR="John doe <jdoe@example.com>"
-    URL="http://example.com/homepage"
-    LICENSE="GPL-3-or-later"
+License Type | Compatibility | Type | Legal Impact
+:---         | :---          | :--- | :---
+Permissive: [ISC] (preferrable), [MIT], [BSD-2-clause] | High | FSF/OSI approved | For Code. **Pros:** Minimal restrictions; allows broad integration and proprietary redistribution. Code can be incorporated into closed-source commercial products. **Cons:** Downstream modifications may be kept private, potentially limiting community contributions.
+Weak Copyleft: [LGPL]     | Medium | FSF/OSI approved | For libraries. **Pros:** Allows linking with proprietary software while ensuring the library itself remains open. **Cons:** Requires library-specific modifications to be released under the same license.
+Strong Copyleft: [GPL] v3  | Restricted; license mixing it with proprietary code | FSF/OSI approved | For Code. **Pros:** Ensures code remains "forever free"; prevents the software from becoming closed-source. **Cons:** "Viral" nature requires derivative works to be licensed under the same GPL terms. Commercial use is allowed, but source code for all distributed modifications must be available.
 
+**Why these are good for software :** The are universally understood and tested licenses.
+
+TABLE: The *Unconditonal* major public domain dedication licenses
+
+License Type | Compatibility | Type | Complexity | Legal Impact
+:---         | :---          | :--- | :--- | :---
+[0BSD] aka Zero-BSD  | High | FSF approved (but not recommended) / OSI approved | Low (Single paragraph; grant type) | Professional. Uses standard contract law as it it essentially the ISC License with the requirement to include the copyright notice removed. Carries the standard warranty disclaimers that protect developer from liability. OSI considers 0BSD a real license with proper legal terminology.
+[Unlicense] | High | FSF approved / OSI approved (but with reservations) | High (Multi-paragraph; waiver type)| Problem: "Vagueness" in some jurisdictions. While approved, OSI considers its "dedication" approach legally sloppy for software and the whole idea of trying to use "Public Domain" a mess because it doesn't exist in many countries (like Germany).
+
+**Why these are good for code snippets:** No attribution or "notice" requirement. Developers can copy-paste code directly into any project (proprietary or open) without carrying over license files or copyright headers.  The user has no obligation to mention creator's name or include the license file in their distribution.
+
+**DISCUSSION**
+
+The proliferation of licenses is a major
+problem in the open-source ecosystem. To
+ensure that code and components can be
+combined seamlessly within a project, it
+is preferable to standardize on major
+licenses that are both [FSF] (Free
+Software Foundation) and [OSI] (Open
+Source Initiative) compliant.
+
+**The Problem of License
+Incompatibility**: The primary issue is
+that differing licenses may prohibit the
+combining and sharing of code. License
+incompatibility occurs when the terms of
+two different licenses contradict each
+other, making it legally impossible to
+distribute a work that incorporates code
+from both sources. This "license
+fragmentation" results in legal barriers
+that hinder collaborative innovation and
+the reuse of existing work.
+
+**About the ISC:** Why is [ISC] often
+considered preferable over MIT and BSD?
+The ISC license is functionally
+identical to the MIT and Simplified BSD
+licenses but excels in legal brevity:
+ISC is approx. 100 words, whereas MIT is
+approx. 170. While established, the MIT
+license contains language specific to
+the Massachusetts Institute of
+Technology’s 1980s policies. It includes
+a specific grant for "sublicensing" that
+many legal scholars argue is redundant
+if the license already allows users to
+"deal in the software without
+restriction." The Internet Systems
+Consortium (ISC) removed this and other
+"unnecessary wording" made redundant by
+the global adoption of the Berne
+Convention. **Bottom Line:** ISC is
+essentially a stripped-down, modern
+refinement of the MIT and BSD-2-Clause
+licenses.
+
+**About 0BSD:** FSF considers 0BSD a
+Free Software license. However, they do
+not recommend or formally approve of it
+for general use. While 0BSD is legally
+valid and 'Free,' the FSF recommends
+classic licences like GPL or ISC instead
+to avoid "license sprawl," which
+complicates legal compliance for large
+projects. This ensures that copyright
+notices remain intact, preserving the
+history of the software and clearly
+communicating rights to future
+developers. FSF is less fond of 0BSD
+over Unlicense due to Notice Removal.
+The FSF generally dislikes licenses that
+allow you to remove the copyright notice
+(which 0BSD does). **Bottom Line:** 0BSD
+is real legal document most likely more
+easily defendable in all jurisdictions.
+
+**About Unlicense:** The FSF prefers the
+Unlicense over 0BSD for two primary
+reasons. The first is moral: the FSF
+views the Unlicense as a bold statement
+of "Freedom." By explicitly "dedicating
+to the public domain," it represents a
+clearer ideological choice for
+developers seeking to waive copyright
+entirely. The second is practical: it
+includes a more prominent No-Warranty
+disclaimer compared to the minimalist
+phrasing in 0BSD. **Bottom Line:**
+Despite its "moral" stance, its
+waiver-based approach is often more
+difficult to uphold legally than the
+"grant-based" approach of 0BSD.
+
+TABLE: Problematic licenses to avoid
+
+License      | Status    | Problems
+:---         | :---      | :---
+CC0-1.0      | avoid     | Creative Commons licences are not designed for software. Nnot fully approved by FSF and OSI. Possible use cases: for non-code assets and minimal code snippets.
+[WTFPL], [WTFNMFPL], [GLWTPL] etc. | avoid at all costs | These aren't just "informal"—they are considered toxic. While they are funny in a "hacker culture" way, they are the digital equivalent of a "Keep Out" sign written in crayon: they have zero legal weight and create massive headaches for anyone trying to use your code in a corporate or serious environment. They do not have proper and robust liability waivers to protect you from being sued. Most corporate legal departments (Microsoft, Google, Oracle, Red Hat) have blacklisted them for a reason. They even have automated scanners that auto-reject these licenses.
+
+**About CC0:** It is primarily designed
+for "works of creativity" (images,
+music, prose). While approved by the FSF
+for its "three-tiered" legal safety net
+(Public Domain dedication, fallback
+license, and non-assertion covenant),
+CC0 is disapproved by the OSI for
+software. It lacks specific definitions
+for binaries vs. source code and
+explicitly excludes patent grants,
+creating a potential legal trap.
+Furthermore, its liability disclaimer is
+lacking. **Bottom Line:** Suitable for
+documentation and assets. For "Public
+Domain-like" code, [0BSD] is more
+professional choice; it is written for
+software and approved by both the FSF
+and OSI.
+
+### 2.4 Execution Flow and Main
+
+Use a function named `Main` to
+encapsulate the entry logic of the
+script, and place it as the bottom-most
+function to ensure the program's starting
+point is easily identifiable.
+
+```shell
+    Main ()
+    {
+        local arg
+        arg="${1:-}"
+
+        echo "1st command line arg: $arg"
+    }
+
+    Main "$@"
+```
+
+**Rationale:** Main provides consistency
+with other programming languages,
+allowing readers to find the start of
+the program quickly and intuitively. The
+formal entry point provides a clear
+starting location for execution and
+prevents global variables from
+cluttering the namespace. This
+separation allows individual functions
+to be tested in isolation without
+triggering the primary application
+logic.
+
+TABLE: Programming languages and their entry points
+
+Language | Entry Point | Comment
+-------- | ---         | ---
+C        | main()      | mandatory
+C++      | main()      | mandatory
+Objective-C | main()   | mandatory
+C#       | main()      | (mandatory)
+D        | main()      | mandatory
+Java     | Main()      | mandatory
+Kotlin   | main()      | mandatory
+Scala    | main()      | mandatory
+Rust     | main()      | mandatory
+Zig      | main()      | mandatory
+Go       | main()      | mandatory
+Haskell  | main()      | mandatory
+Python   | main()      | customary \_\_main\_\_, best practices
+Perl     | main()      | customary, best practices
+Ruby     | main()      | customary \_\_FILE\_\_, best practices
+Javascript| await ... main() | customary, best practices
+Swift    | @main, main.swift | customary, best practices
+PowerShell | Main     | customary, best practices
+PHP      | main() for CLI | customary, best practices
+
+See list of popular programing
+laguages at [PLrank] (most accurate),
+[PLrankings] and [TIOBE index] (search
+results based, the least objective).
+
+### 2.5 User Interface and Help
+
+Provide a `Help()` function near the
+top of the file for quick reference.
+Use a standard set of options to
+ensure a uniform user interface. At a
+minimum, the `-h` (help) option must
+be implemented.
+
+**Rationale:** User expectations are best
+met by providing a standardized
+interface.
+
+TABLE: suggested standard options
+
+Option| Long Option |Description
+:---  | :---        | :---
+-h    | --help      |Display usage instructions and exit
+-v    | --verbose   |Increase output detail for monitoring.
+-V    | --version   |Print version information and exit.
+-D    | --debug     |(Optional) Enable tracing output.
+
+TABLE: other common option names
+
+Option| Long Option |Description
+:---       | :---        | :---
+-c FILE    | --config    |Configuration file
+-d DIR     | --dir       |Directory
+-f FILE    | --file      |file
+-t         | --test, --dry-run |Run in test mode (also -n, --no-op)
+
+An example code for option handling.
+Note that the POSIX [getopts] utility is
+not used here as it does not natively
+support readable long options. A minor
+limitation of this pattern is that it
+does not support stacked short options
+(e.g., accepting `-lx` for `-l -x`).
+Mentioning this in the BUGS section of
+the Help() page will manage user
+expectations and provide transparency
+regarding the script's CLI limitations.
+
+``` shell
     Help ()
     {
         # See sections and formatting
@@ -361,7 +567,7 @@ An example:
         -f, --file FILE
             Use FILE.
 
-        -t, --test
+        -t, --test, --dry-run
             Run in test mode.
 
         -D, --debug
@@ -385,6 +591,12 @@ An example:
     ENVIRONMENT
         <...>
 
+    BUGS
+        Short options cannot be stacked:
+        Options must be provided
+        separately (e.g., -v -t) rather
+        than combined (e.g., -vt).
+
     AUTHOR
         <...>
 
@@ -394,121 +606,93 @@ An example:
         exit 0
     }
 
+    Warn ()
+    {
+        echo "$*" >&2
+    }
+
+    Die ()
+    {
+        Warn "$*"
+        exit 1
+    }
+
+    Verbose ()
+    {
+        [ "${VERBOSE:-}" ] || return 0
+        echo "$*"
+    }
+
+    Debug ()
+    {
+        [ "${DEBUG:-}" ] || return 0
+
+        # Eval for complex commands, like
+        # Debug "echo 'this $message' > file"
+
+        eval "$@" >&2
+    }
+
     Main ()
     {
-        local arg
-        arg=${1:-}
+       while :
+       do
+            local opt
+            opt="${1:-none}"
 
-        echo "command line: $arg"
+            case $opt in
+                -f | --file)
+                    shift
+                    FILE="${1:-}"
+                    if [ ! -f "$FILE" ]; then
+                        Die "ERROR: No --file '$FILE'"
+                    fi
+                    shift
+                    ;;
+                -v | --verbose)
+                    shift
+                    VERBOSE="verbose"
+                    ;;
+                -V | --version)
+                    shift
+                    # Calls exit 0
+                    Version
+                    ;;
+                -D | --debug)
+                    shift
+                    DEBUG="debug"
+                    ;;
+                -t | --test | --dry-run)
+                    shift
+                    TEST="test"
+                    ;;
+                -h | --help)
+                    shift
+                    # Calls exit 0
+                    Help
+                    ;;
+                --) # End of options
+                    shift
+                    break
+                    ;;
+                -*)
+                    shift
+                    Warn "WARN Unknown option: $opt"
+                    ;;
+                *)
+                    break
+                    ;;
+            esac
+        done
+
+        Verbose "Program started"
+        Debug echo "Debug is on"
     }
 
     Main "$@"
 ```
 
-### 2.4 Execution Flow and Main
-
-Use a function named `Main` to
-encapsulate the entry logic of the
-script, and place it as the bottom-most
-function to ensure the program's starting
-point is easily identifiable.
-
-```shell
-    Main ()
-    {
-        local arg
-        arg=${1:-}
-
-        echo "command line: $arg"
-    }
-
-    Main "$@"
-```
-
-**Rationale:** Main provides consistency
-with other programming languages,
-allowing readers to find the start of the
-program quickly and intuitively.
-
-### 2.5 User Interface
-
-Use a standard set of options in every
-script to ensure a uniform user
-interface. At a minimum, the `-h` (help)
-option must be implemented.
-
-**Rationale:** User expectations are best
-met by providing a standardized
-interface.
-
-TABLE: suggested standard options
-
-Option| Long Option |Description
-:---  | :---        | :---
--h    | --help      |Display usage instructions and exit
--v    | --verbose   |Increase output detail for monitoring.
--V    | --version   |Print version information and exit.
--D    | --debug     |(Optional) Enable tracing output.
-
-TABLE: other common option names
-
-Option| Long Option |Description
-:---       | :---        | :---
--c FILE    | --config    |Configuration file
--d DIR     | --dir       |Directory
--f FILE    | --file      |file
-
-Template code for option handling is
-below. Note: The POSIX [getopts] utility
-does not support long options. A
-limitation of this code is that it does
-not support stacked short options (e.g.,
-accepting `-lx` for `-l -x`).
-
-``` shell
-Main ()
-{
-   while :
-   do
-        local opt
-        opt="${1:-none}"
-
-        case $opt in
-            -v | --verbose)
-                shift
-                VERBOSE="verbose"
-                ;;
-            -V | --version)
-                shift
-                # Calls exit 0
-                Version
-                ;;
-            -D | --debug)
-                shift
-                DEBUG="debug"
-                ;;
-            -h | --help)
-                shift
-                # Calls exit 0
-                Help
-                ;;
-            --) # End of options
-                shift
-                break
-                ;;
-            -*)
-                shift
-                echo "$0: WARN Unknown option: $opt" >&2
-                ;;
-            *)
-                break
-                ;;
-        esac
-    done
-}
-```
-
-## 3. Style and Naming
+## 3.0 Style and Naming
 
 ### 3.1 Style Considerations
 
@@ -525,19 +709,32 @@ with spaces or tabs, using spaces around
 operators, and placing blocks and braces
 on the same line or a new line.
 
-Comment about using TAB for indentation:
-While TABs allow for personal preference
-in editors where TAB can be configured
-for display, they can also create a
-"false sense of line length." Variable
-TAB widths (e.g., 2 vs. 8 spaces) cause
-code that fits on one screen to overflow
-and become unreadable on another.
+**Discussion:** Tabs vs. Spaces.
+
+While Tabs allow for personal display
+preferences in local editors, they
+often create a "false sense of line
+length." Because tab widths vary
+across environments (e.g., 2 vs. 8
+spaces), code that fits on one screen
+may overflow and become unreadable on
+another.
+
 Conversely, fixed spaces ensure the
-logic's "shape" remains identical across
-all environments, whereas TABs cause the
-structure to shift based on local editor
-settings.
+"shape" of the logic remains identical
+across all environments. Tabs cause
+the structure to shift based on local
+settings, whereas spaces maintain
+absolute consistency. Providing
+individual control over tab width is
+considered secondary to maintaining a
+predictable codebase across automated
+tooling, git diffs, and version
+control systems.
+
+The system-wide predictability is
+prioritized over individual
+preference.
 
 This style guide adopts the following
 conventions explained below.
@@ -562,45 +759,39 @@ Less code per line is better than more.
 
 Use 4 spaces for indentation.
 
-**Rationale:** The layout remains uniform
-across editors, terminals, and tools like
+**Rationale:** No TABs. with spaces
+the layout remains uniform across
+editors, terminals, and tools like
 [diff], where TAB widths vary.
-Additionally, copy-pasting code preserves
-the exact formatting.
-
-Note: Providing users with individual
-control over tab width via hard TABs is
-considered secondary to maintaining a
-consistent, predictable codebase across
-automated tooling and version control
-systems.
+Additionally, copy-pasting code
+preserves the exact formatting. Refer
+to 3.1
 
 ### 3.4 Naming Conventions
 
+**Functions:** Use [CamelCase] for
+functions starting with an uppercase
+letter (e.g., `IsNumber`).
+**Rationale:** Uppercase function
+names minimize conflicts with existing
+lowercase utility commands.
 
-- Functions: Use [CamelCase] for
-  functions starting with an uppercase
-  letter (e.g., `IsNumber`).
-  **Rationale:** Uppercase function names
-  minimize conflicts with existing
-  lowercase utility commands.
+**Local Variables:** Use [camelCase]
+for variables. Start with a lowercase
+letter (e.g., `maxLength`).
+**Rationale:** Less visual noise
+compared to [Snake Case], underscore
+characters `in_variable_names`.
 
-- Local Variables: Use [camelCase] for
-  variables. Start with a lowercase
-  letter (e.g., `maxLength`).
-  **Rationale:** Less visual noise
-  compared to [Snake Case], underscore
-  characters `in_variable_names`.
-
-- Global Variables: Use uppercase for
-  global variables outside of functions.
-  **Rationale**: Using UPPERCASE is a
-  widely adopted standard across
-  programming languages to denote
-  constants or global state. In shell
-  scripting, it mirrors the convention
-  for system environment variables, such
-  as $PATH and $HOME.
+**Global Variables:** Use uppercase
+for global variables outside of
+functions. **Rationale**: Using
+UPPERCASE is a widely adopted standard
+across programming languages to denote
+constants or global state. In shell
+scripting, it mirrors the convention
+for system environment variables, such
+as $PATH and $HOME.
 
 Examples:
 
@@ -613,6 +804,11 @@ Examples:
 
     # Avoid
     this_result=$(uses_var + and_another)
+
+    Ls () # initial Uppercase, not ls()
+    {
+        ...
+    }
 ```
 
 ### 3.5 Visual Layout (Allman style)
@@ -622,28 +818,35 @@ for functions and control structures.
 
 ```
 do        {         case     if then
-    ...       ...       ...      ...
-    ...       ...       ...      ...
+.         .         .        .
+.         .         .        .
 done      }         esac     fi
 ```
 
 **Rationale:** To maximize clarity,
-placing block-defining keywords and
-braces on their own lines reduces "noise"
-on logical lines of code. This makes
-block boundaries visually distinct and
+placing block-defining braces on
+their own lines makes boundaries
+visually distinct and significantly
 improves scannability.
+
+**Discussion:** While the [K&R]
+(Kernighan & Ritchie) style is more
+compact, the [Allman] style is
+adopted for its focus on structural
+clarity and vertical alignment. This
+approach prioritizes the ease of
+scanning nested blocks; by placing
+the opening and closing braces in
+the same column, the code block
+forms a clear, symmetrical "box."
+This symmetry allows the eye to
+quickly identify the scope of a
+logical block without searching for
+trailing characters.
 
 # 2.0 Error Handling
 
-## 2.1 Exit Status
-
-Set a exit status: Scripts should exit
-with 0 for success and a non-zero
-value to indicate a failure or
-specific error condition.
-
-## 2.2 Execution Safety
+## 2.1 Execution Safety
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -676,10 +879,14 @@ to also learn their caveats from
     set -o pipefail
 ```
 
-## 2.3 Explicit Error Checking
+## 2.2 Explicit Error Checking
 
 Check status of commands and
-exit early.
+exit early. Use the
+standard special parameter 
+[$?](https://www.gnu.org/software/bash/manual/bash.html#index-_003f)
+to retrieve exit status of the most
+recently executed command.
 
 ``` shell
     # In case you do not use
@@ -688,20 +895,43 @@ exit early.
     cd "$dir" || exit $?
 ```
 
+## 2.3 Exit Status
+
+**Set a exit status:** Scripts
+should exit with 0 for success and a
+non-zero value to indicate a failure
+or specific error condition.
+
+```
+    <...code...>
+    exit 0 # success
+```
+
 # 3.0 Temporary Files
 
 ## 3.1 Using mktemp
 
 Use safe temporary files and
-directories with `mktemp`.
+directories with [mktemp].
+
+``` shell
+    TMPBASE="${TMPDIR:-/tmp}/${LOGNAME:-${USER:-dummy}}.tmp.$$"
+
+    tmpfile="$(mktemp -t "$TMPBASE.XXXXX")"
+    tmpdir="$(mktemp -d -t "$TMPBASE.XXXXX)"
+```
+
 **Rationale:** Prevent symlink attacks
 and race conditions in multi-user
 environments. See [Bash FAQ/062].
 
-``` shell
-    tmpfile=$(mktemp -t tmp.file.XXX)
-    tmpdir=$(mktemp --directory -t tmp.dir.XXX)
-```
+**Discussion:** The `mktemp` utility is
+not part of the POSIX standard. It
+originated in BSD and was later enhanced
+in [GNU coreutils]. For maximum
+portability across Linux, BSD, and
+macOS, always use the `-t` option and
+provide a template
 
 ## 3.2 Using trap
 
@@ -711,12 +941,22 @@ See [Bash Guide/SignalTrap].
 
 ``` shell
 
-  AtExit ()
-  {
-     # rm temporary files
-  }
+    AtExit ()
+    {
+        # Capture trigger status.
+        ret=$?
 
-  trap 'AtExit' EXIT HUP INT QUIT TERM
+        # Calling 'exit' is safe here as
+        # the EXIT trap is internally
+        # disabled during  execution.
+
+        [ "${TMPBASE:-}" ] || exit $ret
+
+        rm -rf "$TMPBASE"* # see 3.1
+        exit $ret
+    }
+
+    trap 'AtExit' EXIT HUP INT QUIT TERM
 ```
 
 # 4.0 Variables and Quoting
@@ -737,6 +977,34 @@ Use `"$@"`, that is, quote the "all
 arguments" [special parameters]
 variable. This is mandatory to keep
 each argument distinct and uncorrupted.
+
+```
+    # Set positional parameters
+    set -- 1 2 3
+
+    for item in "$@"
+    do
+        echo "$item"
+    done
+```
+
+**Rationale:** The quoted form "$@"
+ensures that each positional parameter
+is passed as a separate, distinct
+string. This is critical for handling
+arguments that contain spaces, tabs, or
+newlines.
+
+Without quotes, the shell performs Word
+Splitting and Globbing on the arguments.
+This causes a single argument like "New
+Folder" to be split into two separate
+arguments ("New" and "Folder"), often
+leading to script failure or data
+corruption.
+
+See [Bash Pitfalls/24], [Bash Sheet]
+and shellcheck [SC2086]
 
 ## 4.4 Simple Variable Expansion
 
@@ -909,7 +1177,7 @@ short and simple enough.
 ```
 
 In longer statements, switch to the
-[Allman] style for better clarity. The
+full [Allman] style for better clarity. The
 command becomes more visually prominent
 and stands out better compared to keeping
 the `; then` on the same line.
@@ -924,9 +1192,7 @@ the `; then` on the same line.
 ## 5.4 Case Statements
 
 Place pattern case terminators `;;` in
-their own lines. **Rationale:**
-Improves the visual flow and make the
-action blocks stand out.
+their own lines.
 
 ``` shell
     # Note: POSIX case require
@@ -945,12 +1211,15 @@ action blocks stand out.
     esac
 ```
 
+**Rationale:** Improves the visual flow
+and make the action blocks stand out.
+
 # 6.0 Input/Output and File Handling
 
 ## 6.1 Errors to Stderr
 
 Send error messages to stderr. Put
-`>&2` at the end of line.
+stderr redirection `>&2` at the end of line.
 
 ``` bash
     # Preferred
@@ -958,16 +1227,19 @@ Send error messages to stderr. Put
     echo "ERROR: message to stderr" >&2
 
     # Avoid
-    echo "Normal output to stdout"
     echo >&2 "ERROR: message to stderr"
 ```
 
+**Rationale:** To ensure the message
+remains the primary argument. Standard
+redirections (like `> file` or `>&2`)
+are traditionally appended to the end of
+the line, making the script easier to
+scan.
+
 ## 6.2 Help to Stdout
 
-Display help to stdout.
-
-**Rationale**: Displaying help, program
-version etc. are not error conditions.
+Display help to stdout and exit with status 0.
 
 ``` bash
     arg="${1:-}"
@@ -978,16 +1250,12 @@ version etc. are not error conditions.
     fi
 ```
 
+**Rationale**: Displaying help, program
+version etc. are not error conditions.
+
 ## 6.3 Reading Input
 
 Always use `read` with option `-r`.
-
-**Rationale:** When reading input with
-read, always use the `-r` option to
-prevent backslash interpretation, which
-can lead to unexpected behavior. See
-[Bash FAQ/001] and
-shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162).
 
 ``` bash
     while read -r item
@@ -996,21 +1264,18 @@ shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162).
     done < file
 ```
 
+**Rationale:** When reading input with
+read, always use the `-r` option to
+prevent backslash interpretation, which
+can lead to unexpected behavior. See
+[Bash FAQ/001] and
+shellcheck [SC2162].
+
 ## 6.4 Command Substitution
 
 Use POSIX `$(command)`
 instead of archaic \`backticks\` for
 [Command Substitution].
-
-**Rationale:** It is more readable and
-allows for cleaner nesting. All modern
-shells support $(). See [Bash FAQ/082].
-Side note: On many non-US keyboard
-layouts (such as German, French, or
-Nordic), the backtick is an
-inconveniently located dead key, or
-access to it requires a complex modifier
-combination (AltGr).
 
 ``` bash
     # Preferred
@@ -1020,6 +1285,18 @@ combination (AltGr).
     dirname=`basename \`pwd\``
 ```
 
+**Rationale:** It is more readable and
+allows for cleaner nesting. All modern
+shells support `$()`. In addition, on many
+non-US keyboard layouts (such as German,
+French, or Nordic), the backtick is an
+inconveniently located dead key, or
+access to it requires a complex modifier
+combination (AltGr).
+
+See also [Bash FAQ/082] and shellcheck
+[SC2006].
+
 # 7.0 Functions and Scope
 
 ## 7.1 Function syntax
@@ -1027,13 +1304,6 @@ combination (AltGr).
 Use the standard POSIX parentheses syntax
 to define functions. Avoid the
 non-standard `function` keyword.
-
-**Note:** Shell scripts define commands
-rather than traditional programming
-language functions. Prefer defining
-function names using leading Uppercase
-letters to minimize conflicts with
-existing lowercase utility commands.
 
 ``` shell
    # Preferred. Standard POSIX syntax.
@@ -1052,6 +1322,15 @@ existing lowercase utility commands.
     Example "arg"
 ```
 
+**Note:** Shell scripts define commands
+rather than traditional programming
+language functions. Prefer defining
+function names using leading Uppercase
+letters to minimize conflicts with
+existing lowercase utility commands
+(consider: system `sort` vs your `Sort`,
+etc.)
+
 **Stylistic Note:** Prefer including a
 space before the function parentheses to
 align with the output of the Bash [type]
@@ -1069,16 +1348,8 @@ defined within the parentheses.
 
 ## 7.2 Function Local Variables
 
-Use local command to define variables in
+Use `local` command to define variables in
 functions.
-
-**Rationale:** Using local variables
-variable leakage into the global scope,
-ensuring that variables don't leak
-elsewhere. This practice promotes
-encapsulation and modularity, making
-scripts easier to debug and maintain.
-
 
 ``` shell
     Example ()
@@ -1087,12 +1358,21 @@ scripts easier to debug and maintain.
     }
 ```
 
-**Discussion:** The keyword `local` isn't
-defined in the [POSIX] standard, but it
-is 99% supported by all the best-effort
-POSIX-compatible `sh` shells. The `local`
-keyword is portable enough to be used in
-modern shell scripts.
+**Rationale:** Using the `local` command
+prevents variable leakage into the
+global scope. This practice promotes
+encapsulation and modularity, making
+scripts easier to debug and maintain.
+
+**Discussion**
+
+The `local` command
+isn't defined in the [POSIX] standard,
+but it is 99% supported by all the
+best-effort POSIX-compatible `sh`
+shells. The `local` keyword is portable
+enough to be used in modern shell
+scripts.
 
 Shell | local supported
 :---  | :---
@@ -1101,18 +1381,20 @@ dash  | yes
 busybox ash 1.37.0 | yes
 mksh  | yes
 ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
-bash --posix 3.2 | yes (macOS /bin/sh)
 bash  | yes
+bash --posix 3.2 | yes (macOS /bin/sh)
 zsh   | yes
 
-**Note about Dynamic Scope:** The shell
-uses dynamic scoping to control a
-variable’s visibility within functions.
-See the [functions] section in Bash
-manual. This means that a function can
-see variables defined not just inside its
-own scope, but also variables defined by
-any other function that called it.
+**Note about Dynamic Scope**
+
+The shell uses dynamic scoping to
+control a variable’s visibility within
+functions. See the [functions] section
+in Bash manual. This means that a
+function can see variables defined not
+just inside its own scope, but also
+variables defined by any other function
+that called it.
 
 Recommendation: Avoid relying on dynamic
 scoping; functions should be decoupled
@@ -1122,6 +1404,28 @@ via arguments to ensure each function
 remains a self-contained unit.
 
 ``` shell
+    # Preferred
+    Two ()
+    {
+        local arg
+        arg="${1:-}"
+
+        echo "$arg"
+    }
+
+    One ()
+    {
+        local var
+        var="hello"
+
+        Two "$var"   # Send args
+    }
+
+    One
+
+    # - - - - - - - - - - - - - - -
+    # Avoid
+
     Two ()
     {
         echo "$var" # "hello"
@@ -1132,7 +1436,7 @@ remains a self-contained unit.
         local var
         var="hello"
 
-        Two
+        Two # relies on dynamic scoping
     }
 
     One
@@ -1146,10 +1450,6 @@ prefer assigning positional arguments
 (`$1`, `$2`, etc.) immediately to local
 variables.
 
-**Rationale:** Improves code readability
-and makes the logic within the function
-easier to follow and maintain.
-
 ``` shell
     Example ()
     {
@@ -1157,6 +1457,10 @@ easier to follow and maintain.
         file="${1:-}"
     }
 ```
+
+**Rationale:** Improves code readability
+and makes the logic within the function
+easier to follow and maintain.
 
 ## 7.4 Function Local Variables in Ksh
 
@@ -1209,11 +1513,10 @@ complex handling.
 
 ``` shell
     # Preferred. Simple code.
-
     var="message"
     echo "$var"
 
-    # Avoid. Code is more complex.
+    # Avoid. More complex to read
     printf '%s\n' "$var"
 ```
 
@@ -1615,8 +1918,9 @@ Google search help:
 [Bash FAQ/062]: https://mywiki.wooledge.org/BashFAQ/062
 [Bash FAQ/105]: https://mywiki.wooledge.org/BashFAQ/105
 [Bash Pitfalls/60]: https://mywiki.wooledge.org/BashPitfalls#set_-euo_pipefail
+[Bash Pitfalls/24]: https://mywiki.wooledge.org/BashPitfalls#for_arg_in_.24.2A
 [Bash Guide/SignalTrap]: https://mywiki.wooledge.org/SignalTrap
-
+[Bash Sheet]: https://mywiki.wooledge.org/BashSheet
 
 <!-- ------- REF:POSIX ------- -->
 
@@ -1642,15 +1946,26 @@ Google search help:
 <!-- ------- REF:GNU --------- -->
 
 [GNU coreutils]: https://www.gnu.org/software/coreutils/
-[GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
-[GNU awk]: https://tracker.debian.org/pkg/gawk
+[GNU findutils]: https://www.gnu.org/software/findutils/
 [GNU diffutils]: https://www.gnu.org/software/diffutils/
+[GNU grep]: https://tracker.debian.org/pkg/grep
+[GNU awk]: https://www.gnu.org/software/gawk/
+[GNU sed]: https://www.gnu.org/software/sed/
+
+[GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
 [diff]: https://en.wikipedia.org/wiki/Diff
+[mktemp]: https://www.gnu.org/software/coreutils/manual/html_node/mktemp-invocation.html
 
 <!-- ------- REF:MISC ------- -->
+<!-- https://www.shellcheck.net/wiki/ -->
 
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
+
 [shellcheck]: https://www.shellcheck.net
+[SC2162]: https://github.com/koalaman/shellcheck/wiki/SC2162
+[SC2086]: https://www.shellcheck.net/wiki/SC2086
+[SC2006]: https://www.shellcheck.net/wiki/SC2006
+
 [CamelCase]: https://en.wikipedia.org/wiki/Camel_case
 [Camel case]: https://en.wikipedia.org/wiki/Camel_case
 [Snake case]: https://en.wikipedia.org/wiki/Snake_case
@@ -1666,14 +1981,29 @@ Google search help:
 [C# strict mode]: https://www.meziantou.net/csharp-compiler-strict-mode.htm
 [Powershell strict mode]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/set-strictmode?view=powershell-7.5
 
-[SPDX License List]: https://spdx.org/licenses/
-[MIT]: https://spdx.org/licenses/MIT.html
-[ISC]: https://spdx.org/licenses/ISC.html
-[GPL]: https://www.gnu.org/licenses/licenses.html
-[BSD-2-clause]: https://spdx.org/licenses/BSD-2-Clause.html
-[GPL-3.0-or-later]: https://www.gnu.org/licenses/licenses.html
+<!-- ------- REF:LICENSE ------- -->
+<!-- https://spdx.org/licenses/ --->
+
 [FSF]: https://en.wikipedia.org/wiki/Free_Software_Foundation
 [OSI]: https://en.wikipedia.org/wiki/Open_Source_Initiative
+
+[SPDX License List]: https://spdx.org/licenses/
+<!-- professional Licenses -->
+[GPL]: https://www.gnu.org/licenses/licenses.html
+[LGPL]: https://www.gnu.org/licenses/licenses.html
+[GPL-3.0-or-later]: https://www.gnu.org/licenses/licenses.html
+[ISC]: https://spdx.org/licenses/ISC.html
+[MIT]: https://spdx.org/licenses/MIT.html
+[BSD-2-clause]: https://spdx.org/licenses/BSD-2-Clause.html
+<!-- non-professional Licenses -->
+[0BSD]: https://spdx.org/licenses/0BSD.html
+[Unlicense]: https://spdx.org/licenses/Unlicense.html
+<!-- Licenses to avoid: not suitable for software -->
+[CC0-1.0]: https://spdx.org/licenses/CC0-1.0.html
+<!-- Licenses to avoid: at all cost. Jokes are no good in Legal context -->
+[GLWTPL]: https://spdx.org/licenses/GLWTPL.html
+[WTFNMFPL]: https://spdx.org/licenses/WTFNMFPL.html
+[WTFPL]: https://spdx.org/licenses/WTFPL.html
 
 [Semantic Versioning]: https://semver.org
 
@@ -1696,5 +2026,8 @@ Google search help:
 <!-- ------- REF:OTHER ------- -->
 
 [cognitive load]: https://testing.googleblog.com/2023/11/write-clean-code-to-reduce-cognitive.html
+[TIOBE index]: https://www.tiobe.com/tiobe-index/
+[PLrank]: https://plrank.com
+[PLrankings]: https://plrankings.github.io
 
 <!-- END OF FILE -->
