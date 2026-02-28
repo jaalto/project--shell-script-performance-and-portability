@@ -16,7 +16,7 @@
 # Behaviour is not uniform accross shells.
 # Run this file under debug to see behavior.
 #
-#     $sh -x <file>
+#     $SHELL -x <this file>
 #
 #     posh       : error and exit with code 1
 #     dash       : error and exit with code 2
