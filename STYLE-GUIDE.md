@@ -428,8 +428,8 @@ TABLE: Problematic licenses to avoid
 
 License      | Status    | Problems
 :---         | :---      | :---
-CC0-1.0      | avoid     | Creative Commons licences are not designed for software. Nnot fully approved by FSF and OSI. Possible use cases: for non-code assets and minimal code snippets.
-[WTFPL], [WTFNMFPL], [GLWTPL] etc. | avoid at all costs | These aren't just "informal"—they are considered toxic. While they are funny in a "hacker culture" way, they are the digital equivalent of a "Keep Out" sign written in crayon: they have zero legal weight and create massive headaches for anyone trying to use your code in a corporate or serious environment. They do not have proper and robust liability waivers to protect you from being sued. Most corporate legal departments (Microsoft, Google, Oracle, Red Hat) have blacklisted them for a reason. They even have automated scanners that auto-reject these licenses.
+CC0-1.0      | avoid     | Creative Commons licenses are not designed for software. While endorsed by the FSF (with caveats), CC0 is rejected by the OSI for code. Possible use cases: Non-code assets (documentation, images) and minimal code snippets.
+[WTFPL], [WTFNMFPL], [GLWTPL] etc. | avoid at all costs | These aren't just "informal"—they are considered toxic. While they are funny in a "hacker culture" way, they are the digital equivalent of a "Keep Out" sign written in crayon: they have zero legal weight and create massive headaches for anyone trying to use any  code in a corporate or serious environment. They do not have proper and robust liability waivers to protect you from being sued. Most corporate legal departments (Microsoft, Google, Oracle, Red Hat) have blacklisted them for a reason. They even have automated scanners that auto-reject these licenses.
 
 **About CC0:** It is primarily designed
 for "works of creativity" (images,
