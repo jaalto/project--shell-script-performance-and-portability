@@ -319,7 +319,6 @@ https://www.gnu.org/licenses/gpl-howto.en.html
     #       GNU utilities: grep, awk etc.
 ```
 
-
 TABLE: Major *Conditional* Free Software and Open Source Licenses
 
 License Type | Compatibility | Type | Legal Impact
