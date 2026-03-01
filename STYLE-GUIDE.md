@@ -700,18 +700,22 @@ regarding the script's CLI limitations.
 
 ### 3.1 Style Considerations
 
-Programs can be written in a variety
-of styles. To make scripts easier to read
-and understand, use consistent naming
-conventions and style.
+Programs can be written in various
+styles. To ensure scripts are readable
+and maintainable, adopt a consistent
+naming and layout convention throughout
+the project.
 
-Commonly used conventions include
-[Snake case] (e.g., `my_variable`) or
-[Camel case] (e.g., `myVariable`). Follow a
-consistent code style, such as indenting
-with spaces or tabs, using spaces around
-operators, and placing blocks and braces
-on the same line or a new line.
+Commonly used layout styles include
+[K&R] (same-line braces) and [Allman]
+(new-line braces). For identifiers,
+There is either [Snake case] (e.g.,
+`my_variable`) or [Camel case] (e.g.,
+`myVariable`). Maintain a uniform
+indentation strategy—typically 4
+spaces—and ensure consistent spacing
+betweek statements (loops and
+conditionals are separated by newlines).
 
 **Discussion:** Tabs vs. Spaces.
 
