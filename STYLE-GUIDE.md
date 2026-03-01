@@ -385,25 +385,27 @@ essentially a stripped-down, modern
 refinement of the MIT and BSD-2-Clause
 licenses.
 
-**About 0BSD:** FSF considers 0BSD a
-Free Software license. However, they do
-not recommend or formally approve of it
-for general use. While 0BSD is legally
-valid and 'Free,' the FSF recommends
-classic licences like GPL or ISC instead
-to avoid "license sprawl," which
-complicates legal compliance for large
-projects. This ensures that copyright
-notices remain intact, preserving the
-history of the software and clearly
-communicating rights to future
-developers. FSF is less fond of 0BSD
-over Unlicense due to Notice Removal.
-The FSF generally dislikes licenses that
-allow you to remove the copyright notice
-(which 0BSD does). **Bottom Line:** 0BSD
-is real legal document most likely more
-easily defendable in all jurisdictions.
+**About 0BSD:** The FSF considers 0BSD a
+Free Software license; however, they do
+not recommend or formally approve it for
+general use. While 0BSD is legally
+valid, the FSF prefers classic licenses
+like the GPL or ISC to avoid "license
+sprawl," which can complicate compliance
+for large projects. Using established
+licenses ensures that copyright notices
+remain intact, preserving the software's
+history and clearly communicating rights
+to future developers. Furthermore, the
+FSF favors the Unlicense over 0BSD
+because they generally dislike licenses
+that allow for the removal of copyright
+notices. **Bottom Line:** Despite the
+FSF's philosophical stance, 0BSD is
+built on a solid ISC legal foundation
+and is likely more defensible across all
+jurisdictions than "waiver-based"
+alternatives like the Unlicense.
 
 **About Unlicense:** The FSF prefers the
 Unlicense over 0BSD for two primary
