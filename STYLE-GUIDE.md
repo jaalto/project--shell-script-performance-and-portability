@@ -948,7 +948,7 @@ originated in BSD and was later enhanced
 in [GNU coreutils]. For maximum
 portability across Linux, BSD, and
 macOS, always use the `-t` option and
-provide a template
+provide a template.
 
 ## 3.2 Using trap
 
