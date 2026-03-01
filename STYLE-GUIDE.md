@@ -752,16 +752,25 @@ conventions explained below.
 Use a maximum line length of 80
 characters.
 
-**Rationale:** this limit
-is a deliberate constraint based on
-human physiology and complexity
+![The Science of Shorter Lines](pic/infographic-speed-readin.png)
+
+**Rationale**
+
+This limit is a deliberate constraint
+based on human physiology and complexity
 management. Human eyes scan vertical
 text much faster than horizontal text
 (C.f. newspaper columns and
-speed-reading). With limited space,
-complex logic must be broken out, or
-refactored into more manageable parts.
-Less code per line is better than more.
+speed-reading). In coding, a 10-word
+line (approximately 7 characters wide)
+is kept within the 80-column boundary,
+which is considered scientifically
+optimal for human anatomy.
+
+With limited space, complex logic must
+be broken out, or refactored into more
+manageable parts. Less code per line is
+better than more.
 
 ### 3.3 Indentation
 
