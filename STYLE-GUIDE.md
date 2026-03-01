@@ -357,8 +357,8 @@ incompatibility occurs when the terms of
 two different licenses contradict each
 other, making it legally impossible to
 distribute a work that incorporates code
-from both sources. This "license
-fragmentation" results in legal barriers
+from both sources. This license
+fragmentation results in legal barriers
 that hinder collaborative innovation and
 the reuse of existing work.
 
