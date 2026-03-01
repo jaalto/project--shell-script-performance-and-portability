@@ -319,7 +319,8 @@ https://www.gnu.org/licenses/gpl-howto.en.html
     #       GNU utilities: grep, awk etc.
 ```
 
-TABLE: The *Conditional* major professional, Free Software and Open Source licences
+
+TABLE: Major *Conditional* Free Software and Open Source Licenses
 
 License Type | Compatibility | Type | Legal Impact
 :---         | :---          | :--- | :---
@@ -329,7 +330,7 @@ Strong Copyleft: [GPL] v3  | Restricted; license mixing it with proprietary code
 
 **Why these are good for software :** The are universally understood and tested licenses.
 
-TABLE: The *Unconditonal* major public domain dedication licenses
+TABLE: Major *Unconditional* Public Domain Dedication Licenses
 
 License Type | Compatibility | Type | Complexity | Legal Impact
 :---         | :---          | :--- | :--- | :---
