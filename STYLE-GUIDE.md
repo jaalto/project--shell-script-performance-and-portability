@@ -556,6 +556,8 @@ expectations and provide transparency
 regarding the script's CLI limitations.
 
 ``` shell
+    PROGRAM=${0##*/}
+
     Help ()
     {
         # See sections and formatting
@@ -679,7 +681,7 @@ regarding the script's CLI limitations.
                     ;;
                 -*)
                     shift
-                    Warn "WARN Unknown option: $opt"
+                    Warn "WARN: unknown option: $opt"
                     ;;
                 *)
                     break
