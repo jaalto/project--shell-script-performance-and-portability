@@ -378,7 +378,7 @@ if the license already allows users to
 "deal in the software without
 restriction." The Internet Systems
 Consortium (ISC) removed this and other
-"unnecessary wording" made redundant by
+unnecessary wording made redundant by
 the global adoption of the Berne
 Convention. **Bottom Line:** ISC is
 essentially a stripped-down, modern
