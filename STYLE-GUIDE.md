@@ -1468,7 +1468,7 @@ remains a self-contained unit.
 ## 7.3 Function Local Variables in Ksh
 
 If supporting BSD or UNIX systems that
-may use `ksh93` as `/bin/sh` is required,
+may use [ksh] as `/bin/sh` is required,
 include the necessary code at the
 script's start to emulate the `local`
 keyword.
