@@ -1153,7 +1153,7 @@ easily.
         fi
     done
 
-    # Avoid
+    # Avoid tight code
     list="1 2 3"
     for i in $list
     do
