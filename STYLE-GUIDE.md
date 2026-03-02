@@ -976,7 +976,7 @@ See [Bash Guide/SignalTrap].
     trap 'AtExit' EXIT HUP INT QUIT TERM
 ```
 
-# 4.0 Variables and Quoting
+# 4.0 Variables
 
 ## 4.1 Global Variables
 
