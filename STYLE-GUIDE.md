@@ -1465,27 +1465,7 @@ remains a self-contained unit.
     One
 ```
 
-## 7.3 Function Argument Handling
-
-Use meaningful local variables for
-function arguments. In longer functions,
-prefer assigning positional arguments
-(`$1`, `$2`, etc.) immediately to local
-variables.
-
-``` shell
-    Example ()
-    {
-        local file
-        file="${1:-}"
-    }
-```
-
-**Rationale:** Improves code readability
-and makes the logic within the function
-easier to follow and maintain.
-
-## 7.4 Function Local Variables in Ksh
+## 7.3 Function Local Variables in Ksh
 
 If supporting BSD or UNIX systems that
 may use `ksh93` as `/bin/sh` is required,
@@ -1525,6 +1505,26 @@ keyword.
         var="value"
     }
 ```
+
+## 7.4 Function Argument Handling
+
+Use meaningful local variables for
+function arguments. In longer functions,
+prefer assigning positional arguments
+(`$1`, `$2`, etc.) immediately to local
+variables.
+
+``` shell
+    Example ()
+    {
+        local file
+        file="${1:-}"
+    }
+```
+
+**Rationale:** Improves code readability
+and makes the logic within the function
+easier to follow and maintain.
 
 # 8.0 Other
 
