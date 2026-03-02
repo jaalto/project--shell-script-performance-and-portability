@@ -1277,7 +1277,7 @@ version etc. are not error conditions.
 
 ## 6.3 Reading Input
 
-Always use `read` with option `-r`.
+Always use [read] with option `-r`.
 
 ``` bash
     while read -r item
@@ -1959,6 +1959,7 @@ Google search help:
 [let]: https://www.gnu.org/software/bash/manual/bash.html#index-let
 [printf]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html
 [pwd]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html
+[read]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html
 [sed]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html
 [test]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
 [type]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html
