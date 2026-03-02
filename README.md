@@ -2249,6 +2249,9 @@ before testing:
 
 ## 6.2 PORTABILITY AND UTILITIES
 
+- Consult https://mywiki.wooledge.org/Bashism
+  for more ideas how to reduce Bash specific
+  features.
 - GNU autoconf's manual section
   ["11 Portable Shell Programming"](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell)
   **Note:** This presents
