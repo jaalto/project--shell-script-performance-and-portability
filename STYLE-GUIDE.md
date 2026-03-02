@@ -1377,6 +1377,7 @@ functions.
     Example ()
     {
         local file
+        file=2${1:-}"
     }
 ```
 
