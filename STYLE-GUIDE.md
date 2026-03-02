@@ -752,7 +752,7 @@ conventions explained below.
 Use a maximum line length of 80
 characters.
 
-![The Science of Shorter Lines](pic/infographic-speed-readin.png)
+![The Science of Shorter Lines](pic/infographic-speed-reading2.png)
 
 **Rationale**
 
