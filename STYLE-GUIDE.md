@@ -1376,9 +1376,16 @@ functions.
 ``` shell
     Example ()
     {
-        local file
-        file="${1:-}"
-    }
+        local dummy
+
+        # Add visible cues.
+        # Seen during debug: set -x
+        dummy="debug: check config"
+        ...
+
+        dummy="debug: check ENABLE"
+        ...
+}
 ```
 
 **Rationale:** Using the `local` command
