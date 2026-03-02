@@ -1212,12 +1212,7 @@ Place pattern case terminators `;;` in
 their own lines.
 
 ``` shell
-    # Note: POSIX case require
-    # no quotes for $var
-    # because it does not
-    # undergo word splitting or
-    # globbing.
-
+    # Preferred
     case $var in
         pattern1)
             ...
@@ -1226,10 +1221,20 @@ their own lines.
             ...
             ;;
     esac
+
+    # Avoid
+    case $var in
+        one) ... ;;
+        pattern2 | more) ... ;;
+    esac
 ```
 
 **Rationale:** Improves the visual flow
 and make the action blocks stand out.
+
+**Note:** POSIX case require no quotes for
+$var because it does not undergo word
+splitting or globbing.
 
 # 6.0 Input/Output and File Handling
 
