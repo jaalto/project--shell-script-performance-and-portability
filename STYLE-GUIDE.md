@@ -1331,13 +1331,13 @@ non-standard `function` keyword.
    # Preferred. Standard POSIX syntax.
    Example ()
    {
-      ...
+        # Body
    }
 
    # Avoid
    function Example ()
    {
-      # non-POSIX Bash, Zsh syntax
+        # Non-POSIX: Bash, Zsh syntax
    }
 
     # Call command
