@@ -1233,7 +1233,7 @@ their own lines.
 and make the action blocks stand out.
 
 **Note:** POSIX case require no quotes for
-$var because it does not undergo word
+`$var` because it does not undergo word
 splitting or globbing.
 
 # 6.0 Input/Output and File Handling
