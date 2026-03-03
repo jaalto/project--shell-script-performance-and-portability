@@ -776,7 +776,7 @@ better than more.
 
 Use 4 spaces for indentation.
 
-**Rationale:** No TABs. with spaces
+**Rationale:** No TABs. With spaces
 the layout remains uniform across
 editors, terminals, and tools like
 [diff], where TAB widths vary.
@@ -822,7 +822,7 @@ Examples:
     # Avoid
     this_result=$(uses_var + and_another)
 
-    Ls () # initial Uppercase, not ls()
+    Sort () # initial Uppercase, not sort()
     {
         ...
     }
