@@ -1632,20 +1632,21 @@ compatible"?](https://unix.stackexchange.com/q/145522)
   is [ksh93] from the [Korn Shell]
   family.
 - On many commercial and conservative
-  UNIX systems, the default `/bin/sh` is
-  modern KornShell [ksh93]. A key
-  compatibility challenge with `ksh` is
-  its use of the `typeset` command for
-  defining function-local variables,
-  rather than the `local` command found
-  in most other shell derivatives. To
-  ensure wider cross-platform
-  compatibility, you should use the
-  `local` command along with
-  compatibility code to ensure your
-  scripts function correctly even under
-  ksh. Add the following to the beginning
-  of your script:
+  UNIX systems, the default `/bin/s`h is
+  implemented as a modern KornShell
+  [ksh93]. A key compatibility challenge
+  is presented by the use of the
+  `typeset` command for defining
+  function-local variables, rather than
+  the `local` command found in most other
+  shell derivatives. If wider UNIX
+  cross-platform compatibility is
+  required, the `local` command should be
+  used alongside compatibility code to
+  ensure that scripts are executed
+  correctly even under `ksh`. Add the
+  following snippet to the beginning of
+  the script:
 
 ``` bash
     IsCommand ()
