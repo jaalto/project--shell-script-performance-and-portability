@@ -429,22 +429,25 @@ It took about **10 minutes** to process all files.
 The optimizations:
 
 - All files were moved to a Linux RAM
-  disk [tmpfs] for processing. Total time
-  dropped to **5 minutes.**
-- All scripts were converted to use
-  [GNU parallel] as much as possible.
-  Total time dropped to **2 minutes.**
+  disk (tmpfs) for processing. The total
+  execution time dropped to **5 minutes.**
+
+- All scripts were converted to use GNU
+  Parallel where possible to take
+  advantage of all available CPU cores.
+  The total execution time was further
+  reduced to **2 minutes.**
 - All Bash scripts that could, were
   converted to POSIX [dash] shell scripts
   About 3 of the 50 scripts remained in
-  [Bash]. Total time dropped to **1
-  minute.**
+  [Bash]. The total execution time
+  closed to **1 minute.**
 - Further optimizations were considered.
   The shell scripts that processed or
   heavily examined file contents could
   have been converted to faster [Perl],
   potentially achieving a total time drop
-  to **40 seconds**. However, at this
+  to **30-40 seconds**. However, at this
   point, it was decided that even the
   text-processing-heavy shell scripts
   were "fast enough."
