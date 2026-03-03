@@ -1542,32 +1542,71 @@ see
 For more discussion, see
 [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes).
 
-Let's first consider the typical `sh`
-shells in order of their strictness to
-POSIX:
+About the `local` command. It
+isn't defined in the [POSIX] standard,
+but it is 99% supported by all the
+best-effort POSIX-compatible `sh`
+shells. The `local` keyword is portable
+enough to be used in modern shell
+scripts.
+
+Shell | local supported
+:---  | :---
+posh  | yes
+dash  | yes
+busybox ash 1.37.0 | yes
+mksh  | yes
+ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
+bash  | yes
+bash --posix 3.2 | yes (macOS /bin/sh)
+zsh   | yes
+
+Let's consider the typical `sh` shells in
+order of their strictness to POSIX:
 
 - [posh]. Minimal `sh`.
   Policy-compliant Ordinary SHell,
   Very close to POSIX. Stricter than
-  [dash]. Supports `local` command.
-- [dash]. Minimal `sh`, The
-  Debian Almquish Shell.
-  Close to POSIX. Supports `local`
-  command. The shell aims to meet the
-  requirements of the Debian Linux
-  distribution.
+  `dash`.
+- [dash]: A minimal `sh` implementation.
+  The Debian Almquist Shell is based on
+  NetBSD ash, which was fast and had a
+  tiny memory footprint. Close to
+  POSIX-compliant and aims to meet the
+  specific requirements of the Debian
+  Linux distribution. In 1997, Herbert Xu
+  ported NetBSD `ash` to Debian, and in
+  2002, it was renamed to `dash` to
+  distinguish it from other `ash`
+  variants. For a long time, `/bin/sh`
+  was a symbolic link to `/bin/bash`.
+  However, Debian developers realized
+  that using a heavy shell like bash for
+  system scripts (those that run during
+  boot-up) was slow and inefficient. In
+  2009, Debian made dash the default
+  provider for `/bin/sh`.
 - [busybox ash]
   shell is based on [dash] with
-  some more features added. Supports
-  `local` command. See ServerFault
-  ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell)
+  some more features added.
+  See ServerFault
+  ["What's the Busybox default shell?"](https://serverfault.com/questions/241959/whats-the-busybox-default-shell). 
+  BusyBox is the shell commonly found in
+  containerized applications where base
+  distributions are used in Docker,
+  Podman, or OCI images. One such popular
+  container base is the very tiny and
+  resource-efficient [Alpine Linux], whose
+  base deployment uses only 8 MB of RAM
+  and 130 MB of storage.
 
-Let's also consider what the `/bin/sh`
-might be in different Operating
-Systems. For more about the history of
-the `sh` shell, see the well-rounded
-discussion on StackExchange.
-[What does it mean to be "sh compatible"?](https://unix.stackexchange.com/q/145522)
+Let's consider what the `/bin/sh` might
+be in different Operating Systems. For
+more about the history of the `sh` shell,
+see the well-rounded discussion on
+StackExchange. [What does it mean to be
+"sh
+compatible"?](https://unix.stackexchange.com/q/145522)
 
 <!-- <contactme2016@tangentsoft.com> -->
 [Picture](https://tangentsoft.com/misc/unix-shells.svg)
@@ -1592,26 +1631,21 @@ discussion on StackExchange.
   [OpenBSD, sh](https://man.netbsd.org/sh.1)
   is [ksh93] from the [Korn Shell]
   family.
-
-- On many commercial and
-  conservative UNIX systems, the
-  default `/bin/sh` shell is highly
-  capable, often implemented as a
-  modern KornShell [ksh93]. The key
-  compatibility challenge with
-  `ksh` is that it uses the
-  `typeset` command for defining
-  function-local variables, rather
-  than the `local` command
-  available in most other common
-  shell derivatives. If you want to
+- On many commercial and conservative
+  UNIX systems, the default `/bin/sh` is
+  modern KornShell [ksh93]. A key
+  compatibility challenge with `ksh` is
+  its use of the `typeset` command for
+  defining function-local variables,
+  rather than the `local` command found
+  in most other shell derivatives. To
   ensure wider cross-platform
-  compatibility, use the `local`
-  command. To make scripts function
-  correctly even when `ksh` is used
-  as `/bin/sh`, include the
-  following compatibility code at
-  the beginning of your script:
+  compatibility, you should use the
+  `local` command along with
+  compatibility code to ensure your
+  scripts function correctly even under
+  ksh. Add the following to the beginning
+  of your script:
 
 ``` bash
     IsCommand ()
@@ -1720,25 +1754,6 @@ improve shell scripts even more.
     # See Google. External utility
     checkbashisms script.sh
 ```
-
-About the `local` command. It
-isn't defined in the [POSIX] standard,
-but it is 99% supported by all the
-best-effort POSIX-compatible `sh`
-shells. The `local` keyword is portable
-enough to be used in modern shell
-scripts.
-
-Shell | local supported
-:---  | :---
-posh  | yes
-dash  | yes
-busybox ash 1.37.0 | yes
-mksh  | yes
-ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
-bash  | yes
-bash --posix 3.2 | yes (macOS /bin/sh)
-zsh   | yes
 
 ## 4.4 SHEBANG LINE IN SCRIPTS
 
@@ -2511,6 +2526,7 @@ Google search help:
 [Ubuntu]: https://en.wikipedia.org/wiki/Ubuntu
 [OpenSUSE]: https://en.wikipedia.org/wiki/OpenSUSE
 [Oracle Linux]: https://en.wikipedia.org/wiki/Oracle_Linux
+[Alpine Linux]: https://www.alpinelinux.org
 
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [uv]: https://docs.astral.sh/uv/pip/environments/
