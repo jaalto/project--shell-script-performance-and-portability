@@ -1616,6 +1616,7 @@ discussion on StackExchange.
 ``` bash
     IsCommand ()
     {
+        [ "${1:-}" ] || return 1
         command -v "${1:-}" > /dev/null 2>&1
     }
 
@@ -1627,7 +1628,7 @@ discussion on StackExchange.
             # from other shells.
             # This ensures that
             # defining a function
-            # with local variables
+            # with name 'local'
             # does not generate an
             # error and exit the
             # program.
