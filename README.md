@@ -131,7 +131,7 @@ systems. Learn more about POSIX on
 > Please note that `sh` here refers to
 > modern, best-effort POSIX-compatible,
 > minimal shells like
-> [dash], [posh], [mksh], [ash] etc.
+> [ash], [dash], [posh], [mksh] etc.
 > See section [4.0 PORTABILITY](#40-portability)
 
 > **About variables in functions**:
