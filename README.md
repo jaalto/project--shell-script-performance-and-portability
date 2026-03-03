@@ -431,9 +431,8 @@ The optimizations:
 - All files were moved to a Linux RAM
   disk [tmpfs] for processing. The total
   execution time dropped to **5 minutes.**
-
-- All scripts were converted to use GNU
-  Parallel where possible to take
+- All scripts were converted to use
+  [GNU Parallel] where possible to take
   advantage of all available CPU cores.
   The total execution time was further
   reduced to **2 minutes.**
