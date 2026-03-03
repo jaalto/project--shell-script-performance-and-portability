@@ -2081,8 +2081,7 @@ Notable observations:
         [yY]*)
             :  # no-op
             ;;
-        *)
-            exit 1
+        *)  exit 1
             ;;
    esac
 
