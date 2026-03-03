@@ -1495,7 +1495,7 @@ keyword.
             # cause program
             # to exit due to
             # parse error at
-            # 'local' keyword.
+            # 'local'.
 
             eval 'local () { typeset "$@"; }'
         fi
