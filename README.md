@@ -429,7 +429,7 @@ It took about **10 minutes** to process all files.
 The optimizations:
 
 - All files were moved to a Linux RAM
-  disk (tmpfs) for processing. The total
+  disk [tmpfs] for processing. The total
   execution time dropped to **5 minutes.**
 
 - All scripts were converted to use GNU
