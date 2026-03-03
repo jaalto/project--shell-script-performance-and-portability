@@ -1552,16 +1552,16 @@ shells. The `local` keyword is portable
 enough to be used in modern shell
 scripts.
 
-Shell | local supported
-:---  | :---
-posh  | yes
-dash  | yes
-busybox ash 1.37.0 | yes
-mksh  | yes
-ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
-bash  | yes
-bash --posix 3.2 | yes (macOS /bin/sh)
-zsh   | yes
+Shell | used as /bin/sh | `local` supported
+:---  | :--- | :---
+posh  | no | yes
+dash  | in Linux | yes
+busybox ash 1.37.0 | in containers | yes
+mksh  | in BSD and mini-Linux systems | yes
+ksh 93u+m/1.0.10 2024-08-01 | in BSD and UNIX | no (`typeset` command)
+bash --posix 3.2 | in macOS | yes
+bash  | exceedingly rare | yes
+zsh   | no | yes
 
 Let's consider the typical `sh` shells in
 order of their strictness to POSIX:
@@ -1571,23 +1571,25 @@ order of their strictness to POSIX:
   Very close to POSIX. Stricter than
   `dash`.
 - [dash]: A minimal `sh` implementation.
-  The Debian Almquist Shell is based on
-  NetBSD ash, which was fast and had a
-  tiny memory footprint. Close to
-  POSIX-compliant and aims to meet the
-  specific requirements of the Debian
-  Linux distribution. In 1997, Herbert Xu
+  Close to POSIX-compliant and aims to
+  meet the specific requirements of the
+  Debian Linux distribution. The Debian
+  Almquist Shell is based on NetBSD
+  [ash], which was fast and had a tiny
+  memory footprint. In 1997, Herbert Xu
   ported NetBSD `ash` to Debian, and in
   2002, it was renamed to `dash` to
   distinguish it from other `ash`
   variants. For a long time, `/bin/sh`
   was a symbolic link to `/bin/bash`.
   However, Debian developers realized
-  that using a heavy shell like bash for
-  system scripts (those that run during
-  boot-up) was slow and inefficient. In
-  2009, Debian made dash the default
-  provider for `/bin/sh`.
+  that using a heavy shell like `bash`
+  for system scripts (those that run
+  during boot-up) was slow and
+  inefficient. In 2009, Debian made
+  `dash` the default implementation for
+  `/bin/sh`. Soon after, other Linux
+  distributions followed.
 - [busybox ash]
   shell is based on [dash] with
   some more features added.
@@ -1696,6 +1698,8 @@ compatible"?](https://unix.stackexchange.com/q/145522)
   check them for portability with:
 
 ```bash
+    brew install dash posh
+
     # Check better /bin/sh
     # compliance
 
