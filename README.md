@@ -138,10 +138,11 @@ systems. Learn more about POSIX on
 > The `local` command isn't defined in
 > the [POSIX] standard, but it is 99%
 > supported by all the best-effort
-> POSIX-compatible `sh` shells. The
-> `local` keyword is "portable enough" to
-> be used in modern shell scripts. See
-> section
+> POSIX-compatible `sh` shells (see table
+> [RESULTS-PORTABILITY](./doc/RESULTS-PORTABILITY.txt)).
+> The `local` keyword is "portable
+> enough" to be used in modern shell
+> scripts. See section
 > [4.3](#43-writing-posix-compliant-shell-scrips)
 > on how to add local keyword support to
 > shell scripts in a way that ensures
@@ -1718,6 +1719,25 @@ improve shell scripts even more.
     # See Google. External utility
     checkbashisms script.sh
 ```
+
+About the `local` command. It
+isn't defined in the [POSIX] standard,
+but it is 99% supported by all the
+best-effort POSIX-compatible `sh`
+shells. The `local` keyword is portable
+enough to be used in modern shell
+scripts.
+
+Shell | local supported
+:---  | :---
+posh  | yes
+dash  | yes
+busybox ash 1.37.0 | yes
+mksh  | yes
+ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
+bash  | yes
+bash --posix 3.2 | yes (macOS /bin/sh)
+zsh   | yes
 
 ## 4.4 SHEBANG LINE IN SCRIPTS
 
