@@ -1854,8 +1854,8 @@ If a more recent version of Bash is
 installed via Homebrew (`brew install
 bash`), the new binary is stored in a
 separate directory rather than the
-standard system location (/bin/bash). You
-can verify this location using the
+standard system location (`/bin/bash`).
+You can verify this location using the
 command `brew --prefix bash`, which
 returns different paths depending on the
 CPU architecture—specifically, Apple
