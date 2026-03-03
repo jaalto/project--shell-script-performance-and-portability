@@ -132,7 +132,7 @@ systems. Learn more about POSIX on
 > modern, best-effort POSIX-compatible,
 > minimal shells like
 > [dash], [posh], [mksh], [ash] etc.
-> See section [PORTABILITY, SHELLS AND POSIX](#posix-shells-and-portability).
+> See section [4.0 PORTABILITY](#40-portability)
 
 > **About variables in functions**:
 > The `local` command isn't defined in
