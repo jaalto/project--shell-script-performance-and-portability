@@ -891,9 +891,9 @@ two options.
     set -o pipefail
 ```
 
-**Rationale:** These settings (*errexit,
-nounset*) treat errors and unset
-variables as fatal, preventing
+**Rationale:** The minimum settings
+(*errexit, nounset*) treat errors and
+unset variables as fatal, preventing
 unexpected behavior. Be sure to also
 learn their caveats from [Bash FAQ/105]
 and [Bash Pitfalls/60].
