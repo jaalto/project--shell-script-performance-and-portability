@@ -973,10 +973,18 @@ to retrieve exit status of the most
 recently executed command.
 
 ``` shell
-    # In case you do not use
-    # set -o errexit
+    if ! echo "$*" | grep -e "--dir" ; then
+        echo "ERROR: no option --dir" >&2
+        exit 1
+    fi
 
-    cd "$dir" || exit $?
+    ...
+    cd "$dir"
+
+    if ! git status ; then
+        echo "FATAL: no Git dir (error $?)" >&2
+        exit 1
+    fi
 ```
 
 ## 2.3 Exit Status
