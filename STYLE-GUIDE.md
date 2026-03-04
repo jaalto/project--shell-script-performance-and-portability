@@ -1644,7 +1644,7 @@ instead of the [pwd] command.
 
 ``` shell
     # Preferred
-    curdir=$PWD
+    curdir="$PWD"
 
     # Avoid
     curdir=$(pwd)
