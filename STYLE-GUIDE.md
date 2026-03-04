@@ -861,9 +861,9 @@ quickly identify the scope of a
 logical block without searching for
 trailing characters.
 
-# 2.0 Error Handling
+# 4.0 Error Handling
 
-## 2.1 Execution Safety
+## 4.1 Execution Safety
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -963,7 +963,7 @@ if the variable was defined as `$ext`).
     rm ./*."$extension"
 ```
 
-## 2.2 Explicit Error Checking
+## 4.2 Explicit Error Checking
 
 Check status of commands and
 exit early. Use the
@@ -987,7 +987,7 @@ recently executed command.
     fi
 ```
 
-## 2.3 Exit Status
+## 4.3 Exit Status
 
 **Set a exit status:** Scripts
 should exit with 0 for success and a
@@ -999,9 +999,9 @@ or specific error condition.
     exit 0 # success
 ```
 
-# 3.0 Temporary Files
+# 5.0 Temporary Files
 
-## 3.1 Using mktemp
+## 5.1 Using mktemp
 
 Use safe temporary files and
 directories with [mktemp].
@@ -1025,7 +1025,7 @@ portability across Linux, BSD, and
 macOS, always use the `-t` option and
 provide a template.
 
-## 3.2 Using trap
+## 5.2 Using trap
 
 Use a [trap] to ensure proper cleanup
 of temporary files on script exit.
@@ -1051,19 +1051,19 @@ See [Bash Guide/SignalTrap].
     trap 'AtExit' EXIT HUP INT QUIT TERM
 ```
 
-# 4.0 Variables
+# 6.0 Variables
 
-## 4.1 Global Variables
+## 6.1 Global Variables
 
 Global Variables: Use `ALL_CAPS` for
 global, environmental, or read-only
 constants.
 
-## 4.2 Quote Variables
+## 6.2 Quote Variables
 
 Use `"$quoted"` variables.
 
-## 4.3 Variable "$@"
+## 6.3 Variable "$@"
 
 Use `"$@"`, that is, quote the "all
 arguments" [special parameters]
@@ -1098,7 +1098,7 @@ corruption.
 See [Bash Pitfalls/24], [Bash Sheet]
 and shellcheck [SC2086]
 
-## 4.4 Simple Variable Expansion
+## 6.4 Simple Variable Expansion
 
 Use simple `$var` by default. Use
 the braces only when necessary for
@@ -1144,7 +1144,7 @@ Style  | Example          | Cognitive Effort
 Simple | \$dir/\$file     | Low (Instant recognition)
 Braced | \${dir}/\${file} | Medium (Braces must be checked for expansion logic)
 
-## 4.5 Variables and Truth Tests
+## 6.5 Variables and Truth Tests
 
 Use simple truth tests for boolean
 variable checks. Omit explicit `-n`
@@ -1199,9 +1199,9 @@ expression. In those languages, `if (x)`
 will fail to compile if `x` is an integer
 or a pointer/reference or similar.
 
-# 5.0 Formatting and Syntax
+# 7.0 Formatting and Syntax
 
-## 5.1 Logical Grouping
+## 7.1 Logical Grouping
 
 Use blank lines between logical blocks
 and groups if code to improve
@@ -1239,7 +1239,7 @@ easily.
     done
 ```
 
-## 5.2 Loops
+## 7.2 Loops
 
 Use the [Allman] "line up" style in
 `do..done`.
@@ -1256,7 +1256,7 @@ Use the [Allman] "line up" style in
     done
 ```
 
-## 5.3 Conditional Statements
+## 7.3 Conditional Statements
 
 Use [K&R] style for placing `then`
 keyword provided that `<statement>` is
@@ -1281,7 +1281,7 @@ the `; then` on the same line.
     fi
 ```
 
-## 5.4 Case Statements
+## 7.4 Case Statements
 
 Place pattern case terminators `;;` in
 their own lines.
@@ -1311,9 +1311,9 @@ and make the action blocks stand out.
 `$var` because it does not undergo word
 splitting or globbing.
 
-# 6.0 Input/Output and File Handling
+# 8.0 Input/Output and File Handling
 
-## 6.1 Errors to Stderr
+## 8.1 Errors to Stderr
 
 Send error messages to stderr. Put
 stderr redirection `>&2` at the end of line.
@@ -1334,7 +1334,7 @@ are traditionally appended to the end of
 the line, making the script easier to
 scan.
 
-## 6.2 Help to Stdout
+## 8.2 Help to Stdout
 
 Display help to stdout and exit with status 0.
 
@@ -1350,7 +1350,7 @@ Display help to stdout and exit with status 0.
 **Rationale**: Displaying help, program
 version etc. are not error conditions.
 
-## 6.3 Reading Input
+## 8.3 Reading Input
 
 Always use [read] with option `-r`.
 
@@ -1368,7 +1368,7 @@ can lead to unexpected behavior. See
 [Bash FAQ/001] and
 shellcheck [SC2162].
 
-## 6.4 Command Substitution
+## 8.4 Command Substitution
 
 Use POSIX `$(command)`
 instead of archaic \`backticks\` for
@@ -1394,9 +1394,9 @@ combination (AltGr).
 See also [Bash FAQ/082] and shellcheck
 [SC2006].
 
-# 7.0 Functions and Scope
+# 9.0 Functions and Scope
 
-## 7.1 Function syntax
+## 9.1 Function syntax
 
 Use the standard POSIX parentheses syntax
 to define functions. Avoid the
@@ -1443,7 +1443,7 @@ This distinction helps to deter the
 assumption that arguments should be
 defined within the parentheses.
 
-## 7.2 Function Local Variables
+## 9.2 Function Local Variables
 
 Use `local` command to define variables in
 functions.
@@ -1547,7 +1547,7 @@ remains a self-contained unit.
     One
 ```
 
-## 7.3 Function Local Variables in Ksh
+## 9.3 Function Local Variables in Ksh
 
 If supporting BSD or UNIX systems that
 may use [ksh] as `/bin/sh` is required,
@@ -1588,7 +1588,7 @@ keyword.
     }
 ```
 
-## 7.4 Function Argument Handling
+## 9.4 Function Argument Handling
 
 Use meaningful local variables for
 function arguments. In longer functions,
@@ -1608,9 +1608,9 @@ variables.
 and makes the logic within the function
 easier to follow and maintain.
 
-# 8.0 Other
+# 10.0 Other
 
-## 8.1 echo vs printf
+## 10.1 echo vs printf
 
 Use POSIX [echo] without any options for
 regular output. Reserve [printf] for more
@@ -1637,7 +1637,7 @@ always use the `%s` format specifier when
 printing variables with `printf`.
 See [Bash Pitfalls/32](https://mywiki.wooledge.org/BashPitfalls#printf_.22.24foo.22).
 
-## 8.2 PWD vs pwd
+## 10.2 PWD vs pwd
 
 Use the [PWD] environment variable
 instead of the [pwd] command.
@@ -1662,7 +1662,7 @@ program needs the physical path
 (resolving all symlinks), then `pwd -P`
 is the correct way to read the path name.
 
-## 8.3 Long Commands
+## 10.3 Long Commands
 
 Use multiple lines to split long commands
 and their options. **Rationale:** To
@@ -1682,7 +1682,7 @@ action.
         file
 ```
 
-## 8.4 Pipes
+## 10.4 Pipes
 
 Use a trailing pipe (|) at the end of a
 line to indicate that a command continues
@@ -1737,7 +1737,7 @@ functional purpose.
       | command4
 ```
 
-## 8.5 Use Standard if..fi
+## 10.5 Use Standard if..fi
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||` with blocks.
@@ -1759,7 +1759,7 @@ shell shorthands.
     }
 ```
 
-## 8.6 Mathematical Calculations
+## 10.6 Mathematical Calculations
 
 Omit the `$` in POSIX arithmetic
 expansions. The shell automatically
@@ -1791,9 +1791,9 @@ integers. For decimals, use [bc] or
     k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
 ```
 
-## 9.0 Bash Notes
+## 11.0 Bash Notes
 
-### 9.1 Bash Shebang
+### 11.1 Bash Shebang
 
 Use the portable env [shebang] line.
 Improve readability by adding a space
@@ -1830,7 +1830,7 @@ assumption that virtually all modern
 systems provide [env] utility at this
 specific path.
 
-### 9.2 Limiting Bashism
+### 11.2 Limiting Bashism
 
 Even in Bash, default to POSIX syntax
 unless Bash-specific features are
@@ -1846,7 +1846,7 @@ compatibility with `/bin/sh`, allowing
 scripts to benefit from faster startup
 and fewer forks.
 
-### 9.3 Bash Statements To Be Avoided
+### 11.3 Bash Statements To Be Avoided
 
 Avoid obsolete artihmetic expressions
 `$[...]` and the the [let] built-in. They
@@ -1890,7 +1890,7 @@ functions. Avoid the Bash-specific
   overhead of declare's various flags and
   attributes.
 
-### 9.4 Bash Arithmetic expression
+### 11.4 Bash Arithmetic expression
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
@@ -1944,7 +1944,7 @@ Bash ((..))       | 0.006
 Bash seq          | 0.010
 ksh93 seq         | 0.004
 
-### 9.5 Bash Variable Tests
+### 11.5 Bash Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
@@ -1968,7 +1968,7 @@ portability.
     fi
 ```
 
-## 10.0 References
+## 12.0 References
 
 - Allman style (aka BSD style)
   https://en.wikipedia.org/wiki/Indentation_style#Allman_style
