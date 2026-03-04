@@ -870,12 +870,7 @@ set shell options for early exit and
 error checking. Use variations of the
 [unofficial bash strict mode]. For
 robustness, include at least the first
-two options. **Rationale:** These
-settings (*errexit, nounset*) treat
-errors and unset variables as fatal,
-preventing unexpected behavior. Be sure
-to also learn their caveats from
-[Bash FAQ/105] and [Bash Pitfalls/60].
+two options.
 
 ``` shell
     #! /bin/sh
@@ -896,11 +891,18 @@ to also learn their caveats from
     set -o pipefail
 ```
 
+**Rationale:** These settings (*errexit,
+nounset*) treat errors and unset
+variables as fatal, preventing
+unexpected behavior. Be sure to also
+learn their caveats from [Bash FAQ/105]
+and [Bash Pitfalls/60].
+
 ## 2.2 Explicit Error Checking
 
 Check status of commands and
 exit early. Use the
-standard special parameter 
+standard special parameter
 [$?](https://www.gnu.org/software/bash/manual/bash.html#index-_003f)
 to retrieve exit status of the most
 recently executed command.
