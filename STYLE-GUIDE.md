@@ -898,6 +898,71 @@ unexpected behavior. Be sure to also
 learn their caveats from [Bash FAQ/105]
 and [Bash Pitfalls/60].
 
+**Discussion**
+
+While there are some reservations
+regarding the use of `set -o errexit`
+and `set -o nounset`—primarily centered
+on the potential for "false security"
+and inconsistent behavior in complex
+subshells—the structural benefits
+generally outweigh the caveats. The
+primary risk of these flags is not that
+they fail, but that a developer might
+assume they replace the need for robust
+logic. However, in the vast majority of
+production scenarios, a script that
+terminates abruptly is far safer than
+one that continues to execute with
+undefined variables or failed
+prerequisites.
+
+The decision to use these flags should
+be viewed as a choice between *fail-fast*
+automation and *manual* error management.
+For most modern workflows, the safety
+net provided by these options prevents
+"silent failures" that are often the
+root cause of data loss or system
+misconfiguration.
+
+The other benefit of enabling these
+flags is that less code is needed to
+read and maintain in the spirit of
+[Less Is More].
+
+The following code is simple; the script
+will exit immediately if the directory
+does not exist or if `$extension` has
+been misspelled (e.g., if the variable
+was defined as `$ext` but called as
+`$extension`).
+
+```shell
+    # Preferred.
+    #! /bin/sh
+    set -o errexit
+    set -o nounset
+
+    ...
+    cd "$dir"
+    rm ./*."$extension"
+```
+
+Without `set -o ...` settings, extra
+check statements are required. A more
+significant danger is that the `rm`
+command will silently execute even if
+the variable name was misspelled (e.g.,
+if the variable was defined as `$ext`).
+
+```shell
+    #! /bin/sh
+    ...
+    cd "$dir" || exit "$?"
+    rm ./*."$extension"
+```
+
 ## 2.2 Explicit Error Checking
 
 Check status of commands and
