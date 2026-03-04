@@ -1042,10 +1042,10 @@ See [Bash Guide/SignalTrap].
         # the EXIT trap is internally
         # disabled during  execution.
 
-        [ "${TMPBASE:-}" ] || exit $ret
+        [ "${TMPBASE:-}" ] || exit "$ret"
 
         rm -rf "$TMPBASE"* # see 3.1
-        exit $ret
+        exit "$ret"
     }
 
     trap 'AtExit' EXIT HUP INT QUIT TERM
