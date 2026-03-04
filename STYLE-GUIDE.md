@@ -1641,13 +1641,6 @@ See [Bash Pitfalls/32](https://mywiki.wooledge.org/BashPitfalls#printf_.22.24foo
 
 Use the [PWD] environment variable
 instead of the [pwd] command.
-**Rationale:** POSIX requires the shell
-to maintain the PWD variable, making it a
-reliable and portable choice across
-modern systems. In addition, for shells
-where [pwd] is not a built-in, it is
-slightly more efficient to use the
-variable, as it avoids a subshell fork.
 
 ``` shell
     # Preferred
@@ -1656,6 +1649,13 @@ variable, as it avoids a subshell fork.
     # Avoid
     curdir=$(pwd)
 ```
+**Rationale:** POSIX requires the shell
+to maintain the PWD variable, making it a
+reliable and portable choice across
+modern systems. In addition, for shells
+where [pwd] is not a built-in, it is
+slightly more efficient to use the
+variable, as it avoids a subshell fork.
 
 **Pro Tip:** In rare cases, if the
 program needs the physical path
