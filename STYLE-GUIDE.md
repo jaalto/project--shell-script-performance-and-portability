@@ -1896,21 +1896,10 @@ Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
 `((...))`.
 
-**Rationale:** POSIX defines the
-arithmetic expansion syntax `$((...))`,
-which is supported by all modern shells.
-The `((...))` construct is a non-standard
-extension. Alternatives to Bash-specific
-"C-style" for-loops are easily
-implemented with standard POSIX tools
-like seq or simple while increments,
-requiring almost no extra effort while
-gaining full compatibility.
-
-Examples:
+Example: arithmetic
 
 ``` shell
-    # POSIX, portable
+    # Preferred. POSIX, portable
     if [ 1 -gt 0 ]; then
        ...
     fi
@@ -1919,8 +1908,23 @@ Examples:
     if (( 1 > 0 )); then
         ...
     fi
+```
 
-    # POSIX, portable.
+Example: loop
+
+```shell
+    # Preferred. POSIX, portable.
+    # No noticeable
+    # performance difference
+
+    i=1
+    while [ $i -le 10 ];
+    do
+        ...
+        i=$((i + 1))
+    done
+
+    # Compact with GNU seq.
     # No noticeable
     # performance difference
     for i in $(seq 10)
@@ -1935,13 +1939,24 @@ Examples:
     done
 ```
 
+**Rationale:** POSIX defines the
+arithmetic expansion syntax `$((...))`,
+which is supported by all modern shells.
+The `((...))` construct is a non-standard
+extension. Alternatives to Bash-specific
+"C-style" for-loops are easily
+implemented with standard POSIX while
+increment loop or with [GNU seq] from GNU
+coreutils, requiring almost no extra
+effort.
+
 Performance results for 100 loop rounds:
 
 Loop              | real time (ms)
 -----------       | ----------
-/bin/sh seq (dash)| 0.004
-Bash ((..))       | 0.006
+Bash ((...))      | 0.006
 Bash seq          | 0.010
+Dash seq (/bin/sh)| 0.004
 ksh93 seq         | 0.004
 
 ### 11.5 Bash Variable Tests
@@ -2057,6 +2072,7 @@ Google search help:
 [GNU grep]: https://tracker.debian.org/pkg/grep
 [GNU awk]: https://www.gnu.org/software/gawk/
 [GNU sed]: https://www.gnu.org/software/sed/
+[GNU seq]: https://www.gnu.org/software/coreutils/manual/html_node/seq-invocation.html
 
 [GNU autoconf/Portable Shell Programming]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html#Portable-Shell
 [diff]: https://en.wikipedia.org/wiki/Diff
