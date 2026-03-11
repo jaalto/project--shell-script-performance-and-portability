@@ -1965,22 +1965,28 @@ For simple tests, avoid
 [double bracket] conditional `[[...]]`.
 Instead, use the portable POSIX [test]
 command `[...]` and always quote
-variable expansions. Develop a
+variable expansions. Developing a
 consistent quoting habit
 ensures safety, correctness, and
 portability.
 
 ``` shell
-    # Instead of ...
+    # Instead of relying on Bash
+    # to do the "quoting" for you...
     if [[ $a = $b ]]; then
         ...
     fi
 
-    # Use portable POSIX-style
-    # with quoting
+    # Develop a habbit and
+    # use portable POSIX-style.
     if [ "$a" = "$b" ]; then
         ...
     fi
+
+    # ... because it's used everywhere
+    # in shell scripting
+    rm "$file"
+
 ```
 
 ## 12.0 References
