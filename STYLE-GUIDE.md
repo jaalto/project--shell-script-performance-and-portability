@@ -1698,9 +1698,9 @@ action.
     # - at the end
     # - in between
 
-    sed -e 's/^[ \t]+//' \
-        -e 's/[ \t]+$//' \
-        -e 's/  +/ /g'   \
+    sed -e 's/^[[:space:]]\+//' \
+        -e 's/[[:space:]]\+$//' \
+        -e 's/[[:space:]]\+/ /g'   \
         file
 ```
 
