@@ -1692,7 +1692,7 @@ compatible"?](https://unix.stackexchange.com/q/145522)
   --posix`, where the Bash version is
   indefinitely stuck at version 3.2.x
   (GNU Bash from 2006) due to Apple
-  avoiding the GPL-3 license in later
+  avoiding the GPLv3 license in later
   Bash versions. If you write `/bin/sh`
   scripts in macOS, it is good idea to
   check them for portability with:
@@ -2403,7 +2403,7 @@ Copyright (C) 2024-2026 Jari Aalto
 
 These programs are free software; you can redistribute it and/or modify
 them under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
+the Free Software Foundation; either version 3 of the License, or
 (at your option) any later version.
 
 These programs are distributed in the hope that it will be useful,
@@ -2414,11 +2414,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with these programs. If not, see <http://www.gnu.org/licenses/>.
 
-SPDX-License-tag: GPL-2.0-or-later<br>
+SPDX-License-tag: GPL-3.0-or-later<br>
 See https://spdx.org/licenses
 
 Documentation is also licensed under
-GPL-2.0-or-later<br>
+GPL-3.0-or-later<br>
 
 Keywords: shell, sh, POSIX, bash,
 ksh, ksh93, programming,
