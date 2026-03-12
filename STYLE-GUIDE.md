@@ -719,7 +719,7 @@ There is either [Snake case] (e.g.,
 `myVariable`). Maintain a uniform
 indentation strategy—typically 4
 spaces—and ensure consistent spacing
-betweek statements (loops and
+between statements (loops and
 conditionals are separated by newlines).
 
 **Discussion:** Tabs vs. Spaces.
