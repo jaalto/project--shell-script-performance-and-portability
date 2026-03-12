@@ -90,15 +90,20 @@ spirit of the [Less Is More] philosophy
 (LIM), similar to [Keep It Short and
 Simple] (KISS).
 
-Prioritize minimum effort over rigorous
-standards for small controlled scripts.
+Prioritize minimum effort over
+rigorous standards for small
+controlled scripts. For example, the
+inclusion of a Help() or the
+requirement to start logic within
+Main() is not necessary for
+non-production, or small, scripts.
 
-When sharing code intended for a wider
-audience, or for deployment in a
-production or operational environment,
-strictly adhere to best practices, like
-variable quoting, to prevent unexpected
-behavior.
+When sharing code intended for a
+wider audience, or for deployment in
+a production or operational
+environment, adhere to best
+practices, like variable quoting, to
+prevent unexpected behavior.
 
 ### 1.3 Tooling
 
