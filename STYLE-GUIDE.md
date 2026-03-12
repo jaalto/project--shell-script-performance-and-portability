@@ -2016,7 +2016,7 @@ portability.
 
     # ... because it's used everywhere
     # in shell scripting
-    rm "$file"
+    rm -- "$file"
 
 ```
 
