@@ -1062,7 +1062,7 @@ See [Bash Guide/SignalTrap].
 
         [ "${TMPBASE:-}" ] || exit "$ret"
 
-        rm -rf "$TMPBASE"* # see 3.1
+        rm -rf "$TMPBASE"* # see 5.1
         exit "$ret"
     }
 
