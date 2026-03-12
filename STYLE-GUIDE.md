@@ -991,7 +991,7 @@ to retrieve exit status of the most
 recently executed command.
 
 ``` shell
-    if ! echo "$*" | grep -e "--dir" ; then
+    if ! echo "$*" | grep -qe "--dir" ; then
         echo "ERROR: no option --dir" >&2
         exit 1
     fi
