@@ -717,10 +717,13 @@ Commonly used layout styles include
 There is either [Snake case] (e.g.,
 `my_variable`) or [Camel case] (e.g.,
 `myVariable`). Maintain a uniform
-indentation strategy—typically 4
-spaces—and ensure consistent spacing
-between statements (loops and
-conditionals are separated by newlines).
+indentation strategy and ensure
+consistent spacing between statements
+(loops and conditionals are separated
+by newlines).
+
+This style guide adopts the following
+conventions explained below.
 
 **Discussion:** Tabs vs. Spaces.
 
@@ -748,9 +751,6 @@ control systems.
 The system-wide predictability is
 prioritized over individual
 preference.
-
-This style guide adopts the following
-conventions explained below.
 
 ### 3.2 Line Length
 
