@@ -1601,7 +1601,7 @@ keyword.
     PortableLocal ()
     {
         # Portable use of local.
-        # On its own lines:
+        # On their own lines:
         # - Declaration
         # - Assignment
 
