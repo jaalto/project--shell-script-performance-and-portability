@@ -1044,7 +1044,6 @@ macOS, always use the `-t` option and
 provide a template.
 
 ## 5.2 Using trap
-
 Use a [trap] to ensure proper cleanup
 of temporary files on script exit.
 See [Bash Guide/SignalTrap].
@@ -1400,14 +1399,19 @@ instead of archaic \`backticks\` for
     dirname=`basename \`pwd\``
 ```
 
-**Rationale:** It is more readable and
-allows for cleaner nesting. All modern
-shells support `$()`. In addition, on many
-non-US keyboard layouts (such as German,
-French, or Nordic), the backtick is an
-inconveniently located dead key, or
-access to it requires a complex modifier
-combination (AltGr).
+**Rationale:** The POSIX Command
+Substitution syntax has been
+supported in shells for well over 15
+years. Even legacy systems now almost
+universally provide a default shell
+compatible with this standard. It is
+more readable and allows for cleaner
+nesting. A side note: on many non-US
+keyboard layouts (such as German,
+French, or Nordic), the backtick is
+an inconveniently located dead key,
+or access to it requires a complex
+modifier combination (AltGr).
 
 See also [Bash FAQ/082] and shellcheck
 [SC2006].
