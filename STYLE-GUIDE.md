@@ -831,7 +831,7 @@ as $PATH and $HOME.
 Examples:
 
 ``` shell
-    # Global variables
+    # Global variables in ALL_UPPERCASE
     URL_HOMEPAGE="http://example.com"
 
     # Preferred
@@ -964,7 +964,7 @@ was defined as `$ext` but called as
 
     ...
     cd "$dir"
-    rm ./*."$extension"
+    rm ./*"$extension"
 ```
 
 Without `set -o ...` settings, extra
@@ -978,7 +978,7 @@ if the variable was defined as `$ext`).
     #! /bin/sh
     ...
     cd "$dir" || exit "$?"
-    rm ./*."$extension"
+    rm ./*"$extension"
 ```
 
 ## 4.2 Explicit Error Checking
