@@ -784,6 +784,19 @@ Additionally, copy-pasting code
 preserves the exact formatting. Refer
 to 3.1
 
+![Spaces only](pic/infographic-spaces-only.png)
+
+Unlike spaces, a Tab is not defined
+by a fixed width; it is treated as an
+instruction for the "next tab stop"
+to be jumped to. When code containing
+Tabs is copied and pasted into a
+location where a different
+indentation level or Tab-width
+setting is used, the alignment is
+broken. As is shown in the final box,
+the lines are "drifted."
+
 ### 3.4 Naming Conventions
 
 **Functions:** Use [CamelCase] for
