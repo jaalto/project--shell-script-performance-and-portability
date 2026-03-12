@@ -1694,13 +1694,13 @@ action.
 
 ``` shell
     # Canonicalize whitepaces:
-    # - at the beginning
-    # - at the end
-    # - in between
+    # - delete at the beginning
+    # - delete at the end
+    # - in between, leave one space
 
     sed -e 's/^[[:space:]]\+//' \
         -e 's/[[:space:]]\+$//' \
-        -e 's/[[:space:]]\+/ /g'   \
+        -e 's/[[:space:]]\+/ /g' \
         file
 ```
 
