@@ -1800,8 +1800,8 @@ more. Using the `$` inside the parenthese
 is redundant.
 
 ``` shell
-    result=$((n + m))   # preferred
-    result=$(($n + $m))
+    result=$((n + m))   # Preferred
+    result=$(($n + $m)) # Avoid
 ```
 
 The POSIX `$((...))` only handles
