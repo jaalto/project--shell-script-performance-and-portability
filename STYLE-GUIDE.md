@@ -1745,18 +1745,27 @@ the end of every preceding line to
 prevent the shell from terminating the
 command early.
 
-This approach does not allign with the
-[Less is More] (LIM) principle. A
+This approach does not allign with
+the [Less is More] (LIM) principle. A
 trailing pipe is already a valid
-line-continuation marker in POSIX shells;
-therefore, the backslash serves no
-functional purpose.
+line-continuation marker in POSIX
+shells. The following code contains
+"more noise". In addition, it is
+prone to syntax error if accidental
+trailing spaces are present.
 
 ``` shell
     # Google
     command1 \
       | command2 \
       | command4
+
+    # This would cause an error:
+    #
+    #  Syntax error: "|" unexpected
+
+    echo abc \<space character here>
+         | wc -l
 ```
 
 ## 10.5 Use Standard if..fi
