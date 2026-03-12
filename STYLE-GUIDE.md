@@ -1661,7 +1661,7 @@ See [Bash Pitfalls/32](https://mywiki.wooledge.org/BashPitfalls#printf_.22.24foo
 
 ## 10.2 PWD vs pwd
 
-Use the [PWD] environment variable
+Use the POSIX [PWD] environment variable
 instead of the [pwd] command.
 
 ``` shell
