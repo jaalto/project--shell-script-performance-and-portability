@@ -1586,13 +1586,10 @@ keyword.
 
     if ! IsCommand local; then
         if IsCommand typeset; then
-            # Use 'eval' to
-            # hide statement.
-            # Would otherwise
-            # cause program
-            # to exit due to
-            # parse error at
-            # 'local'.
+            # Use 'eval' to hide
+            # statement. Would otherwise
+            # cause program to exit due
+            # to parse error at 'local'.
 
             eval 'local () { typeset "$@"; }'
         fi
