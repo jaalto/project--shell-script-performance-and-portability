@@ -1682,12 +1682,13 @@ program needs the physical path
 is the correct way to read the path name.
 
 **Pro Tip 2:** When executing commands
-in different directories, use the POSIX
-variable [OLDPWD] to return to the
-previous directory. This avoids the
-overhead of launching a subshell `( ... )`
-for every iteration, which is
-significantly slower in large loops.
+in different directories, it is possible
+to use the POSIX variable [OLDPWD] to
+return to the previous directory. This
+avoids the overhead of launching a
+subshell `( ... )` for every iteration,
+which is significantly slower in large
+loops.
 
 ```shell
 
