@@ -2414,7 +2414,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with these programs. If not, see <http://www.gnu.org/licenses/>.
 
-SPDX-License-tag: GPL-3.0-or-later<br>
+SPDX-License-Identifier: GPL-3.0-or-later<br>
 See https://spdx.org/licenses
 
 Documentation is also licensed under
