@@ -1784,16 +1784,17 @@ operators:
         command3 ||
 ```
 
-**Discussion:** The
-[Google Bash Style Guide] recommends
-placing the pipe operator (|) at the
-start of the following line. While this
-makes the "action" (the pipe) vertically
-aligned and visually prominent, it
-requires redundant backslashes (\\) at
-the end of every preceding line to
-prevent the shell from terminating the
-command early.
+**Discussion**
+
+The [Google Bash Style Guide]
+recommends placing the pipe operator
+(|) at the start of the following line.
+While this makes the "action" (the
+pipe) vertically aligned and visually
+prominent, it requires redundant
+backslashes (\\) at the end of every
+preceding line to prevent the shell
+from terminating the command early.
 
 This approach does not allign with
 the [Less is More] (LIM) principle. A
