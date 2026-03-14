@@ -1810,13 +1810,16 @@ trailing spaces are present.
     command1 \
       | command2 \
       | command4
+```
 
-    # This would cause an error:
-    #
-    #  Syntax error: "|" unexpected
+The backslashes at the end of lines are
+prone to subtle errors. The following
+would cause an error: `Syntax error:
+"|" unexpected`
 
+``` shell
     echo abc \<space character here>
-         | wc -l
+         | wc --bytes
 ```
 
 ## 10.5 Use Standard if..fi
