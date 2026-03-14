@@ -1736,10 +1736,7 @@ variable. The [OLDPWD] only tracks the
 ## 10.3 Long Commands
 
 Use multiple lines to split long commands
-and their options. **Rationale:** To
-improve readability by following the
-"Clean Code" principle: one line, one
-action.
+and their options.
 
 ``` shell
     # Canonicalize whitepaces:
@@ -1752,6 +1749,10 @@ action.
         -e 's/[[:space:]]\+/ /g' \
         file
 ```
+
+**Rationale:** Improve readability by
+following the "Clean Code" principle:
+one line, one action.
 
 ## 10.4 Pipes
 
