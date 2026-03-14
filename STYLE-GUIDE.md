@@ -1691,7 +1691,6 @@ which is significantly slower in large
 loops.
 
 ```shell
-
     # Preferred
     # Fast and efficient
 
@@ -1712,6 +1711,25 @@ loops.
         cd "$dir" || exit "$?"
         ...
     )
+    done
+```
+
+If a loop contains multiple [cd]
+commands, it is best to save the
+original directory to a dedicated
+variable. The [OLDPWD] only tracks the
+*immediately* preceding directory.
+
+```shell
+    pwd="$PWD"
+
+    for dir in $dirlist
+    do
+        cd ...
+        ...
+        cd ...
+        ...
+        cd "$pwd" # a fresh start
     done
 ```
 
@@ -2125,6 +2143,7 @@ Google search help:
 [parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
 
 [awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
+[cd]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html
 [bc]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
 [env]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html
