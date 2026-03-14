@@ -1934,9 +1934,9 @@ and fewer forks.
 ### 11.3 Bash Statements To Be Avoided
 
 Avoid obsolete artihmetic expressions
-`$[...]` and the the [let] built-in. They
-have no uses as better and more portable
-POSIX compound command altenatives exist.
+`$[...]` and the the [let] built-in.
+There exist better and more portable
+POSIX compound command altenatives.
 
 Avoid             | Alternative
 ---------         | ----------------
