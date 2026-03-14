@@ -1669,17 +1669,50 @@ instead of the [pwd] command.
     curdir=$(pwd)
 ```
 **Rationale:** POSIX requires the shell
-to maintain the PWD variable, making it a
+to maintain the [PWD] variable, making it a
 reliable and portable choice across
 modern systems. In addition, for shells
 where [pwd] is not a built-in, it is
 slightly more efficient to use the
 variable, as it avoids a subshell fork.
 
-**Pro Tip:** In rare cases, if the
+**Pro Tip 1:** In rare cases, if the
 program needs the physical path
 (resolving all symlinks), then `pwd -P`
 is the correct way to read the path name.
+
+**Pro Tip 2:** When executing commands
+in different directories, use the POSIX
+variable [OLDPWD] to return to the
+previous directory. This avoids the
+overhead of launching a subshell `( ... )`
+for every iteration, which is
+significantly slower in large loops.
+
+```shell
+
+    # Preferred
+    # Fast and efficient
+
+    for dir in $dirlist
+    do
+        cd "$dir" || continue
+        ...
+        cd "$OLDPWD"
+    done
+
+    # Avoid
+    # Much slower due to subshell "()"
+    # fork/exec overhead
+
+    for dir in $dirlist
+    do
+    (
+        cd "$dir" || exit "$?"
+        ...
+    )
+    done
+```
 
 ## 10.3 Long Commands
 
@@ -2079,10 +2112,17 @@ Google search help:
 <!-- ------- REF:POSIX ------- -->
 
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
+
+[PATH]: <https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes>
+
+[PWD]: <https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=PWD>
+
+[OLDPWD]: <https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html#:~:text=OLDPWD%20shell%20variable%20shall%20also%20be%20set>
+
 [special parameters]: https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html
 [command substitution]: https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html
 [parameter expansion]: https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#tag_02_06_02
-[PWD]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=PWD
+
 [awk]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
 [bc]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html
 [echo]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
