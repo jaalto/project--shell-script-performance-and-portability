@@ -2058,18 +2058,21 @@ portability.
 ``` shell
     # Instead of relying on Bash
     # to do the "quoting" for you...
+
     if [[ $a = $b ]]; then
         ...
     fi
 
     # Develop a habbit and
     # use portable POSIX-style.
+
     if [ "$a" = "$b" ]; then
         ...
     fi
 
-    # ... because it's used everywhere
-    # in shell scripting
+    # ... because quoting is needed
+    # everywhere in shell scripting
+
     rm -- "$file"
 
 ```
