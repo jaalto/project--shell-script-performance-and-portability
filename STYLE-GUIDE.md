@@ -1910,7 +1910,7 @@ However, in nearly all operational
 environments, the de facto standard and
 highly portable location for this
 utility is `/usr/bin/env`. It is
-currently considered a safe and robust
+considered a safe and robust
 assumption that virtually all modern
 systems provide [env] utility at this
 specific path.
