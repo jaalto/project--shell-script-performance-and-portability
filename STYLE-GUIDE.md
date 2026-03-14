@@ -1858,6 +1858,8 @@ is redundant.
     result=$(($n + $m)) # Avoid
 ```
 
+**Discussion**
+
 The POSIX `$((...))` only handles
 integers. For decimals, use [bc] or
 [awk].
