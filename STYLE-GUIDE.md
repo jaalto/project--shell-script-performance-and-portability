@@ -1899,7 +1899,7 @@ disabling System Integrity Protection
 script to use a newer version of Bash by
 searching the current PATH.
 
-**Discussion:**
+**Discussion**
 
 The [env] utility is defined as a
 standard POSIX command, but its exact
