@@ -1,16 +1,28 @@
 # CONTRIBUTING
 
-information for contributing test cases.
+Information for contributing test cases.
+
+About writing test cases: Write as simple and clean as
+possible. Do not treat as a production code, which means:
+
+- Leave out quotes from variables. Write: `$var` and not
+  `"$var"`.
+- No need to use `local` command. Each test case is a
+  independent unit whose variables do not affect others.
+- No need for [shellcheck] linting.
 
 # TEST CASE FILE LAYOUT
 
-Write documentation comments in the `<test
-case>.sh` files as they would appear in
-markdown. The comments "# " will be stripped
-during documentation conversion. See
-[txt2markdown.sh](./bin/Makefile::d).
+Write documentation comments at the
+beginning of the `<test case>.sh` files
+in markdown format. The comments "# "
+will be stripped during documentation
+conversion. See
+[txt2markdown.sh](./bin/txt2markdown.sh).
 
-```
+The commentary format:
+
+```text
     Q: <In one sentence, test case description>
     A: <In one sentence, major results>
     priority: 0-10
@@ -30,7 +42,7 @@ during documentation conversion. See
 Based on the results, select \<priority\> as
 follows regarding the impact on performance:
 
-```
+```text
     9-10 critical – High impact
     7-8  high – Significant
     5-6  medium – Some
@@ -45,7 +57,7 @@ follows regarding the impact on performance:
   is one of:
 
 
-```
+```text
     command     - external commands
     dir         - directory related
     file        - file manipulation
@@ -69,14 +81,14 @@ follows regarding the impact on performance:
   is supported. Add two comment lines at
   the top of the file:
 
-```
+```text
     Short: <In less than 40 chars, summary>
     Desc: <In one sentence, description>
 ```
 
   An example:
 
-```
+```text
     #! /bin/bash
     # Short: arrays
     # Desc: Test array support
@@ -85,7 +97,7 @@ follows regarding the impact on performance:
     : "${array[1]}"
 ```
 
-- Name performance <test case> files as extra
+- Name performance `<test case>` files as
   `xp-performance-*.sh`. Each file contains a
   simple feature test. The program can use
   command line arguments. A single integer
@@ -98,7 +110,7 @@ follows regarding the impact on performance:
 
   An example:
 
-```
+```shell
 #! /bin/sh
 # Short: while loop
 # Desc: Measure while loop and external awk call count
@@ -126,8 +138,8 @@ EOF
 
 # TEST CASE FILE FORMAT
 
-- The <test case> file must return to the same
-   directory on exit (if it uses `cd`).
+- The `<test case>` file must return to the same
+  directory on exit (if it uses `cd`).
 
 - Variables. Use short variable names. From
   [t-lib.sh](./bin/t-lib.sh) use global `TMPBASE` to
@@ -139,40 +151,48 @@ EOF
 
 - To clean  `TMPBASE` derived temporary
   files using
-  Special Built-In Utility
-  [`trap`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_28),
+  Special Built-In Utility [trap]
   see examples below: For custom cleanup,
   define function `AtExit` and call `AtExitDefault`to manually
   clean `TMPBASE` files.
 
+```shell
+    # Use default
+    # defines AtExit to clean TMPBASE* files
+    SetupTrapAtExit
 ```
-    SetupTrapAtExit # defines AtExit to clean TMPBASE* files
 
+Or use custom clean up:
+
+```shell
     AtExit ()
     {
-        AtExitDefault # Clean TMPBASE* files
-        rm --recursive --force $tmpdir  # my custom cleanup
+        # Clean all $TMPBASE* files first
+        AtExitDefault
+
+        # ... the rest
+        rm --recursive --force $tmpdir
     }
 
     SetupTrapAtExit AtExit    # Use your custom AtExit
 ```
-z
+
 - Name the test case functions using `t<number>[something]()`, like
-  t1, t2 or t3a, t3b. Order the test cases by fastest
+  `t1`, `t2` or `t3a`, `t3b`. Order the test cases by fastest
   solution first and slowest last. Every test case must be
   independent.
 
-```
+```shell
     t1 ()
     {
         # test case
     }
 ```
 
-- Define function `Info` to display information once
-  before test cases are being run.
+- If needed, you can define function `Info` to display
+  information before test cases are being run.
 
-```
+```shell
     Info ()
     {
         ls -l $f  # Test file information
@@ -184,7 +204,8 @@ z
   pre-condition, for example shell or feature,
   use `Is<test>` function from
   [t-lib.sh](./bin/t-lib.sh)
-```
+
+```shell
     # Define lists of test cases,
     # leading colon(:) at
     # the beginning of string
@@ -213,3 +234,12 @@ z
 ```
 
 End of file
+
+<!-- links -->
+
+<!-- ------- REF:POSIX ------- -->
+
+[trap]: https://www.gnu.org/software/bash/manual/bash.html#index-trap
+[shellcheck]: https://www.shellcheck.net
+
+<!-- END OF FILE -->
