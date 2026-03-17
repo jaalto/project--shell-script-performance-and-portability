@@ -1160,8 +1160,8 @@ assumptions.
 
 Style  | Example          | Cognitive Effort
 :---   | :---             | :---
-Simple | \$dir/\$file     | Low (Instant recognition)
-Braced | \${dir}/\${file} | Medium (Braces must be checked for expansion logic)
+Simple | `$dir/$file`     | Low (Instant recognition)
+Braced | `${dir}/${file}` | Medium (Braces must be checked for expansion logic)
 
 ## 6.5 Variables and Truth Tests
 
