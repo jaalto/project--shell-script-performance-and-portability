@@ -1099,7 +1099,7 @@ each argument distinct and uncorrupted.
     done
 ```
 
-**Rationale:** The quoted form "$@"
+**Rationale:** The quoted form `"$@"`
 ensures that each positional parameter
 is passed as a separate, distinct
 string. This is critical for handling
