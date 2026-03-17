@@ -1828,9 +1828,6 @@ would cause an error: `Syntax error:
 
 Use standard `if..fi`. Avoid clever
 logical `&&` or `||` with blocks.
-Complex Shell-only blocks sacrifice
-clarity for readers unfamiliar with
-shell shorthands.
 
 ``` shell
     # Preferred
@@ -1845,6 +1842,10 @@ shell shorthands.
         # here
     }
 ```
+
+**Rationale:** Complex Shell-only
+blocks sacrifice clarity for readers
+unfamiliar with shell shorthands.
 
 ## 10.6 Mathematical Calculations
 
