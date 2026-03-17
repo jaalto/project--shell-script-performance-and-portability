@@ -1852,14 +1852,16 @@ unfamiliar with shell shorthands.
 Omit the `$` in POSIX arithmetic
 expansions. The shell automatically
 treats names as variables and evaluates
-their values. **Rationale:** Less is
-more. Using the `$` inside the parenthese
-is redundant.
+their values.
 
 ``` shell
     result=$((n + m))   # Preferred
     result=$(($n + $m)) # Avoid
 ```
+
+**Rationale:** [Less Is More]
+Using the `$` inside the parenthese
+is redundant.
 
 **Discussion**
 
