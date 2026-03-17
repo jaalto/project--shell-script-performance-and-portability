@@ -999,7 +999,6 @@ recently executed command.
     fi
 
     ...
-    cd "$dir"
 
     if ! git status ; then
         echo "FATAL: no Git dir (error $?)" >&2
