@@ -1668,7 +1668,7 @@ instead of the [pwd] command.
     curdir="$PWD"
 
     # Avoid
-    curdir=$(pwd)
+    curdir="$(pwd)"
 ```
 **Rationale:** POSIX requires the shell
 to maintain the [PWD] variable, making it a
