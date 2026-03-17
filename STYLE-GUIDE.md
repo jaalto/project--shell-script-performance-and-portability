@@ -1089,7 +1089,7 @@ arguments" [special parameters]
 variable. This is mandatory to keep
 each argument distinct and uncorrupted.
 
-```
+```shell
     # Set positional parameters
     set -- 1 2 3
 
