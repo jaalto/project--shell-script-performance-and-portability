@@ -273,10 +273,10 @@ a:
 - **License:** add
   standard license text.
 - **Description:** Optional if
-  included in `--help`.
+  included in `-h, --help`.
   Describe script's functionality.
 - **Usage:** Optional if included
-  in `--help`. Provide clear examples of
+  in `-h, --help`. Provide clear examples of
   how to invoke the command.
 - **Dependencies:** List required
   external requirements.
