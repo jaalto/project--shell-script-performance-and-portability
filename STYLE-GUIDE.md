@@ -367,7 +367,7 @@ fragmentation results in legal barriers
 that hinder collaborative innovation and
 the reuse of existing work.
 
-**About the ISC:** Why is [ISC] often
+**About the ISC:** Why is [ISC]
 considered preferable over MIT and BSD?
 The ISC license is functionally
 identical to the MIT and Simplified BSD
