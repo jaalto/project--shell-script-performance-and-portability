@@ -1062,7 +1062,8 @@ See [Bash Guide/SignalTrap].
 
         [ "${TMPBASE:-}" ] || exit "$ret"
 
-        rm -rf "$TMPBASE"* # see 5.1
+        # See 5.1 for $TMPBASE
+        rm --force --recursive "$TMPBASE"*
         exit "$ret"
     }
 
