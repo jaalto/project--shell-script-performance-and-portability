@@ -1240,7 +1240,7 @@ easily.
 
     for i in $list
     do
-        item=$$((i + 1))
+        item=$((i + 1))
 
         if [...]; then
             ...
