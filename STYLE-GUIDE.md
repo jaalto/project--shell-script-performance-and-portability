@@ -832,16 +832,18 @@ Examples:
 
 ``` shell
     # Global variables in ALL_UPPERCASE
+    # outside of function scope
     URL_HOMEPAGE="http://example.com"
-
-    # Preferred
-    thisResult=$(usesVar + andAnother)
-
-    # Avoid
-    this_result=$(uses_var + and_another)
 
     Sort () # initial Uppercase, not sort()
     {
+        # local variables
+        ...
+        # Preferred
+        thisResult=$(usesVar + andAnother)
+
+        # Avoid
+        this_result=$(uses_var + and_another)
         ...
     }
 ```
