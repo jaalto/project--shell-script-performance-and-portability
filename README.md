@@ -89,7 +89,7 @@ Table of Contents
 - [COPYRIGHT](#copyright)
 - [LICENSE](#license)
 
-Is Shell scripting is only useful for
+Is Shell scripting only useful for
 couple a quick scripts and should you
 turn to higher level langauges like
 Python for anyting complicated?
