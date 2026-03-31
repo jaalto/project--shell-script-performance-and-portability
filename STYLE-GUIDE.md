@@ -1912,6 +1912,18 @@ PATH—similar to the behavior of
     (unalias sqlite3; command -v sqlite3) > /dev/null 2>&1
 ```
 
+**Note:** `command -v` identifies the
+presence of a command but does not
+explicitly verify the file's executable
+bit. While theoretically possible on
+misconfigured systems, such edge cases
+remain statistically negligible and
+require no additional logic. Under `set
+-o errexit`, any attempt to execute a
+non-existent or non-executable command
+terminates the script automatically.
+See [4.1 Execution Safety](#4.1-execution-safety)
+
 ## 11.0 Bash Notes
 
 ### 11.1 Bash Shebang
