@@ -1826,12 +1826,12 @@ where [pwd] is not a built-in, it is
 slightly more efficient to use the
 variable, as it avoids a subshell fork.
 
-**Pro Tip 1:** In rare cases, if the
+**Tip 1:** In rare cases, if the
 program needs the physical path
 (resolving all symlinks), then `pwd -P`
 is the correct way to read the path name.
 
-**Pro Tip 2:** When executing commands
+**Tip 2:** When executing commands
 in different directories, it is possible
 to use the POSIX variable [OLDPWD] to
 return to the previous directory. This
