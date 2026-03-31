@@ -1691,11 +1691,10 @@ compatible"?](https://unix.stackexchange.com/q/145522)
 - On macOS, `sh` points to `bash
   --posix`, where the Bash version is
   indefinitely stuck at version 3.2.x
-  (GNU Bash from 2006) due to Apple
-  avoiding the GPLv3 license in later
-  Bash versions. If you write `/bin/sh`
-  scripts in macOS, it is good idea to
-  check them for portability with:
+  (GNU Bash from 2006). If you write
+  `/bin/sh` scripts in macOS, it is
+  good idea to check them for
+  portability with:
 
 ```bash
     brew install dash posh
@@ -1837,18 +1836,16 @@ feature set.
 While Linux distributions typically
 provide Bash at `/bin/bash`, macOS
 remains hard-coded to Bash version
-3.2.x (dating back to 2006). This
-restriction exists because Apple
-avoids including GPLv3-licensed
-programs within the Operating System
-core. Despite the availability
-of newer Bash versions
-(see [Debian Bash tracker]),
-the system-provided
-version cannot be uninstalled, even
-with root access, unless System
-Integrity Protection (SIP) is
-disabled.
+3.2.x (from 2006). This restriction
+exists because Apple avoids including
+GPLv3-licensed programs within the
+Operating System core. Despite the
+availability of newer Bash versions
+(see [Debian Bash tracker]), The
+system-provided version cannot be
+uninstalled, even with root access,
+unless System Integrity Protection
+(SIP) is disabled.
 
 If a more recent version of Bash is
 installed via Homebrew (`brew install
