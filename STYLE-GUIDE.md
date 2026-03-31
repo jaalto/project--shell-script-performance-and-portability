@@ -1631,7 +1631,155 @@ easier to follow and maintain.
 
 # 10.0 Other
 
-## 10.1 echo vs printf
+## 10.1 Long Commands
+
+Use multiple lines to split long commands
+and their options.
+
+``` shell
+    # Canonicalize whitepaces:
+    # - delete at the beginning
+    # - delete at the end
+    # - in between, leave one space
+
+    sed -e 's/^[[:space:]]\+//' \
+        -e 's/[[:space:]]\+$//' \
+        -e 's/[[:space:]]\+/ /g' \
+        file
+```
+
+**Rationale:** Improve readability by
+following the "Clean Code" principle:
+one line, one action.
+
+## 10.2 Pipes
+
+Use a trailing pipe (|) at the end of a
+line to indicate that a command continues
+onto the next. Do not use backslashes
+(\\) for line continuation when using
+pipes. The pipe character itself is a
+natural line-continuation indicator in
+shell syntax. Indent subsequent lines to
+visually group the pipeline.
+
+``` shell
+    command1   |
+      command2 |
+      command3
+```
+
+The same priciple applies to also other
+operators:
+
+``` shell
+    command1     &&
+        command2 &&
+        command3 &&
+
+    command1     ||
+        command2 ||
+        command3 ||
+```
+
+**Discussion**
+
+The [Google Bash Style Guide]
+recommends placing the pipe operator
+(|) at the start of the following line.
+While this makes the "action" (the
+pipe) vertically aligned and visually
+prominent, it requires redundant
+backslashes (\\) at the end of every
+preceding line to prevent the shell
+from terminating the command early.
+
+This approach does not allign with
+the [Less is More] (LIM) principle. A
+trailing pipe is already a valid
+line-continuation marker in POSIX
+shells. The following code contains
+"more noise". In addition, it is
+prone to syntax error if accidental
+trailing spaces are present.
+
+``` shell
+    # Google
+    command1 \
+      | command2 \
+      | command4
+```
+
+The backslashes at the end of lines are
+prone to subtle errors. The following
+would cause an error: `Syntax error:
+"|" unexpected`
+
+``` shell
+    echo abc \<space character here>
+         | wc --bytes
+```
+
+## 10.3 Use Standard if..fi
+
+Use standard `if..fi`. Avoid clever
+logical `&&` or `||` with blocks.
+
+``` shell
+    # Preferred
+    if <statement>; then
+        # Clear to all readers
+    fi
+
+    # Avoid
+    <statement> && {
+        # many
+        # statements
+        # here
+    }
+```
+
+**Rationale:** Complex Shell-only
+blocks sacrifice clarity for readers
+unfamiliar with shell shorthands.
+
+## 10.4 Mathematical Calculations
+
+Omit the `$` in POSIX arithmetic
+expansions. The shell automatically
+treats names as variables and evaluates
+their values.
+
+``` shell
+    result=$((n + m))   # Preferred
+    result=$(($n + $m)) # Avoid
+```
+
+**Rationale:** [Less Is More]
+Using the `$` inside the parenthese
+is redundant.
+
+**Discussion**
+
+The POSIX `$((...))` only handles
+integers. For decimals, use [bc] or
+[awk].
+
+``` shell
+    i=0.5
+    j=0.1
+
+    # No leading zero: .6
+    k=$(echo "$i + $j" | bc)
+
+    # With leading zero: 0.6
+    k=$(printf "%g" "$(echo "$i + $j" | bc)")
+
+    # POSIX awk
+    k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+```
+
+## 10.5 echo vs printf
 
 Use POSIX [echo] without any options for
 regular output. Reserve [printf] for more
@@ -1658,7 +1806,7 @@ always use the `%s` format specifier when
 printing variables with `printf`.
 See [Bash Pitfalls/32](https://mywiki.wooledge.org/BashPitfalls#printf_.22.24foo.22).
 
-## 10.2 PWD vs pwd
+## 10.6 PWD vs pwd
 
 Use the POSIX [PWD] environment variable
 instead of the [pwd] command.
@@ -1735,152 +1883,34 @@ variable. The [OLDPWD] only tracks the
     done
 ```
 
-## 10.3 Long Commands
+## 10.7 Command Existence
 
-Use multiple lines to split long commands
-and their options.
+Use `command -v` to check for the
+existence of a command.
 
-``` shell
-    # Canonicalize whitepaces:
-    # - delete at the beginning
-    # - delete at the end
-    # - in between, leave one space
-
-    sed -e 's/^[[:space:]]\+//' \
-        -e 's/[[:space:]]\+$//' \
-        -e 's/[[:space:]]\+/ /g' \
-        file
-```
-
-**Rationale:** Improve readability by
-following the "Clean Code" principle:
-one line, one action.
-
-## 10.4 Pipes
-
-Use a trailing pipe (|) at the end of a
-line to indicate that a command continues
-onto the next. Do not use backslashes
-(\\) for line continuation when using
-pipes. The pipe character itself is a
-natural line-continuation indicator in
-shell syntax. Indent subsequent lines to
-visually group the pipeline.
-
-``` shell
-    command1   |
-      command2 |
-      command3
-```
-
-The same priciple applies to also other
-operators:
-
-``` shell
-    command1     &&
-        command2 &&
-        command3 &&
-
-    command1     ||
-        command2 ||
-        command3 ||
-```
-
-**Discussion**
-
-The [Google Bash Style Guide]
-recommends placing the pipe operator
-(|) at the start of the following line.
-While this makes the "action" (the
-pipe) vertically aligned and visually
-prominent, it requires redundant
-backslashes (\\) at the end of every
-preceding line to prevent the shell
-from terminating the command early.
-
-This approach does not allign with
-the [Less is More] (LIM) principle. A
-trailing pipe is already a valid
-line-continuation marker in POSIX
-shells. The following code contains
-"more noise". In addition, it is
-prone to syntax error if accidental
-trailing spaces are present.
-
-``` shell
-    # Google
-    command1 \
-      | command2 \
-      | command4
-```
-
-The backslashes at the end of lines are
-prone to subtle errors. The following
-would cause an error: `Syntax error:
-"|" unexpected`
-
-``` shell
-    echo abc \<space character here>
-         | wc --bytes
-```
-
-## 10.5 Use Standard if..fi
-
-Use standard `if..fi`. Avoid clever
-logical `&&` or `||` with blocks.
-
-``` shell
-    # Preferred
-    if <statement>; then
-        # Clear to all readers
+```shell
+    # Check if command exists
+    if ! command -v sqlite3 > /dev/null 2>&1; then
+        echo "ERROR: no sqlite3 available" >&2
+        exit 1
     fi
-
-    # Avoid
-    <statement> && {
-        # many
-        # statements
-        # here
-    }
 ```
 
-**Rationale:** Complex Shell-only
-blocks sacrifice clarity for readers
-unfamiliar with shell shorthands.
+**Rationale:** command -v is a standard
+POSIX utility that behaves consistently
+across compliant shells, unlike the
+non-portable which command.
 
-## 10.6 Mathematical Calculations
+**Discussion:** In some shells (like
+Bash), `command -v` may prioritize
+aliases over the PATH. To ensure you are
+locating the actual executable in the
+PATH—similar to the behavior of
+which—wrap the check in a subshell to
+safely ignore aliases:
 
-Omit the `$` in POSIX arithmetic
-expansions. The shell automatically
-treats names as variables and evaluates
-their values.
-
-``` shell
-    result=$((n + m))   # Preferred
-    result=$(($n + $m)) # Avoid
-```
-
-**Rationale:** [Less Is More]
-Using the `$` inside the parenthese
-is redundant.
-
-**Discussion**
-
-The POSIX `$((...))` only handles
-integers. For decimals, use [bc] or
-[awk].
-
-``` shell
-    i=0.5
-    j=0.1
-
-    # No leading zero: .6
-    k=$(echo "$i + $j" | bc)
-
-    # With leading zero: 0.6
-    k=$(printf "%g" "$(echo "$i + $j" | bc)")
-
-    # POSIX awk
-    k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
+```shell
+    (unalias sqlite3; command -v sqlite3) > /dev/null 2>&1
 ```
 
 ## 11.0 Bash Notes
@@ -1986,7 +2016,7 @@ functions. Avoid the Bash-specific
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
-`((...))`.
+`((...))` if possible.
 
 Example: arithmetic
 
