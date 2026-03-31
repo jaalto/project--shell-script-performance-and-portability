@@ -1896,18 +1896,17 @@ existence of a command.
     fi
 ```
 
-**Rationale:** command -v is a standard
+**Rationale:** `command -v` is a standard
 POSIX utility that behaves consistently
 across compliant shells, unlike the
-non-portable which command.
+non-portable `which` command.
 
 **Discussion:** In some shells (like
 Bash), `command -v` may prioritize
-aliases over the PATH. To ensure you are
+aliases over the [PATH]. To ensure
 locating the actual executable in the
 PATH—similar to the behavior of
-which—wrap the check in a subshell to
-safely ignore aliases:
+`which`—use subshell to ignore aliases:
 
 ```shell
     (unalias sqlite3; command -v sqlite3) > /dev/null 2>&1
