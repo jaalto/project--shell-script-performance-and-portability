@@ -1874,8 +1874,12 @@ recommended:
     # In macOS, to use latest Bash,
     # set in shell startup file ~/.zshrc
     PATH="$(brew --prefix bash):$PATH"
+```
 
-    ... in scripts, portable
+In scripts:
+
+```bash
+    ... portable
 
     #! /usr/bin/env bash
 
