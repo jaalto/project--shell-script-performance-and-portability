@@ -1505,9 +1505,9 @@ denominator of all native Windows
 Linux-like environments is the [Cygwin]
 base which, in all practical terms,
 provides the usual command-line
-utilities, including Bash. For curious
-readers, Windows software
+utilities.
 
+For curious readers, Windows software
 [MobaXterm](https://mobaxterm.mobatek.net),
 offers X server, terminals and other
 connectivity features, but also comes
