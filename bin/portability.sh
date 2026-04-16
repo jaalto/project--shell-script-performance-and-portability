@@ -28,7 +28,7 @@ set -o nounset # Treat unused variables as errors
 
 # is used
 # shellcheck disable=SC2034
-VERSION="2025.1222.1645"
+VERSION="2026.0416.2002"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
@@ -59,6 +59,7 @@ sh,\
 posh,\
 dash,\
 pbosh,\
+osh,\
 busybox ash,\
 mksh,\
 ksh,\
@@ -71,6 +72,7 @@ SHELL_LIST_DEFAULT_DASH="\
 posh,\
 dash,\
 pbosh,\
+osh,\
 busybox ash,\
 mksh,\
 ksh,\
@@ -223,6 +225,11 @@ ShellVersionMain ()
                 print
                 exit
             }'
+            ;;
+        osh | */osh)
+            # ignore $var in single quote
+            # shellcheck disable=SC2016
+            $sh -c 'echo $OIL_VERSION' 2> /dev/null
             ;;
         *posh*)
             # ignore $var in single quote
