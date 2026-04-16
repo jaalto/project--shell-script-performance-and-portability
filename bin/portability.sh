@@ -28,7 +28,7 @@ set -o nounset # Treat unused variables as errors
 
 # is used
 # shellcheck disable=SC2034
-VERSION="2026.0416.2002"
+VERSION="2026.0416.2008"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
@@ -127,6 +127,9 @@ OPTIONS
     --help-pbosh
         Display pbosh shell install help.
 
+    --help-oil-shell, --help-osh
+        Display sh shell install help.
+
     -h, --help
         Display help.
 
@@ -182,6 +185,29 @@ HelpBposh ()
 
     install -D -m 644 OBJ/x86_64-linux-gcc/man/pbosh.1 /usr/local/man/man1/pbosh.1
     install -m 755 OBJ/x86_64-linux-gcc/pbosh /usr/local/bin/'
+
+    exit 0
+}
+
+HelpOsh ()
+{
+    # ignore single quote
+    # shellcheck disable=SC2016
+
+    echo 'THE OIL SHELL (osh)
+
+    See https://oils.pub/
+    To install in /user/local as root:
+
+    wget https://oils.pub/download/oils-for-unix-0.NN.N.tar.gz
+
+    tar -xf *.tar.gz
+    apt-get install systemtap-sdt-dev libreadline-dev
+
+    ./configure --with-readline
+
+    _build/oils.sh
+    ./install'
 
     exit 0
 }
@@ -593,6 +619,10 @@ Main ()
             --help-pbosh)
                 shift
                 HelpBposh
+                ;;
+            --help-oil-shell | --help-osh)
+                shift
+                HelpOsh
                 ;;
             -h | --help)
                 shift
