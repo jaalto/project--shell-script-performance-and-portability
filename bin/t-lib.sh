@@ -357,6 +357,12 @@ IsOsWinWsl ()
 # TODO: IsShellDash
 # TODO: IsShellBusybox
 
+IsShellOsh ()
+{
+    # https://oils.pub
+    [ "${OIL_VERSION:-}" ]
+}
+
 IsShellPosh ()
 {
     # pdksh derivate shell
