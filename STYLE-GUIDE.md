@@ -790,14 +790,14 @@ the lines are "drifted."
 
 ### 3.4 Naming Conventions
 
-**Functions:** Use [CamelCase] for
+**Functions:** Use upper [CamelCase] for
 functions starting with an uppercase
 letter (e.g., `IsNumber`).
 **Rationale:** Uppercase function
 names minimize conflicts with existing
 lowercase utility commands.
 
-**Local Variables:** Use [camelCase]
+**Local Variables:** Use lower [camelCase]
 for variables. Start with a lowercase
 letter (e.g., `maxLength`).
 **Rationale:** Less visual noise
