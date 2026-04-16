@@ -13,7 +13,7 @@ INFORMATION FOR EDITING
   Markdown: Open Preview to the side C-k v
   [upper right:eye-icon button] Open Preview to the Side
 
-- URL text fragments: #:~:text=
+ URL text fragments: #:~:text=
   https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments
 
 - About accessibility
@@ -2391,6 +2391,8 @@ discussion forum
   preserving the project and some
   history at
   [Reddit](https://www.reddit.com/r/linux/comments/w9vrpx/continued_development_of_j%C3%B6rg_schillings_tools/?rdt=56420).
+- The sh compatible Oil shell (osh)
+  is available at https://oils.pub
 - Super simple `s` command
   interpreter to write shell-like
   scripts (security oriented):
