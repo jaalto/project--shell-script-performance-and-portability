@@ -217,9 +217,25 @@ across POSIX-compliant systems. The
 system's POSIX-compliant shell
 implementation is located at `/bin/sh`.
 
-Note: To improve readability, add a
+**Note 1**: To improve readability, add a
 single space after the [shebang] and
 before the interpreter path.
+
+**Note 2**: Strictly adhere to `/bin/sh`.
+While some non-[FHS] systems (like [NixOS])
+use `/usr/bin/env` to locate binaries,
+the POSIX standard specifically mandates
+that a POSIX-compliant shell must be
+accessible via the literal path
+`/bin/sh`. Never use shebang:
+
+```
+#! /usr/bin/env sh
+```
+
+which would introduce a dependency on a
+non-guaranteed path, thereby reducing the
+portability of the script.
 
 ### 2.2 Project Metadata
 
@@ -2177,6 +2193,7 @@ Google search help:
 
 <!-- ------- REF:POSIX ------- -->
 
+[FHS]: https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
 [POSIX]: https://pubs.opengroup.org/onlinepubs/9799919799/
 
 [PATH]: <https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap08.html#:~:text=This%20variable%20shall%20represent%20the%20sequence%20of%20path%20prefixes>
@@ -2292,5 +2309,7 @@ Google search help:
 [TIOBE index]: https://www.tiobe.com/tiobe-index/
 [PLrank]: https://plrank.com
 [PLrankings]: https://plrankings.github.io
+
+[NixOS]: https://nixos.org
 
 <!-- END OF FILE -->
