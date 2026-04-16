@@ -1782,9 +1782,11 @@ integers. For decimals, use [bc] or
 
 ## 10.5 echo vs printf
 
-Use POSIX [echo] without any options for
-regular output. Reserve [printf] for more
-complex handling.
+Use the POSIX [echo] command without
+options for regular output. Reserve
+[printf] for complex handling or when
+embedded newlines `\n` are required for
+multiline output.
 
 ``` shell
     # Preferred. Simple code.
@@ -1792,7 +1794,7 @@ complex handling.
     echo "$var"
 
     # Avoid. More complex to read
-    printf '%s\n' "$var"
+    printf -- '%s\n' "$var"
 ```
 
 **Discussion:** In the spirit of [Less Is
