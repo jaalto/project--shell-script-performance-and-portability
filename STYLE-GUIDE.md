@@ -1513,6 +1513,7 @@ ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
 bash  | yes
 bash --posix 3.2 | yes (macOS /bin/sh)
 zsh   | yes
+osh   | yes (Oil shell)
 
 **Note about Dynamic Scope**
 
