@@ -1063,11 +1063,11 @@ See [Bash Guide/SignalTrap].
         [ "${TMPBASE:-}" ] || exit "$ret"
 
         # See 5.1 for $TMPBASE
-        rm --force --recursive "$TMPBASE"*
+        rm --force --recursive -- "$TMPBASE"*
         exit "$ret"
     }
 
-    trap 'AtExit' EXIT HUP INT QUIT TERM
+    trap 'AtExit $?' EXIT HUP INT QUIT TERM
 ```
 
 # 6.0 Variables
