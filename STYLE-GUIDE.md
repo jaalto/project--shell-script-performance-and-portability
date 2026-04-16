@@ -1320,8 +1320,10 @@ splitting or globbing.
 
 ## 8.1 Errors to Stderr
 
-Send error messages to stderr. Put
-stderr redirection `>&2` at the end of line.
+Send warnings and error messages to
+stderr. Anything parsable else to stdout.
+Put stderr redirection `>&2` at the end
+of line.
 
 ``` bash
     # Preferred
