@@ -132,7 +132,7 @@ fi
 AtExitDefault ()
 {
     if [ "${TMPBASE:-}" ]; then
-        $RM --force "$TMPBASE"*
+        $RM --force -- "$TMPBASE"*
     fi
 }
 
