@@ -1983,12 +1983,17 @@ compatibility with `/bin/sh`, allowing
 scripts to benefit from faster startup
 and fewer forks.
 
+**Discussion:** Consult
+https://mywiki.wooledge.org/Bashism for
+more ideas how to reduce Bash specific
+features.
+
 ### 11.3 Bash Statements To Be Avoided
 
-Avoid obsolete artihmetic expressions
-`$[...]` and the the [let] built-in.
-There exist better and more portable
-POSIX compound command altenatives.
+1. Avoid obsolete artihmetic expressions
+`$[...]`and [let] built-in. There exist
+better and more portable POSIX compound
+command altenatives.
 
 Avoid             | Alternative
 ---------         | ----------------
@@ -1996,9 +2001,8 @@ archaic `$[...]`  | POSIX `$((...))`
 `let ...`         | POSIX `$((...))`
 `declare`         | `local`
 
-Use `local` for variable scoping within
-functions. Avoid the Bash-specific
-[declare] built-in.
+2. Avoid the Bash-specific [declare]
+built-in.
 
 **Rationale:**
 
@@ -2036,12 +2040,12 @@ double-parentheses arithmetic expression
 Example: arithmetic
 
 ``` shell
-    # Preferred. POSIX, portable
+    # Preferred. POSIX, portable.
     if [ 1 -gt 0 ]; then
        ...
     fi
 
-    # Bash only
+    # Bash, Ksh, Zsh specific
     if (( 1 > 0 )); then
         ...
     fi
