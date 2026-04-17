@@ -96,21 +96,20 @@ Python for anyting complicated?
 Well, in the right hands, shell scripts
 can be highly performant, feature-rich,
 modular, and maintainable—provided they
-are authored with a professional software
-engineering approach rather than a
-"throwaway" mindset. This document was
-prompted by a practical need to analyze
-the capabilities of an existing codebase
-following the implementation of a modular
-CI Linting and text based reporting
-system comprising, among other things,
-separate modules of 20 000+ lines of
-shell code. While the initial goal was to
-explore how to harness greater
-performance, the resulting insights into
-POSIX standards and portability
-considerations proved to be an invaluable
-secondary benefit.
+are authored with a professional
+software engineering approach rather
+than a "throwaway" mindset. This
+document was prompted by a practical
+need to analyze the capabilities of an
+existing codebase following the
+implementation of a modular CI Linting
+and text based reporting system
+comprising battery of shell scripts.
+While the initial goal was to explore
+how to harness greater performance, the
+resulting insights into POSIX standards
+and portability considerations proved to
+be an invaluable secondary benefit.
 
 The tests reflect results under Linux
 using GNU utilities. The focus is on the
