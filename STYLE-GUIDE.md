@@ -912,6 +912,13 @@ two options.
     set -o errtrace
     set -o pipefail
 ```
+**Rationale:**
+
+The minimum settings (*errexit, nounset*)
+treat errors and unset variables as
+fatal, preventing unexpected behavior. Be
+sure to also learn their caveats from
+[Bash FAQ/105] and [Bash Pitfalls/60].
 
 **Detail: pipefail**
 
@@ -933,13 +940,19 @@ ksh93  | yes
 dash   | yes (since 2023)
 busybox ash | maybe. Depends on compile-time configuration (CONFIG_ASH_PIPEFAIL). Often enabled in modern distros like Alpine that is used in containers.
 
-**Rationale:**
+Consider this pipeline:
 
-The minimum settings (*errexit, nounset*)
-treat errors and unset variables as
-fatal, preventing unexpected behavior. Be
-sure to also learn their caveats from
-[Bash FAQ/105] and [Bash Pitfalls/60].
+``` shell
+    grep "regexp" file | sort
+```
+
+If file does not exist, `grep` fails with
+an error. However `sort` receives an
+empty input, successfully sorts nothing,
+and exits with ok status. The Result: The
+shell thinks the entire command
+succeeded, even though the data was never
+processed.
 
 **Discussion**
 
