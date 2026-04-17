@@ -1588,7 +1588,7 @@ keyword.
     IsCommand ()
     {
         [ "${1:-}" ] || return 1
-        command -v "${1:-}" > /dev/null 2>&1
+        command -v -- "${1:-}" > /dev/null 2>&1
     }
 
     if ! IsCommand local; then
