@@ -922,8 +922,11 @@ sure to also learn their caveats from
 
 **Detail: pipefail**
 
-To enable non-POSIX `pipefail` in shells
-that support it, use:
+Even though pipefail is now standard,
+there is a lag between a specification
+being published and it being implemented
+in every system's `/bin/sh´. The safe way
+to enable it in shells that support it:
 
 ``` shell
     # Portable 'pipefail' enable
@@ -940,10 +943,11 @@ ksh93  | yes
 dash   | yes (since 2023)
 busybox ash | maybe. Depends on compile-time configuration (CONFIG_ASH_PIPEFAIL). Often enabled in modern distros like Alpine that is used in containers.
 
-POSIX specified that the exit status of a
-pipeline was determined only by the last
-command in the sequence. This created a
-major silent failure vulnerability.
+Without `pipefail` POSIX specifies that
+the exit status of a pipeline is
+determined only by the last command in
+the sequence. This creates a major silent
+failure vulnerability.
 
 Consider this pipeline:
 
