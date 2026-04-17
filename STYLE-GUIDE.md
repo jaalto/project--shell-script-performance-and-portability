@@ -2249,6 +2249,13 @@ chain for improved auditing.
   [React Strict Mode] library for
   Node.js, and [PowerShell strict mode].
 
+Other shell style guides:
+
+- Google shell Style Guide
+  https://google.github.io/styleguide/shellguide.html
+- The Chromium Project shell Style Guide
+  https://www.chromium.org/chromium-os/developer-library/reference/style-guides/shell/
+
 <!-- links -->
 
 <!-- ------- REF:LANG -------- -->
