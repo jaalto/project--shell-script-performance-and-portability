@@ -2306,6 +2306,9 @@ chain for improved auditing.
   https://www.shellcheck.net
 - Shell script Unit Testing framework
   https://github.com/kward/shunit2/blob/master/shunit2
+- Annotation based documentation, similar to
+  Javadoc, PHPdoc docblocks
+  https://github.com/reconquest/shdoc
 - The "Unofficial Bash Strict Mode" blog
   post by Aaron Maxwell. Warning: The
   post contains a few serious errors,
