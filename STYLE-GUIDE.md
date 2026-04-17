@@ -1785,7 +1785,7 @@ statements:
 
     # POSIX awk. With eading zero.
     k=$(awk "BEGIN {print $i + $j}" < /dev/null)
-
+```
 ## 10.5 echo vs printf
 
 Use the POSIX [echo] command without
@@ -1932,6 +1932,34 @@ require no additional logic. Under `set
 non-existent or non-executable command
 terminates the script automatically.
 See [4.1 Execution Safety](#4.1-execution-safety)
+
+## 10.6 Awk and passing variables
+
+Use [awk] option `-v` to define
+variables. Defining variable in
+order top-down and left-to-right is
+easier to read than writing
+assignments after the program.
+
+```shell
+
+    # Preferred
+    awk -v re="x" '$0 ~ re {print}' file
+
+    # Avoid
+    awk '$0 ~ re {print}' re="x" file
+```
+
+**Note:** When using a `BEGIN` block
+without input files, remember to include
+an `exit` call. Otherwise, awk will proceed
+to the main loop and wait for input from
+stdin.
+
+```shell
+    # Add 'exit'
+    awk -v var=1 'BEGIN {print var + 1; exit}'
+```
 
 ## 11.0 Bash Notes
 
