@@ -2045,10 +2045,12 @@ compatibility with `/bin/sh`, allowing
 scripts to benefit from faster startup
 and fewer forks.
 
-**Discussion:** Consult
-https://mywiki.wooledge.org/Bashism for
-more ideas how to reduce Bash specific
-features.
+**Discussion:** Consult the following
+pages for more ideas how to reduce Bash
+specific features:
+
+- https://mywiki.wooledge.org/Bashism
+- https://wiki.ubuntu.com/DashAsBinSh
 
 ### 11.3 Bash Statements To Be Avoided
 
