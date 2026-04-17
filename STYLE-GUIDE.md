@@ -1056,9 +1056,20 @@ should exit with 0 for success and a
 non-zero value to indicate a failure
 or specific error condition.
 
-```
+```shell
     <...code...>
     exit 0 # success
+```
+
+**Rationale:** Without the proper exit
+status the commands behave unpredictably
+and cannot be combined together like the
+standard utilities:
+
+```shell
+    program.sh || echo "FATAL: failure"
+
+    check.sh && build.sh
 ```
 
 # 5.0 Temporary Files
