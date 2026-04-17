@@ -1739,30 +1739,17 @@ remains a self-contained unit.
     One
 ```
 
-## 9.3 Function Local Variables in Ksh
+## 9.3 Function Local Variables Bootstrap
 
-If supporting BSD or UNIX systems that
-may use [ksh] as `/bin/sh` is required,
-include the necessary code at the
-script's start to emulate the `local`
-keyword.
+To support BSD or UNIX systems that may
+use [ksh] as `/bin/sh`, include following
+code at the beginning to emulate the
+`local` keyword.
 
 ``` shell
-    IsCommand ()
-    {
-        [ "${1:-}" ] || return 1
-        command -v -- "${1:-}" > /dev/null 2>&1
-    }
-
-    if ! IsCommand local; then
-        if IsCommand typeset; then
-            # Use 'eval' to hide
-            # statement. Would otherwise
-            # cause program to exit due
-            # to parse error at 'local'.
-
-            eval 'local () { typeset "$@"; }'
-        fi
+    # ksh/BSD portability
+    if ! command -v local > /dev/null 2>&1; then
+        alias local=typeset
     fi
 ```
 
