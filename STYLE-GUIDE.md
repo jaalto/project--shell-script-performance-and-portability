@@ -1977,12 +1977,10 @@ after the interpreter path.
 unfortunately not portable across all
 operating systems. For example, in macOS,
 `/bin/bash` is hard-coded to Bash version
-3.2.x (from 2006). Even the root user
-cannot upgrade this version without
-disabling System Integrity Protection
-(SIP). Using the [env] command allows the
-script to use a newer version of Bash by
-searching the current PATH.
+3.2.x (from 2006). Using the [env]
+command allows the script to use a newer
+version of Bash by searching the current
+PATH.
 
 **Discussion**
 
