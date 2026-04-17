@@ -1094,7 +1094,7 @@ recently executed command.
 ## 4.3 Exit Status
 
 **Set a exit status:** Scripts
-should exit with 0 for success and a
+must exit with 0 for success and a
 non-zero value to indicate a failure
 or specific error condition.
 
