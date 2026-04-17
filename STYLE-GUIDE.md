@@ -1114,7 +1114,9 @@ constants.
 
 ## 6.2 Quote Variables
 
-Use `"$quoted"` variables.
+Use `"$quoted"` variables. For more
+information, see
+http://mywiki.wooledge.org/Quotes
 
 ## 6.3 Variable "$@"
 
