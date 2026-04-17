@@ -30,7 +30,7 @@ set -o nounset   # Treat unused variables as errors
 
 # is used
 # shellcheck disable=SC2034
-VERSION="2025.1219.1004"
+VERSION="2026.0417.0016"
 
 PROGRAM=${0##*/}
 AWK=${AWK:-awk}   # GNU version
@@ -144,6 +144,6 @@ Main ()
     Result "${@:-}"
 }
 
-Main "$@"
+IsSourced || Main "$@"
 
 # End of file
