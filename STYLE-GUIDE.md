@@ -900,25 +900,26 @@ two options.
     # Use readable long options
     # instead of 'set -eu'
 
-    # Recommended
+    # POSIX. Recommended
     # - Exit on error
-    # - unused vars
-    set -o errexit
-    set -o nounset
+    # - Exit on unused vars
+    set -o errexit # set -e
+    set -o nounset # set -u
 
-    # Optional
-    # - fail on $()
-    # - fail cmd on pipe
+    # Bash only: Optional
+    # - Fail on $()
+    # - Fail cmd on pipe
     set -o errtrace
     set -o pipefail
 ```
 
-**Rationale:** The minimum settings
-(*errexit, nounset*) treat errors and
-unset variables as fatal, preventing
-unexpected behavior. Be sure to also
-learn their caveats from [Bash FAQ/105]
-and [Bash Pitfalls/60].
+**Rationale:**
+
+The minimum settings (*errexit, nounset*)
+treat errors and unset variables as
+fatal, preventing unexpected behavior. Be
+sure to also learn their caveats from
+[Bash FAQ/105] and [Bash Pitfalls/60].
 
 **Discussion**
 
@@ -985,22 +986,31 @@ if the variable was defined as `$ext`).
     rm ./*"$extension"
 ```
 
-**Bottom Line:** Rather than adopting
-all-or-nothing stance on the utility of
-`set -o errexit`, a more robust strategy
-employs [Defense in Depth]. By
-integrating global safety flags with
-localized, explicit error handling (e.g.,
-`|| exit` and `if` blocks; see 4.2),
-developers create a multi-layered
-fail-safe system that mitigates the risks
-of both silent failures and subshell
-inconsistencies.
+**Bottom Line:**
 
 The `set -o` flags are not a set and
 forget solution, but a foundational
 safety layer that should be augmented by
 explicit checks.
+
+Rather than adopting all-or-nothing
+stance on the utility of `set -o
+errexit`, a more robust strategy employs
+[Defense in Depth]. By integrating global
+safety flags with localized, explicit
+error handling (e.g., `|| exit` and `if`
+blocks; see 4.2), developers create a
+multi-layered fail-safe system that
+mitigates the risks of both silent
+failures and subshell inconsistencies.
+
+TABLE: Execution Safety
+
+Layer     | Component | Purpose
+:---      | :---      | :---
+Active    | set -e, set -u | Immediate halt on obvious failures.
+Structural| "local" separation | Prevents "masked" errors that `set -e` would miss.
+Passive   | trap 'AtExit' EXIT | Guaranteed cleanup regardless of how the script ends.
 
 See the following for more information
 about the shortcoming and possible edge
