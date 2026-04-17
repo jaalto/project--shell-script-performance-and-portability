@@ -26,9 +26,16 @@
 set -o errexit # Exit on error
 set -o nounset # Treat unused variables as errors
 
+# Prevent call 'sh <program>' (sh, mksh, ksh ...)
+
+if [ ! "$BASH_VERSION" ]; then
+    echo "FATAL: $0 can only be run under bash" >&2
+    exit 1
+fi
+
 # is used
 # shellcheck disable=SC2034
-VERSION="2025.1219.1003"
+VERSION="2026.0417.0020"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
@@ -255,7 +262,7 @@ RunBash ()
         fi
 
         # TODO: could the time be accomplished
-        # by using Bach EPOCHTIME?
+        # by using Bash EPOCHTIME?
 
         # GET BASELINE
         # How long it takes to read a script
@@ -482,6 +489,6 @@ Main ()
     unset dummy shlist file
 }
 
-Main "${@:-}"
+IsSourced || Main "${@:-}"
 
 # End of file
