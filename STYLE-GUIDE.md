@@ -2182,7 +2182,53 @@ built-in.
   overhead of declare's various flags and
   attributes.
 
-### 11.4 Bash Arithmetic expression
+### 11.4 Bash and Arrays
+
+Avoid Bash-specific arrays with simple
+lists. The arrays can esily be
+implemented using a plain POSIX string.
+
+```shell
+    # POSIX
+    array=""
+    array="$array abc" # add end
+    array="def $array" # add beg
+
+    for item in $array
+    do
+        echo "$item"
+    done
+
+    # Bash
+    array=()
+    array+=("abc")
+    array+=("def")
+
+    for item in "${array[@]}"
+    do
+        echo "$item"
+    done
+```
+
+For storing items with space, use a
+separator like colon(:) in between:
+
+```shell
+    # POSIX
+    array=""
+    array="$array${array:+:}a b" # add end
+    array="c d${array:+:}$array" # add beg
+
+    saved="$IFS"
+    IFS=":"
+    for item in $array
+    do
+        echo "$item"
+    done
+    IFS=$saved
+```
+
+### 11.5 Bash Arithmetic expression
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
@@ -2251,7 +2297,7 @@ Bash seq          | 0.010
 Dash seq (/bin/sh)| 0.004
 ksh93 seq         | 0.004
 
-### 11.5 Bash Variable Tests
+### 11.6 Bash Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
@@ -2284,7 +2330,7 @@ portability.
 
 ```
 
-## 11.5 Bash and ERR trap error handler
+## 11.7 Bash and ERR trap error handler
 
 Use the Bash-specific `ERR` signal to
 trap errors and display a detailed call
