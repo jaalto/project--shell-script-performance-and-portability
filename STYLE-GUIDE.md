@@ -988,13 +988,14 @@ if the variable was defined as `$ext`).
 **Bottom Line:** Rather than adopting
 all-or-nothing stance on the utility of
 `set -o errexit`, a more robust strategy
-employs [Defense in Depth]. By integrating
-global safety flags with localized,
-explicit error handling (e.g., `|| exit`
-and `if` blocks), developers create a
-multi-layered fail-safe system that
-mitigates the risks of both silent
-failures and subshell inconsistencies.
+employs [Defense in Depth]. By
+integrating global safety flags with
+localized, explicit error handling (e.g.,
+`|| exit` and `if` blocks; see 4.2),
+developers create a multi-layered
+fail-safe system that mitigates the risks
+of both silent failures and subshell
+inconsistencies.
 
 The `set -o` flags are not a set and
 forget solution, but a foundational
