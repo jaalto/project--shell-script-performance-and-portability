@@ -1047,6 +1047,7 @@ macOS, always use the `-t` option and
 provide a template.
 
 ## 5.2 Using trap
+
 Use a [trap] to ensure proper cleanup
 of temporary files on script exit.
 See [Bash Guide/SignalTrap].
@@ -2159,6 +2160,36 @@ portability.
 
     rm -- "$file"
 
+```
+
+## 11.5 Bash and ERR trap error handler
+
+Use the Bash-specific `ERR` signal to
+trap errors and display a detailed call
+chain for improved auditing.
+
+```shell
+    # Enable trap in functions
+    set -o errtrace
+
+    ErrHandler ()
+    {
+        local status=$1
+
+        trap - ERR
+
+        echo "Aborting on error $status:"
+
+        local i=0
+        while caller $i
+        do
+            i=((i + 1))
+        done
+
+        exit "$?"
+    }
+
+    trap 'ErrHandler $?' ERR
 ```
 
 ## 12.0 References
