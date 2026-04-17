@@ -2141,7 +2141,7 @@ specific features:
 
 ### 11.3 Bash Statements To Be Avoided
 
-1. Avoid obsolete artihmetic expressions
+1. Avoid obsolete arithmetic expressions
 `$[...]`and [let] built-in. There exist
 better and more portable POSIX compound
 command altenatives.
