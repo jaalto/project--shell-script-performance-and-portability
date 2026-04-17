@@ -1317,6 +1317,43 @@ expression. In those languages, `if (x)`
 will fail to compile if `x` is an integer
 or a pointer/reference or similar.
 
+## 6.6 Incrementing variables
+
+Use standard, readable POSIX increment syntax:
+
+```shell
+    i=$((i + 1))
+```
+
+**Retionale:** Standard assignment logic
+is universal across nearly all
+programming languages, making the code
+immediately accessible to any developer.
+
+**Discussion:**
+
+Avoid arcane syntaxes that require deep,
+shell-specific knowledge to decipher. For
+example, the following pattern dates back
+to the pre-POSIX era:
+
+```shell
+    # Avoid: Side-effect-based incrementing
+    : $((i + 1))
+```
+
+To interpret this code, a maintainer must
+remember that the colon serves only to
+facilitate a mathematical side effect.
+While technically valid, such opaque
+constructs increase cognitive load and
+hinder the auditing process. Modern shell
+standards prioritize clarity of intent
+over syntactic cleverness; explicit
+assignments ensure that the script's
+logic is understood immediately and
+without ambiguity.
+
 # 7.0 Formatting and Syntax
 
 ## 7.1 Logical Grouping
