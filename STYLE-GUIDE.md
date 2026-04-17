@@ -1004,7 +1004,7 @@ multi-layered fail-safe system that
 mitigates the risks of both silent
 failures and subshell inconsistencies.
 
-TABLE: Execution Safety
+TABLE: Execution Safety as a combination of three distinct layers
 
 Layer     | Component | Purpose
 :---      | :---      | :---
