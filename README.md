@@ -1652,27 +1652,9 @@ compatible"?](https://unix.stackexchange.com/q/145522)
   the script:
 
 ``` bash
-    IsCommand ()
-    {
-        [ "${1:-}" ] || return 1
-        command -v -- "${1:-}" > /dev/null 2>&1
-    }
-
-    # Check if 'local' is supported
-    if ! IsCommand local; then
-        # Check if we are in ksh
-        if IsCommand typeset; then
-            # Use 'eval' to hide it
-            # from other shells.
-            # This ensures that
-            # defining a function
-            # with name 'local'
-            # does not generate an
-            # error and exit the
-            # program.
-
-            eval 'local () { typeset "$@"; }'
-        fi
+    # ksh/BSD portability
+    if ! command -v local > /dev/null 2>&1; then
+        alias local=typeset
     fi
 
     PortableLocal ()
