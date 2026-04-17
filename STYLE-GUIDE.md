@@ -2269,7 +2269,34 @@ built-in.
   overhead of declare's various flags and
   attributes.
 
-## 11.4 Bash and Arrays
+## 11.4 Bash ANSI-C Quoting
+
+Avoid shell-expanded, backslash-escaped
+characters `$'string'`, such as:
+
+```shell
+newline=$'\n'
+tab=$'\t'
+```
+
+**Rationale:** This syntax is not
+included in the POSIX standard. While
+supported by Bash, Ksh, Zsh, and recent
+versions of Dash and BusyBox Ash, it
+lacks universal portability. Use
+equivalent, portable POSIX alternatives
+instead:
+
+```shell
+# POSIX-compliant literal newline
+newline='
+'
+
+# POSIX-compliant character generation
+tab=$(printf "\t")
+```
+
+## 11.5 Bash and Arrays
 
 Avoid Bash-specific arrays with simple
 lists. The arrays can esily be
@@ -2315,7 +2342,7 @@ separator like colon(:) in between:
     IFS=$saved
 ```
 
-## 11.5 Bash Arithmetic expression
+## 11.6 Bash Arithmetic expression
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
@@ -2384,7 +2411,7 @@ Bash seq          | 0.010
 Dash seq (/bin/sh)| 0.004
 ksh93 seq         | 0.004
 
-## 11.6 Bash Variable Tests
+## 11.7 Bash Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
@@ -2417,7 +2444,7 @@ portability.
 
 ```
 
-## 11.7 Bash and ERR trap error handler
+## 11.8 Bash and ERR trap error handler
 
 Use the Bash-specific `ERR` signal to
 trap errors and display a detailed call
