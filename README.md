@@ -1656,7 +1656,7 @@ compatible"?](https://unix.stackexchange.com/q/145522)
     IsCommand ()
     {
         [ "${1:-}" ] || return 1
-        command -v "${1:-}" > /dev/null 2>&1
+        command -v -- "${1:-}" > /dev/null 2>&1
     }
 
     # Check if 'local' is supported
