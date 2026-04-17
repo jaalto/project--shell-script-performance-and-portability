@@ -1786,16 +1786,17 @@ assignment.
 
 **Rationale:**
 
-The `local` is a command. A statement
-`local var=$(process)` is vulnerable
-because In some older shells, using `local
-var=$(command)` will actually return an exit
-code of 0 (success) because the `local`
-command itself succeeded, even though the
-process substitution may have failed
-
-Use the following, which is compatible
-with the Ksh shell (see 9.3):
+The `local` keyword is a built-in command.
+Combining it with a subshell, as in `local
+var=$(command)`, is risky because the
+local command returns an exit status of 0
+(success) as long as the variable is
+successfully declared. This masks the
+failure of the subshell command.
+Separating the declaration from the
+assignment is the only way to ensure that
+`set -e` or manual error checking correctly
+detects a subshell failure.
 
 ## 9.5 Function Argument Handling
 
