@@ -35,7 +35,7 @@ set -o nounset # Treat unused variables as errors
 
 # is used
 # shellcheck disable=SC2034
-VERSION="2025.1219.1002"
+VERSION="2026.0417.0013"
 
 PROGRAM=${0##*/}
 pwd=$(cd "$(dirname "$0")" && pwd)
@@ -127,6 +127,6 @@ Main ()
     Builtins
 }
 
-Main "${@:-}"
+IsSourced || Main "${@:-}"
 
 # End of file
