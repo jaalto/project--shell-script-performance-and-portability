@@ -885,7 +885,7 @@ trailing characters.
 
 # 4.0 Error Handling
 
-## 4.1 Execution Safety
+## 4.1 Execution Safety like set -o errexit
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -951,14 +951,14 @@ misconfiguration.
 The other benefit of enabling these
 flags is that less code is needed to
 read and maintain in the spirit of
-[Less Is More].
+[Less Is More] principle.
 
 The following code is simple; the script
 will exit immediately if the directory
 does not exist or if `$extension` has
-been misspelled (e.g., if the variable
+been misspelled; the variable
 was defined as `$ext` but called as
-`$extension`).
+`$extension`.
 
 ```shell
     # Preferred.
@@ -984,6 +984,22 @@ if the variable was defined as `$ext`).
     cd "$dir" || exit "$?"
     rm ./*"$extension"
 ```
+
+**Bottom Line:** Rather than adopting
+all-or-nothing stance on the utility of
+set -o errexit, a more robust strategy
+employs [Defense in Depth]. By integrating
+global safety flags with localized,
+explicit error handling (e.g., `|| exit`
+and `if` blocks), developers create a
+multi-layered fail-safe system that
+mitigates the risks of both silent
+failures and subshell inconsistencies.
+
+The `set -o` flags are not a set and
+forget solution, but a foundational
+safety layer that should be augmented by
+explicit checks.
 
 ## 4.2 Explicit Error Checking
 
@@ -2371,5 +2387,6 @@ Google search help:
 [PLrankings]: https://plrankings.github.io
 
 [NixOS]: https://nixos.org
+[Defense in Depth]: https://en.wikipedia.org/wiki/Defense_in_depth_(computing)
 
 <!-- END OF FILE -->
