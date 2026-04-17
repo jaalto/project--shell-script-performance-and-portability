@@ -913,6 +913,26 @@ two options.
     set -o pipefail
 ```
 
+**Detail: pipefail**
+
+To enable non-POSIX `pipefail` in shells
+that support it, use:
+
+``` shell
+    # Portable 'pipefail' enable
+    (set -o pipefail 2> /dev/null) && set -o pipefail
+```
+
+TABLE: pipefail support in shells
+
+Shell  | Support
+:---   | :---
+bash   | yes
+zsh    | yes
+ksh93  | yes
+dash   | yes (since 2023)
+busybox ash | maybe. Depends on compile-time configuration (CONFIG_ASH_PIPEFAIL). Often enabled in modern distros like Alpine that is used in containers.
+
 **Rationale:**
 
 The minimum settings (*errexit, nounset*)
