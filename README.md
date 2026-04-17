@@ -78,7 +78,6 @@ Table of Contents
     - [4.4.3 The fine print of /usr/bin/env in shebang](#443-the-fine-print-of-usrbinenv-in-shebang)
   - [4.5 PORTABILITY OF UTILITIES](#45-portability-of-utilities)
     - [4.5.1 Case Study: sed](#451-case-study-sed)
-    - [4.5.2 Case Study: awk](#451-case-study-awk)
   - [4.6 MISCELLANEUS NOTES](#46-miscellaneus-notes)
 - [5.0 RANDOM NOTES](#50-random-notes)
 - [6.0 FURTHER READING](#60-further-reading)
@@ -2169,35 +2168,6 @@ StackOverflow [3](https://stackoverflow.com/q/7573368).
     sed 's/this/that/g' file > "$tmp" &&
     mv "$tmp" file &&
     rm -f "$tmp"
-```
-
-### 4.5.2 Case Study: awk
-
-POSIX [awk] does not support the
-GNU option `-v` option to define
-variables. You can use assignments
-after the program instead.
-
-```shell
-    # POSIX
-    awk '{print var}' var=1 file
-
-    # GNU awk
-    awk -v var=1 '{print var}' file
-```
-
-However, don't forget that such
-assignments are not evaluated until
-they are encountered, that is, after
-any `BEGIN` action. To use awk for
-operands without any files:
-
-```shell
-    # POSIX
-    var=1 awk 'BEGIN {print ENVIRON["var"] + 1}' < /dev/null
-
-    # GNU awk
-    awk -v var=1 'BEGIN {print var + 1; exit}'
 ```
 
 ## 4.6 MISCELLANEOUS NOTES
