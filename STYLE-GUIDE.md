@@ -1336,7 +1336,73 @@ the `; then` on the same line.
     fi
 ```
 
-## 7.4 Case Statements
+## 7.4 Logical Operators
+
+Use only shell-level `&&` and `||` to
+chain logical statements. Avoid the
+internal `-a` (and) and `-o` (or) options
+within the `[` [test] command.
+
+```shell
+    if [ <test> ] || [ <test> ]; then
+        # Do something
+    fi
+
+    if [ <test> ] && [ <test> ]; then
+        # Do something
+    fi
+```
+
+**Rationale:**
+
+The `-a` and `-o` flags are marked as
+obsolescent by POSIX. Their use leads to
+fragile code because the `[` command's
+parsing becomes ambiguous if variables
+are empty or contain special characters
+(like !, (, or -). Using `&&` and `||`
+ensures the shell handles the logic,
+providing consistent and predictable
+behavior.
+
+```shell
+    # Avoid
+    if [ <test> -o <test> ]; then
+        # Do something
+    fi
+
+    # Avoid
+    if [ <test> -a <test> ]; then
+        # Do something
+    fi
+```
+
+**Discussion:**
+
+The preferred approach utilizes
+short-circuit evaluation. In the
+following example, the subshell `$(id
+-u)` is never called if `$checkRoot` is
+empty or null, saving system resources
+and preventing errors. Conversely, some
+implementations of [ may evaluate all
+arguments before processing the flags,
+meaning the subshell is called regardless
+of the first condition's result:
+
+```shell
+    # Preferred
+    if [ "$checkRoot" ] && [ "$(id -u)" = "0" ]; then
+        # Do something
+    fi
+
+    # Avoid
+    if [ "$checkRoot" -a "$(id -u)" = "0" ]; then
+        # Do something
+    fi
+```
+
+## 7.5 Case Statements
 
 Place pattern case terminators `;;` in
 their own lines.
