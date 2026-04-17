@@ -2169,9 +2169,9 @@ stdin.
     awk -v var=1 'BEGIN {print var + 1; exit}'
 ```
 
-## 11.0 Bash Notes
+# 11.0 Bash Notes
 
-### 11.1 Bash Shebang
+## 11.1 Bash Shebang
 
 Use the portable env [shebang] line.
 Improve readability by adding a space
@@ -2206,7 +2206,7 @@ assumption that virtually all modern
 systems provide [env] utility at this
 specific path.
 
-### 11.2 Limiting Bashism
+## 11.2 Limiting Bashism
 
 In the spirit of the [Less Is More]
 philosophy, even in Bash, default to
@@ -2226,7 +2226,7 @@ specific features:
 - https://mywiki.wooledge.org/Bashism
 - https://wiki.ubuntu.com/DashAsBinSh
 
-### 11.3 Bash Statements To Be Avoided
+## 11.3 Bash Statements To Be Avoided
 
 1. Avoid obsolete arithmetic expressions
 `$[...]`and [let] built-in. There exist
@@ -2269,7 +2269,7 @@ built-in.
   overhead of declare's various flags and
   attributes.
 
-### 11.4 Bash and Arrays
+## 11.4 Bash and Arrays
 
 Avoid Bash-specific arrays with simple
 lists. The arrays can esily be
@@ -2315,7 +2315,7 @@ separator like colon(:) in between:
     IFS=$saved
 ```
 
-### 11.5 Bash Arithmetic expression
+## 11.5 Bash Arithmetic expression
 
 Avoid Bash-specific constructs like the
 double-parentheses arithmetic expression
@@ -2384,7 +2384,7 @@ Bash seq          | 0.010
 Dash seq (/bin/sh)| 0.004
 ksh93 seq         | 0.004
 
-### 11.6 Bash Variable Tests
+## 11.6 Bash Variable Tests
 
 For simple tests, avoid
 [double bracket] conditional `[[...]]`.
@@ -2447,7 +2447,7 @@ chain for improved auditing.
     trap 'ErrHandler $?' ERR
 ```
 
-## 12.0 References
+# 12.0 References
 
 - Allman style (aka BSD style)
   https://en.wikipedia.org/wiki/Indentation_style#Allman_style
