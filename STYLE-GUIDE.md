@@ -575,20 +575,20 @@ regarding the script's CLI limitations.
         $PROGRAM [options]
 
     OPTIONS
+        -D, --debug
+            Turn on debug.
+
         -f, --file FILE
             Use FILE.
 
         -t, --test, --dry-run
             Run in test mode.
 
-        -D, --debug
-            Turn on debug.
-
-        -v, --version
-            Display version and exit.
-
         -v, --verbose
             Display verbose message.
+
+        -V, --version
+            Display version and exit.
 
         -h, --help
             Display help and exit.
