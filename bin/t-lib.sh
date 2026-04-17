@@ -136,6 +136,13 @@ AtExitDefault ()
     fi
 }
 
+IsCommandExist ()
+{
+    [ "${1:-}" ] || return 1
+
+    command -v "$1" > /dev/null 2>&1
+}
+
 SetupTrapAtExit ()
 {
     if ! IsCommandExist AtExit; then
@@ -156,13 +163,6 @@ TrapReset ()
 {
     # Clear our traps
     trap - EXIT HUP INT QUIT TERM
-}
-
-IsCommandExist ()
-{
-    [ "${1:-}" ] || return 1
-
-    command -v "$1" > /dev/null 2>&1
 }
 
 IsMatchGlob () # args: GLOB STR
