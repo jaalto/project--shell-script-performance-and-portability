@@ -1972,13 +1972,10 @@ specific path.
 
 ### 11.2 Limiting Bashism
 
-Even in Bash, default to POSIX syntax
-unless Bash-specific features are
-explicitly required.
-
-Consult https://mywiki.wooledge.org/Bashism
-for more ideas how to reduce Bash specific
-features.
+In the spirit of the [Less Is More]
+philosophy, even in Bash, default to
+POSIX syntax unless Bash-specific
+features are explicitly required.
 
 **Rationale:** This ensures broader
 system portability and later
