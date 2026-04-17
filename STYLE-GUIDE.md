@@ -1980,7 +1980,7 @@ operating systems. For example, in macOS,
 3.2.x (from 2006). Using the [env]
 command allows the script to use a newer
 version of Bash by searching the current
-PATH.
+[PATH].
 
 **Discussion**
 
