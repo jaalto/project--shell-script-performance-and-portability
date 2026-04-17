@@ -1661,11 +1661,12 @@ one line, one action.
 
 Use a trailing pipe (|) at the end of a
 line to indicate that a command continues
-onto the next. Do not use backslashes
-(\\) for line continuation when using
-pipes. The pipe character itself is a
-natural line-continuation indicator in
-shell syntax. Indent subsequent lines to
+onto the next. Avoid backslashes (\\) for
+line continuation when using pipes.
+
+The pipe character itself is a natural
+line-continuation indicator in shell
+syntax. Indent subsequent lines to
 visually group the pipeline.
 
 ``` shell
@@ -1766,9 +1767,11 @@ is redundant.
 
 **Discussion**
 
-The POSIX `$((...))` only handles
-integers. For decimals, use [bc] or
-[awk].
+The POSIX `$((...))` syntax only handles
+integers. For decimals, use bc or awk.
+There is no practical difference in
+execution speed among the following
+statements:
 
 ``` shell
     i=0.5
@@ -1780,9 +1783,8 @@ integers. For decimals, use [bc] or
     # With leading zero: 0.6
     k=$(printf "%g" "$(echo "$i + $j" | bc)")
 
-    # POSIX awk
-    k=$(i="$i" j="$j" awk 'BEGIN {print ENVIRON["i"] + ENVIRON["j"] }')
-```
+    # POSIX awk. With eading zero.
+    k=$(awk "BEGIN {print $i + $j}" < /dev/null)
 
 ## 10.5 echo vs printf
 
