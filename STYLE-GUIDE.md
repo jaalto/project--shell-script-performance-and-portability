@@ -2304,6 +2304,8 @@ chain for improved auditing.
 - Shellcheck - static shell script code
   analysis
   https://www.shellcheck.net
+- Shell script Unit Testing framework
+  https://github.com/kward/shunit2/blob/master/shunit2
 - The "Unofficial Bash Strict Mode" blog
   post by Aaron Maxwell. Warning: The
   post contains a few serious errors,
