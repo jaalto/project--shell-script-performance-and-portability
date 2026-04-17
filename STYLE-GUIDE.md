@@ -987,7 +987,7 @@ if the variable was defined as `$ext`).
 
 **Bottom Line:** Rather than adopting
 all-or-nothing stance on the utility of
-set -o errexit, a more robust strategy
+`set -o errexit`, a more robust strategy
 employs [Defense in Depth]. By integrating
 global safety flags with localized,
 explicit error handling (e.g., `|| exit`
@@ -1000,6 +1000,20 @@ The `set -o` flags are not a set and
 forget solution, but a foundational
 safety layer that should be augmented by
 explicit checks.
+
+See the following for more information
+about the shortcoming and possible edge
+cases:
+
+- set -euo pipefail
+  https://mywiki.wooledge.org/BashPitfalls#set_-euo_pipefail
+- Why doesn't `set -e` (or `set -o errexit`,
+  or trap ERR) do what I expected?
+  https://mywiki.wooledge.org/BashFAQ/105
+- What are the advantages and
+  disadvantages of using `set -u` (or `set
+  -o nounset`)?
+  http://mywiki.wooledge.org/BashFAQ/112
 
 ## 4.2 Explicit Error Checking
 
