@@ -1682,31 +1682,6 @@ bash --posix 3.2 | yes (macOS /bin/sh)
 zsh   | yes
 osh   | yes (Oil shell)
 
-**Note about portable use**
-
-The `local` is a command. A statement
-`local var=$(process)` is vulnerable
-because In some older shells, using `local
-var=$(command)` will actually return an exit
-code of 0 (success) because the `local`
-command itself succeeded, even though the
-process substitution may have failed
-
-Use the following, which is compatible
-with the Ksh shell (see 9.3):
-
-```shell
-    PortableUseOfLocal ()
-    {
-        # On their own lines:
-        # - Declaration
-        # - Assignment
-
-        local var
-        var="value"
-    }
-```
-
 **Note about Dynamic Scope**
 
 The shell uses dynamic scoping to
@@ -1791,7 +1766,38 @@ keyword.
     fi
 ```
 
-## 9.4 Function Argument Handling
+## 9.4 Separation of Declaration and Assignment
+
+In maximum portability is requied (Ksh as
+`/bin/sh`), separate `local` from a value
+assignment.
+
+```shell
+    PortableUseOfLocal ()
+    {
+        # On their own lines:
+        # - Declaration
+        # - Assignment
+
+        local var
+        var="value"
+    }
+```
+
+**Rationale:**
+
+The `local` is a command. A statement
+`local var=$(process)` is vulnerable
+because In some older shells, using `local
+var=$(command)` will actually return an exit
+code of 0 (success) because the `local`
+command itself succeeded, even though the
+process substitution may have failed
+
+Use the following, which is compatible
+with the Ksh shell (see 9.3):
+
+## 9.5 Function Argument Handling
 
 Use meaningful local variables for
 function arguments. In longer functions,
