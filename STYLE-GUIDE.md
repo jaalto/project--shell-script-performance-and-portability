@@ -885,7 +885,7 @@ trailing characters.
 
 # 4.0 Error Handling
 
-## 4.1 Execution Safety like set -o errexit
+## 4.1 Execution Safety
 
 At the beginning of file, explicitly
 set shell options for early exit and
@@ -906,11 +906,13 @@ two options.
     set -o errexit # set -e
     set -o nounset # set -u
 
+    # POSIX (see below). Optional
+    # - Fail cmd on pipe
+    set -o pipefail
+
     # Bash only: Optional
     # - Fail on $()
-    # - Fail cmd on pipe
     set -o errtrace
-    set -o pipefail
 ```
 **Rationale:**
 
@@ -922,11 +924,12 @@ sure to also learn their caveats from
 
 **Detail: pipefail**
 
-Even though pipefail is now standard,
-there is a lag between a specification
-being published and it being implemented
-in every system's `/bin/sh´. The safe way
-to enable it in shells that support it:
+Even though pipefail is in current
+standard, there is a lag between a
+specification being published and it
+being implemented in every system's
+`/bin/sh´. The safe way to enable it in
+shells that support it:
 
 ``` shell
     # Portable 'pipefail' enable
