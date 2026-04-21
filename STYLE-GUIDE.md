@@ -1328,7 +1328,7 @@ Use standard, readable POSIX increment syntax:
     i=$((i + 1))
 ```
 
-**Retionale:** Standard assignment logic
+**Rationale:** Standard assignment logic
 is universal across nearly all
 programming languages, making the code
 immediately accessible to any developer.
