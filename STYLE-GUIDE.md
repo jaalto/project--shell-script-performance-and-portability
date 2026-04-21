@@ -65,7 +65,7 @@ FORMAT
 ### 1.1 Context
 
 This guide is designed for developers
-targeting modern most POSIX compliant
+targeting modern POSIX compliant
 `/bin/sh` environments, including Linux,
 macOS, BSD systems using the [ksh93]
 shell, Windows Subsystem for Linux
