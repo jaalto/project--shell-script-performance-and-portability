@@ -928,7 +928,7 @@ Even though pipefail is in current
 standard, there is a lag between a
 specification being published and it
 being implemented in every system's
-`/bin/sh´. The safe way to enable it in
+`/bin/sh`. The safe way to enable it in
 shells that support it:
 
 ``` shell
