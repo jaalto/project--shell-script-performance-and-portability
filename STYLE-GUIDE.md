@@ -1794,9 +1794,8 @@ code at the beginning to emulate the
 
 ## 9.4 Separation of Declaration and Assignment
 
-In maximum portability is requied (Ksh as
-`/bin/sh`), separate `local` from a value
-assignment.
+For maximum portability and robustness
+separate `local` from a value assignment.
 
 ```shell
     PortableUseOfLocal ()
