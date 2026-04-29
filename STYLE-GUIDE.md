@@ -1055,7 +1055,7 @@ Layer     | Component | Purpose
 :---      | :---      | :---
 Active    | set -e, set -u | Immediate halt on obvious failures.
 Structural| "local" separation | Prevents "masked" errors that `set -e` would miss.
-Passive   | trap 'AtExit' EXIT | Guaranteed cleanup regardless of how the script ends.
+Passive   | trap AtExit EXIT | Guaranteed cleanup regardless of how the script ends.
 
 See the following for more information
 about the shortcoming and possible edge
@@ -1167,7 +1167,7 @@ See [Bash Guide/SignalTrap].
         exit "$ret"
     }
 
-    trap 'AtExit $?' EXIT HUP INT QUIT TERM
+    trap AtExit EXIT HUP INT QUIT TERM
 ```
 
 # 6.0 Variables
