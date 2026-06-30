@@ -2034,7 +2034,7 @@ Notable observations:
   Bash, the command would default to
   variable `REPLY` if omitted. You should
   also always use option `-r` which is
-  eplained in
+  explained in
   shellcheck [SC2162](https://github.com/koalaman/shellcheck/wiki/SC2162),
   BashFAQ [001](https://mywiki.wooledge.org/BashFAQ/001),
   POSIX [IFS](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#:~:text=A%20string%20treated%20as%20a%20list%20of%20characters)
