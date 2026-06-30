@@ -1211,10 +1211,10 @@ speed up shell scripts.
 
 ```bash
     i=$((i + 1))     # POSIX, preferred
-    : $((i = i + 1)) # POSIX, Uhm
-    : $((i++))       # POSIX, Uhm
+    : $((i = i + 1)) # POSIX, Uhm, arcane
+    : $((i++))       # POSIX, Uhm, arcane
     ((i++))          # Bash, Ksh
-    let i++          # Bash, Ksh; Uhm
+    let i++          # Bash, Ksh; avoid
 
     # ----------------------------
     # Different shells compared.
@@ -1988,7 +1988,7 @@ Notable observations:
 
         for cmd in "$@"
         do
-            if IsCommand "$cmd"; then
+            if ! IsCommand "$cmd"; then
                 echo "ERROR: not in PATH: $cmd" >&2
                 return 1
             fi
