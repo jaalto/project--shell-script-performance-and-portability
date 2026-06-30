@@ -1651,12 +1651,9 @@ compatible"?](https://unix.stackexchange.com/q/145522)
   the script:
 
 ``` bash
-
-    case "${KSH_VERSION:-}" in
-	*MIRBSD*|*LEGACY*KSH*)
-	    # MirBSD supports 'local'
-	    ;;
-	*?)
+    if [ "${KSH_VERSION:-}" ]; then
+	# MirBSD supports 'local'
+	if ! command -v local > /dev/null 2>&1; then
 	    # CAVEAT: 'typeset'
 	    # variables inside ksh93
 	    # POSIX-style functions
@@ -1669,11 +1666,11 @@ compatible"?](https://unix.stackexchange.com/q/145522)
 	    # accidental overwriting of
 	    # script-level variables.
 
-	    echo "WARN: use mksh $0" >&2
+	    echo "WARN: run under mksh $0 or behavior is undefined" >&2
 	    # ksh/BSD portability
 	    alias local=typeset
-	    ;;
-    esac
+	fi
+    fi
 
     PortableLocal ()
     {
