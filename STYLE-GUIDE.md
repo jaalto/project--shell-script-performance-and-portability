@@ -1786,11 +1786,9 @@ code at the beginning to emulate the
 `local` keyword.
 
 ``` shell
-case "${KSH_VERSION:-}" in
-    *MIRBSD*|*LEGACY*KSH*)
-        # MirBSD supports 'local'
-        ;;
-    *?)
+if [ "${KSH_VERSION:-}" ]; then
+    # MirBSD supports 'local'
+    if ! command -v local > /dev/null 2>&1; then
         # CAVEAT: 'typeset'
         # variables inside ksh93
         # POSIX-style functions
@@ -1806,8 +1804,8 @@ case "${KSH_VERSION:-}" in
         echo "WARN: run under mksh $0 or behavior is undefined" >&2
         # ksh/BSD portability
         alias local=typeset
-        ;;
-esac
+    fi
+fi
 ```
 
 ## 9.4 Separation of Declaration and Assignment
