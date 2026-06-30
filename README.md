@@ -1652,20 +1652,28 @@ compatible"?](https://unix.stackexchange.com/q/145522)
 
 ``` bash
 
-    # CAVEAT: 'typeset' variables inside
-    # ksh93 POSIX-style functions
-    # "foo()" do NOT have the same scope
-    # as Bash 'local'. While the script
-    # will run under ksh93, these
-    # variables will be treated as
-    # global, risking accidental
-    # overwriting of script-level
-    # variables.
+    case "${KSH_VERSION:-}" in
+	*MIRBSD*|*LEGACY*KSH*)
+	    # MirBSD supports 'local'
+	    ;;
+	*?)
+	    # CAVEAT: 'typeset'
+	    # variables inside ksh93
+	    # POSIX-style functions
+	    # "foo()" do NOT have the
+	    # same scope as Bash
+	    # 'local'. While the script
+	    # will run under ksh93,
+	    # these variables will be
+	    # treated as global, risking
+	    # accidental overwriting of
+	    # script-level variables.
 
-    # ksh/BSD portability
-    if ! command -v local > /dev/null 2>&1; then
-        alias local=typeset
-    fi
+	    echo "WARN: use mksh $0" >&2
+	    # ksh/BSD portability
+	    alias local=typeset
+	    ;;
+    esac
 
     PortableLocal ()
     {
