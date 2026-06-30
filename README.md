@@ -1654,21 +1654,10 @@ compatible"?](https://unix.stackexchange.com/q/145522)
     if [ "${KSH_VERSION:-}" ]; then
 	# MirBSD supports 'local'
 	if ! command -v local > /dev/null 2>&1; then
-	    # CAVEAT: 'typeset'
-	    # variables inside ksh93
-	    # POSIX-style functions
-	    # "foo()" do NOT have the
-	    # same scope as Bash
-	    # 'local'. While the script
-	    # will run under ksh93,
-	    # these variables will be
-	    # treated as global, risking
-	    # accidental overwriting of
-	    # script-level variables.
-
-	    echo "WARN: run under mksh $0 or behavior is undefined" >&2
-	    # ksh/BSD portability
-	    alias local=typeset
+	    if command -v typeset > /dev/null 2>&1; then
+		# Use eval to hide from shell parsers
+		eval 'local () { typeset "$@" ; }'
+	    fi
 	fi
     fi
 
