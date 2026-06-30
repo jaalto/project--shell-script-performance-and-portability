@@ -121,6 +121,7 @@ DICTIONARY_FILE=${DICTIONARY_FILE:-$DICTIONARY_DEFAULT}
 # Emulate 'local' if needed
 
 if [ "${KSH_VERSION:-}" ]; then
+    # MirBSD supports 'local'
     if ! command -v local > /dev/null 2>&1; then
         if command -v typeset > /dev/null 2>&1; then
             # Use eval to hide from shell parsers
