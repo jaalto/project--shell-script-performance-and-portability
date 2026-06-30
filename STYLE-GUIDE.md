@@ -1786,10 +1786,28 @@ code at the beginning to emulate the
 `local` keyword.
 
 ``` shell
-    # ksh/BSD portability
-    if ! command -v local > /dev/null 2>&1; then
-        alias local=typeset
-    fi
+    case "${KSH_VERSION:-}" in
+	*MIRBSD*|*LEGACY*KSH*)
+	    # MirBSD supports 'local'
+	    ;;
+	*?)
+	    # CAVEAT: 'typeset'
+	    # variables inside ksh93
+	    # POSIX-style functions
+	    # "foo()" do NOT have the
+	    # same scope as Bash
+	    # 'local'. While the script
+	    # will run under ksh93,
+	    # these variables will be
+	    # treated as global, risking
+	    # accidental overwriting of
+	    # script-level variables.
+
+	    echo "WARN: use mksh $0" >&2
+	    # ksh/BSD portability
+	    alias local=typeset
+	    ;;
+    esac
 ```
 
 ## 9.4 Separation of Declaration and Assignment
