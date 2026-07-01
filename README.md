@@ -1652,13 +1652,13 @@ compatible"?](https://unix.stackexchange.com/q/145522)
 
 ``` bash
     if [ "${KSH_VERSION:-}" ]; then
-	# MirBSD supports 'local'
-	if ! command -v local > /dev/null 2>&1; then
-	    if command -v typeset > /dev/null 2>&1; then
-		# Use eval to hide from shell parsers
-		eval 'local () { typeset "$@" ; }'
-	    fi
-	fi
+        # MirBSD supports 'local'
+        if ! command -v local > /dev/null 2>&1; then
+            if command -v typeset > /dev/null 2>&1; then
+                # Use eval to hide from shell parsers
+                eval 'local () { typeset "$@" ; }'
+            fi
+        fi
     fi
 
     PortableLocal ()
