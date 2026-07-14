@@ -1994,7 +1994,7 @@ is redundant.
 **Discussion**
 
 The POSIX `$((...))` syntax only handles
-integers. For decimals, use bc or awk.
+integers. For decimals, use [bc} or [awk].
 There is no practical difference in
 execution speed among the following
 statements:
