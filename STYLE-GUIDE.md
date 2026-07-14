@@ -1790,12 +1790,24 @@ if [ "${KSH_VERSION:-}" ]; then
     # MirBSD supports 'local'
     if ! command -v local > /dev/null 2>&1; then
         if command -v typeset > /dev/null 2>&1; then
+            echo "WARN: incomplete local variables emulation; better to call 'mksh/bash <script>'" >&2
             # Use eval to hide from shell parsers
             eval 'local () { typeset "$@" ; }'
         fi
     fi
 fi
 ```
+
+**Discussion:** Variables defined with
+`typeset` inside [ksh93} POSIX-style
+functions—defined as foo()-do not share
+the same local scope as they do with
+local in Dash and Bash. While the script
+will run under `ksh`, these variables will
+actually leak into the global scope.
+Consequently, the program may behave
+erratically due to these unintended
+global variables.
 
 ## 9.4 Separation of Declaration and Assignment
 
