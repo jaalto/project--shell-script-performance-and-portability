@@ -2140,8 +2140,8 @@ non-portable `which` command.
 Bash), `command -v` may prioritize
 aliases over the [PATH]. To ensure
 locating the actual executable in the
-PATH—similar to the behavior of
-`which`—use subshell to ignore aliases:
+PATH, use subshell to ignore any
+posisible aliases:
 
 ```shell
     (unalias sqlite3; command -v sqlite3) > /dev/null 2>&1
