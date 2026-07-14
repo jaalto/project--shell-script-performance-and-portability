@@ -2009,7 +2009,7 @@ statements:
     # With leading zero: 0.6
     k=$(printf "%g" "$(echo "$i + $j" | bc)")
 
-    # POSIX awk. With eading zero.
+    # POSIX awk. With leading zero.
     k=$(awk "BEGIN {print $i + $j}" < /dev/null)
 ```
 ## 10.5 echo vs printf
