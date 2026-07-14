@@ -1634,7 +1634,7 @@ compatible"?](https://unix.stackexchange.com/q/145522)
   is [ksh93] from the [Korn Shell]
   family.
 - On many commercial and conservative
-  UNIX systems, the default `/bin/s`h is
+  UNIX systems, the default `/bin/sh` is
   implemented as a modern KornShell
   [ksh93]. A key compatibility challenge
   is presented by the use of the
