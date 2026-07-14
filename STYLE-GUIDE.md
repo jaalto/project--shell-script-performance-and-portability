@@ -2161,11 +2161,11 @@ See [4.1 Execution Safety](#4.1-execution-safety)
 
 ## 10.6 Awk and passing variables
 
-Use [awk] option `-v` to define
-variables. Defining variable in
-order top-down and left-to-right is
-easier to read than writing
-assignments after the program.
+Use POSIX [awk] option `-v` to define
+variables. Defining variable in order
+top-down and left-to-right is easier to
+read than writing assignments after the
+program.
 
 ```shell
 
