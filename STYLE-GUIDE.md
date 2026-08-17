@@ -1858,7 +1858,7 @@ variables.
     Example ()
     {
         local file
-        file="${1:-}"
+        file=${1:-}
     }
 ```
 
