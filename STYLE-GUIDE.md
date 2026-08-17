@@ -2361,7 +2361,7 @@ separator like colon(:) in between:
     do
         echo "$item"
     done
-    IFS=$saved
+    IFS="$saved"
 ```
 
 ## 11.6 Bash Arithmetic expression
