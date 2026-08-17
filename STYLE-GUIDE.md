@@ -1184,6 +1184,34 @@ Use `"$quoted"` variables. For more
 information, see
 http://mywiki.wooledge.org/Quotes
 
+**Discussion**
+
+In POSIX, quotes are not strictly
+necessary for the parameter expansions on
+the right-hand side of a variable
+assignment and in `case` test.
+The following are 100% safe even if right
+hand variables contain spaces or special
+characterss, like globs (*, ?):
+
+```shell
+    var=$message
+    ext=${file##*.}
+
+    case $ext in     # quotes not required
+        "$myext")    # quotes required
+            ...
+            ;;
+    esac
+
+    Example ()
+    {
+        local arg
+
+        arg=${1:-} # first arg or assign empty
+    }
+```
+
 ## 6.3 Variable "$@"
 
 Use `"$@"`, that is, quote the "all
