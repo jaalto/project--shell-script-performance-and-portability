@@ -649,7 +649,7 @@ regarding the script's CLI limitations.
        while :
        do
             local opt
-            opt="${1:-none}"
+            opt=${1:-none}
 
             case $opt in
                 -f | --file)
