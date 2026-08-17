@@ -1710,17 +1710,17 @@ shells. The `local` keyword is portable
 enough to be used in modern shell
 scripts.
 
-Shell | local supported
-:---  | :---
-posh  | yes
-dash  | yes
-busybox ash 1.37.0 | yes
-mksh  | yes
-ksh 93u+m/1.0.10 2024-08-01 | no (typeset keyword)
-bash  | yes
+Shell      | local supported
+:---       | :---
+dash (sh)  | yes
+posh (sh)  | yes
+busybox ash 1.37.0 (sh) | yes
+mksh (sh)  | yes
+ksh 93u+m/1.0.10 2024-08-01 (sh in BSD) | no (typeset keyword)
+bash       | yes
 bash --posix 3.2 | yes (macOS /bin/sh)
-zsh   | yes
-osh   | yes (Oil shell)
+zsh        | yes
+osh        | yes (Oil shell)
 
 **Note about Dynamic Scope**
 
@@ -1745,7 +1745,7 @@ remains a self-contained unit.
     Two ()
     {
         local arg
-        arg="${1:-}"
+        arg=${1:-}
 
         echo "$arg"
     }
