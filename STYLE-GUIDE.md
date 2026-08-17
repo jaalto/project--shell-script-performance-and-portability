@@ -2027,7 +2027,6 @@ multiline output.
 
 ``` shell
     # Preferred. Simple code.
-    var="message"
     echo "$var"
 
     # Avoid. More complex to read
