@@ -654,7 +654,7 @@ regarding the script's CLI limitations.
             case $opt in
                 -f | --file)
                     shift
-                    FILE="${1:-}"
+                    FILE=${1:-}
                     if [ ! -f "$FILE" ]; then
                         Die "ERROR: No --file '$FILE'"
                     fi
@@ -1564,7 +1564,7 @@ scan.
 Display help to stdout and exit with status 0.
 
 ``` bash
-    arg="${1:-}"
+    arg=${1:-}
 
     if [ "$arg" = "-h" ]; then
         echo "Synopsis: ...."
