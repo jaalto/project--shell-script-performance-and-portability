@@ -1801,7 +1801,7 @@ fi
 **Discussion:**
 
 Warning: The emulation code only supports
-running under /bin/sh, which may be  Korn
+running under `/bin/sh`, which may be  Korn
 Shell interpreter (like on BSD systems).
 
 Variables defined with `typeset` inside
