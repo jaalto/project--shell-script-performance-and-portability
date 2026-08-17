@@ -1850,7 +1850,7 @@ detects a subshell failure.
 Use meaningful local variables for
 function arguments. In longer functions,
 prefer assigning positional arguments
-(`$1`, `$2`, etc.) immediately to local
+($1, $2, etc.) immediately to local
 variables.
 
 ``` shell
