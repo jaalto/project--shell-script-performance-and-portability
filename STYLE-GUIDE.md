@@ -138,7 +138,7 @@ See [GNU coreutils], [GNU findutils],
 **B. Long options**
 
 Use readable `--long` form options in
-calling utilities (e.g. `grep`) where
+calling utilities (e.g. [GNU grep}) where
 possible.
 
 **Rationale:** `--long` options make a
