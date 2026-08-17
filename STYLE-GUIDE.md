@@ -2111,7 +2111,7 @@ variable. The [OLDPWD] only tracks the
 *immediately* preceding directory.
 
 ```shell
-    pwd="$PWD"
+    pwd=$PWD
 
     for dir in $dirlist
     do
