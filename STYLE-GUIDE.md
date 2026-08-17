@@ -2355,13 +2355,13 @@ separator like colon(:) in between:
     array="$array${array:+:}a b" # add end
     array="c d${array:+:}$array" # add beg
 
-    saved="$IFS"
+    saved=$IFS
     IFS=":"
     for item in $array
     do
         echo "$item"
     done
-    IFS="$saved"
+    IFS=$saved
 ```
 
 ## 11.6 Bash Arithmetic expression
