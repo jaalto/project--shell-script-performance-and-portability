@@ -1572,8 +1572,9 @@ Display help to stdout and exit with status 0.
     fi
 ```
 
-**Rationale**: Displaying help, program
-version etc. are not error conditions.
+**Rationale**: Do not use stderr for
+output. Displaying help, program version
+etc. are not error conditions.
 
 ## 8.3 Reading Input
 
